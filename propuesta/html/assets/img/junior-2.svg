@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720" role="img" aria-hidden="true">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.85" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#EDF1F5"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="720" fill="url(#bg)"/>
+  <!-- bloque diagonal de marca muy suave -->
+  <polygon points="742,0 1280,0 1280,720 384,720" fill="#EEF3F8" opacity="0.9"/>
+  <polygon points="0,720 282,720 0,396" fill="#EEF3F8" opacity="0.7"/>
+  <!-- grilla horizontal tenue (navy-100) -->
+  <g stroke="#DCE7F1" stroke-width="1.4" opacity="0.7"><line x1="0" y1="60" x2="1280" y2="60"/><line x1="0" y1="120" x2="1280" y2="120"/><line x1="0" y1="180" x2="1280" y2="180"/><line x1="0" y1="240" x2="1280" y2="240"/><line x1="0" y1="300" x2="1280" y2="300"/><line x1="0" y1="360" x2="1280" y2="360"/><line x1="0" y1="420" x2="1280" y2="420"/><line x1="0" y1="480" x2="1280" y2="480"/><line x1="0" y1="540" x2="1280" y2="540"/><line x1="0" y1="600" x2="1280" y2="600"/><line x1="0" y1="660" x2="1280" y2="660"/></g>
+  <!-- líneas de cancha tenues (navy-200) -->
+  <g stroke="#BBD2E6" stroke-width="2" fill="none" opacity="0.75">
+    <line x1="640" y1="0" x2="640" y2="720"/>
+    <circle cx="640" cy="360" r="94"/>
+    <line x1="0" y1="360" x2="1280" y2="360"/>
+  </g>
+  <!-- etiqueta grande fantasma -->
+  <text x="58" y="432" font-family="Archivo, Arial, sans-serif" font-weight="800" font-size="83" fill="#BBD2E6" opacity="0.55" letter-spacing="-1">TIBURONES</text>
+  <!-- ícono + kicker navy -->
+  <rect x="62.99999999999999" y="277.2" width="43.2" height="54.0" rx="7.5600000000000005" fill="#294D6E"/><g stroke="#fff" stroke-width="3.2399999999999998" stroke-linecap="round"><path d="M72.50399999999999 295.56 H96.696"/><path d="M72.50399999999999 305.28 H96.696"/><path d="M72.50399999999999 315.0 H88.056"/></g>
+  <text x="126" y="316" font-family="Inter, Arial, sans-serif" font-weight="600" font-size="22" fill="#294D6E" letter-spacing="3">JUNIOR FC · PLANTILLA</text>
+  <!-- monograma HD (marca de agua) -->
+  <text x="1222" y="680" text-anchor="end" font-family="Archivo, Arial, sans-serif" font-weight="800" font-size="45" fill="#BBD2E6" opacity="0.6" letter-spacing="2">HD</text>
+</svg>

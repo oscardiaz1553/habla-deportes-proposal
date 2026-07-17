@@ -1,0 +1,21 @@
+# Ajustes locales de Claude Code (permisos por máquina)
+.claude/settings.local.json
+
+# Sistema / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+
+# Node (por si se agrega tooling luego)
+node_modules/
+
+# Temporales
+*.tmp
+
+# Archivos de referencia pesados / assets sin usar (se conservan en local)
+/Home - Diario Deportes.png
+propuesta/html/assets/img/fondo_pelotasyletras.png
+propuesta/html/assets/img/bandera_junior.png
+propuesta/html/assets/img/Banner-Drogueria-Inglesa.png
+propuesta/html/assets/img/image002.webp

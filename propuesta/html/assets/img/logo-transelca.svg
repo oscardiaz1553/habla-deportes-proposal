@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 44" width="200" height="44" role="img" aria-label="Transelca">
+  <!-- Glifo torre/energía + wordmark. Usa currentColor: el contexto fija el color
+       (azul --sponsor-blue sobre chip claro; blanco sobre superficies navy). Encapsulado. -->
+  <g fill="currentColor">
+    <path d="M14 8 L24 30 L4 30 Z" opacity="0.92"/>
+    <rect x="12.5" y="18" width="3" height="16"/>
+  </g>
+  <g stroke="currentColor" stroke-width="1.6" opacity="0.92">
+    <path d="M8 22 L20 22 M6.5 27 L21.5 27"/>
+  </g>
+  <text x="36" y="29" font-family="Archivo, Arial, sans-serif" font-weight="800" font-size="22" letter-spacing="1.5" fill="currentColor">TRANSELCA</text>
+</svg>

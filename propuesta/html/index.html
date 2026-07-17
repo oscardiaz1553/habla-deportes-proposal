@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Habla Deportes — Fútbol colombiano, Junior FC y Selección Colombia</title>
+  <meta name="description" content="Habla Deportes: video, análisis y radio del fútbol colombiano. Junior de Barranquilla, Selección Colombia, fichajes y el show de la mañana, de lunes a viernes a las 10:00 AM.">
+  <meta name="theme-color" content="#294D6E">
+  <link rel="canonical" href="https://habladeportes.co/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Habla Deportes">
+  <meta property="og:title" content="Habla Deportes — Fútbol colombiano, Junior FC y Selección Colombia">
+  <meta property="og:description" content="Video, análisis y radio del fútbol colombiano. Junior, Selección Colombia, fichajes y el show de la mañana en vivo.">
+  <meta property="og:url" content="https://habladeportes.co/">
+  <meta property="og:locale" content="es_CO">
+  <meta property="og:image" content="assets/img/juansalvador1.png">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Habla Deportes — Fútbol colombiano, Junior FC y Selección Colombia">
+  <meta name="twitter:description" content="Video, análisis y radio del fútbol colombiano. El show de la mañana, L–V 10:00 AM.">
+  <meta name="twitter:image" content="assets/img/juansalvador1.png">
+
+  <!-- Fuentes: preconnect + Archivo (display) + Inter (cuerpo) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap">
+
+  <!-- Estilos: tokens PRIMERO, luego componentes.
+       Cache-busting con ?v=N: subir el número al cambiar CSS/JS para que el
+       cliente reciba la versión nueva sin forzar recarga (Ctrl+F5). -->
+  <link rel="stylesheet" href="assets/tokens.css?v=36">
+  <link rel="stylesheet" href="assets/css/main.css?v=36">
+
+  <link rel="icon" href="assets/img/LogoHablaDeportes.webp" type="image/webp">
+
+  <!-- JSON-LD: Organización + Sitio web + Video destacado -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "name": "Habla Deportes",
+        "url": "https://habladeportes.co/",
+        "logo": "https://habladeportes.co/assets/img/LogoHablaDeportes.webp",
+        "email": "info@habladeportes.co",
+        "areaServed": "CO",
+        "sameAs": ["https://www.youtube.com/@HablaDeportesRadio"]
+      },
+      {
+        "@type": "WebSite",
+        "name": "Habla Deportes",
+        "url": "https://habladeportes.co/",
+        "inLanguage": "es-CO",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://habladeportes.co/?s={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "VideoObject",
+        "name": "¡Junior le ganó a Santa Fe por penales!",
+        "description": "Análisis en vivo de la clasificación de Junior de Barranquilla tras vencer a Santa Fe en la tanda de penales.",
+        "thumbnailUrl": "https://habladeportes.co/assets/img/juansalvador1.png",
+        "uploadDate": "2026-07-14",
+        "publisher": { "@type": "Organization", "name": "Habla Deportes" }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <!-- ===================== TOPBAR ===================== -->
+  <div class="topbar">
+    <div class="container topbar__inner">
+      <span class="live-dot live-dot--pulse" aria-hidden="true"></span>
+      <p class="topbar__text">El show de la mañana, de lunes a viernes a las 10:00 AM</p>
+    </div>
+  </div>
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="index.html" aria-label="Habla Deportes — Inicio">
+        <img class="brand__logo" src="assets/img/LogoHablaDeportes-white.png"
+             width="800" height="272" alt="Habla Deportes">
+      </a>
+
+      <nav class="primary-nav" aria-label="Navegación principal">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="index.html" aria-current="page">Inicio</a></li>
+          <li><a class="nav-link" href="#mundo-junior">Junior</a></li>
+          <li>
+            <a class="nav-link" href="#">Futbol
+              <svg class="nav-link__caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" href="#el-show">Programas
+              <svg class="nav-link__caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" href="#">Más
+              <svg class="nav-link__caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </a>
+          </li>
+          <li aria-hidden="true"><span class="nav-sep"></span></li>
+          <li>
+            <a class="btn btn--subscribe btn--on-dark" href="https://www.youtube.com/@HablaDeportesRadio?sub_confirmation=1" target="_blank" rel="noopener">
+              Suscribirse
+              <svg class="btn__yt" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31.4 31.4 0 0 0 24 12a31.4 31.4 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.3 3.6-6.3 3.6Z"/></svg>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <button class="nav-toggle" type="button" data-nav-toggle
+              aria-expanded="false" aria-controls="mobile-menu" aria-label="Abrir menú">
+        <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===================== MENÚ MÓVIL ===================== -->
+  <div class="mobile-menu" id="mobile-menu" data-mobile-menu aria-hidden="true" aria-label="Menú de navegación">
+    <div class="mobile-menu__head">
+      <img class="brand__logo" src="assets/img/LogoHablaDeportes.webp" width="1600" height="545" alt="Habla Deportes">
+      <button class="nav-toggle" type="button" data-menu-close aria-label="Cerrar menú">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <a class="mobile-menu__link" href="index.html" aria-current="page">Inicio</a>
+    <a class="mobile-menu__link" href="#mundo-junior">Junior</a>
+    <a class="mobile-menu__link" href="#">Futbol</a>
+    <a class="mobile-menu__link" href="#el-show">Programas</a>
+    <a class="mobile-menu__link" href="#">Más</a>
+    <a class="btn btn--subscribe" href="https://www.youtube.com/@HablaDeportesRadio?sub_confirmation=1" target="_blank" rel="noopener">
+      Suscribirse
+      <svg class="btn__yt" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31.4 31.4 0 0 0 24 12a31.4 31.4 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.3 3.6-6.3 3.6Z"/></svg>
+    </a>
+  </div>
+
+  <main id="contenido">
+    <!-- ===================== HERO ===================== -->
+    <section class="hero" data-hero aria-label="Video destacado"
+      data-slides='[
+        {"img":"assets/img/juansalvador1.png","alt":"Juan Salvador reacciona en vivo a la posible llegada de Cuadrado a Junior","title":"Cuadrado a Junior: ¿qué hay de cierto?","time":"Hace 2 horas","youtube":"LK0g1WLTga0"},
+        {"img":"assets/img/juansalvador2.png","alt":"Juan Salvador analiza la última hora sobre la Selección Colombia","title":"Contra todo pronóstico con la Selección Colombia","time":"Hace 1 día","youtube":"f9rJ95E_pTg"}
+      ]'>
+      <div class="hero__slide">
+        <!-- Dos capas apiladas para el crossfade real entre slides.
+             La capa activa lleva la clase is-active y el alt descriptivo;
+             la otra queda decorativa (alt vacío) mientras precarga la
+             siguiente imagen. El JS alterna cuál está activa. -->
+        <div class="hero__layers">
+          <img class="hero__img is-active" data-hero-layer
+               src="assets/img/juansalvador1.png"
+               width="1715" height="917" fetchpriority="high"
+               alt="Juan Salvador reacciona en vivo al triunfo de Junior de Barranquilla sobre Santa Fe">
+          <img class="hero__img" data-hero-layer
+               src="assets/img/juansalvador2.png"
+               width="1715" height="917" loading="lazy" alt="">
+        </div>
+        <div class="hero__scrim" aria-hidden="true"></div>
+
+        <button class="hero__arrow hero__arrow--prev" type="button" data-hero-prev aria-label="Video anterior">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <button class="hero__arrow hero__arrow--next" type="button" data-hero-next aria-label="Siguiente video">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+
+        <button class="play-btn hero__play" type="button" data-hero-play
+                data-youtube-id="LK0g1WLTga0"
+                data-video-title="Cuadrado a Junior: ¿qué hay de cierto?"
+                aria-label="Reproducir video destacado">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+
+        <div class="hero__content">
+          <h1 class="hero__title" data-hero-title>Cuadrado a Junior: ¿qué hay de cierto?</h1>
+          <p class="hero__meta">
+            <svg class="yt-mark" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31.4 31.4 0 0 0 24 12a31.4 31.4 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.3 3.6-6.3 3.6Z"/></svg>
+            <span>YouTube</span>
+            <span class="meta-sep" aria-hidden="true">•</span>
+            <span data-hero-time>Hace 2 horas</span>
+          </p>
+          <div class="hero__dots" role="tablist" aria-label="Seleccionar video destacado">
+            <button class="hero__dot" type="button" data-hero-dot aria-current="true" aria-label="Video 1"></button>
+            <button class="hero__dot" type="button" data-hero-dot aria-current="false" aria-label="Video 2"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TICKER ===================== -->
+    <div class="ticker" aria-label="Últimas noticias">
+      <span class="ticker__label"><span class="live-dot" aria-hidden="true"></span>Noticias</span>
+      <div class="ticker__viewport">
+        <div class="ticker__track" data-ticker-track>
+          <span class="ticker__item"><span class="ticker__cat">Junior</span><span class="ticker__headline">Confirmada la cartelera completa para la velada del Coliseo</span></span>
+          <span class="ticker__item"><span class="ticker__cat">Futbol</span><span class="ticker__headline">La Selección Colombia ya tiene rival para el amistoso de septiembre</span></span>
+          <span class="ticker__item"><span class="ticker__cat">Fichajes</span><span class="ticker__headline">Juanfer Quintero y la realidad de su posible regreso a Junior</span></span>
+          <span class="ticker__item"><span class="ticker__cat">Copa América</span><span class="ticker__headline">Así quedó el fixture rumbo a la próxima edición</span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== CENTRO DE PARTIDOS ===================== -->
+    <!-- Banner de partido (carrusel) + panel de Publicidad. Datos MOCK.
+         Slider JS mínimo (data-match-slider) con dots; respeta
+         prefers-reduced-motion. Migrable a un widget en WordPress. -->
+    <section class="section" id="centro-partidos" aria-labelledby="partidos-title">
+      <div class="container">
+        <h2 class="visually-hidden" id="partidos-title">Centro de Partidos</h2>
+        <div class="match-center">
+          <!-- IZQUIERDA: banner de partido (carrusel) -->
+          <div class="match-slider" data-match-slider>
+            <div class="match-slider__viewport">
+              <div class="match-slider__track" data-match-track>
+
+                <!-- Slide 1: Junior vs Nacional — foto real oscurecida (spec §3.1) -->
+                <a class="match-banner match-banner--junnac" href="en-vivo.html"
+                   aria-label="Final Liga Betplay: Junior vs Atlético Nacional. Sábado 20 de julio en el Estadio Metropolitano. Transmite Win Sports.">
+                  <span class="match-banner__overlay" aria-hidden="true"></span>
+                  <span class="match-banner__kicker">Final Liga Betplay</span>
+                  <span class="match-banner__body">
+                    <span class="match-banner__fixture">
+                      <img class="match-banner__crest" src="assets/img/Escudo_Junior_de_Barranquilla_2018.png" width="208" height="237" loading="lazy" alt="Escudo de Junior de Barranquilla">
+                      <span class="match-banner__vs">vs</span>
+                      <img class="match-banner__crest" src="assets/img/Atlético_Nacional.png" width="200" height="200" loading="lazy" alt="Escudo de Atlético Nacional">
+                    </span>
+                    <span class="match-banner__info">
+                      <span class="match-banner__info-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg> Sábado 20 de Julio</span>
+                      <span class="match-banner__info-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> Metropolitano</span>
+                    </span>
+                    <!-- Dónde ver: SOLO el logo del canal, alto 24px, sin rótulo (spec §2 Error 2) -->
+                    <span class="match-banner__tv">
+                      <img class="match-banner__tv-logo" src="assets/img/Win_Sports_nuevo_logo.svg.webp" width="3840" height="2171" loading="lazy" alt="Win Sports">
+                    </span>
+                  </span>
+                </a>
+
+                <!-- Slide 2: Colombia vs Perú.
+                     Fondo: default de la espec = oscuro saturado con colores de cada
+                     equipo (nunca pálido) + mismo overlay negro (§3.1). El cliente
+                     entregará una foto por partido; para hacer el swap, define aquí una
+                     imagen de fondo igual que en .match-banner--junnac:
+                       background: url('../img/colombia_peru.png') center/cover no-repeat;
+                     "Dónde ver": por ahora Win Sports en todos los partidos (pedido del cliente). -->
+                <a class="match-banner match-banner--col" href="#"
+                   aria-label="Eliminatorias Sudamericanas: Colombia vs Perú. Martes 9 de septiembre en Barranquilla.">
+                  <span class="match-banner__overlay" aria-hidden="true"></span>
+                  <span class="match-banner__kicker">Eliminatorias Sudamericanas</span>
+                  <span class="match-banner__body">
+                    <span class="match-banner__fixture">
+                      <img class="match-banner__crest" src="assets/img/Escudo_de_la_Federación_Colombiana_de_Fútbol.png" width="2160" height="2160" loading="lazy" alt="Escudo de la Selección Colombia">
+                      <span class="match-banner__vs">vs</span>
+                      <img class="match-banner__crest" src="assets/img/Logotipo_FPF_2016.png" width="1278" height="1613" loading="lazy" alt="Escudo de la Selección de Perú">
+                    </span>
+                    <span class="match-banner__info">
+                      <span class="match-banner__info-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg> Martes 9 de Septiembre</span>
+                      <span class="match-banner__info-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> Metropolitano</span>
+                    </span>
+                    <!-- Dónde ver: por ahora Win Sports en todos los partidos (pedido del cliente) -->
+                    <span class="match-banner__tv">
+                      <img class="match-banner__tv-logo" src="assets/img/Win_Sports_nuevo_logo.svg.webp" width="3840" height="2171" loading="lazy" alt="Win Sports">
+                    </span>
+                  </span>
+                </a>
+
+                <!-- Slide 3: Junior vs Millonarios.
+                     Foto real junior_millonarios.png + overlay negro (patrón del slide 1).
+                     "Dónde ver": Win Sports (pedido del cliente). -->
+                <a class="match-banner match-banner--junmil" href="#"
+                   aria-label="Liga Betplay: Junior vs Millonarios. Miércoles 24 de julio en el Estadio Metropolitano.">
+                  <span class="match-banner__overlay" aria-hidden="true"></span>
+                  <span class="match-banner__kicker">Liga Betplay · Fecha 12</span>
+                  <span class="match-banner__body">
+                    <span class="match-banner__fixture">
+                      <img class="match-banner__crest" src="assets/img/Escudo_Junior_de_Barranquilla_2018.png" width="208" height="237" loading="lazy" alt="Escudo de Junior de Barranquilla">
+                      <span class="match-banner__vs">vs</span>
+                      <img class="match-banner__crest" src="assets/img/Escudo_Millos.png" width="200" height="200" loading="lazy" alt="Escudo de Millonarios">
+                    </span>
+                    <span class="match-banner__info">
+                      <span class="match-banner__info-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg> Miércoles 24 de Julio</span>
+                      <span class="match-banner__info-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> Metropolitano</span>
+                    </span>
+                    <!-- Dónde ver: por ahora Win Sports en todos los partidos (pedido del cliente) -->
+                    <span class="match-banner__tv">
+                      <img class="match-banner__tv-logo" src="assets/img/Win_Sports_nuevo_logo.svg.webp" width="3840" height="2171" loading="lazy" alt="Win Sports">
+                    </span>
+                  </span>
+                </a>
+
+              </div>
+            </div>
+            <div class="match-slider__dots" role="tablist" aria-label="Seleccionar partido">
+              <button class="match-slider__dot" type="button" data-match-dot aria-current="true" aria-label="Partido 1: Junior vs Nacional"></button>
+              <button class="match-slider__dot" type="button" data-match-dot aria-current="false" aria-label="Partido 2: Colombia vs Perú"></button>
+              <button class="match-slider__dot" type="button" data-match-dot aria-current="false" aria-label="Partido 3: Junior vs Millonarios"></button>
+            </div>
+          </div>
+
+          <!-- DERECHA: publicidad — a color pleno, SIN overlay/filtro (spec §3.2).
+               El chip "Publicidad" va DENTRO de la imagen, arriba-izquierda. -->
+          <aside class="match-ad" aria-label="Espacio publicitario">
+            <a class="match-ad__link" href="#" aria-label="Publicidad de ISA Transelca">
+              <!-- Creativo VERTICAL real (1126×1397). Llena el panel a sangre
+                   con object-fit: cover; alto = alto del banner (424px en desktop). -->
+              <img class="match-ad__img" src="assets/img/publicidad.png" width="1126" height="1397" loading="lazy" alt="Publicidad — ISA Transelca: eso que menos ves, es lo que más cuidamos">
+              <span class="match-ad__label">Publicidad</span>
+            </a>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== EL SHOW DE LA MAÑANA ===================== -->
+    <section class="section" id="el-show" data-carousel aria-labelledby="show-title">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-head__icon section-head__icon--yt" aria-hidden="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31.4 31.4 0 0 0 24 12a31.4 31.4 0 0 0-.5-5.8Z" fill="#D20000"/><path d="M9.6 15.6V8.4l6.3 3.6-6.3 3.6Z" fill="#fff"/></svg>
+          </span>
+          <h2 class="section-head__title" id="show-title">El show de la mañana</h2>
+          <div class="section-head__actions">
+            <button class="round-arrow" type="button" data-carousel-prev aria-label="Ver videos anteriores">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+            <button class="round-arrow" type="button" data-carousel-next aria-label="Ver más videos">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="vcards" data-carousel-viewport>
+          <!-- Las 4 tarjetas son VIDEO y se comportan IGUAL: todas abren el
+               lightbox (data-youtube-id). La página propia del video
+               (video.html) sigue accesible desde los relacionados de
+               articulo.html / video.html y desde el destacado de seccion.html. -->
+          <!-- Card 1 -->
+          <a class="vcard" href="#" data-youtube-id="m-CS9-qo5rA" data-video-title="Recorriendo el Supermetro: el alcalde habló de Junior" aria-label="Reproducir video: Recorriendo el Supermetro, el alcalde habló de Junior">
+            <div class="vcard__thumb">
+              <img class="vcard__img" src="assets/img/Junior-de-Barranquilla-1200x740.jpg" width="1200" height="740" loading="lazy" alt="Análisis del presente de Junior de Barranquilla en el programa">
+              <span class="vcard__scrim" aria-hidden="true"></span>
+              <span class="vcard__type" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Video
+              </span>
+              <span class="play-btn vcard__play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+            </div>
+            <p class="vcard__date">14 de Julio, 2026</p>
+            <h3 class="vcard__title">Recorriendo el Supermetro: el alcalde habló de Junior</h3>
+          </a>
+          <!-- Card 2 -->
+          <a class="vcard" href="#" data-youtube-id="6V994TI_VSk" data-video-title="¿Jhomier Guerrero a Millonarios? La salida del lateral de Junior" aria-label="Reproducir video: ¿Jhomier Guerrero a Millonarios? La salida del lateral de Junior">
+            <div class="vcard__thumb">
+              <img class="vcard__img" src="assets/img/img-04.jpg" width="520" height="358" loading="lazy" alt="Mesa del programa con las novedades de Junior y la previa de Colombia">
+              <span class="vcard__scrim" aria-hidden="true"></span>
+              <span class="vcard__type" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Video
+              </span>
+              <span class="play-btn vcard__play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+            </div>
+            <p class="vcard__date">13 de Julio, 2026</p>
+            <h3 class="vcard__title">¿Jhomier Guerrero a Millonarios? La salida del lateral de Junior</h3>
+          </a>
+          <!-- Card 3 -->
+          <a class="vcard" href="#" data-youtube-id="9F1vfbcBZtI" data-video-title="¿Llegará? Juanfer Quintero y su posible regreso a Junior" aria-label="Reproducir video: ¿Llegará? Juanfer Quintero y su posible regreso a Junior">
+            <div class="vcard__thumb">
+              <img class="vcard__img" src="assets/img/img-02.jpg" width="1440" height="706" loading="lazy" alt="Análisis del presente de Jordan Barrera en la Selección Colombia">
+              <span class="vcard__scrim" aria-hidden="true"></span>
+              <span class="vcard__type" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Video
+              </span>
+              <span class="play-btn vcard__play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+            </div>
+            <p class="vcard__date">12 de Julio, 2026</p>
+            <h3 class="vcard__title">¿Llegará? Juanfer Quintero y su posible regreso a Junior</h3>
+          </a>
+          <!-- Card 4 -->
+          <a class="vcard" href="#" data-youtube-id="sbECwF3dEaI" data-video-title="¡Sorpresiva llegada! El refuerzo de Junior que pocos esperaban" aria-label="Reproducir video: ¡Sorpresiva llegada! El refuerzo de Junior que pocos esperaban">
+            <div class="vcard__thumb">
+              <img class="vcard__img" src="assets/img/seleccion-derrota-gira.webp" width="1280" height="720" loading="lazy" alt="Transmisión en vivo desde la sede de la Selección Colombia">
+              <span class="vcard__scrim" aria-hidden="true"></span>
+              <span class="vcard__type" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Video
+              </span>
+              <span class="play-btn vcard__play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+            </div>
+            <p class="vcard__date">11 de Julio, 2026</p>
+            <h3 class="vcard__title">¡Sorpresiva llegada! El refuerzo de Junior que pocos esperaban</h3>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== MUNDO JUNIOR ===================== -->
+    <section class="section" id="mundo-junior" aria-labelledby="junior-title">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-head__icon section-head__icon--crest" aria-hidden="true">
+            <img src="assets/img/Escudo_Junior_de_Barranquilla_2018.png" width="208" height="237" loading="lazy" alt="">
+          </span>
+          <h2 class="section-head__title" id="junior-title">Mundo Junior</h2>
+          <div class="section-head__actions">
+            <a class="section-head__link" href="#">Ver todo
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="junior-grid">
+          <!-- Feature -> enlaza a la NOTA (Home → Artículo). Sin data-youtube-id
+               para que navegue en vez de abrir el lightbox. Badge "NOTA" +
+               tiempo de lectura como marcadores positivos de tipo. -->
+          <article class="feature">
+            <a href="articulo.html" aria-label="Leer nota (5 min de lectura): Cuadrado a Junior, ¿qué hay de cierto?">
+              <div class="feature__media">
+                <img class="feature__img" src="assets/img/junior-de-barranquilla-es-bicampeon-de-liga-betplay-2026-I-en-estadio-atanasio-girardot.webp"
+                     width="1080" height="1080" loading="lazy"
+                     alt="Jugadores de Junior de Barranquilla celebran con el trofeo de la Liga BetPlay">
+                <span class="vcard__scrim" aria-hidden="true"></span>
+                <span class="feature__badge" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h6"/></svg>
+                  Nota · 5 min de lectura
+                </span>
+              </div>
+              <h3 class="feature__title">Cuadrado a Junior: ¿qué hay de cierto?</h3>
+            </a>
+            <div class="byline">
+              <img class="byline__avatar" src="assets/img/juansalvador1.png" width="1715" height="917" loading="lazy" alt="Foto de Juan Salvador">
+              <p class="byline__meta">
+                <span class="byline__name">Juan Salvador</span>
+                <span class="meta-sep" aria-hidden="true">•</span>
+                <span class="reading-time">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                  5 min de lectura
+                </span>
+                <span class="meta-sep" aria-hidden="true">•</span>
+                <span>Hace 4 horas</span>
+              </p>
+            </div>
+          </article>
+
+          <!-- Lista -->
+          <div class="junior-list">
+            <!-- jitem 1 -> NOTA (Home → Artículo). Sin data-youtube-id y SIN play:
+                 antes mostraba un play falso (bug C1). Ahora lleva badge "NOTA". -->
+            <a class="jitem" href="articulo.html" aria-label="Leer nota: ¿Jhomier Guerrero a Millonarios? La salida del lateral de Junior">
+              <div class="jitem__thumb">
+                <img class="jitem__img" src="assets/img/img-04.jpg" width="520" height="358" loading="lazy" alt="Jugadores de Junior en la final de la Liga ante Deportes Tolima">
+                <span class="jitem__type" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+                  Nota
+                </span>
+              </div>
+              <div class="jitem__body">
+                <span class="jitem__cat">Junior</span>
+                <h3 class="jitem__title">¿Jhomier Guerrero a Millonarios? La salida del lateral de Junior</h3>
+              </div>
+            </a>
+            <a class="jitem" href="#" data-youtube-id="9F1vfbcBZtI" data-video-title="¿Llegará? Juanfer Quintero y su posible regreso a Junior" aria-label="Reproducir video: ¿Llegará? Juanfer Quintero y su posible regreso a Junior">
+              <div class="jitem__thumb">
+                <img class="jitem__img" src="assets/img/img-08.jpg" width="520" height="358" loading="lazy" alt="Junior de Barranquilla enfrenta a Nacional en el Metropolitano">
+                <span class="jitem__type" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Video
+                </span>
+                <span class="jitem__play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+              </div>
+              <div class="jitem__body">
+                <span class="jitem__cat">Junior</span>
+                <h3 class="jitem__title">¿Llegará? Juanfer Quintero y su posible regreso a Junior</h3>
+              </div>
+            </a>
+            <a class="jitem" href="#" data-youtube-id="m-CS9-qo5rA" data-video-title="Recorriendo el Supermetro: el alcalde habló de Junior" aria-label="Reproducir video: Recorriendo el Supermetro, el alcalde habló de Junior">
+              <div class="jitem__thumb">
+                <img class="jitem__img" src="assets/img/img-02.jpg" width="1440" height="706" loading="lazy" alt="Previa en vivo del partido de la Selección Colombia">
+                <span class="jitem__type" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Video
+                </span>
+                <span class="jitem__play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+              </div>
+              <div class="jitem__body">
+                <span class="jitem__cat">Junior</span>
+                <h3 class="jitem__title">Recorriendo el Supermetro: el alcalde habló de Junior</h3>
+              </div>
+            </a>
+            <a class="jitem" href="#" data-youtube-id="sbECwF3dEaI" data-video-title="¡Sorpresiva llegada! El refuerzo de Junior que pocos esperaban" aria-label="Reproducir video: ¡Sorpresiva llegada! El refuerzo de Junior que pocos esperaban">
+              <div class="jitem__thumb">
+                <img class="jitem__img" src="assets/img/Junior-de-Barranquilla-1200x740.jpg" width="1200" height="740" loading="lazy" alt="Jordan Barrera, figura de Junior y la Selección Colombia">
+                <span class="jitem__type" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Video
+                </span>
+                <span class="jitem__play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+              </div>
+              <div class="jitem__body">
+                <span class="jitem__cat">Junior</span>
+                <h3 class="jitem__title">¡Sorpresiva llegada! El refuerzo de Junior que pocos esperaban</h3>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CLIPS (formato corto 9:16) ===================== -->
+    <!-- Carrusel de tarjetas verticales tipo Shorts/Reels. Mantiene scroll
+         horizontal también en desktop (identidad de "formato corto").
+         Cada .clip:
+           - Auto-reproduce un PREVIEW muteado en loop cuando entra en vista
+             (IntersectionObserver, máx. 2 simultáneos) -> ver home.js + .clip__preview.
+           - Al hacer clic abre el lightbox de YouTube CON sonido vía data-youtube-id.
+         NOTA DE CONTENIDO: los data-youtube-id actuales son videos DEMO
+         horizontales (16:9). El preview muteado funciona igual, pero para
+         producción el cliente debe usar Shorts VERTICALES reales (9:16); con
+         ellos el preview cubre la tarjeta sin recorte/zoom (quitar el scale
+         de .clip__preview en main.css). -->
+    <section class="section" id="clips" data-carousel aria-labelledby="clips-title">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-head__icon section-head__icon--line" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          </span>
+          <h2 class="section-head__title" id="clips-title">Clips</h2>
+          <div class="section-head__actions">
+            <button class="round-arrow clips__arrow" type="button" data-carousel-prev aria-label="Ver clips anteriores">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+            <button class="round-arrow clips__arrow" type="button" data-carousel-next aria-label="Ver más clips">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="clips" data-carousel-viewport>
+          <a class="clip" href="#" data-youtube-id="LK0g1WLTga0" data-video-title="El grito de gol de Junior en el Metropolitano" aria-label="Reproducir clip: El grito de gol de Junior en el Metropolitano">
+            <img class="clip__img" src="assets/img/juansalvador1.png" width="1715" height="917" loading="lazy" alt="Reacción en vivo a un gol de Junior de Barranquilla" style="object-position:50% 20%">
+            <span class="clip__scrim" aria-hidden="true"></span>
+            <span class="clip__badge" aria-hidden="true">0:38</span>
+            <span class="play-btn clip__play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+            <h3 class="clip__title">¡Golazo de Junior!</h3>
+          </a>
+          <a class="clip" href="#" data-youtube-id="6V994TI_VSk" data-video-title="Cuadrado: la frase que encendió a la hinchada" aria-label="Reproducir clip: Cuadrado, la frase que encendió a la hinchada">
+            <img class="clip__img" src="assets/img/img-04.jpg" width="520" height="358" loading="lazy" alt="Debate en el programa sobre la posible llegada de Cuadrado a Junior" style="object-position:50% 30%">
+            <span class="clip__scrim" aria-hidden="true"></span>
+            <span class="clip__badge" aria-hidden="true">0:52</span>
+            <span class="play-btn clip__play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+            <h3 class="clip__title">La frase de Cuadrado</h3>
+          </a>
+          <a class="clip" href="#" data-youtube-id="f9rJ95E_pTg" data-video-title="Colombia y una jugada de otro planeta" aria-label="Reproducir clip: Colombia y una jugada de otro planeta">
+            <img class="clip__img" src="assets/img/seleccion-derrota-gira.webp" width="1280" height="720" loading="lazy" alt="Jugada destacada de la Selección Colombia" style="object-position:50% 25%">
+            <span class="clip__scrim" aria-hidden="true"></span>
+            <span class="clip__badge" aria-hidden="true">0:45</span>
+            <span class="play-btn clip__play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+            <h3 class="clip__title">Jugada de otro planeta</h3>
+          </a>
+          <a class="clip" href="#" data-youtube-id="9F1vfbcBZtI" data-video-title="La palomita de Juanfer que no viste" aria-label="Reproducir clip: La palomita de Juanfer que no viste">
+            <img class="clip__img" src="assets/img/img-02.jpg" width="1440" height="706" loading="lazy" alt="Juanfer Quintero en acción" style="object-position:50% 20%">
+            <span class="clip__scrim" aria-hidden="true"></span>
+            <span class="clip__badge" aria-hidden="true">1:03</span>
+            <span class="play-btn clip__play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+            <h3 class="clip__title">La palomita de Juanfer</h3>
+          </a>
+          <a class="clip" href="#" data-youtube-id="sbECwF3dEaI" data-video-title="Reacción EN VIVO al penal decisivo" aria-label="Reproducir clip: Reacción en vivo al penal decisivo">
+            <img class="clip__img" src="assets/img/juansalvador2.png" width="1715" height="917" loading="lazy" alt="Reacción en vivo a la tanda de penales" style="object-position:50% 18%">
+            <span class="clip__scrim" aria-hidden="true"></span>
+            <span class="clip__badge" aria-hidden="true">0:29</span>
+            <span class="play-btn clip__play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+            <h3 class="clip__title">Reacción al penal decisivo</h3>
+          </a>
+          <a class="clip" href="#" data-youtube-id="m-CS9-qo5rA" data-video-title="Lo que dijo el técnico tras el clásico" aria-label="Reproducir clip: Lo que dijo el técnico tras el clásico">
+            <img class="clip__img" src="assets/img/img-08.jpg" width="520" height="358" loading="lazy" alt="Rueda de prensa del técnico tras el clásico" style="object-position:50% 28%">
+            <span class="clip__scrim" aria-hidden="true"></span>
+            <span class="clip__badge" aria-hidden="true">0:57</span>
+            <span class="play-btn clip__play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+            <h3 class="clip__title">El técnico tras el clásico</h3>
+          </a>
+          <a class="clip" href="#" data-youtube-id="LK0g1WLTga0" data-video-title="El Metropolitano se vistió de fiesta" aria-label="Reproducir clip: El Metropolitano se vistió de fiesta">
+            <img class="clip__img" src="assets/img/Junior-de-Barranquilla-1200x740.jpg" width="1200" height="740" loading="lazy" alt="Ambiente de la hinchada en el Estadio Metropolitano" style="object-position:50% 35%">
+            <span class="clip__scrim" aria-hidden="true"></span>
+            <span class="clip__badge" aria-hidden="true">0:41</span>
+            <span class="play-btn clip__play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+            <h3 class="clip__title">El Metro, de fiesta</h3>
+          </a>
+          <a class="clip" href="#" data-youtube-id="9F1vfbcBZtI" data-video-title="Barranquilla, capital del fútbol caribe" aria-label="Reproducir clip: Barranquilla, capital del fútbol caribe">
+            <img class="clip__img" src="assets/img/img-10.jpg" width="1200" height="800" loading="lazy" alt="Postal de Barranquilla y su afición" style="object-position:50% 30%">
+            <span class="clip__scrim" aria-hidden="true"></span>
+            <span class="clip__badge" aria-hidden="true">1:12</span>
+            <span class="play-btn clip__play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+            <h3 class="clip__title">Capital del fútbol caribe</h3>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TEMPORADA DE HUMO 2026 ===================== -->
+    <!-- Antes "Fichajes". Filas: fecha + escudo(origen) → escudo(destino) +
+         texto del fichaje. Sin píldoras de estado. 2 columnas en desktop. -->
+    <section class="section" id="humo" aria-labelledby="humo-title">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-head__icon section-head__icon--line" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 3v6M17 3l-3 3M17 3l3 3M7 21v-6M7 21l-3-3M7 21l3-3"/></svg>
+          </span>
+          <h2 class="section-head__title" id="humo-title">Temporada de humo 2026</h2>
+          <div class="section-head__actions">
+            <a class="section-head__link" href="#">Ver todo
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <ul class="humo-list">
+          <li class="humo">
+            <span class="humo__date">14/06/2026</span>
+            <span class="humo__move" aria-hidden="true">
+              <img class="humo__crest" src="assets/img/Escudo_Junior_de_Barranquilla_2018.png" width="120" height="120" loading="lazy" alt="">
+              <svg class="humo__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              <img class="humo__crest" src="assets/img/Escudo_Millos.png" width="120" height="120" loading="lazy" alt="">
+            </span>
+            <a class="humo__text" href="#">Millonarios compró a Jhomier Guerrero.</a>
+          </li>
+          <li class="humo">
+            <span class="humo__date">13/06/2026</span>
+            <span class="humo__move" aria-hidden="true">
+              <img class="humo__crest" src="assets/img/Atlético_Nacional.png" width="120" height="120" loading="lazy" alt="">
+              <svg class="humo__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              <img class="humo__crest" src="assets/img/Escudo_Junior_de_Barranquilla_2018.png" width="120" height="120" loading="lazy" alt="">
+            </span>
+            <a class="humo__text" href="#">Junior firmó a Marino Hinestroza.</a>
+          </li>
+          <li class="humo">
+            <span class="humo__date">12/06/2026</span>
+            <span class="humo__move" aria-hidden="true">
+              <img class="humo__crest" src="assets/img/Escudo_Millos.png" width="120" height="120" loading="lazy" alt="">
+              <svg class="humo__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              <img class="humo__crest" src="assets/img/Atlético_Nacional.png" width="120" height="120" loading="lazy" alt="">
+            </span>
+            <a class="humo__text" href="#">Atlético Nacional compró a Daniel Ruiz.</a>
+          </li>
+          <li class="humo">
+            <span class="humo__date">11/06/2026</span>
+            <span class="humo__move" aria-hidden="true">
+              <img class="humo__crest" src="assets/img/Escudo_América_de_Cali.png" width="120" height="120" loading="lazy" alt="">
+              <svg class="humo__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              <img class="humo__crest" src="assets/img/Escudo_del_Deportivo_Independiente_Medellín.png" width="120" height="120" loading="lazy" alt="">
+            </span>
+            <a class="humo__text" href="#">El DIM contrató al volante Luis Sánchez.</a>
+          </li>
+          <li class="humo">
+            <span class="humo__date">10/06/2026</span>
+            <span class="humo__move" aria-hidden="true">
+              <img class="humo__crest" src="assets/img/Escudo_Deportes_Tolima.png" width="120" height="120" loading="lazy" alt="">
+              <svg class="humo__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              <img class="humo__crest" src="assets/img/Escudo_Junior_de_Barranquilla_2018.png" width="120" height="120" loading="lazy" alt="">
+            </span>
+            <a class="humo__text" href="#">Junior aseguró al defensa Andrés Cadavid.</a>
+          </li>
+          <li class="humo">
+            <span class="humo__date">09/06/2026</span>
+            <span class="humo__move" aria-hidden="true">
+              <img class="humo__crest" src="assets/img/Escudo_Junior_de_Barranquilla_2018.png" width="120" height="120" loading="lazy" alt="">
+              <svg class="humo__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              <img class="humo__crest" src="assets/img/Escudo_Deportes_Tolima.png" width="120" height="120" loading="lazy" alt="">
+            </span>
+            <a class="humo__text" href="#">Deportes Tolima fichó a Carlos Bacca.</a>
+          </li>
+          <li class="humo">
+            <span class="humo__date">08/06/2026</span>
+            <span class="humo__move" aria-hidden="true">
+              <img class="humo__crest" src="assets/img/Escudo_del_Deportivo_Independiente_Medellín.png" width="120" height="120" loading="lazy" alt="">
+              <svg class="humo__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              <img class="humo__crest" src="assets/img/Escudo_América_de_Cali.png" width="120" height="120" loading="lazy" alt="">
+            </span>
+            <a class="humo__text" href="#">América de Cali firmó a Dorlan Pabón.</a>
+          </li>
+          <li class="humo">
+            <span class="humo__date">07/06/2026</span>
+            <span class="humo__move" aria-hidden="true">
+              <img class="humo__crest" src="assets/img/Atlético_Nacional.png" width="120" height="120" loading="lazy" alt="">
+              <svg class="humo__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              <img class="humo__crest" src="assets/img/Escudo_Millos.png" width="120" height="120" loading="lazy" alt="">
+            </span>
+            <a class="humo__text" href="#">Millonarios sumó al extremo Andrés Andrade.</a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== SELECCIÓN COLOMBIA (espejo de Mundo Junior) ===================== -->
+    <!-- Reutiliza .junior-grid / .feature / .byline / .jitem. Kicker de
+         categoría en NAVY (no rojo). Acento amarillo SOLO decorativo (chip). -->
+    <section class="section" id="seleccion" aria-labelledby="seleccion-title">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-head__icon section-head__icon--crest" aria-hidden="true">
+            <img src="assets/img/Escudo_de_la_Federación_Colombiana_de_Fútbol.png" width="2160" height="2160" loading="lazy" alt="">
+          </span>
+          <h2 class="section-head__title" id="seleccion-title">Selección Colombia</h2>
+          <div class="section-head__actions">
+            <a class="section-head__link" href="#">Ver todo
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="junior-grid">
+          <!-- Feature -->
+          <article class="feature">
+            <a href="#" data-youtube-id="f9rJ95E_pTg" data-video-title="Contra todo pronóstico: la última hora de la Selección Colombia" aria-label="Reproducir video: Contra todo pronóstico, la última hora de la Selección Colombia">
+              <div class="feature__media">
+                <img class="feature__img" src="assets/img/seleccion-derrota-gira.webp"
+                     width="1280" height="720" loading="lazy"
+                     alt="Jugadores de la Selección Colombia durante la concentración de Eliminatorias">
+                <span class="vcard__scrim" aria-hidden="true"></span>
+                <span class="feature__badge" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31.4 31.4 0 0 0 24 12a31.4 31.4 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.3 3.6-6.3 3.6Z"/></svg>
+                  12:37 · Video
+                </span>
+                <span class="play-btn feature__play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+              </div>
+              <h3 class="feature__title">Contra todo pronóstico: la última hora de la Selección Colombia</h3>
+            </a>
+            <div class="byline">
+              <img class="byline__avatar" src="assets/img/juansalvador2.png" width="1715" height="917" loading="lazy" alt="Foto de Juan Salvador">
+              <p class="byline__meta">
+                <span class="byline__name">Juan Salvador</span>
+                <span class="meta-sep" aria-hidden="true">•</span>
+                <span class="byline__comments">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                  248
+                </span>
+                <span class="meta-sep" aria-hidden="true">•</span>
+                <span>Hace 6 horas</span>
+              </p>
+            </div>
+          </article>
+
+          <!-- Lista -->
+          <div class="junior-list">
+            <a class="jitem" href="#" data-youtube-id="9F1vfbcBZtI" data-video-title="Colombia define su once para el duelo clave de Eliminatorias" aria-label="Reproducir video: Colombia define su once para el duelo clave de Eliminatorias">
+              <div class="jitem__thumb">
+                <img class="jitem__img" src="assets/img/img-02.jpg" width="1440" height="706" loading="lazy" alt="Entrenamiento de la Selección Colombia rumbo a las Eliminatorias">
+                <span class="jitem__type" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Video
+                </span>
+                <span class="jitem__play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+              </div>
+              <div class="jitem__body">
+                <span class="jitem__cat jitem__cat--sel">Selección</span>
+                <h3 class="jitem__title">Colombia define su once para el duelo clave de Eliminatorias</h3>
+              </div>
+            </a>
+            <a class="jitem" href="#" data-youtube-id="f9rJ95E_pTg" data-video-title="El rendimiento de los jugadores de la Liga en la Tricolor" aria-label="Reproducir video: El rendimiento de los jugadores de la Liga en la Tricolor">
+              <div class="jitem__thumb">
+                <img class="jitem__img" src="assets/img/img-08.jpg" width="520" height="358" loading="lazy" alt="Análisis del rendimiento de los jugadores de la Selección Colombia">
+                <span class="jitem__type" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Video
+                </span>
+                <span class="jitem__play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+              </div>
+              <div class="jitem__body">
+                <span class="jitem__cat jitem__cat--sel">Selección</span>
+                <h3 class="jitem__title">El rendimiento de los jugadores de la Liga en la Tricolor</h3>
+              </div>
+            </a>
+            <a class="jitem" href="#" data-youtube-id="sbECwF3dEaI" data-video-title="Lo que se viene para la Selección en la próxima fecha FIFA" aria-label="Reproducir video: Lo que se viene para la Selección en la próxima fecha FIFA">
+              <div class="jitem__thumb">
+                <img class="jitem__img" src="assets/img/img-10.jpg" width="1200" height="800" loading="lazy" alt="Concentración de la Selección Colombia antes de la fecha FIFA">
+                <span class="jitem__type" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Video
+                </span>
+                <span class="jitem__play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+              </div>
+              <div class="jitem__body">
+                <span class="jitem__cat jitem__cat--sel">Selección</span>
+                <h3 class="jitem__title">Lo que se viene para la Selección en la próxima fecha FIFA</h3>
+              </div>
+            </a>
+            <a class="jitem" href="#" data-youtube-id="m-CS9-qo5rA" data-video-title="Jordan Barrera y su irrupción con la camiseta de Colombia" aria-label="Reproducir video: Jordan Barrera y su irrupción con la camiseta de Colombia">
+              <div class="jitem__thumb">
+                <img class="jitem__img" src="assets/img/img-11.jpg" width="1200" height="800" loading="lazy" alt="Jordan Barrera con la camiseta de la Selección Colombia">
+                <span class="jitem__type" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Video
+                </span>
+                <span class="jitem__play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+              </div>
+              <div class="jitem__body">
+                <span class="jitem__cat jitem__cat--sel">Selección</span>
+                <h3 class="jitem__title">Jordan Barrera y su irrupción con la camiseta de Colombia</h3>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== RADIO A LA CARTA ===================== -->
+    <!-- Episodios on-demand del programa. Play sólido navy (audio). Cada
+         episodio abre el lightbox (las grabaciones están en YouTube). -->
+    <section class="section" id="radio" aria-labelledby="radio-title">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-head__icon section-head__icon--line" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12h3l2-6 4 14 3-9 2 4h6"/></svg>
+          </span>
+          <h2 class="section-head__title" id="radio-title">Radio a la carta</h2>
+          <div class="section-head__actions">
+            <a class="section-head__link" href="en-vivo.html">Ver episodios
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <p class="radio-live">
+          <span class="live-dot live-dot--pulse" aria-hidden="true"></span>
+          <span><strong>EN VIVO ahora</strong> · El show de la mañana — hasta las 12:00 m.</span>
+        </p>
+
+        <ul class="radio-list">
+          <li class="episode">
+            <button class="episode__play" type="button" data-youtube-id="LK0g1WLTga0" data-video-title="El show — Cuadrado a Junior: ¿qué hay de cierto?" aria-label="Reproducir episodio: Cuadrado a Junior, ¿qué hay de cierto?">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <div class="episode__body">
+              <h3 class="episode__title">El show — Cuadrado a Junior: ¿qué hay de cierto?</h3>
+              <p class="episode__meta">14 jul, 2026 · 1:52:04</p>
+            </div>
+            <svg class="episode__wave" viewBox="0 0 48 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 12v0M9 8v8M15 4v16M21 9v6M27 6v12M33 10v4M39 7v10M45 12v0"/></svg>
+          </li>
+          <li class="episode">
+            <button class="episode__play" type="button" data-youtube-id="f9rJ95E_pTg" data-video-title="El show — Previa Colombia vs. Perú por Eliminatorias" aria-label="Reproducir episodio: Previa Colombia vs. Perú por Eliminatorias">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <div class="episode__body">
+              <h3 class="episode__title">El show — Previa Colombia vs. Perú por Eliminatorias</h3>
+              <p class="episode__meta">13 jul, 2026 · 1:47:30</p>
+            </div>
+            <svg class="episode__wave" viewBox="0 0 48 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 12v0M9 8v8M15 4v16M21 9v6M27 6v12M33 10v4M39 7v10M45 12v0"/></svg>
+          </li>
+          <li class="episode">
+            <button class="episode__play" type="button" data-youtube-id="6V994TI_VSk" data-video-title="El show — Mercado de pases: ¿quién llega y quién se va?" aria-label="Reproducir episodio: Mercado de pases, ¿quién llega y quién se va?">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <div class="episode__body">
+              <h3 class="episode__title">El show — Mercado de pases: ¿quién llega y quién se va?</h3>
+              <p class="episode__meta">12 jul, 2026 · 2:03:11</p>
+            </div>
+            <svg class="episode__wave" viewBox="0 0 48 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 12v0M9 8v8M15 4v16M21 9v6M27 6v12M33 10v4M39 7v10M45 12v0"/></svg>
+          </li>
+          <li class="episode">
+            <button class="episode__play" type="button" data-youtube-id="9F1vfbcBZtI" data-video-title="El show — Juanfer Quintero y el sueño del regreso" aria-label="Reproducir episodio: Juanfer Quintero y el sueño del regreso">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <div class="episode__body">
+              <h3 class="episode__title">El show — Juanfer Quintero y el sueño del regreso</h3>
+              <p class="episode__meta">11 jul, 2026 · 1:58:22</p>
+            </div>
+            <svg class="episode__wave" viewBox="0 0 48 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 12v0M9 8v8M15 4v16M21 9v6M27 6v12M33 10v4M39 7v10M45 12v0"/></svg>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== CTA CANAL DE WHATSAPP ===================== -->
+    <!-- Verde WhatsApp ENCAPSULADO (tokens --wa-*). Título navy, botón verde
+         profundo con texto blanco (AA). Enlace placeholder al canal. -->
+    <section class="section wa-section" aria-labelledby="wa-title">
+      <div class="container">
+        <div class="wa-cta">
+          <span class="wa-cta__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm5.8 14.16c-.25.69-1.45 1.32-2 1.4-.51.08-1.16.11-1.87-.12-.43-.14-.98-.32-1.69-.63-2.98-1.29-4.92-4.28-5.07-4.48-.15-.2-1.21-1.6-1.21-3.06 0-1.45.76-2.16 1.03-2.46.27-.3.59-.37.79-.37.2 0 .39 0 .56.01.18.01.42-.07.66.5.25.59.83 2.04.9 2.19.07.15.12.32.02.52-.1.2-.15.32-.3.5-.15.17-.31.39-.44.52-.15.15-.3.31-.13.6.17.3.76 1.25 1.63 2.02 1.12.99 2.05 1.3 2.35 1.45.3.15.47.12.64-.07.17-.2.74-.86.94-1.16.2-.3.4-.25.66-.15.27.1 1.71.81 2.01.96.3.15.5.22.57.35.07.12.07.72-.18 1.41Z"/></svg>
+          </span>
+          <div class="wa-cta__text">
+            <h2 class="wa-cta__title" id="wa-title">Únete a nuestro Canal de WhatsApp</h2>
+            <p class="wa-cta__sub">Goles, fichajes y el arranque del show, al instante.</p>
+          </div>
+          <a class="btn btn--whatsapp" href="https://whatsapp.com/channel/HABLADEPORTES" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm5.8 14.16c-.25.69-1.45 1.32-2 1.4-.51.08-1.16.11-1.87-.12-.43-.14-.98-.32-1.69-.63-2.98-1.29-4.92-4.28-5.07-4.48-.15-.2-1.21-1.6-1.21-3.06 0-1.45.76-2.16 1.03-2.46.27-.3.59-.37.79-.37.2 0 .39 0 .56.01.18.01.42-.07.66.5.25.59.83 2.04.9 2.19.07.15.12.32.02.52-.1.2-.15.32-.3.5-.15.17-.31.39-.44.52-.15.15-.3.31-.13.6.17.3.76 1.25 1.63 2.02 1.12.99 2.05 1.3 2.35 1.45.3.15.47.12.64-.07.17-.2.74-.86.94-1.16.2-.3.4-.25.66-.15.27.1 1.71.81 2.01.96.3.15.5.22.57.35.07.12.07.72-.18 1.41Z"/></svg>
+            Unirme al canal
+          </a>
+        </div>
+      </div>
+    </section>
+    <!-- ===================== BANNER GASES DEL CARIBE (sponsor full-width) ===================== -->
+    <aside class="gases-banner" aria-label="Publicidad — Gases del Caribe">
+      <div class="container">
+        <a class="gases-banner__link" href="#">
+          <img class="gases-banner__img" src="assets/img/publicidad_gc.png" width="5440" height="576" loading="lazy" alt="Publicidad — Gases del Caribe: Copa 60 aniversario, celebremos juntos nuestro aniversario">
+        </a>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer__grid">
+        <!-- Marca -->
+        <div>
+          <img class="footer__brand-logo" src="assets/img/LogoHablaDeportes-white.png" width="800" height="272" loading="lazy" alt="Habla Deportes">
+          <p class="footer__tagline">Video, análisis y radio del fútbol colombiano. Junior de Barranquilla, Selección Colombia y todo lo que hay que hablar.</p>
+          <div class="footer__social">
+            <a href="https://www.youtube.com/@HablaDeportesRadio" target="_blank" rel="noopener" aria-label="YouTube de Habla Deportes">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31.4 31.4 0 0 0 24 12a31.4 31.4 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.3 3.6-6.3 3.6Z"/></svg>
+            </a>
+            <a href="#" aria-label="Instagram de Habla Deportes">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            </a>
+            <a href="#" aria-label="X de Habla Deportes">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 2H22l-7.6 8.7L23.3 22h-6.9l-5.4-7-6.2 7H1.6l8.1-9.3L1 2h7l4.9 6.4L18.9 2Zm-1.2 18h1.7L6.4 3.8H4.6L17.7 20Z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Secciones -->
+        <nav aria-label="Secciones del sitio">
+          <h2 class="footer__col-title">Secciones</h2>
+          <div class="footer__links">
+            <a href="index.html">Inicio</a>
+            <a href="#mundo-junior">Junior FC</a>
+            <a href="#">Selección Colombia</a>
+            <a href="#">Fichajes</a>
+            <a href="#">Copa América</a>
+          </div>
+        </nav>
+
+        <!-- El programa -->
+        <div>
+          <h2 class="footer__col-title">El programa</h2>
+          <p class="footer__show"><span class="live-dot" aria-hidden="true"></span>El show de la mañana</p>
+          <p class="footer__schedule">Lunes a viernes<br>10:00 a.m. – 12:00 m.<br>Barranquilla, Colombia</p>
+          <div class="footer__links" style="margin-top:var(--space-4)">
+            <a href="en-vivo.html">Escuchar en vivo</a>
+            <a href="#">Parrilla de la semana</a>
+          </div>
+        </div>
+
+        <!-- Institucional + sponsor -->
+        <div>
+          <h2 class="footer__col-title">Institucional</h2>
+          <div class="footer__links">
+            <a href="#">Quiénes somos</a>
+            <a href="mailto:info@habladeportes.co">Contacto</a>
+            <a href="#">Política de privacidad</a>
+            <a href="#">Términos y condiciones</a>
+          </div>
+          <div class="footer__sponsor">
+            <span class="footer__sponsor-label">Presentado por</span>
+            <img src="assets/img/logo-transelca.svg" width="200" height="44" loading="lazy" alt="Transelca">
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p>© 2026 Habla Deportes. Todos los derechos reservados.</p>
+        <div class="footer__legal">
+          <span>Barranquilla, Colombia</span>
+          <a href="mailto:info@habladeportes.co">info@habladeportes.co</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================== LIGHTBOX DE VIDEO (YouTube) ===================== -->
+  <!-- Shell estático; el <iframe> se inyecta al abrir y se ELIMINA al cerrar
+       (para detener el audio). role/aria-modal + focus trap en el JS. -->
+  <div class="lightbox" data-lightbox hidden role="dialog" aria-modal="true"
+       aria-label="Reproductor de video de Habla Deportes">
+    <div class="lightbox__backdrop" data-lightbox-close aria-hidden="true"></div>
+    <div class="lightbox__dialog" role="document">
+      <button class="lightbox__close" type="button" data-lightbox-close aria-label="Cerrar video">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+      <div class="lightbox__frame" data-lightbox-frame>
+        <!-- iframe inyectado por JS al abrir -->
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/home.js?v=36" defer></script>
+</body>
+</html>

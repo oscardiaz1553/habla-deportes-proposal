@@ -1,0 +1,339 @@
+/* ==========================================================================
+   HABLA DEPORTES — Design Tokens
+   Dirección de arte: "CLARO EDITORIAL" — claro, aireado y profesional,
+   con el AZUL DE MARCA (navy #294D6E) como color de acción/identidad.
+   --------------------------------------------------------------------------
+   Sistema LIGHT-FIRST. El tema claro es el DEFAULT de todo el sitio.
+   El tema oscuro es OPCIONAL/secundario y se activa con [data-theme="dark"].
+
+   Cómo consumir:
+     <html>                     (default = claro; no requiere atributo)
+     <html data-theme="light">  (fuerza claro)
+     <html data-theme="dark">   (opcional; superficies navy profundas)
+
+   Firma cromática:
+     NAVY (azul de marca, extraído del logo real) = identidad + acción.
+       CTAs, enlaces de énfasis, estados activos, barras de sección, play.
+     ROJO BROADCAST = reservado EXCLUSIVAMENTE al estado "AL AIRE / EN VIVO".
+     NEUTROS CLAROS (slate) = ~85% de la superficie: aire, blanco, gris muy claro.
+     SPONSOR (Transelca) = azul brillante ENCAPSULADO en su módulo, nunca fuera.
+
+   Contraste verificado para WCAG 2.1 AA (texto normal >=4.5:1, grande >=3:1).
+   ========================================================================== */
+
+/* --- Fuentes (Google Fonts). Importar también en <head> con <link> para perf:
+   Archivo (600-800) + Inter (400-700). Aquí como fallback declarativo. ------ */
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  /* ======================================================================
+     1. PRIMITIVAS DE COLOR (no usar directas en componentes; usar semánticas)
+     ====================================================================== */
+
+  /* Navy — AZUL DE MARCA (identidad, acción, "play", secciones activas).
+     Escala construida alrededor de #294D6E (el navy real del logo = navy-700). */
+  --navy-50:  #EEF3F8;   /* fondo de énfasis muy suave / chip activo */
+  --navy-100: #DCE7F1;   /* tint de superficie / hover de fila */
+  --navy-200: #BBD2E6;   /* bordes de énfasis */
+  --navy-300: #8FB2D2;   /* acento sobre fondos oscuros (tema dark) */
+  --navy-400: #5B8CB8;   /* hover en dark / detalle */
+  --navy-500: #3E729F;   /* AZUL SECUNDARIO (más brillante) — enlaces/interacción alterna (AA en blanco) */
+  --navy-600: #335F86;   /* hover del navy sobre claro */
+  --navy-700: #294D6E;   /* NAVY BASE — el color de marca (CTAs, enlaces, barras) */
+  --navy-800: #1E3A55;   /* pressed / titulares sobre claro */
+  --navy-900: #14263A;   /* superficies profundas (footer opcional, tema dark) */
+  --navy-950: #0E1B29;   /* fondo base del tema oscuro opcional */
+
+  /* Slate — neutros claros, ligeramente fríos para armonizar con el navy */
+  --white:     #FFFFFF;  /* superficie de cards / header */
+  --slate-50:  #F4F6F8;  /* FONDO DE PÁGINA (gris muy claro, aireado) */
+  --slate-100: #EDF1F5;  /* franja alterna / hover sutil */
+  --slate-200: #E1E7ED;  /* pressed / seleccionado */
+  --slate-300: #DCE3EA;  /* borde estándar */
+  --slate-400: #C4CED8;  /* borde fuerte */
+  --slate-500: #96A2AE;  /* íconos decorativos / deshabilitado */
+  --slate-600: #5E6B77;  /* texto atenuado (meta, timestamps, kickers) — AA */
+  --slate-700: #4A5866;  /* texto secundario — AAA en blanco */
+  --slate-800: #2B3742;  /* texto fuerte alterno */
+  --slate-900: #17222E;  /* TEXTO PRIMARIO (tinta con matiz navy, editorial) */
+
+  /* Broadcast Red — SOLO estado "AL AIRE / EN VIVO" (semántica, no marca) */
+  --live-500: #FF3B30;   /* relleno del badge "AL AIRE" + punto pulsante */
+  --live-600: #E11D12;   /* texto/ícono "en vivo" sobre claro (AA en blanco) + hover badge */
+  --live-glow: rgba(255, 59, 48, 0.40);
+
+  /* Estados / semánticos */
+  --green-600:  #1F9254;  /* victoria / positivo / disponible (AA en blanco) */
+  --amber-500:  #B7791F;  /* aviso / próximamente (texto AA en blanco) */
+  --amber-bg:   #FFB020;  /* relleno de chip de aviso (texto tinta) */
+  --red-600:    #D42A2C;  /* error / derrota (familia distinta al live por contexto) */
+  --info-600:   #2563A8;  /* info / enlaces neutros */
+
+  /* Marca sponsor (Transelca) — ENCAPSULADA, NO dicta la identidad.
+     Azul brillante/turquesa, deliberadamente distinto del navy de marca. */
+  --sponsor-blue: #0A85C9;  /* solo dentro del módulo "Presentado por" */
+  --sponsor-blue-deep: #0568A3;
+  --sponsor-tint: rgba(10, 133, 201, 0.08); /* fondo suave del módulo sponsor */
+
+  /* ======================================================================
+     2. TOKENS SEMÁNTICOS — TEMA CLARO (DEFAULT)
+     ====================================================================== */
+
+  /* Fondos y superficies */
+  --color-bg:            var(--slate-50);   /* fondo de página (gris muy claro) */
+  --color-bg-subtle:     var(--slate-100);  /* franjas alternas de sección */
+  --color-surface:       var(--white);      /* cards, paneles, header */
+  --color-surface-2:     var(--slate-50);   /* elevado / hover de card */
+  --color-surface-3:     var(--slate-200);  /* pressed / seleccionado */
+  --color-surface-brand: var(--navy-700);   /* superficie navy (barras de sección, footer) */
+  --color-overlay:       rgba(20, 38, 58, 0.55); /* modales / scrim de overlay */
+
+  /* Texto */
+  --color-text:          var(--slate-900);  /* primario */
+  --color-text-secondary:var(--slate-700);  /* secundario (AAA en blanco) */
+  --color-text-muted:    var(--slate-600);  /* atenuado / kickers gris (AA) */
+  --color-text-inverse:  var(--white);      /* sobre fondos navy/oscuros */
+  --color-text-on-accent:var(--white);      /* texto sobre botón navy */
+
+  /* Bordes */
+  --color-border:        var(--slate-300);
+  --color-border-strong: var(--slate-400);
+  --color-border-subtle: rgba(23, 34, 46, 0.08);
+
+  /* Acento / marca (NAVY) */
+  --color-accent:        var(--navy-700);   /* relleno de CTA primario, play, barras */
+  --color-accent-hover:  var(--navy-600);
+  --color-accent-press:  var(--navy-800);
+  --color-accent-text:   var(--navy-700);   /* navy como color de TEXTO/enlace sobre claro (AAA) */
+  --color-accent-2:      var(--navy-500);   /* azul secundario más brillante (interacción alterna) */
+  --color-accent-tint:   rgba(41, 77, 110, 0.08); /* fondos suaves de énfasis (fila, chip activo) */
+  --color-focus-ring:    var(--navy-500);
+
+  /* En vivo / broadcast */
+  --color-live:          var(--live-500);   /* badge / punto */
+  --color-live-strong:   var(--live-600);   /* texto/ícono en vivo sobre claro */
+  --color-live-glow:     var(--live-glow);
+
+  /* Estados semánticos (texto/íconos sobre fondo claro) */
+  --color-success:       var(--green-600);
+  --color-warning:       var(--amber-500);
+  --color-danger:        var(--red-600);
+  --color-info:          var(--info-600);
+
+  /* Scrim de thumbnails para TEMA CLARO.
+     La card es clara, pero el texto sobre la imagen es blanco: el scrim baja
+     hacia una tinta navy para garantizar legibilidad sobre cualquier foto. */
+  --scrim-thumb: linear-gradient(180deg, rgba(14,27,41,0) 40%, rgba(14,27,41,0.34) 74%, rgba(14,27,41,0.82) 100%);
+  --scrim-hero:  linear-gradient(180deg, rgba(14,27,41,0.05) 0%, rgba(14,27,41,0.30) 52%, rgba(14,27,41,0.82) 100%);
+
+  /* Soporte de componentes: vidrio, texto sobre media y chips sobre thumbnail.
+     Sobre las imágenes (con scrim navy) el texto/las píldoras van claros. */
+  --color-surface-glass:  rgba(255, 255, 255, 0.82); /* header al hacer scroll */
+  --color-on-media:       #FFFFFF;                    /* texto primario sobre scrim de imagen */
+  --color-on-media-muted: rgba(255, 255, 255, 0.82);  /* texto secundario sobre scrim */
+  --scrim-chip:           rgba(14, 27, 41, 0.62);      /* píldora translúcida sobre thumbnail (duración/tipo/kicker) */
+  --color-on-brand-muted: rgba(255, 255, 255, 0.68);  /* texto atenuado sobre superficies navy (footer, dock) */
+  --color-border-on-brand:rgba(255, 255, 255, 0.18);  /* bordes sutiles sobre superficies navy */
+  --color-surface-on-brand:rgba(255, 255, 255, 0.07); /* panel elevado sutil sobre navy */
+
+  /* ======================================================================
+     3. TIPOGRAFÍA
+     ====================================================================== */
+  --font-display: 'Archivo', 'Arial Narrow', system-ui, sans-serif; /* titulares */
+  --font-body:    'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono:    ui-monospace, 'SFMono-Regular', 'Roboto Mono', Menlo, monospace;
+
+  /* Pesos (tratamiento suavizado: display llega hasta 800, no 900) */
+  --fw-regular:  400;
+  --fw-medium:   500;
+  --fw-semibold: 600;
+  --fw-bold:     700;
+  --fw-extrabold:800;
+
+  /* Escala tipográfica (fluida, base 16px, ratio ~1.25 / clamp para hero) */
+  --fs-2xs:  0.6875rem;  /* 11px — timestamps, meta */
+  --fs-xs:   0.75rem;    /* 12px — kickers, chips, captions */
+  --fs-sm:   0.875rem;   /* 14px — UI, meta */
+  --fs-base: 1rem;       /* 16px — cuerpo */
+  --fs-md:   1.125rem;   /* 18px — cuerpo destacado / bajada */
+  --fs-lg:   1.375rem;   /* 22px — título card grande */
+  --fs-xl:   1.75rem;    /* 28px — H3 / título sección */
+  --fs-2xl:  2.25rem;    /* 36px — H2 */
+  --fs-3xl:  clamp(2.25rem, 1.7rem + 2.6vw, 3.25rem);  /* H1 */
+  --fs-hero: clamp(2.75rem, 1.9rem + 5vw, 4.75rem);    /* hero display */
+
+  /* Altura de línea */
+  --lh-tight:   1.06;   /* display grande */
+  --lh-snug:    1.16;   /* titulares */
+  --lh-normal:  1.38;   /* subtítulos */
+  --lh-relaxed: 1.65;   /* cuerpo de lectura */
+
+  /* Tracking (suavizado: menos "rótulo de TV", más editorial) */
+  --ls-tightest: -0.02em; /* hero display */
+  --ls-tight:    -0.012em;/* titulares */
+  --ls-normal:   0em;
+  --ls-kicker:   0.08em;  /* kickers / etiquetas en mayúsculas (antes 0.14em) */
+  --ls-caps:     0.04em;  /* botones/etiquetas en mayúsculas */
+
+  /* ======================================================================
+     4. RETÍCULA, CONTENEDORES Y ESPACIADO (conservado)
+     ====================================================================== */
+  --container-max:  1280px;  /* ancho de contenido estándar */
+  --container-wide: 1440px;  /* héroes full-bleed */
+  --container-text: 720px;   /* medida de lectura (artículos) */
+  --grid-columns:   12;
+  --gutter:         24px;    /* desktop */
+  --gutter-mobile:  16px;
+  --page-margin:    clamp(16px, 4vw, 48px);
+
+  /* Escala de espaciado (base 4px) */
+  --space-0:  0;
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-7:  32px;
+  --space-8:  40px;
+  --space-9:  48px;
+  --space-10: 64px;
+  --space-11: 80px;
+  --space-12: 96px;
+  --space-13: 128px;
+
+  /* Alto de componentes fijos */
+  --header-height:  68px;
+  --header-height-mobile: 56px;
+  --radio-bar-height: 72px;   /* reproductor sticky */
+  --touch-min: 44px;          /* objetivo táctil mínimo (a11y) */
+
+  /* ======================================================================
+     5. RADIOS, BORDES, SOMBRAS, MOVIMIENTO (conservado / re-templado a claro)
+     ====================================================================== */
+  --radius-none: 0;
+  --radius-xs:   4px;   /* chips internos, tags */
+  --radius-sm:   8px;   /* botones, inputs */
+  --radius-md:   12px;  /* cards */
+  --radius-lg:   16px;  /* paneles, hero */
+  --radius-xl:   24px;
+  --radius-pill: 999px; /* chips de filtro, badges "AL AIRE" */
+  --radius-circle: 50%;
+
+  --border-hairline: 1px;
+  --border-thick:    2px;
+  --border-focus:    2px;
+
+  /* Sombras: en claro predominan sombras suaves y difusas (aire, no glow). */
+  --shadow-sm:  0 1px 2px rgba(20, 38, 58, 0.06);
+  --shadow-md:  0 4px 16px rgba(20, 38, 58, 0.10);
+  --shadow-lg:  0 20px 48px rgba(20, 38, 58, 0.14);
+  --shadow-accent: 0 0 0 1px rgba(41, 77, 110, 0.25), 0 8px 24px rgba(41, 77, 110, 0.16);
+  --shadow-live:   0 0 0 4px var(--live-glow);
+  --focus-shadow:  0 0 0 2px var(--color-bg), 0 0 0 4px var(--color-focus-ring);
+
+  /* CTA "Suscribirse" sobre superficies navy/oscuras/foto: anillo claro que
+     garantiza el borde del botón (WCAG 1.4.11) sin cambiar el fill rojo. */
+  --subscribe-ring:        rgba(255, 255, 255, 0.90);
+  --subscribe-shadow-dark: 0 4px 14px rgba(14, 27, 41, 0.35);
+
+  /* Movimiento (rápido y deportivo; respeta prefers-reduced-motion en el HTML) */
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast:    120ms;
+  --dur-base:    180ms;
+  --dur-slow:    280ms;
+
+  /* Capas (z-index) */
+  --z-base:     0;
+  --z-sticky:   100;  /* header */
+  --z-radio:    200;  /* reproductor sticky (sobre el header al hacer scroll) */
+  --z-dropdown: 300;  /* menús Equipos/Torneos */
+  --z-overlay:  400;  /* scrim */
+  --z-modal:    500;  /* menú móvil / buscador */
+  --z-toast:    600;
+}
+
+/* ==========================================================================
+   6-BIS. TOKENS DE AMPLIACIÓN DE HOME (Etapa 2) — acentos ENCAPSULADOS.
+   Cada grupo vive solo dentro de su módulo (igual que el sponsor Transelca);
+   ninguno re-tematiza el sistema navy/rojo/neutro. Al cambiar assets, subir
+   el número de versión (?v=) de los <link>/<script> en index.html.
+   ========================================================================== */
+:root {
+  /* --- WhatsApp (ENCAPSULADO en el módulo .wa-cta; nunca fuera) ----------- */
+  --wa-green:       #25D366;                  /* ícono/acento reconocible */
+  --wa-green-deep:  #128C7E;                  /* relleno de botón (texto blanco, AA) */
+  --wa-green-press: #0E6F63;                  /* pressed / hover del botón */
+  --wa-tint:        rgba(37, 211, 102, 0.08); /* fondo suave de la franja */
+  --wa-border:      rgba(37, 211, 102, 0.24); /* borde de la franja */
+
+  /* --- Acento Selección (ENCAPSULADO en §Selección; SOLO decorativo) ------ */
+  --sel-yellow:     #FCD116;                  /* barra/subrayado o chip con TEXTO NAVY encima */
+  --sel-yellow-ink: var(--navy-800);          /* texto sobre el amarillo (≈9:1, AA holgado) */
+
+  /* --- Tints de estado para etiquetas de Fichajes (derivados) ------------- */
+  --tag-confirmado-bg: rgba(31, 146, 84, 0.10);   /* texto: --color-success */
+  --tag-rumor-bg:      rgba(183, 121, 31, 0.12);  /* texto: --color-warning */
+  --tag-cerrado-bg:    var(--color-accent-tint);  /* texto: --color-accent-text */
+  --tag-descartado-bg: var(--color-bg-subtle);    /* texto: --color-text-muted */
+}
+
+/* Alias explícito: forzar el tema claro (idéntico al default). */
+[data-theme="light"] { color-scheme: light; }
+
+/* ==========================================================================
+   6. TEMA OSCURO — OPCIONAL / secundario.
+   Se activa con <html data-theme="dark">. NO es el default ni lo que se
+   muestra al cliente. Superficies navy profundas; el acento pasa a un navy
+   claro/brillante (navy-300/400) porque el navy oscuro no contrasta en oscuro.
+   ========================================================================== */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --color-bg:            var(--navy-950);
+  --color-bg-subtle:     var(--navy-900);
+  --color-surface:       #14263A;           /* = navy-900, superficie de card */
+  --color-surface-2:     #1B3350;           /* elevado / hover de card */
+  --color-surface-3:     #24406A;           /* pressed / seleccionado */
+  --color-surface-brand: var(--navy-800);
+  --color-overlay:       rgba(6, 14, 22, 0.72);
+
+  --color-text:          #EAF0F6;
+  --color-text-secondary:#B7C6D6;
+  --color-text-muted:    #8497A9;
+  --color-text-inverse:  var(--navy-950);
+  --color-text-on-accent:var(--navy-950);   /* texto sobre relleno navy-claro */
+
+  --color-border:        rgba(255, 255, 255, 0.12);
+  --color-border-strong: rgba(255, 255, 255, 0.22);
+  --color-border-subtle: rgba(255, 255, 255, 0.07);
+
+  --color-accent:        var(--navy-400);   /* relleno de acento sobre oscuro */
+  --color-accent-hover:  var(--navy-300);
+  --color-accent-press:  var(--navy-500);
+  --color-accent-text:   var(--navy-300);   /* enlaces/énfasis sobre oscuro (AA) */
+  --color-accent-2:      var(--navy-300);
+  --color-accent-tint:   rgba(143, 178, 210, 0.14);
+  --color-focus-ring:    var(--navy-300);
+
+  --scrim-thumb: linear-gradient(180deg, rgba(6,14,22,0) 36%, rgba(6,14,22,0.55) 72%, rgba(6,14,22,0.92) 100%);
+  --scrim-hero:  linear-gradient(180deg, rgba(6,14,22,0.10) 0%, rgba(6,14,22,0.45) 55%, rgba(6,14,22,0.90) 100%);
+
+  --color-surface-glass:  rgba(14, 27, 41, 0.82);
+  --scrim-chip:           rgba(6, 14, 22, 0.68);
+
+  --shadow-sm:  0 1px 2px rgba(0,0,0,0.40);
+  --shadow-md:  0 6px 20px rgba(0,0,0,0.45);
+  --shadow-lg:  0 18px 48px rgba(0,0,0,0.55);
+  --shadow-accent: 0 0 0 1px rgba(143,178,210,0.35), 0 8px 28px rgba(20,38,58,0.5);
+  --focus-shadow:  0 0 0 2px var(--color-bg), 0 0 0 4px var(--color-focus-ring);
+}
+
+/* Respeta la preferencia del sistema SOLO si el HTML no fijó data-theme.
+   El default del producto es CLARO; esto habilita el dark opcional sin JS. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) {
+    color-scheme: light; /* light-first: no auto-oscurecer salvo opt-in explícito */
+  }
+}

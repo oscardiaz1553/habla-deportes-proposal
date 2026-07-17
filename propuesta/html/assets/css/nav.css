@@ -1,0 +1,144 @@
+/* Diario Deportes — componente de navegación unificado.
+   Se carga DESPUÉS de site.css / article.css. Da el mismo desplegable «Más ▾»,
+   el mismo menú móvil y el mismo sticky rápido en index, artículo y categoría. */
+
+/* ===== Lista de navegación (misma en las 3 barras) ===== */
+.nav-list{display:flex;align-items:center;gap:2px;list-style:none;margin:0;padding:0}
+.nav-list > li{position:relative}
+
+/* Disparador del desplegable: se ve como un enlace más de su barra */
+.nav-trigger{display:inline-flex;align-items:center;gap:7px;font:inherit;color:inherit;
+  background:none;border:0;cursor:pointer}
+.caret{width:7px;height:7px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;
+  transform:translateY(-2px) rotate(45deg);transition:transform var(--dur-fast) var(--ease-out)}
+.has-dropdown.is-open .caret,
+.nav-trigger[aria-expanded="true"] .caret{transform:translateY(1px) rotate(-135deg)}
+
+/* ===== Panel del submenú (oscuro, consistente) ===== */
+.submenu{position:absolute;top:100%;right:0;left:auto;min-width:216px;margin-top:8px;padding:8px;
+  background:var(--dark);border:1px solid rgba(255,255,255,.12);border-radius:12px;
+  box-shadow:0 14px 34px rgba(0,12,36,.4);list-style:none;z-index:80;
+  opacity:0;visibility:hidden;transform:translateY(-6px);
+  /* Demora de 300ms SOLO al cerrar (periodo de gracia del hover); la apertura pone delay:0 */
+  transition:opacity var(--dur-fast) var(--ease-out) 300ms,transform var(--dur-fast) var(--ease-out) 300ms,visibility var(--dur-fast) 300ms}
+.has-dropdown:hover .submenu,
+.has-dropdown:focus-within .submenu,
+.has-dropdown.is-open .submenu{opacity:1;visibility:visible;transform:translateY(0);transition-delay:0ms}
+/* puente invisible para que el mouse no pierda el panel */
+.has-dropdown::after{content:"";position:absolute;top:100%;left:0;right:0;height:12px}
+.submenu li{margin:0}
+.submenu a{display:block;padding:10px 12px;border-radius:8px;color:#E7E9EE;font-weight:500;
+  font-size:14.5px;white-space:nowrap;transition:background var(--dur-fast),color var(--dur-fast)}
+.submenu a:hover,.submenu a:focus-visible{background:rgba(255,255,255,.12);color:#fff}
+
+/* ===== Mega-menú (estilo MARCA): panel oscuro full-width bajo la barra =====
+   El panel se ancla a .sticky-nav (que es full width y position:sticky), por eso
+   la li deja de ser el contexto de posicionamiento (position:static) y se estira a
+   toda la altura de la barra para que el hover llegue sin gap hasta el panel. */
+.sticky-nav .has-mega{position:static;align-self:stretch;display:flex;align-items:center}
+.has-mega::after{display:none}
+.has-mega:hover .caret{transform:translateY(1px) rotate(-135deg)}
+.mega{position:absolute;left:0;right:0;top:100%;z-index:75;
+  background:var(--dark-2);border-top:3px solid var(--accent);box-shadow:0 24px 40px rgba(0,4,16,.5);
+  opacity:0;visibility:hidden;transform:translateY(-8px);pointer-events:none;
+  /* Demora de 300ms SOLO al cerrar (periodo de gracia del hover); la apertura pone delay:0 */
+  transition:opacity var(--dur-fast) var(--ease-out) 300ms,transform var(--dur-fast) var(--ease-out) 300ms,visibility var(--dur-fast) 300ms}
+.has-mega:hover .mega,.has-mega:focus-within .mega,.has-mega.is-open .mega{
+  opacity:1;visibility:visible;transform:translateY(0);pointer-events:auto;transition-delay:0ms}
+/* Cierre explícito por click/Escape (nav.js añade .is-dismissed un instante):
+   sin gracia de 300ms — esa es solo para el hover. */
+.has-dropdown.is-dismissed .submenu,
+.has-dropdown.is-dismissed .mega{transition-delay:0ms}
+.mega-wrap{max-width:var(--wrap);margin:0 auto;padding:34px 40px 40px}
+.mega-grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:48px;align-items:start}
+.mega-head{display:block;color:#8A90A3;font-weight:700;font-size:11.5px;text-transform:uppercase;
+  letter-spacing:.09em;padding-bottom:10px;margin-bottom:12px;border-bottom:1px solid rgba(255,255,255,.1)}
+.mega-links{columns:2;column-gap:40px}
+.mega-item{padding:9px 0;break-inside:avoid}
+.mega-item > a{display:inline-block;color:#fff;font-weight:700;font-size:16px;
+  transition:color var(--dur-fast) var(--ease-out)}
+.mega-item > a:hover,.mega-item > a:focus-visible{color:var(--accent)}
+.mega-sub{margin-top:3px;font-size:12.5px;color:#8A90A3}
+.mega-sub a{color:#8A90A3;transition:color var(--dur-fast)}
+.mega-sub a:hover,.mega-sub a:focus-visible{color:#fff}
+/* Nota destacada a la derecha (como el featured de MARCA) */
+.mega-feat{display:block;border-radius:12px;overflow:hidden;background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);transition:border-color var(--dur-fast) var(--ease-out)}
+.mega-feat:hover{border-color:rgba(207,124,14,.5)}
+.mega-feat .mf-img{display:block;aspect-ratio:16/9;background-size:cover;background-position:center}
+.mega-feat .mf-body{padding:14px 16px}
+.mega-feat .mf-eyebrow{color:var(--accent);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+.mega-feat .mf-title{display:block;margin-top:6px;color:#fff;font-weight:700;font-size:16px;line-height:1.25;
+  transition:color var(--dur-fast) var(--ease-out)}
+.mega-feat:hover .mf-title{color:var(--accent)}
+
+/* ===== Ajustes por contexto ===== */
+/* Nav principal (único, siempre visible) */
+.sticky-nav .nav-trigger{color:#E7E9EE;font-weight:500;font-size:14.5px;padding:8px 13px;border-radius:8px}
+.sticky-nav .nav-trigger:hover{background:rgba(255,255,255,.12);color:#fff}
+.sticky-nav .nav-list > li > a[aria-current="page"]{color:#fff;background:rgba(207,124,14,.20);border-radius:8px}
+
+/* ===== Navbar sólido mientras un desplegable está abierto =====
+   En la home el nav arranca transparente sobre el hero; si se abre un submenu/mega,
+   la barra toma el mismo fondo y sombra que .is-stuck para que el panel no cuelgue
+   de una barra transparente. La transición base (site.css) NO lleva demora: así el
+   de-stick al volver arriba funde de inmediato. La gracia de 300ms al salir del hover
+   la gestiona nav.js manteniendo .menu-open durante ese lapso. */
+.sticky-nav:has(.has-dropdown:hover),
+.sticky-nav:has(.has-dropdown:focus-within),
+.sticky-nav:has(.has-dropdown.is-open),
+.sticky-nav.menu-open{ /* .menu-open: JS — cubre click/teclado y la gracia del hover */
+  background-color:var(--dark);box-shadow:0 4px 24px rgba(0,12,36,.28)}
+
+
+/* ===== Menú móvil (hamburguesa) ===== */
+.mobile-menu{position:fixed;inset:0;z-index:200;background:rgba(0,12,36,.55);
+  opacity:0;visibility:hidden;transition:opacity var(--dur-base) var(--ease-out),visibility var(--dur-base)}
+.mobile-menu.open{opacity:1;visibility:visible}
+.mm-panel{position:absolute;top:0;right:0;height:100%;width:min(86vw,340px);background:var(--dark);
+  padding:20px;overflow-y:auto;transform:translateX(100%);transition:transform var(--dur-base) var(--ease-out);
+  display:flex;flex-direction:column;gap:6px}
+.mobile-menu.open .mm-panel{transform:translateX(0)}
+.mm-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.mm-head .logo img{height:30px;width:auto;filter:brightness(0) invert(1)}
+.mm-close{width:44px;height:44px;border-radius:10px;border:1px solid rgba(255,255,255,.25);
+  background:none;color:#fff;display:flex;align-items:center;justify-content:center}
+.mm-close svg{width:22px;height:22px}
+.mm-panel .mm-label{color:#8A90A3;font-size:11px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.08em;margin:14px 6px 4px}
+.mm-panel a{display:block;padding:13px 12px;border-radius:10px;color:#E7E9EE;font-weight:600;font-size:16px;
+  border-bottom:1px solid rgba(255,255,255,.06)}
+.mm-panel a:last-child{border-bottom:0}
+.mm-panel a:hover,.mm-panel a:focus-visible{background:rgba(255,255,255,.1);color:#fff}
+.mm-panel a[aria-current="page"]{color:#fff;background:rgba(207,124,14,.20)}
+
+/* Fila padre: botón-toggle que abre/cierra un grupo (FPC, Más). NO navega.
+   Se ve como un enlace más de la lista, con el caret alineado a la derecha. */
+.mm-panel .mm-trigger{display:flex;align-items:center;justify-content:space-between;width:100%;
+  min-height:48px;padding:13px 12px;border-radius:10px;color:#E7E9EE;font-weight:600;font-size:16px;
+  text-align:left;border-bottom:1px solid rgba(255,255,255,.06)}
+.mm-panel .mm-trigger:hover{background:rgba(255,255,255,.1);color:#fff}
+.mm-panel .mm-trigger:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.mm-panel .mm-trigger .caret{flex:none}
+/* La rotación del caret reutiliza la MISMA regla del desktop:
+   .nav-trigger[aria-expanded="true"] .caret{...} (definida arriba). */
+
+/* Grupo colapsable: altura animada con el truco de grid (0fr→1fr), sin medir en JS.
+   Los enlaces siguen SIEMPRE en el DOM (rastreables); al cerrar, visibility:hidden con
+   demora los saca del orden de tabulación tras la animación. */
+.mm-group{display:grid;grid-template-rows:0fr;overflow:hidden;visibility:hidden;flex:none;
+  margin-left:12px;border-left:2px solid rgba(255,255,255,.12);
+  transition:grid-template-rows var(--dur-base) var(--ease-out),visibility 0s linear var(--dur-base)}
+.mm-group.is-open{grid-template-rows:1fr;visibility:visible;
+  transition:grid-template-rows var(--dur-base) var(--ease-out),visibility 0s}
+.mm-group > *{min-height:0;overflow:hidden}
+
+/* Sub-enlaces del grupo: indent (padding-left) + el riel izquierdo como señal de "hijo"
+   (reemplaza el viejo prefijo «—», que estaba mal codificado). Peso 500, color #B7BBC8. */
+.mm-panel a.mm-sub{padding-left:18px;font-size:14.5px;font-weight:500;color:#B7BBC8;border-bottom:0}
+.mm-panel a.mm-sub[aria-current="page"]{color:#fff}
+
+/* ===== Movimiento reducido ===== */
+@media (prefers-reduced-motion: reduce){
+  .submenu,.mega,.caret,.sticky-nav,.mobile-menu,.mm-panel,.mm-group{transition:none}
+}

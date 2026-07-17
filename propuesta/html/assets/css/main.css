@@ -1,0 +1,2992 @@
+/* ==========================================================================
+   HABLA DEPORTES — Home (base canónica)
+   Hoja de componentes limpia. Consume assets/tokens.css (cargar ANTES).
+   Dirección de arte R2: "Claro editorial" — navy #294D6E de marca,
+   rojo #D20000 reservado a live/CTA suscribirse, neutros claros.
+   ========================================================================== */
+
+/* --- Overrides puntuales de marca para esta Home ------------------------- */
+/* El mockup define el rojo del CTA "Suscribirse" y del punto vivo como
+   #D20000. Lo mapeamos localmente sin tocar tokens.css. */
+:root {
+  --brand-red: #D20000;
+  --brand-red-hover: #B00000;
+}
+
+/* ==========================================================================
+   1. RESET / BASE
+   ========================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  line-height: var(--lh-relaxed);
+  color: var(--color-text);
+  background: var(--color-surface);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+img, svg, video { display: block; max-width: 100%; }
+img { height: auto; }
+
+a { color: inherit; text-decoration: none; }
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border: 0;
+  background: none;
+}
+
+h1, h2, h3, h4 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: var(--fw-extrabold);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-tight);
+  color: var(--color-text);
+}
+
+ul { margin: 0; padding: 0; list-style: none; }
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-shadow);
+  border-radius: var(--radius-sm);
+}
+
+/* Skip link accesible */
+.skip-link {
+  position: absolute;
+  left: 50%;
+  top: -60px;
+  transform: translateX(-50%);
+  z-index: var(--z-toast);
+  background: var(--color-accent);
+  color: var(--color-text-on-accent);
+  padding: var(--space-3) var(--space-5);
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  font-weight: var(--fw-semibold);
+  transition: top var(--dur-base) var(--ease-out);
+}
+.skip-link:focus { top: 0; }
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0);
+  white-space: nowrap; border: 0;
+}
+
+/* ==========================================================================
+   2. LAYOUT
+   ========================================================================== */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--page-margin);
+}
+
+.section { padding-block: var(--space-6); }        /* 24px móvil */
+@media (min-width: 1024px) {
+  .section { padding-block: var(--space-7); }       /* 32px desktop (antes 80px) */
+}
+
+/* ==========================================================================
+   3. TOPBAR (navy)
+   ========================================================================== */
+.topbar {
+  background: var(--color-surface-brand);
+  color: var(--color-text-inverse);
+}
+.topbar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 34px;
+  padding-block: var(--space-2);
+  text-align: center;
+}
+.topbar__text {
+  margin: 0;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  color: var(--color-text-inverse);
+}
+.live-dot {
+  display: inline-block;
+  width: 9px; height: 9px;
+  border-radius: var(--radius-circle);
+  background: var(--brand-red);
+  flex: none;
+}
+.live-dot--pulse { animation: livePulse 1.6s ease-in-out infinite; }
+@keyframes livePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(210, 0, 0, 0.55); }
+  50%      { box-shadow: 0 0 0 6px rgba(210, 0, 0, 0); }
+}
+
+/* ==========================================================================
+   4. HEADER / NAV
+   ========================================================================== */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+  /* Transparente por defecto: superpuesto sobre el hero.
+     El degradado (background-image) solo refuerza la legibilidad del nav;
+     backgroundColor sigue siendo transparente. */
+  background-color: transparent;
+  background-image: linear-gradient(180deg,
+    rgba(14, 27, 41, 0.55) 0%,
+    rgba(14, 27, 41, 0.18) 55%,
+    rgba(14, 27, 41, 0) 100%);
+  border-bottom: 0;
+  transition: background-color var(--dur-base) var(--ease-out),
+              box-shadow var(--dur-base) var(--ease-out);
+}
+/* Sticky (al hacer scroll): fondo navy sólido + sombra */
+.site-header.is-stuck {
+  background-color: var(--color-surface-brand); /* navy #294D6E */
+  background-image: none;
+  box-shadow: var(--shadow-md);
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-header { transition: none; }
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  min-height: var(--header-height-mobile);
+}
+@media (min-width: 1024px) {
+  .site-header__inner { min-height: var(--header-height); }
+}
+
+.brand { display: inline-flex; align-items: center; flex: none; }
+.brand__logo {
+  height: 30px;   /* proporción 2.936:1 preservada con width auto */
+  width: auto;
+}
+@media (min-width: 1024px) {
+  .brand__logo { height: 36px; }
+}
+
+.primary-nav { margin-left: auto; }
+.nav-list {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+}
+.nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 40px;
+  padding: var(--space-2) 0;
+  font-size: var(--fs-base);
+  font-weight: var(--fw-medium);
+  color: #fff; /* siempre blanco: sobre el hero (transparente) y sobre navy (sticky) */
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.nav-link:hover { color: #fff; }
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -2px;
+  height: 2px;
+  background: #fff;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-base) var(--ease-out);
+}
+.nav-link:hover::after { transform: scaleX(1); }
+.nav-link[aria-current="page"] { color: #fff; font-weight: var(--fw-semibold); }
+.nav-link[aria-current="page"]::after { transform: scaleX(1); }
+.nav-link__caret { width: 14px; height: 14px; opacity: .7; }
+
+.nav-sep {
+  width: 1px;
+  height: 22px;
+  background: rgba(255, 255, 255, 0.32);
+  flex: none;
+}
+
+/* CTA rojo "Suscribirse" */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--touch-min);
+  padding: var(--space-2) var(--space-5);
+  border-radius: var(--radius-pill);
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-sm);
+  line-height: 1;
+  transition: background var(--dur-fast) var(--ease-out),
+              transform var(--dur-fast) var(--ease-out),
+              box-shadow var(--dur-fast) var(--ease-out);
+}
+.btn--subscribe {
+  background: var(--brand-red);
+  color: #fff;
+}
+.btn--subscribe:hover { background: var(--brand-red-hover); }
+.btn--subscribe:active { transform: translateY(1px); }
+.btn__yt { width: 20px; height: 20px; flex: none; }
+
+/* Variante sobre superficies navy/oscuras/foto (header, panel en vivo): el fill
+   rojo se mantiene y se añade un anillo claro 1.5px + sombra que crea el borde
+   exigido por WCAG 1.4.11 contra el navy y contra el propio rojo. */
+.btn--subscribe.btn--on-dark {
+  background: var(--brand-red);
+  color: #fff;
+  box-shadow: var(--subscribe-shadow-dark);   /* sin anillo blanco (pedido del cliente) */
+}
+.btn--subscribe.btn--on-dark:hover  { background: var(--brand-red-hover); }
+.btn--subscribe.btn--on-dark:active { transform: translateY(1px); }
+.btn--subscribe.btn--on-dark:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* Hamburguesa (móvil) */
+.nav-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--touch-min);
+  height: var(--touch-min);
+  margin-left: auto;
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+}
+/* En el header la hamburguesa va blanca (sobre hero / navy); el botón de
+   cerrar dentro del panel móvil conserva el color oscuro por defecto. */
+.site-header .nav-toggle { color: #fff; }
+.nav-toggle svg { width: 26px; height: 26px; }
+.nav-toggle .icon-close { display: none; }
+.nav-toggle[aria-expanded="true"] .icon-open { display: none; }
+.nav-toggle[aria-expanded="true"] .icon-close { display: block; }
+
+/* ==========================================================================
+   5. MENÚ MÓVIL (overlay claro)
+   ========================================================================== */
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  background: var(--color-surface);
+  padding: var(--space-6) var(--page-margin) var(--space-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  transform: translateX(100%);
+  transition: transform var(--dur-slow) var(--ease-out);
+  overflow-y: auto;
+}
+.mobile-menu.is-open { transform: translateX(0); }
+.mobile-menu__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+.mobile-menu__link {
+  display: flex;
+  align-items: center;
+  min-height: var(--touch-min);
+  padding: var(--space-3) var(--space-2);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-medium);
+  color: var(--color-text);
+  border-bottom: var(--border-hairline) solid var(--color-border-subtle);
+}
+.mobile-menu__link[aria-current="page"] { color: var(--color-accent-text); font-weight: var(--fw-semibold); }
+.mobile-menu .btn--subscribe { margin-top: var(--space-5); align-self: flex-start; }
+
+@media (min-width: 1024px) {
+  .nav-toggle { display: none; }
+  .mobile-menu { display: none; }
+}
+@media (max-width: 1023px) {
+  .primary-nav { display: none; }
+}
+
+/* ==========================================================================
+   6. HERO DE VIDEO
+   ========================================================================== */
+.hero {
+  position: relative;
+  width: 100%;
+  /* El hero sube por debajo del header sticky (transparente) para que la
+     imagen se vea detrás del nav. El desplazamiento equivale a la altura
+     del header, que queda superpuesto encima (z-index mayor). */
+  margin-top: calc(-1 * var(--header-height-mobile));
+}
+@media (min-width: 1024px) {
+  .hero { margin-top: calc(-1 * var(--header-height)); }
+}
+.hero__slide {
+  position: relative;
+  width: 100%;
+  height: min(70vh, 580px);
+  min-height: 460px; /* room para el titular centrado en pantallas estrechas */
+  overflow: hidden;
+  background: var(--color-surface-brand);
+}
+@media (min-width: 768px)  { .hero__slide { height: min(78vh, 680px); min-height: 520px; } }
+@media (min-width: 1280px) { .hero__slide { height: min(80vh, 720px); min-height: 600px; } }
+
+/* Capas de imagen apiladas: crossfade por opacidad + Ken Burns en la activa */
+.hero__layers {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.hero__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Encuadre del presentador: la cabeza/manos quedan en la zona centro-alta
+     y el escudo de Junior visible; deja el pecho (centro-inferior) para el
+     titular. Recorta el exceso arriba/abajo en formatos anchos (21:9 / 24:9). */
+  object-position: 50% 25%;
+  opacity: 0;
+  transform: scale(1.001);
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+}
+.hero__img.is-active { opacity: 1; }
+
+/* Crossfade (~620ms) + Ken Burns (~9.5s) solo si el usuario no pidió
+   reducir movimiento. La capa saliente vuelve suavemente a su escala base
+   al perder is-active, evitando cualquier "salto" durante el fundido. */
+@media (prefers-reduced-motion: no-preference) {
+  .hero__img {
+    transition: opacity 620ms var(--ease-in-out),
+                transform 620ms var(--ease-out);
+  }
+  .hero__img.is-active {
+    animation: heroKenBurns 9500ms var(--ease-out) forwards;
+  }
+}
+@keyframes heroKenBurns {
+  from { transform: scale(1.02)  translate3d(0, 0, 0); }
+  to   { transform: scale(1.10)  translate3d(-1.4%, -1.2%, 0); }
+}
+
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  background: var(--scrim-hero);
+}
+
+/* Botón play central */
+.play-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-circle);
+  background: rgba(255, 255, 255, 0.22);
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(2px);
+  color: #fff;
+  transition: background var(--dur-base) var(--ease-out),
+              transform var(--dur-base) var(--ease-out);
+}
+.play-btn:hover { background: rgba(255, 255, 255, 0.34); transform: scale(1.06); }
+.play-btn svg { width: 42%; height: 42%; margin-left: 8%; }
+
+.hero__play {
+  position: absolute;
+  top: 56%;   /* bajado ~20% respecto al 44% anterior */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 84px; height: 84px;
+}
+.hero__play:hover { transform: translate(-50%, -50%) scale(1.06); }
+
+/* Flechas laterales */
+.hero__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--touch-min);
+  height: var(--touch-min);
+  border-radius: var(--radius-circle);
+  background: rgba(20, 38, 58, 0.32);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  color: #fff;
+  transition: background var(--dur-fast) var(--ease-out);
+}
+.hero__arrow:hover { background: rgba(20, 38, 58, 0.6); }
+.hero__arrow svg { width: 22px; height: 22px; }
+.hero__arrow--prev { left: clamp(8px, 2vw, 28px); }
+.hero__arrow--next { right: clamp(8px, 2vw, 28px); }
+
+/* Bloque de texto centrado, bajo el botón de play (zona centro-inferior) */
+.hero__content {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(28px, 4.5vh, 52px);   /* anclado ABAJO: posición constante en todos los slides */
+  transform: translateX(-50%);
+  width: 100%;
+  padding-inline: clamp(60px, 12vw, 120px);
+  text-align: center;
+}
+.hero__title {
+  color: var(--color-on-media);
+  font-size: clamp(1.6rem, 3.4vw, 3rem);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tightest);
+  max-width: 24ch;
+  margin-inline: auto;
+  text-shadow: 0 2px 18px rgba(6, 14, 22, 0.5);
+  /* Máximo 2 líneas: si un titular es más largo, se recorta con … */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
+.hero__meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  line-height: 1;
+  color: var(--color-on-media-muted);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+}
+.hero__meta .yt-mark { width: 20px; height: 15px; }
+.meta-sep { opacity: .6; }
+
+/* Entrada del titular + meta al cambiar de slide: fade + translateY con un
+   leve stagger. No altera alineación ni tamaño (el titular sigue centrado). */
+@keyframes heroTextIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero__title.is-enter { animation: heroTextIn 460ms var(--ease-out) both; }
+  .hero__meta.is-enter  { animation: heroTextIn 460ms var(--ease-out) 90ms both; }
+
+  /* Realce muy sutil del botón play: anillo que late lentamente */
+  .hero__play::after {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    border-radius: var(--radius-circle);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    animation: heroPlayPulse 3200ms var(--ease-out) infinite;
+    pointer-events: none;
+  }
+}
+@keyframes heroPlayPulse {
+  0%   { transform: scale(1);    opacity: .5; }
+  70%  { transform: scale(1.32); opacity: 0; }
+  100% { transform: scale(1.32); opacity: 0; }
+}
+
+/* Dots */
+.hero__dots {
+  margin-top: 60px;              /* separación exacta entre el contenido y los dots */
+  display: flex;
+  justify-content: center;
+  gap: var(--space-2);
+  z-index: 2;
+}
+.hero__dot {
+  width: 28px; height: 5px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.45);
+  transition: background var(--dur-fast) var(--ease-out), width var(--dur-fast);
+  padding: 0;
+  min-height: 0;
+}
+.hero__dot[aria-current="true"] { background: #fff; }
+
+/* ==========================================================================
+   7. TICKER "● Noticias"
+   ========================================================================== */
+.ticker {
+  display: flex;
+  align-items: stretch;
+  background: var(--color-surface-brand);
+  color: var(--color-text-inverse);
+  overflow: hidden;
+}
+.ticker__label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: none;
+  padding: var(--space-3) var(--page-margin);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-sm);
+  background: var(--color-surface-brand);
+  white-space: nowrap;
+}
+.ticker__viewport {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+.ticker__track {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  white-space: nowrap;
+  padding-left: var(--space-6);
+  animation: tickerScroll 38s linear infinite;
+  will-change: transform;
+}
+.ticker__viewport:hover .ticker__track { animation-play-state: paused; }
+@keyframes tickerScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.ticker__item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-size: var(--fs-sm);
+}
+.ticker__cat { font-weight: var(--fw-bold); color: #fff; }
+.ticker__headline { color: var(--color-on-brand-muted); }
+
+/* ==========================================================================
+   8. ENCABEZADO DE SECCIÓN
+   ========================================================================== */
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+.section-head__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+.section-head__icon--yt svg { width: 34px; height: 24px; }
+.section-head__icon--crest img { width: 30px; height: auto; }
+.section-head__title {
+  font-size: 24px;                  /* pedido del cliente */
+  font-weight: var(--fw-semibold);  /* 600 */
+  color: var(--color-accent-text);
+}
+.section-head__actions {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.section-head__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-sm);
+  color: var(--color-accent-text);
+  padding: var(--space-2);
+  min-height: var(--touch-min);
+}
+.section-head__link:hover { text-decoration: underline; }
+
+/* Flechas circulares de carrusel */
+.round-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--touch-min); height: var(--touch-min);
+  border-radius: var(--radius-circle);
+  border: var(--border-hairline) solid var(--color-border-strong);
+  color: var(--color-accent-text);
+  background: var(--color-surface);
+  transition: background var(--dur-fast) var(--ease-out),
+              border-color var(--dur-fast) var(--ease-out);
+}
+.round-arrow:hover { background: var(--color-accent-tint); border-color: var(--color-accent); }
+.round-arrow:disabled { opacity: .4; cursor: not-allowed; }
+.round-arrow svg { width: 20px; height: 20px; }
+
+/* ==========================================================================
+   9. CARRUSEL "EL SHOW DE LA MAÑANA" — cards de video
+   ========================================================================== */
+.vcards {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 82%;
+  gap: var(--space-5);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: var(--space-2);
+  scrollbar-width: none;
+}
+.vcards::-webkit-scrollbar { display: none; }
+@media (min-width: 560px)  { .vcards { grid-auto-columns: 46%; } }
+@media (min-width: 900px)  { .vcards { grid-auto-columns: 30%; } }
+@media (min-width: 1100px) {
+  .vcards {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-columns: unset;
+    overflow: visible;
+  }
+}
+
+.vcard { scroll-snap-align: start; }
+.vcard__thumb {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-surface-brand);
+}
+.vcard__img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+.vcard:hover .vcard__img { transform: scale(1.04); }
+.vcard__scrim { position: absolute; inset: 0; background: var(--scrim-thumb); }
+.vcard__play {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 56px; height: 56px;
+}
+/* Fix hover: conservar el centrado (translate) al escalar, si no el botón "salta". */
+.vcard:hover .vcard__play { transform: translate(-50%, -50%) scale(1.06); }
+.vcard__date {
+  margin-top: var(--space-3);
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+}
+.vcard__title {
+  margin-top: var(--space-1);
+  font-size: var(--fs-base);
+  font-weight: var(--fw-bold);
+  font-family: var(--font-display);
+  color: var(--color-accent-text);
+  line-height: var(--lh-snug);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.vcard:hover .vcard__title { text-decoration: underline; }
+
+/* ==========================================================================
+   10. MUNDO JUNIOR — feature + lista
+   ========================================================================== */
+.junior-grid {
+  display: grid;
+  gap: var(--space-7);
+}
+@media (min-width: 900px) {
+  .junior-grid {
+    grid-template-columns: 1.15fr 1fr;
+    gap: var(--space-9);
+    align-items: start;
+  }
+}
+
+/* Feature */
+.feature__media {
+  position: relative;
+  aspect-ratio: 16 / 11;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-surface-brand);
+}
+.feature__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform var(--dur-slow) var(--ease-out); }
+.feature:hover .feature__img { transform: scale(1.03); }
+.feature__play {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 68px; height: 68px;
+}
+.feature:hover .feature__play { transform: translate(-50%, -50%) scale(1.06); }
+.feature__title {
+  margin-top: var(--space-5);
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-extrabold);
+  color: var(--color-accent-text);
+  line-height: var(--lh-snug);
+}
+.feature:hover .feature__title { text-decoration: underline; }
+.byline {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+.byline__avatar {
+  width: 40px; height: 40px;
+  border-radius: var(--radius-circle);
+  object-fit: cover;
+  flex: none;
+  border: var(--border-hairline) solid var(--color-border);
+}
+.byline__meta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+  flex-wrap: wrap;
+}
+.byline__name { font-weight: var(--fw-semibold); color: var(--color-text); }
+.byline__comments { display: inline-flex; align-items: center; gap: 4px; }
+.byline__comments svg { width: 15px; height: 15px; }
+
+/* Lista vertical */
+.junior-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+.jitem {
+  display: grid;
+  grid-template-columns: 116px 1fr;
+  gap: var(--space-4);
+  align-items: center;
+}
+.jitem__thumb {
+  position: relative;
+  aspect-ratio: 16 / 11;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--color-surface-brand);
+  flex: none;
+}
+.jitem__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform var(--dur-slow) var(--ease-out); }
+.jitem:hover .jitem__img { transform: scale(1.05); }
+/* Play badge sobre el thumbnail de lista (señala pieza de video) */
+.jitem__play {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px; height: 30px;
+  border-radius: var(--radius-circle);
+  background: rgba(20, 38, 58, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  color: #fff;
+  backdrop-filter: blur(2px);
+  transition: background var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
+}
+.jitem:hover .jitem__play { background: rgba(20, 38, 58, 0.72); transform: translate(-50%, -50%) scale(1.08); }
+.jitem__play svg { width: 44%; height: 44%; margin-left: 8%; }
+.jitem__cat {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-kicker);
+  text-transform: uppercase;
+  color: var(--brand-red);
+}
+.jitem__title {
+  margin-top: 4px;
+  font-size: var(--fs-base);
+  font-weight: var(--fw-bold);
+  font-family: var(--font-display);
+  color: var(--color-accent-text);
+  line-height: var(--lh-snug);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.jitem:hover .jitem__title { text-decoration: underline; }
+@media (min-width: 560px) {
+  .jitem { grid-template-columns: 150px 1fr; }
+}
+
+/* ==========================================================================
+   10-BIS. AMPLIACIÓN DE HOME (Etapa 2) — componentes nuevos, acotados.
+   Reutilizan tokens existentes; los acentos nuevos (WA / amarillo Selección /
+   tints de estado) viven SOLO dentro de su módulo.
+   ========================================================================== */
+
+/* --- Íconos de encabezado de línea (navy stroke/fill) -------------------- */
+.section-head__icon--line { color: var(--color-accent); }
+.section-head__icon--line svg { width: 26px; height: 26px; }
+
+/* Chip decorativo "★ Selección" (amarillo con texto navy, ~9:1 AA) --------- */
+.sel-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex: none;
+  background: var(--sel-yellow);
+  color: var(--sel-yellow-ink);
+  font-size: var(--fs-2xs);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-caps);
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: var(--radius-pill);
+}
+/* La cabecera de Selección puede envolver en móvil sin desbordar horizontal */
+#seleccion .section-head { flex-wrap: wrap; row-gap: var(--space-2); }
+
+/* Kicker de categoría de Selección en NAVY (no rojo): el rojo se reserva a
+   Junior/live. Diferencia la lista sin romper el contraste. */
+.jitem__cat--sel { color: var(--color-accent-text); }
+
+/* ==========================================================================
+   [1] CENTRO DE PARTIDOS — spec pixel-exact (÷4.0)
+   Banner de partido (carrusel) + panel Publicidad.
+   Todas las medidas salen de propuesta/centro-partidos-spec.md.
+   ========================================================================== */
+/* Móvil: una columna (banner arriba, publicidad debajo, §4). */
+.match-center { display: grid; gap: 24px; }
+@media (min-width: 900px) {
+  .match-center {
+    /* banner 934 : ad 322 en contenedor 1280, gap 24 (ratio 2.90 : 1) */
+    grid-template-columns: 2.9fr 1fr;
+    gap: 24px;
+    align-items: stretch;
+  }
+}
+
+/* --- Slider --- */
+/* .match-slider tiene la ALTURA del viewport; los dots van absolutos encima. */
+.match-slider { position: relative; display: block; }
+.match-slider__viewport {
+  overflow: hidden;
+  border-radius: var(--radius-sm);      /* 8px (spec: border-radius de ambas cajas) */
+  box-shadow: var(--shadow-md);
+  height: 300px;                        /* móvil §4 */
+}
+@media (min-width: 900px) {
+  .match-slider__viewport { height: 424px; }   /* ALTURA IGUAL a la publicidad (Error 1) */
+}
+.match-slider__track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s var(--ease-out);
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .match-slider__track { transition: none; }
+}
+
+/* --- Banner de partido --- */
+.match-banner {
+  position: relative;
+  flex: 0 0 100%;
+  min-width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 22px 21px;
+  text-decoration: none;
+  color: var(--color-on-media);
+  background: #0e141c center / cover no-repeat;
+  isolation: isolate;
+}
+
+/* Slide 1: foto REAL Junior/Nacional a sangre, a plena saturación (spec §3.1).
+   Para el swap de foto en los slides 2/3 basta con replicar este patrón. */
+.match-banner--junnac {
+  background-image: url('../img/junior_nacional.png');
+  background-position: center;
+  background-size: cover;
+}
+
+/* Overlay negro ÚNICO, gradiente vertical (spec §3.1). NUNCA baja de 0.40 (por eso
+   el centro no se lava) y se oscurece hacia abajo. Sin color, sin tinte azul, sin
+   filtros. Mismo overlay para los tres slides. */
+.match-banner__overlay {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to bottom,
+    rgba(0,0,0,0.40) 0%,
+    rgba(0,0,0,0.55) 30%,
+    rgba(0,0,0,0.68) 50%,
+    rgba(0,0,0,0.82) 72%,
+    rgba(0,0,0,0.95) 100%);
+}
+
+/* Slides 2/3 con foto REAL entregada por el cliente (mismo patrón del slide 1). */
+.match-banner--col {
+  background-image: url('../img/colombia_peru.png');
+  background-position: center;
+  background-size: cover;
+}
+.match-banner--junmil {
+  background-image: url('../img/junior_millonarios.png');
+  background-position: center;
+  background-size: cover;
+}
+/* Contenido del banner por encima del overlay (el kicker se excluye: él es
+   position:absolute anclado arriba-izquierda y esta regla genérica, de mayor
+   especificidad, le pisaba el position). */
+.match-banner > *:not(.match-banner__overlay):not(.match-banner__kicker) { position: relative; z-index: 2; }
+
+/* Kicker: sentence case, 13px/500, sin tracking, anclado arriba-izquierda
+   (spec §2 Error 3 + tabla: left 21 / top 22). */
+.match-banner__kicker {
+  position: absolute; top: 22px; left: 21px; z-index: 2;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: var(--fw-medium);        /* 500 */
+  text-transform: none;
+  letter-spacing: 0;
+  color: #FFFFFF;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+.match-banner__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+.match-banner__fixture {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;                            /* 30 px por lado, escudo↔vs↔escudo */
+}
+/* Escudos igualados por ALTO=180px, ancho auto (aspecto natural). */
+.match-banner__crest {
+  height: 140px; width: auto;           /* móvil §4 */
+  object-fit: contain;
+  opacity: 1;
+  filter: drop-shadow(0 6px 16px rgba(0,0,0,0.55));
+}
+@media (min-width: 900px) { .match-banner__crest { height: 180px; } }
+/* "vs" en minúscula, 16px/500. */
+.match-banner__vs {
+  font-family: var(--font-body);
+  font-weight: var(--fw-medium);        /* 500 */
+  font-size: 16px;
+  text-transform: lowercase;
+  color: #FFFFFF;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+}
+/* Escudos placeholder (slide 2): badges de país igualados al alto de los escudos. */
+.match-banner__flag {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 120px; height: 120px; border-radius: var(--radius-circle);
+  font-family: var(--font-display);
+  font-weight: var(--fw-extrabold); font-size: var(--fs-lg);
+  color: #fff; letter-spacing: 0.02em;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+@media (min-width: 900px) { .match-banner__flag { width: 150px; height: 150px; } }
+.match-banner__flag--col { background: linear-gradient(160deg, #FCD116 0 55%, #003893 55% 78%, #CE1126 78%); color: #0e141c; }
+.match-banner__flag--per { background: linear-gradient(90deg, #D91023 0 30%, #fff 30% 70%, #D91023 70%); color: #D91023; }
+/* Fila fecha/estadio: 16px/700, dos items separados por 36px, SIN glifo "·". */
+.match-banner__info {
+  display: flex; align-items: center; justify-content: center;
+  flex-wrap: wrap; gap: 8px 36px;
+  font-size: 14px; font-weight: var(--fw-bold);   /* 700; móvil 14 */
+  color: #FFFFFF;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  text-align: center;
+}
+@media (min-width: 900px) { .match-banner__info { font-size: 16px; } }
+.match-banner__info-item { display: inline-flex; align-items: center; gap: 8px; }
+.match-banner__info-item svg { width: 18px; height: 18px; flex: none; }
+/* Dónde ver: SOLO el logo del canal, alto 24px, SIN rótulo (Error 2). */
+.match-banner__tv { display: inline-flex; align-items: center; }
+.match-banner__tv-logo { height: 20px; width: auto; }   /* móvil §4 */
+@media (min-width: 900px) { .match-banner__tv-logo { height: 24px; } }
+
+/* Dots del slider — absolutos, bottom 22, centrados (spec tabla).
+   Activo: pill blanco 22×5; inactivo: #4B4B4B 8×5; gap 7. */
+.match-slider__dots {
+  position: absolute; left: 0; right: 0; bottom: 22px; z-index: 3;
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+}
+.match-slider__dot {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 8px;                         /* área táctil sin alterar el pill */
+  background: none; border: 0; cursor: pointer;
+}
+.match-slider__dot::before {
+  content: ""; width: 8px; height: 5px; border-radius: var(--radius-pill);
+  background: #4B4B4B;                   /* rgb(75,75,75) */
+  transition: background var(--dur-fast) var(--ease-out), width var(--dur-fast) var(--ease-out);
+}
+.match-slider__dot[aria-current="true"]::before {
+  width: 22px; height: 5px; background: #FFFFFF;
+}
+.match-slider__dot:focus-visible { outline: var(--border-focus) solid var(--color-focus-ring); outline-offset: 2px; border-radius: var(--radius-pill); }
+
+/* --- Panel Publicidad — a color pleno, SIN overlay/filtro (spec §3.2). --- */
+/* Móvil §4: centrada, ancho máx 360, alto auto respetando su aspecto vertical. */
+.match-ad { display: block; max-width: 360px; width: 100%; margin-inline: auto; }
+.match-ad__link {
+  position: relative; display: block; overflow: hidden;
+  aspect-ratio: 0.807;                  /* móvil: alto auto */
+  border-radius: var(--radius-sm);      /* 8px */
+  background: var(--color-surface-brand);
+}
+@media (min-width: 900px) {
+  .match-ad { max-width: none; }
+  .match-ad__link { aspect-ratio: auto; height: 424px; }   /* = alto del banner (Error 1) */
+}
+/* El creativo VERTICAL LLENA el panel a sangre; sin tinte, sin filtro. */
+.match-ad__img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; filter: none; }
+/* Chip "Publicidad": DENTRO de la imagen, arriba-izquierda, pill navy translúcido. */
+.match-ad__label {
+  position: absolute; top: 0; left: 0; z-index: 2;
+  padding: 8px 16px;
+  font-size: 12px; font-weight: var(--fw-medium); color: #FFFFFF;
+  text-transform: none; letter-spacing: 0;
+  background: rgba(41,77,110,0.72);     /* navy de marca #294D6E al 72% */
+  border-radius: 8px 0 10px 0;          /* sup-izq = radio panel; inf-der redondeada */
+}
+
+/* ==========================================================================
+   [4] CLIPS — carrusel vertical 9:16 (mantiene scroll horizontal en desktop)
+   ========================================================================== */
+.clips {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 44%;
+  gap: var(--space-3);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: var(--space-2);
+  scrollbar-width: none;
+}
+.clips::-webkit-scrollbar { display: none; }
+@media (min-width: 560px)  { .clips { grid-auto-columns: 28%; } }
+@media (min-width: 900px)  { .clips { grid-auto-columns: 20%; } }
+@media (min-width: 1100px) { .clips { grid-auto-columns: 160px; } }
+
+.clip {
+  position: relative;
+  scroll-snap-align: start;
+  display: block;
+  aspect-ratio: 9 / 16;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-surface-brand);
+}
+.clip__img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+.clip:hover .clip__img { transform: scale(1.05); }
+
+/* Preview autoplay muteado (tipo Shorts/Reels). El iframe se inyecta por JS
+   sólo cuando la tarjeta entra en vista (IntersectionObserver, máx. 2 a la vez)
+   y se elimina al salir. Cubre la tarjeta 9:16 por encima del thumbnail.
+   pointer-events:none deja pasar el clic al enlace -> abre el lightbox con sonido.
+   El scale(3.2) recorta un video DEMO 16:9 para cubrir el marco vertical; con
+   Shorts verticales reales (9:16) se puede quitar el transform. */
+.clip__preview {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  border: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: #000;
+  transform: scale(3.2);
+  transform-origin: center;
+}
+.clip__scrim { position: absolute; inset: 0; z-index: 2; background: var(--scrim-thumb); }
+.clip__badge {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: 3;
+  background: var(--scrim-chip);
+  color: #fff;
+  font-size: var(--fs-2xs);
+  font-weight: var(--fw-semibold);
+  padding: 2px 7px;
+  border-radius: var(--radius-pill);
+}
+/* Indicador de "silenciado" mientras corre el preview (esquina superior der.).
+   Se inyecta/elimina por JS junto con el iframe. */
+.clip__muted {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px; height: 26px;
+  border-radius: var(--radius-pill);
+  background: var(--scrim-chip);
+  color: #fff;
+}
+.clip__muted svg { width: 15px; height: 15px; }
+.clip__play {
+  position: absolute;
+  top: 50%; left: 50%;
+  z-index: 3;
+  transform: translate(-50%, -50%);
+  width: 46px; height: 46px;
+  transition: opacity var(--dur-base) var(--ease-out),
+              transform var(--dur-base) var(--ease-out);
+}
+.clip:hover .clip__play { transform: translate(-50%, -50%) scale(1.06); }
+/* Con el preview corriendo, atenúa el botón play para dejar ver el video
+   (sigue visible como indicador de "clic para ver con sonido"). */
+.clip.is-previewing .clip__play { opacity: 0.85; }
+.clip__title {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  z-index: 3;
+  padding: var(--space-3);
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-sm);
+  color: var(--color-on-media);
+  line-height: var(--lh-snug);
+  text-shadow: 0 1px 8px rgba(6, 14, 22, 0.6);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;   /* tope holgado: los títulos cortos caben completos, no se cortan */
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+/* En móvil el gesto nativo basta: ocultamos las flechas < 900px */
+.clips__arrow { display: none; }
+@media (min-width: 900px) { .clips__arrow { display: inline-flex; } }
+
+/* ==========================================================================
+   [3] TEMPORADA DE HUMO 2026 — fichajes: escudo(origen) -> escudo(destino)
+   ========================================================================== */
+.humo-list {
+  display: grid;
+  border-top: var(--border-hairline) solid var(--color-border-subtle);
+}
+@media (min-width: 760px) {
+  .humo-list { grid-template-columns: 1fr 1fr; column-gap: var(--space-8); }
+}
+.humo {
+  display: grid;
+  column-gap: var(--space-4);
+  grid-template-columns: minmax(96px, auto) 1fr;
+  grid-template-areas:
+    "date text"
+    "move text";
+  align-items: center;
+  padding: var(--space-4) 0;
+  border-bottom: var(--border-hairline) solid var(--color-border-subtle);
+}
+.humo__date {
+  grid-area: date;
+  align-self: end;
+  justify-self: center;      /* centrado (pedido del cliente) */
+  text-align: center;
+  font-size: var(--fs-2xs);
+  font-weight: var(--fw-semibold);
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+.humo__move {
+  grid-area: move;
+  align-self: start;
+  justify-self: center;      /* centrado (pedido del cliente) */
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.humo__crest { width: 26px; height: 26px; object-fit: contain; }
+.humo__arrow { width: 16px; height: 16px; color: var(--color-text-muted); }
+.humo__text {
+  grid-area: text;
+  align-self: center;
+  min-width: 0;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--color-accent-text);
+  line-height: var(--lh-snug);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.humo__text:hover { text-decoration: underline; }
+
+/* ==========================================================================
+   [5] RADIO A LA CARTA — episodios on-demand (play sólido navy = audio)
+   ========================================================================== */
+.radio-live {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-5);
+  font-size: var(--fs-sm);
+  color: var(--color-text-secondary);
+}
+.radio-live strong { color: var(--color-live-strong); font-weight: var(--fw-bold); }
+
+.radio-list { display: grid; gap: var(--space-3); }
+@media (min-width: 760px) {
+  .radio-list { grid-template-columns: 1fr 1fr; column-gap: var(--space-6); }
+}
+.episode {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  min-height: 64px;
+  padding: var(--space-3);
+  background: var(--color-surface);
+  border: var(--border-hairline) solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: background var(--dur-fast) var(--ease-out);
+}
+.episode:hover { background: var(--color-surface-2); }
+.episode__play {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--touch-min);
+  height: var(--touch-min);
+  border-radius: var(--radius-circle);
+  background: var(--color-accent);
+  color: #fff;
+  transition: background var(--dur-fast) var(--ease-out),
+              transform var(--dur-fast) var(--ease-out);
+}
+.episode__play:hover { background: var(--color-accent-hover); transform: scale(1.06); }
+.episode__play:active { transform: scale(0.96); }
+.episode__play svg { width: 18px; height: 18px; margin-left: 2px; }
+.episode__body { flex: 1; min-width: 0; }
+.episode__title {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--color-accent-text);
+  line-height: var(--lh-snug);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.episode__meta { margin: 4px 0 0; font-size: var(--fs-xs); color: var(--color-text-muted); }
+.episode__wave { width: 44px; height: 22px; color: var(--navy-300); flex: none; }
+@media (max-width: 560px) { .episode__wave { display: none; } }
+
+/* ==========================================================================
+   [6] CTA CANAL DE WHATSAPP — verde ENCAPSULADO en la franja
+   ========================================================================== */
+.wa-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  background: var(--wa-tint);
+  border: var(--border-hairline) solid var(--wa-border);
+}
+@media (min-width: 760px) {
+  .wa-cta {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+    gap: var(--space-6);
+    padding: var(--space-6) var(--space-7);
+  }
+}
+.wa-cta__icon {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px; height: 56px;
+  border-radius: var(--radius-circle);
+  background: var(--wa-green);
+  color: #fff;
+}
+.wa-cta__icon svg { width: 32px; height: 32px; }
+.wa-cta__text { flex: 1; }
+.wa-cta__title {
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-extrabold);
+  color: var(--color-accent-text);
+}
+.wa-cta__sub {
+  margin: var(--space-1) 0 0;
+  font-size: var(--fs-sm);
+  color: var(--color-text-secondary);
+}
+.btn--whatsapp { flex: none; background: var(--wa-green-deep); color: #fff; }
+.btn--whatsapp:hover { background: var(--wa-green-press); }
+.btn--whatsapp:active { transform: translateY(1px); }
+.btn--whatsapp svg { width: 20px; height: 20px; flex: none; }
+@media (max-width: 759px) { .wa-cta .btn--whatsapp { width: 100%; } }
+
+/* ==========================================================================
+   11. FOOTER (navy)
+   ========================================================================== */
+.site-footer {
+  background: var(--color-surface-brand);
+  color: var(--color-text-inverse);
+  margin-top: var(--space-11);
+}
+.site-footer a { color: var(--color-on-brand-muted); }
+.site-footer a:hover { color: #fff; }
+
+.footer__grid {
+  display: grid;
+  gap: var(--space-8);
+  padding-block: var(--space-9);
+}
+@media (min-width: 720px)  { .footer__grid { grid-template-columns: 1.4fr 1fr 1fr; } }
+@media (min-width: 1024px) { .footer__grid { grid-template-columns: 1.6fr 1fr 1fr 1.2fr; } }
+
+.footer__brand-logo { height: 34px; width: auto; margin-bottom: var(--space-4); }
+.footer__tagline {
+  color: var(--color-on-brand-muted);
+  font-size: var(--fs-sm);
+  max-width: 34ch;
+  line-height: var(--lh-normal);
+}
+.footer__social {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+.footer__social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--touch-min);
+  height: var(--touch-min);
+  border-radius: var(--radius-circle);
+  border: var(--border-hairline) solid var(--color-border-on-brand);
+  background: var(--color-surface-on-brand);
+}
+.footer__social svg { width: 20px; height: 20px; }
+
+.footer__col-title {
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-kicker);
+  text-transform: uppercase;
+  color: var(--color-on-brand-muted);
+  margin-bottom: var(--space-4);
+}
+.footer__links { display: flex; flex-direction: column; gap: var(--space-3); }
+.footer__links a { font-size: var(--fs-sm); min-height: 24px; display: inline-flex; align-items: center; }
+
+.footer__show {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--fs-sm);
+  color: #fff;
+  font-weight: var(--fw-semibold);
+  margin-bottom: var(--space-2);
+}
+.footer__schedule { font-size: var(--fs-sm); color: var(--color-on-brand-muted); }
+
+/* Franja de sponsor */
+.footer__sponsor {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin-top: var(--space-5);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-on-brand);
+  border: var(--border-hairline) solid var(--color-border-on-brand);
+}
+.footer__sponsor-label {
+  font-size: var(--fs-2xs);
+  letter-spacing: var(--ls-kicker);
+  text-transform: uppercase;
+  color: var(--color-on-brand-muted);
+}
+.footer__sponsor img {
+  height: 24px;
+  width: auto;
+  padding: 7px 12px;
+  background: #fff;
+  border-radius: var(--radius-sm);
+  color: var(--sponsor-blue); /* currentColor del SVG -> azul de sponsor, encapsulado */
+  box-sizing: content-box;
+}
+
+.footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-block: var(--space-5);
+  border-top: var(--border-hairline) solid var(--color-border-on-brand);
+  font-size: var(--fs-sm);
+  color: var(--color-on-brand-muted);
+}
+.footer__legal { display: flex; gap: var(--space-4); flex-wrap: wrap; }
+
+/* ==========================================================================
+   12. LIGHTBOX DE VIDEO (modal YouTube)
+   Facade + lightbox: el iframe se inyecta al abrir y se elimina al cerrar.
+   ========================================================================== */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-toast);            /* por encima del header/menú */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(12px, 4vw, 40px);
+  background: rgba(6, 14, 22, 0.86);  /* backdrop oscuro semitransparente */
+  opacity: 0;
+  transition: opacity var(--dur-base) var(--ease-out);
+}
+.lightbox[hidden] { display: none; }   /* asegura ocultamiento aun con display:flex */
+.lightbox.is-open { opacity: 1; }
+
+.lightbox__backdrop { position: absolute; inset: 0; cursor: pointer; }
+
+.lightbox__dialog {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: min(1120px, 100%);
+  transform: translateY(14px) scale(0.98);
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+.lightbox.is-open .lightbox__dialog { transform: translateY(0) scale(1); }
+
+/* Contenedor 16:9 responsive que aloja el iframe */
+.lightbox__frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+.lightbox__frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.lightbox__close {
+  position: absolute;
+  top: -14px;
+  right: -6px;
+  transform: translateY(-100%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--touch-min);
+  height: var(--touch-min);
+  border-radius: var(--radius-circle);
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  color: #fff;
+  transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+.lightbox__close:hover { background: rgba(255, 255, 255, 0.28); }
+.lightbox__close:active { transform: translateY(-100%) scale(0.96); }
+.lightbox__close svg { width: 22px; height: 22px; }
+
+/* En pantallas muy angostas el botón cerrar se mete dentro del marco */
+@media (max-width: 560px) {
+  .lightbox__close { top: 8px; right: 8px; transform: none; }
+  .lightbox__close:active { transform: scale(0.96); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lightbox, .lightbox__dialog { transition: none; }
+  .lightbox__dialog { transform: none; }
+}
+
+/* ==========================================================================
+   13. REDUCED MOTION
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .ticker__track { animation: none; transform: none; }
+}
+
+/* ==========================================================================
+   14. HEADER SÓLIDO — páginas internas (sin hero oscuro detrás)
+   En una página interna el fondo es claro: si el header fuera transparente,
+   el nav blanco quedaría invisible. Esta clase arranca el header en su estado
+   navy sólido (idéntico a .is-stuck) desde el inicio. Se aplica en el <header>
+   de todas las plantillas internas (articulo, video, seccion, programas…).
+   home.js detecta esta clase y NO alterna is-stuck al hacer scroll (se
+   mantiene sólido siempre). Va DESPUÉS de .site-header para ganar en cascada.
+   ========================================================================== */
+.site-header--solid {
+  background-color: var(--color-surface-brand); /* navy #294D6E */
+  background-image: none;
+  box-shadow: var(--shadow-md);
+}
+
+/* ==========================================================================
+   15. PLANTILLA NOTA / ARTÍCULO  (§3.3 arquitectura de contenido)
+   Columna de lectura cómoda (~720px) centrada, aireada y mobile-first.
+   Reutiliza tokens de color/tipografía/espaciado; ningún valor suelto.
+   ========================================================================== */
+
+/* Contenedor de la nota: los medios respiran hasta 920px, la prosa se clampa
+   a la medida de lectura (--container-text = 720px) para legibilidad. */
+.article {
+  width: 100%;
+  max-width: 920px;
+  margin-inline: auto;
+  padding-block: var(--space-8) var(--space-9);
+}
+.article > * { max-width: var(--container-text); margin-inline: auto; }
+.article > .article__media { max-width: 920px; }
+
+@media (min-width: 1024px) {
+  .article { padding-block: var(--space-9) var(--space-11); }
+}
+
+/* --- Breadcrumb ---------------------------------------------------------- */
+.breadcrumb { margin-bottom: var(--space-5); }
+.breadcrumb__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+}
+.breadcrumb__list li { display: inline-flex; align-items: center; }
+.breadcrumb__list a { color: var(--color-accent-text); font-weight: var(--fw-medium); }
+.breadcrumb__list a:hover { text-decoration: underline; }
+.breadcrumb__sep { color: var(--color-border-strong); }
+.breadcrumb__list [aria-current="page"] { color: var(--color-text-muted); }
+
+/* --- Cabecera: kicker + titular + bajada + meta -------------------------- */
+.article__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+  font-family: var(--font-display);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-kicker);
+  text-transform: uppercase;
+  color: var(--brand-red); /* rojo de marca sólo como acento de kicker */
+}
+
+.article__title {
+  font-size: var(--fs-3xl);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  color: var(--color-text);
+}
+
+.article__lead {
+  margin-top: var(--space-4);
+  font-size: var(--fs-lg);
+  line-height: var(--lh-normal);
+  font-weight: var(--fw-medium);
+  color: var(--color-text-secondary);
+}
+
+.article__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-4);
+  margin-top: var(--space-6);
+  padding-block: var(--space-4);
+  border-top: var(--border-hairline) solid var(--color-border);
+  border-bottom: var(--border-hairline) solid var(--color-border);
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+}
+.article__author { display: inline-flex; align-items: center; gap: var(--space-3); }
+.article__avatar {
+  width: 40px; height: 40px;
+  border-radius: var(--radius-circle);
+  object-fit: cover;
+  flex: none;
+  border: var(--border-hairline) solid var(--color-border);
+}
+.article__author-name { font-weight: var(--fw-semibold); color: var(--color-text); }
+.article__meta-sep { color: var(--color-border-strong); }
+.article__reading { display: inline-flex; align-items: center; gap: var(--space-1); }
+.article__reading svg { width: 15px; height: 15px; }
+.article__chips { display: inline-flex; flex-wrap: wrap; gap: var(--space-2); }
+.article__chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 2px var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--color-accent-tint);
+  color: var(--color-accent-text);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+}
+.article__chip:hover { background: var(--navy-100); }
+
+/* --- Imagen destacada (respira hasta 920px) ----------------------------- */
+.article__media { margin-top: var(--space-7); }
+.article__figure { margin: 0; }
+.article__figure img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-brand);
+}
+.article__caption {
+  margin-top: var(--space-2);
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+/* --- Cuerpo enriquecido -------------------------------------------------- */
+.article__body { margin-top: var(--space-8); }
+.article__body > p {
+  margin: 0 0 var(--space-5);
+  font-size: var(--fs-md);
+  line-height: var(--lh-relaxed);
+  color: var(--color-text);
+}
+.article__body > p:first-child::first-letter {
+  font-family: var(--font-display);
+  font-weight: var(--fw-extrabold);
+  font-size: 3.4em;
+  line-height: 0.8;
+  float: left;
+  margin: 6px var(--space-3) 0 0;
+  color: var(--color-accent-text);
+}
+.article__body a {
+  color: var(--color-accent-text);
+  font-weight: var(--fw-medium);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.article__body a:hover { color: var(--color-accent-hover); }
+.article__body h2 {
+  margin: var(--space-9) 0 var(--space-4);
+  font-size: var(--fs-xl);
+  color: var(--color-text);
+}
+.article__body h3 {
+  margin: var(--space-7) 0 var(--space-3);
+  font-size: var(--fs-lg);
+  color: var(--color-text);
+}
+.article__body ul {
+  margin: 0 0 var(--space-5) 0;
+  padding-left: var(--space-6);
+  list-style: disc;
+}
+.article__body li {
+  margin-bottom: var(--space-2);
+  font-size: var(--fs-md);
+  line-height: var(--lh-relaxed);
+  color: var(--color-text);
+}
+.article__body li::marker { color: var(--color-accent); }
+
+/* --- Cita destacada ------------------------------------------------------ */
+.pullquote {
+  margin: var(--space-8) 0;
+  padding: var(--space-1) 0 var(--space-1) var(--space-6);
+  border-left: 4px solid var(--brand-red);
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-tight);
+  color: var(--navy-800);
+}
+.pullquote cite {
+  display: block;
+  margin-top: var(--space-3);
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  font-style: normal;
+  color: var(--color-text-muted);
+}
+
+/* --- Video incrustado en el cuerpo (facade -> abre el lightbox) ---------- */
+.article-video { margin: var(--space-8) 0; }
+.article-video__btn {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-surface-brand);
+}
+.article-video__img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+.article-video__btn:hover .article-video__img { transform: scale(1.03); }
+.article-video__scrim { position: absolute; inset: 0; background: var(--scrim-thumb); }
+.article-video__play {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 72px; height: 72px;
+}
+.article-video__btn:hover .article-video__play { transform: translate(-50%, -50%) scale(1.06); }
+.article-video__badge {
+  position: absolute;
+  left: var(--space-4); bottom: var(--space-4);
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  padding: 6px var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--scrim-chip);
+  color: var(--color-on-media);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+}
+.article-video__badge svg { width: 16px; height: 16px; }
+.article-video__caption {
+  margin-top: var(--space-2);
+  text-align: center;
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+}
+
+/* --- CTA de suscripción intercalado ------------------------------------- */
+/* Card CLARA con acento navy (mismo patrón que .wa-cta): el botón rojo trabaja
+   nativo sobre el tint claro (borde 5.03:1) sin competir con el navy. */
+.inline-cta {
+  margin: var(--space-8) 0;
+  padding: var(--space-5) 0;
+  color: var(--color-text);
+  display: grid;
+  gap: var(--space-5);
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+@media (min-width: 640px) {
+  .inline-cta {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    text-align: left;
+  }
+}
+.inline-cta__title { margin: 0; font-size: var(--fs-lg); font-weight: var(--fw-semibold); color: var(--color-accent-text); }
+.inline-cta__sub { margin: 4px 0 0; font-size: var(--fs-sm); color: var(--color-text-secondary); }
+/* El botón usa .btn--subscribe base (rojo). Se fija el texto blanco de forma
+   explícita para ganarle al color de enlace de .article__body a (0,1,1). */
+.inline-cta .btn--subscribe { justify-self: center; color: #fff; text-decoration: none; }
+@media (min-width: 640px) { .inline-cta .btn--subscribe { justify-self: end; } }
+
+/* --- Etiquetas (equipos / torneos / temas) ------------------------------ */
+.article__tags {
+  margin-top: var(--space-8);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+.article__tags-label {
+  margin-right: var(--space-2);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--color-text-muted);
+}
+.article__tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 4px var(--space-4);
+  border-radius: var(--radius-pill);
+  border: var(--border-hairline) solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-accent-text);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+}
+.article__tag:hover { border-color: var(--color-accent); background: var(--color-accent-tint); }
+
+/* --- Espacio de sponsor (encapsulado, "Presentado por") ----------------- */
+.article__sponsor {
+  margin-top: var(--space-9);
+  padding: var(--space-6);
+  border-radius: var(--radius-md);
+  background: var(--sponsor-tint);
+  border: var(--border-hairline) solid rgba(10, 133, 201, 0.18);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  text-align: center;
+}
+.article__sponsor-label {
+  font-size: var(--fs-xs);
+  letter-spacing: var(--ls-kicker);
+  text-transform: uppercase;
+  font-weight: var(--fw-semibold);
+  color: var(--color-text-muted);
+}
+.article__sponsor img { height: 40px; width: auto; }
+
+/* --- "Sigue leyendo" / relacionados (franja clara, ancho completo) ------ */
+.related { background: var(--color-bg-subtle); }
+.related .vcards { margin-top: 0; }
+
+/* ==========================================================================
+   16. PLANTILLA PÁGINA DE VIDEO  (§3.4 arquitectura de contenido)
+   Reproductor grande arriba (facade -> iframe inline CON sonido), ficha del
+   video (título/meta/descripción), CTA de suscripción rojo + compartir,
+   etiquetas y módulos "Más videos" / nota relacionada. Reutiliza tokens y
+   componentes (.vcards, .article__tags, .article__sponsor, .related).
+   ========================================================================== */
+
+/* Envoltura de la ficha del video: el reproductor respira hasta 960px, la
+   prosa (descripción/meta) queda cómoda de leer. Centrada y mobile-first. */
+.video-page {
+  width: 100%;
+  max-width: 960px;
+  margin-inline: auto;
+  padding-block: var(--space-6) var(--space-9);
+}
+@media (min-width: 1024px) {
+  .video-page { padding-block: var(--space-8) var(--space-11); }
+}
+
+/* --- Reproductor 16:9 (facade). El <iframe> se inyecta al hacer clic
+   (autoplay CON sonido) reemplazando la portada; nunca se carga al inicio. */
+.player {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-surface-brand);
+  box-shadow: var(--shadow-md);
+}
+.player__facade {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+.player__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+.player__facade:hover .player__img { transform: scale(1.03); }
+.player__scrim { position: absolute; inset: 0; background: var(--scrim-thumb); }
+.player__play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 84px;
+  height: 84px;
+}
+.player__facade:hover .player__play { transform: translate(-50%, -50%) scale(1.06); }
+.player__badge {
+  position: absolute;
+  left: var(--space-4);
+  bottom: var(--space-4);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 6px var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--scrim-chip);
+  color: var(--color-on-media);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+}
+.player__badge svg { width: 16px; height: 16px; flex: none; }
+.player__iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* --- Cabecera de la ficha: kicker + título (h1) + meta + descripción ----- */
+.video-head { margin-top: var(--space-6); }
+.video-head__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+  font-family: var(--font-display);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-kicker);
+  text-transform: uppercase;
+  color: var(--brand-red);
+}
+.video-head__title {
+  font-size: var(--fs-2xl);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-tight);
+  color: var(--color-text);
+}
+.video-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  margin-top: var(--space-4);
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+}
+.video-meta__item { display: inline-flex; align-items: center; gap: var(--space-1); }
+.video-meta__item svg { width: 15px; height: 15px; flex: none; }
+.video-meta__sep { color: var(--color-border-strong); }
+.video-meta__program {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 2px var(--space-3);
+  min-height: 26px;
+  border-radius: var(--radius-pill);
+  background: var(--color-accent-tint);
+  color: var(--color-accent-text);
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-xs);
+}
+.video-meta__program .live-dot { width: 7px; height: 7px; }
+.video-desc { margin-top: var(--space-5); }
+.video-desc p {
+  margin: 0 0 var(--space-4);
+  font-size: var(--fs-md);
+  line-height: var(--lh-relaxed);
+  color: var(--color-text);
+}
+.video-desc p:last-child { margin-bottom: 0; }
+
+/* --- Barra de acciones: CTA suscribirse (rojo) + compartir --------------- */
+.video-actions {
+  margin-top: var(--space-7);
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  border: var(--border-hairline) solid var(--color-border);
+  display: grid;
+  gap: var(--space-5);
+}
+@media (min-width: 720px) {
+  .video-actions {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+  }
+}
+.video-actions__sub { display: grid; gap: var(--space-4); align-items: center; }
+@media (min-width: 480px) {
+  .video-actions__sub { grid-template-columns: auto 1fr; }
+}
+.video-actions__channel { display: inline-flex; align-items: center; gap: var(--space-3); }
+.video-actions__avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-circle);
+  object-fit: cover;
+  flex: none;
+  border: var(--border-hairline) solid var(--color-border);
+}
+.video-actions__name {
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-base);
+  color: var(--color-text);
+  line-height: 1.2;
+}
+.video-actions__handle { font-size: var(--fs-sm); color: var(--color-text-muted); }
+.video-actions .btn--subscribe { justify-self: start; }
+@media (min-width: 480px) { .video-actions .btn--subscribe { justify-self: end; } }
+
+/* --- Compartir ----------------------------------------------------------- */
+.share {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+.share__label {
+  margin-right: var(--space-1);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--color-text-muted);
+}
+.share__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--touch-min);
+  height: var(--touch-min);
+  border-radius: var(--radius-circle);
+  background: var(--color-surface-2);
+  border: var(--border-hairline) solid var(--color-border);
+  color: var(--color-text-secondary);
+  transition: background var(--dur-fast) var(--ease-out),
+              color var(--dur-fast) var(--ease-out),
+              border-color var(--dur-fast) var(--ease-out),
+              transform var(--dur-fast) var(--ease-out);
+}
+.share__btn svg { width: 20px; height: 20px; }
+.share__btn:hover { transform: translateY(-1px); color: #fff; }
+.share__btn--wa:hover { background: var(--wa-green-deep); border-color: var(--wa-green-deep); }
+.share__btn--x:hover { background: var(--color-surface-brand); border-color: var(--color-surface-brand); }
+.share__btn--fb:hover { background: #1877F2; border-color: #1877F2; }
+.share__btn:active { transform: translateY(0); }
+
+/* --- Etiquetas del video (reutiliza patrón de .article__tags) ------------ */
+.video-tags {
+  margin-top: var(--space-7);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Sponsor del video: reutiliza el patrón .article__sponsor sin depender de
+   la envoltura .article. */
+.video-sponsor { margin-top: var(--space-8); }
+
+/* ==========================================================================
+   17. PLANTILLA SECCIÓN / ÍNDICE  (§3.2 arquitectura de contenido)
+   Índice REUTILIZABLE (equipo / torneo / tema): encabezado con escudo,
+   destacado, barra de filtros (chips) y grilla de tarjetas mezcladas
+   (video/nota/fichaje). Reutiliza .vcard, .feature, .byline, tokens.
+   Ninguna paleta o tamaño suelto: todo vía variables del sistema.
+   ========================================================================== */
+
+.section-page {
+  width: 100%;
+  max-width: 1120px;
+  margin-inline: auto;
+  padding-block: var(--space-6) var(--space-9);
+}
+@media (min-width: 1024px) {
+  .section-page { padding-block: var(--space-7) var(--space-11); }
+}
+
+/* --- Encabezado de sección: escudo + nombre + descripción + contador ----- */
+.section-hero {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  background: var(--color-accent-tint);
+  border: var(--border-hairline) solid var(--navy-200);
+}
+@media (min-width: 640px) {
+  .section-hero { gap: var(--space-6); padding: var(--space-7) var(--space-8); }
+}
+.section-hero__crest {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 76px; height: 76px;
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+@media (min-width: 640px) { .section-hero__crest { width: 96px; height: 96px; } }
+.section-hero__crest img { width: 62%; height: auto; object-fit: contain; }
+.section-hero__body { min-width: 0; }
+.section-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+  font-family: var(--font-display);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-kicker);
+  text-transform: uppercase;
+  color: var(--brand-red);
+}
+.section-hero__title {
+  font-size: var(--fs-2xl);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  color: var(--color-accent-text);
+}
+@media (min-width: 640px) { .section-hero__title { font-size: var(--fs-3xl); } }
+.section-hero__desc {
+  margin-top: var(--space-2);
+  font-size: var(--fs-base);
+  line-height: var(--lh-normal);
+  color: var(--color-text-secondary);
+  max-width: 62ch;
+}
+.section-hero__count {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--color-accent-text);
+}
+.section-hero__count strong { font-weight: var(--fw-bold); }
+.section-hero__count svg { width: 16px; height: 16px; }
+
+/* --- Destacado de la sección (feature grande, horizontal en desktop) ----- */
+.section-feature { margin-top: var(--space-8); }
+.feature-lg {
+  display: grid;
+  gap: var(--space-5);
+}
+@media (min-width: 820px) {
+  .feature-lg {
+    grid-template-columns: 1.25fr 1fr;
+    gap: var(--space-8);
+    align-items: center;
+  }
+}
+.feature-lg__media {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-surface-brand);
+  box-shadow: var(--shadow-sm);
+}
+.feature-lg__img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+.feature-lg:hover .feature-lg__img { transform: scale(1.03); }
+.feature-lg__scrim { position: absolute; inset: 0; background: var(--scrim-thumb); }
+.feature-lg__play {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 72px; height: 72px;
+}
+.feature-lg__media:hover .feature-lg__play { transform: translate(-50%, -50%) scale(1.06); }
+.feature-lg__badge {
+  position: absolute;
+  left: var(--space-4); bottom: var(--space-4);
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  padding: 6px var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--scrim-chip);
+  color: var(--color-on-media);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+}
+.feature-lg__badge svg { width: 16px; height: 16px; }
+.feature-lg__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+  font-family: var(--font-display);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-kicker);
+  text-transform: uppercase;
+  color: var(--brand-red);
+}
+.feature-lg__title {
+  font-size: var(--fs-xl);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-tight);
+  color: var(--color-accent-text);
+}
+@media (min-width: 640px) { .feature-lg__title { font-size: var(--fs-2xl); } }
+.feature-lg__link:hover .feature-lg__title { text-decoration: underline; }
+.feature-lg__desc {
+  margin-top: var(--space-3);
+  font-size: var(--fs-base);
+  line-height: var(--lh-normal);
+  color: var(--color-text-secondary);
+}
+
+/* --- Barra de filtros (chips accesibles: <button aria-pressed>) ---------- */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-8);
+  padding-bottom: var(--space-5);
+  border-bottom: var(--border-hairline) solid var(--color-border);
+}
+.filter-bar__label {
+  margin-right: var(--space-1);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--color-text-muted);
+}
+.filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--touch-min);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-pill);
+  border: var(--border-hairline) solid var(--color-border-strong);
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  transition: background var(--dur-fast) var(--ease-out),
+              color var(--dur-fast) var(--ease-out),
+              border-color var(--dur-fast) var(--ease-out);
+}
+.filter-chip:hover { border-color: var(--color-accent); background: var(--color-accent-tint); }
+.filter-chip[aria-pressed="true"] {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-text-on-accent);
+}
+.filter-chip__count {
+  font-size: var(--fs-2xs);
+  font-weight: var(--fw-bold);
+  opacity: .75;
+}
+
+/* --- Grilla de piezas (tarjetas .vcard que envuelven y ocupan filas) ----- */
+.section-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-7) var(--space-5);
+  margin-top: var(--space-7);
+}
+@media (min-width: 520px) { .section-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 900px) { .section-grid { grid-template-columns: repeat(3, 1fr); } }
+
+/* Card oculta por el filtro activo o aún no revelada ("cargar más").
+   Combina con [hidden] (extras) para que ambas condiciones oculten. */
+.section-grid .vcard.is-filtered-out { display: none; }
+
+/* Badge de tipo sobre el thumbnail (Video / Nota / Fichaje) */
+.vcard__type {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border-radius: var(--radius-pill);
+  background: var(--scrim-chip);
+  color: #fff;
+  font-size: var(--fs-2xs);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-kicker);
+  text-transform: uppercase;
+}
+.vcard__type svg { width: 12px; height: 12px; }
+.vcard__type--fichaje { background: var(--brand-red); }
+
+/* Badge de tipo COMPACTO para thumbnails de lista (.jitem).
+   Mismo lenguaje visual que .vcard__type (scrim navy translúcido + texto
+   blanco en mayúsculas), reducido para el thumb de 116–150px de la lista. */
+.jitem__type {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 6px;
+  border-radius: var(--radius-pill);
+  background: var(--scrim-chip);
+  color: #fff;
+  font-size: 9px;
+  line-height: 1.5;
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-kicker);
+  text-transform: uppercase;
+}
+.jitem__type svg { width: 10px; height: 10px; }
+.jitem__type--fichaje { background: var(--brand-red); }
+
+/* Badge de tipo para el FEATURE de Home (Mundo Junior / Selección Colombia).
+   Mismo patrón que .feature-lg__badge de seccion.html, anclado dentro de
+   .feature__media. Neutro (scrim navy) para Video y Nota; el tiempo de
+   lectura o la duración acompañan al texto del tipo. */
+.feature__badge {
+  position: absolute;
+  left: var(--space-4);
+  bottom: var(--space-4);
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 6px var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--scrim-chip);
+  color: var(--color-on-media);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+}
+.feature__badge svg { width: 16px; height: 16px; }
+
+/* Refuerzo de "tiempo de lectura" bajo el título de una NOTA en tarjetas de
+   Home (contraparte simétrica de la duración del video). Ícono de reloj +
+   texto; hereda el color mutado del meta. */
+.reading-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+}
+.reading-time svg { width: 14px; height: 14px; flex: none; }
+
+/* Estado vacío cuando un filtro no tiene coincidencias visibles */
+.section-empty {
+  margin-top: var(--space-7);
+  padding: var(--space-8);
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: var(--fs-base);
+  border: var(--border-hairline) dashed var(--color-border-strong);
+  border-radius: var(--radius-md);
+}
+.section-empty[hidden] { display: none; }
+
+/* --- Paginación / "cargar más" ------------------------------------------ */
+.section-more {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-8);
+}
+.btn--outline {
+  min-height: var(--touch-min);
+  padding: var(--space-3) var(--space-7);
+  border-radius: var(--radius-pill);
+  border: var(--border-hairline) solid var(--color-border-strong);
+  background: var(--color-surface);
+  color: var(--color-accent-text);
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  transition: background var(--dur-fast) var(--ease-out),
+              border-color var(--dur-fast) var(--ease-out);
+}
+.btn--outline:hover { background: var(--color-accent-tint); border-color: var(--color-accent); }
+.btn--outline[hidden] { display: none; }
+
+/* --- Módulo "Otras secciones" (tarjetas con escudo -> seccion.html) ------ */
+.xsections {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: 1fr;
+  margin-top: 0;
+}
+@media (min-width: 560px) { .xsections { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 900px) { .xsections { grid-template-columns: repeat(4, 1fr); } }
+.xsection {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-surface);
+  border: var(--border-hairline) solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--dur-fast) var(--ease-out),
+              box-shadow var(--dur-fast) var(--ease-out),
+              border-color var(--dur-fast) var(--ease-out);
+}
+.xsection:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--navy-200);
+}
+.xsection__crest { width: 44px; height: 44px; object-fit: contain; flex: none; }
+.xsection__body { min-width: 0; }
+.xsection__name {
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-base);
+  color: var(--color-accent-text);
+  line-height: var(--lh-snug);
+}
+.xsection:hover .xsection__name { text-decoration: underline; }
+.xsection__meta { font-size: var(--fs-xs); color: var(--color-text-muted); }
+
+/* ==========================================================================
+   16. PROGRAMA (ficha del show) — programas.html
+   Reutiliza: .section-page, .breadcrumb, .live-dot, .vcards/.vcard,
+   .section-head, .btn--subscribe, .article__sponsor, tokens del sistema.
+   Sólo se añade lo específico: cabecera del programa, estado en vivo,
+   botón "Escuchar en vivo" (rojo), chip de duración y segmentos.
+   ========================================================================== */
+
+/* --- Cabecera del programa (media + info, apilado en móvil) -------------- */
+.program-hero {
+  display: grid;
+  gap: var(--space-6);
+  margin-top: var(--space-5);
+}
+@media (min-width: 860px) {
+  .program-hero {
+    grid-template-columns: 1fr 1.05fr;
+    gap: var(--space-9);
+    align-items: center;
+  }
+}
+.program-hero__media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-surface-brand);
+  box-shadow: var(--shadow-sm);
+}
+.program-hero__img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.program-hero__scrim {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 45%, rgba(14, 27, 41, 0.55) 100%);
+}
+.program-hero__tag {
+  position: absolute;
+  left: var(--space-4); bottom: var(--space-4);
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  padding: 6px var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--scrim-chip);
+  color: var(--color-on-media);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+}
+.program-hero__tag svg { width: 15px; height: 15px; flex: none; }
+
+.program-hero__body { min-width: 0; }
+.program-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+  font-family: var(--font-display);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-kicker);
+  text-transform: uppercase;
+  color: var(--brand-red);
+}
+.program-hero__title {
+  font-size: var(--fs-2xl);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  color: var(--color-accent-text);
+}
+@media (min-width: 640px) { .program-hero__title { font-size: var(--fs-3xl); } }
+
+/* Estado en vivo / próximo */
+.prog-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-pill);
+  border: var(--border-hairline) solid var(--color-border-strong);
+  background: var(--color-surface);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--color-text-secondary);
+}
+.prog-status.is-live {
+  border-color: transparent;
+  background: var(--color-live);
+  color: var(--color-on-media);
+}
+.prog-status.is-live .live-dot {
+  background: var(--color-on-media);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.28);
+}
+
+.program-hero__schedule {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+  font-size: var(--fs-base);
+  color: var(--color-text);
+}
+.program-hero__schedule svg { width: 20px; height: 20px; flex: none; color: var(--color-accent-text); }
+.program-hero__schedule strong { font-weight: var(--fw-bold); color: var(--color-accent-text); }
+.program-hero__tz { color: var(--color-text-muted); font-weight: var(--fw-regular); font-size: var(--fs-sm); }
+
+.program-hero__desc {
+  margin-top: var(--space-4);
+  font-size: var(--fs-base);
+  line-height: var(--lh-normal);
+  color: var(--color-text-secondary);
+  max-width: 56ch;
+}
+
+/* Presentador */
+.program-host {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+  padding: var(--space-2) var(--space-4) var(--space-2) var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--color-accent-tint);
+}
+.program-host__avatar {
+  width: 46px; height: 46px;
+  border-radius: var(--radius-circle);
+  object-fit: cover;
+  object-position: 50% 20%;
+  flex: none;
+  border: 2px solid var(--color-surface);
+}
+.program-host__meta { display: flex; flex-direction: column; line-height: 1.2; }
+.program-host__role {
+  font-size: var(--fs-2xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-kicker);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+.program-host__name {
+  font-family: var(--font-display);
+  font-size: var(--fs-base);
+  font-weight: var(--fw-bold);
+  color: var(--color-accent-text);
+}
+
+/* CTAs del programa */
+.program-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+.btn--live {
+  gap: var(--space-2);
+  background: var(--color-live);
+  color: var(--color-on-media);
+  font-weight: var(--fw-bold);
+  box-shadow: var(--shadow-sm);
+}
+.btn--live:hover { background: var(--color-live-strong); }
+.btn--live:active { transform: translateY(1px); }
+.btn--live .live-dot {
+  background: var(--color-on-media);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.30);
+}
+
+/* --- Duración sobre la miniatura de la emisión -------------------------- */
+.vcard__dur {
+  position: absolute;
+  right: var(--space-2); bottom: var(--space-2);
+  padding: 3px var(--space-2);
+  border-radius: var(--radius-sm);
+  background: var(--scrim-chip);
+  color: var(--color-on-media);
+  font-size: var(--fs-2xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Segmentos del show (lista con hora + descripción) ------------------ */
+.segments {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+}
+@media (min-width: 720px) { .segments { grid-template-columns: repeat(3, 1fr); } }
+.segment {
+  display: flex;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  border: var(--border-hairline) solid var(--color-border);
+}
+.segment__time {
+  flex: none;
+  align-self: flex-start;
+  padding: 4px var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--color-accent-tint);
+  color: var(--color-accent-text);
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-bold);
+  font-variant-numeric: tabular-nums;
+}
+.segment__body { min-width: 0; }
+.segment__name {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-bold);
+  color: var(--color-accent-text);
+  line-height: var(--lh-snug);
+}
+.segment__desc {
+  margin-top: var(--space-2);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-normal);
+  color: var(--color-text-secondary);
+}
+
+/* ==========================================================================
+   17. PLANTILLA EN VIVO / RADIO  (§3.5 arquitectura de contenido)
+   Reproductor destacado con estado AL AIRE / FUERA DE AIRE (reusa la lógica
+   [data-live-schedule] vía [data-live-player]), programa actual/próximo,
+   parrilla semanal accesible, últimos episodios (lightbox) y CTA de canal.
+   Reutiliza tokens y componentes (.player, .prog-status, .vcards, .inline-cta,
+   .article__sponsor, .section-head). Mobile-first.
+   ========================================================================== */
+
+/* --- Hero en vivo: reproductor + panel de estado (navy) ------------------ */
+.live-hero {
+  display: grid;
+  gap: var(--space-5);
+  margin-top: var(--space-5);
+}
+@media (min-width: 960px) {
+  .live-hero {
+    grid-template-columns: 1.55fr 1fr;
+    align-items: stretch;
+    gap: var(--space-6);
+  }
+}
+.live-hero__media { position: relative; align-self: start; }
+@media (min-width: 960px) { .live-hero__media { align-self: stretch; } }
+
+/* Bandera "EN DIRECTO / GRABADO" sobre el reproductor */
+.live-flag {
+  position: absolute;
+  top: var(--space-4);
+  left: var(--space-4);
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 6px var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--scrim-chip);
+  color: var(--color-on-media);
+  font-family: var(--font-display);
+  font-size: var(--fs-2xs);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-kicker);
+  text-transform: uppercase;
+}
+.live-flag .live-dot { background: var(--color-on-media); }
+.is-onair .live-flag { background: var(--color-live); }
+.is-onair .live-flag .live-dot {
+  background: var(--color-on-media);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.30);
+  animation: livePulse 1.6s ease-in-out infinite;
+}
+
+/* Panel de estado (superficie navy de marca) */
+.live-hero__panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-brand);
+  color: var(--color-text-inverse);
+  box-shadow: var(--shadow-md);
+}
+.live-state {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-on-brand);
+  border: var(--border-hairline) solid var(--color-border-on-brand);
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-caps);
+  text-transform: uppercase;
+  color: var(--color-text-inverse);
+}
+.live-state__dot {
+  width: 10px; height: 10px;
+  border-radius: var(--radius-circle);
+  background: var(--color-on-brand-muted);
+  flex: none;
+}
+.is-onair .live-state {
+  background: var(--color-live);
+  border-color: transparent;
+  color: var(--color-on-media);
+}
+.is-onair .live-state__dot {
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.32);
+  animation: livePulse 1.6s ease-in-out infinite;
+}
+.live-hero__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-tight);
+  color: #fff;
+}
+@media (min-width: 960px) { .live-hero__title { font-size: var(--fs-2xl); } }
+
+/* Bloque "programa actual" dentro del panel */
+.live-now {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-top: var(--space-2);
+  border-top: var(--border-hairline) solid var(--color-border-on-brand);
+}
+.live-now__label {
+  font-size: var(--fs-2xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-kicker);
+  text-transform: uppercase;
+  color: var(--color-on-brand-muted);
+}
+.live-now__name {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-bold);
+  color: #fff;
+  line-height: var(--lh-snug);
+}
+.live-now__host { font-size: var(--fs-sm); color: var(--color-on-brand-muted); }
+.live-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--fs-sm);
+  color: var(--color-text-inverse);
+}
+.live-meta svg { width: 18px; height: 18px; flex: none; color: var(--navy-300); }
+.live-next {
+  margin: 0;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--color-text-inverse);
+}
+.live-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+/* Botón fantasma sobre la superficie navy del panel */
+.btn--on-brand {
+  background: var(--color-surface-on-brand);
+  color: #fff;
+  border: var(--border-hairline) solid var(--color-border-on-brand);
+}
+.btn--on-brand:hover { background: rgba(255, 255, 255, 0.14); }
+.btn--on-brand:active { transform: translateY(1px); }
+
+/* --- Parrilla semanal (tabla accesible con scroll horizontal en móvil) --- */
+.schedule {
+  margin-top: var(--space-6);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: var(--border-hairline) solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+.schedule__table {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: collapse;
+  background: var(--color-surface);
+  font-size: var(--fs-sm);
+}
+.schedule__table th,
+.schedule__table td {
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  border-bottom: var(--border-hairline) solid var(--color-border);
+  vertical-align: middle;
+}
+.schedule__table tr:last-child th,
+.schedule__table tr:last-child td { border-bottom: 0; }
+.schedule__table thead th {
+  background: var(--color-surface-brand);
+  color: var(--color-text-inverse);
+  font-family: var(--font-display);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-caps);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.schedule__table tbody th[scope="row"] {
+  background: var(--color-bg-subtle);
+  color: var(--color-accent-text);
+  font-weight: var(--fw-bold);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.schedule__row--main td {
+  background: var(--color-accent-tint);
+  color: var(--color-text);
+  font-weight: var(--fw-semibold);
+}
+.schedule__prog { display: block; }
+.schedule__note {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--fs-2xs);
+  font-weight: var(--fw-regular);
+  color: var(--color-text-muted);
+}
+/* Celda en emisión ahora (marcada por JS) */
+.schedule__table td.is-now {
+  background: var(--color-live);
+  color: var(--color-on-media);
+  font-weight: var(--fw-bold);
+}
+.schedule__table td.is-now .schedule__note { color: rgba(255, 255, 255, 0.85); }
+.schedule__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+}
+.schedule__legend span { display: inline-flex; align-items: center; gap: var(--space-2); }
+.schedule__swatch {
+  width: 14px; height: 14px;
+  border-radius: var(--radius-xs);
+  flex: none;
+}
+.schedule__swatch--main { background: var(--color-accent-tint); border: 1px solid var(--color-accent); }
+.schedule__swatch--live { background: var(--color-live); }
+
+/* --- CTA de canal: refuerza .inline-cta con redes ----------------------- */
+.live-cta__socials {
+  display: inline-flex;
+  gap: var(--space-2);
+  margin-left: var(--space-3);
+}
+.live-cta__socials a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--touch-min);
+  height: var(--touch-min);
+  border-radius: var(--radius-circle);
+  background: var(--navy-700);
+  color: #fff;
+  border: var(--border-hairline) solid var(--navy-700);
+  transition: background var(--dur-fast) var(--ease-out);
+}
+.live-cta__socials a:hover { background: var(--navy-800); }
+.live-cta__socials svg { width: 20px; height: 20px; }
+.live-cta__buttons {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  justify-self: center;
+}
+@media (min-width: 640px) { .live-cta__buttons { justify-self: end; } }
+
+/* Respeta reduced-motion: sin latidos del estado en vivo */
+@media (prefers-reduced-motion: reduce) {
+  .is-onair .live-flag .live-dot,
+  .is-onair .live-state__dot { animation: none; }
+}
+
+
+/* ==========================================================================
+   BANNER GASES DEL CARIBE — sponsor full-width antes del footer
+   ========================================================================== */
+.gases-banner { padding-block: var(--space-7); }
+.gases-banner__link { display: block; border-radius: var(--radius-md); }
+.gases-banner__img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+}

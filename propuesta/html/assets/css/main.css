@@ -165,14 +165,17 @@ ul { margin: 0; padding: 0; list-style: none; }
   .topbar__text--clone { display: none; }   /* en desktop solo se muestra 1 copia */
   .topbar__text {
     padding-right: 0;
-    /* Sheen SOLO en desktop: banda blanca que recorre los glifos (background-clip:text) */
-    background-image: linear-gradient(100deg,
-      var(--tb-ink) 0%, var(--tb-ink) 42%,
-      #ffffff 50%,
-      var(--tb-ink) 58%, var(--tb-ink) 100%);
-    background-size: 220% 100%;
-    background-position: -40% 0;             /* en reposo: banda fuera → se ve la base */
-    background-repeat: no-repeat;
+    /* Sheen SOLO en desktop, A PRUEBA DE FALLOS: DOS capas de fondo recortadas al texto.
+       Capa 1 (arriba) = banda blanca que se DESPLAZA. Capa 2 (abajo) = tinta sólida al
+       100%, fija: garantiza que el texto SIEMPRE se vea, aunque la banda esté fuera.
+       Antes fallaba porque una sola capa no-repeat dejaba parte del texto sin fondo
+       (transparente = invisible) en el reposo. */
+    background-image:
+      linear-gradient(100deg, transparent 42%, #ffffff 50%, transparent 58%),
+      linear-gradient(var(--tb-ink), var(--tb-ink));
+    background-size: 220% 100%, 100% 100%;
+    background-position: 150% 0, 0 0;        /* banda fuera (derecha) · base fija */
+    background-repeat: no-repeat, no-repeat;
     -webkit-background-clip: text;
             background-clip: text;
     color: transparent;
@@ -181,9 +184,10 @@ ul { margin: 0; padding: 0; list-style: none; }
   }
 }
 @keyframes topbarSheen {
-  0%   { background-position: 150% 0; }      /* banda entra por la derecha */
-  22%  { background-position: -50% 0; }      /* recorre y sale por la izquierda (~1.3s) */
-  100% { background-position: -50% 0; }      /* pausa larga en reposo (~4.7s) */
+  /* Solo se mueve la banda (1ª posición); la base (2ª posición) queda fija en 0 0. */
+  0%   { background-position: 150% 0, 0 0; }  /* banda entra por la derecha */
+  22%  { background-position: -50% 0, 0 0; }  /* recorre y sale por la izquierda (~1.3s) */
+  100% { background-position: -50% 0, 0 0; }  /* reposo (~4.7s): base sólida = texto completo */
 }
 
 .live-dot {
@@ -411,6 +415,8 @@ ul { margin: 0; padding: 0; list-style: none; }
   min-height: 460px; /* room para el titular centrado en pantallas estrechas */
   overflow: hidden;
   background: var(--color-surface-brand);
+  touch-action: pan-y;          /* swipe horizontal lo gestiona el JS; el scroll vertical, el navegador */
+  -webkit-user-select: none; user-select: none;   /* arrastre limpio (sin selección de texto) */
 }
 @media (min-width: 768px)  { .hero__slide { height: min(78vh, 680px); min-height: 520px; } }
 @media (min-width: 1280px) { .hero__slide { height: min(80vh, 720px); min-height: 600px; } }
@@ -462,20 +468,27 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 
 /* Botón play central */
+/* Botón play UNIFICADO en todo el sitio: solo el ícono (sin fondo ni aro),
+   triángulo con esquinas redondeadas y sombra para leerse sobre miniaturas. */
 .play-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-circle);
-  background: rgba(255, 255, 255, 0.22);
-  border: 2px solid rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(2px);
+  background: transparent;
+  border: 0;
   color: #fff;
-  transition: background var(--dur-base) var(--ease-out),
-              transform var(--dur-base) var(--ease-out);
+  transition: transform var(--dur-base) var(--ease-out);
 }
-.play-btn:hover { background: rgba(255, 255, 255, 0.34); transform: scale(1.06); }
-.play-btn svg { width: 42%; height: 42%; margin-left: 8%; }
+.play-btn:hover { transform: scale(1.06); }
+.play-btn svg {
+  width: 42%; height: 42%; margin-left: 8%;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.5));
+}
+.play-btn svg path,
+.jitem__play svg path {
+  stroke: currentColor; stroke-width: 2;
+  stroke-linejoin: round; stroke-linecap: round;
+}
 
 .hero__play {
   position: absolute;
@@ -489,7 +502,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 /* Flechas laterales */
 .hero__arrow {
   position: absolute;
-  top: 50%;
+  top: 56%;   /* MISMA altura que .hero__play para alinear los 3 botones en una línea */
   transform: translateY(-50%);
   display: inline-flex;
   align-items: center;
@@ -497,13 +510,18 @@ ul { margin: 0; padding: 0; list-style: none; }
   width: var(--touch-min);
   height: var(--touch-min);
   border-radius: var(--radius-circle);
-  background: rgba(20, 38, 58, 0.32);
-  border: 1px solid rgba(255, 255, 255, 0.55);
+  background: transparent;               /* solo el chevron, sin caja (pedido del cliente) */
+  border: 0;
   color: #fff;
-  transition: background var(--dur-fast) var(--ease-out);
+  transition: transform var(--dur-fast) var(--ease-out),
+              opacity var(--dur-fast) var(--ease-out);
 }
-.hero__arrow:hover { background: rgba(20, 38, 58, 0.6); }
-.hero__arrow svg { width: 22px; height: 22px; }
+/* Sin caja, el chevron necesita sombra propia para leerse sobre cualquier imagen. */
+.hero__arrow:hover { transform: translateY(-50%) scale(1.14); }
+.hero__arrow svg {
+  width: 26px; height: 26px;
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.6));
+}
 .hero__arrow--prev { left: clamp(8px, 2vw, 28px); }
 .hero__arrow--next { right: clamp(8px, 2vw, 28px); }
 
@@ -511,7 +529,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 .hero__content {
   position: absolute;
   left: 50%;
-  bottom: clamp(28px, 4.5vh, 52px);   /* anclado ABAJO: posición constante en todos los slides */
+  bottom: clamp(25.2px, 4.05vh, 46.8px);   /* anclado ABAJO (padding inferior -10%): posición constante en todos los slides */
   transform: translateX(-50%);
   width: 100%;
   padding-inline: clamp(60px, 12vw, 120px);
@@ -555,17 +573,6 @@ ul { margin: 0; padding: 0; list-style: none; }
 @media (prefers-reduced-motion: no-preference) {
   .hero__title.is-enter { animation: heroTextIn 460ms var(--ease-out) both; }
   .hero__meta.is-enter  { animation: heroTextIn 460ms var(--ease-out) 90ms both; }
-
-  /* Realce muy sutil del botón play: anillo que late lentamente */
-  .hero__play::after {
-    content: "";
-    position: absolute;
-    inset: -6px;
-    border-radius: var(--radius-circle);
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    animation: heroPlayPulse 3200ms var(--ease-out) infinite;
-    pointer-events: none;
-  }
 }
 @keyframes heroPlayPulse {
   0%   { transform: scale(1);    opacity: .5; }
@@ -866,15 +873,11 @@ ul { margin: 0; padding: 0; list-style: none; }
   align-items: center;
   justify-content: center;
   width: 30px; height: 30px;
-  border-radius: var(--radius-circle);
-  background: rgba(20, 38, 58, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  color: #fff;
-  backdrop-filter: blur(2px);
-  transition: background var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
+  color: #fff;                           /* unificado: solo el ícono, sin fondo ni aro */
+  transition: transform var(--dur-base) var(--ease-out);
 }
-.jitem:hover .jitem__play { background: rgba(20, 38, 58, 0.72); transform: translate(-50%, -50%) scale(1.08); }
-.jitem__play svg { width: 44%; height: 44%; margin-left: 8%; }
+.jitem:hover .jitem__play { transform: translate(-50%, -50%) scale(1.08); }
+.jitem__play svg { width: 44%; height: 44%; margin-left: 8%; filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.5)); }
 .jitem__cat {
   font-size: var(--fs-xs);
   font-weight: var(--fw-bold);
@@ -959,6 +962,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   border-radius: var(--radius-sm);      /* 8px (spec: border-radius de ambas cajas) */
   box-shadow: var(--shadow-md);
   height: 300px;                        /* móvil §4 */
+  touch-action: pan-y;                  /* swipe horizontal del slider; el scroll vertical sigue siendo de la página */
 }
 @media (min-width: 900px) {
   .match-slider__viewport { height: 424px; }   /* ALTURA IGUAL a la publicidad (Error 1) */
@@ -969,6 +973,9 @@ ul { margin: 0; padding: 0; list-style: none; }
   height: 100%;
   transition: transform 0.5s var(--ease-out);
   will-change: transform;
+  touch-action: pan-y;                  /* idem viewport (Pointer Events del swipe) */
+  user-select: none;                    /* sin selección de texto al arrastrar con mouse */
+  -webkit-user-select: none;
 }
 @media (prefers-reduced-motion: reduce) {
   .match-slider__track { transition: none; }

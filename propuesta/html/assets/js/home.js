@@ -160,6 +160,71 @@
     hero.addEventListener('focusin', stop);
     hero.addEventListener('focusout', restart);
 
+    /* ---- Swipe táctil en el hero: deslizar cambia de video ------------
+       El hero es crossfade (no track), así que el gesto NO arrastra en vivo:
+       al soltar, si el desplazamiento horizontal supera el umbral, dispara
+       next (izq) / prev (der). No intercepta el scroll vertical (touch-action:
+       pan-y en el CSS). Un swipe sobre el botón play NO abre el video (se
+       suprime el click). Robustez: captura del puntero + pointerup en window +
+       aborto si el mouse pierde el botón (mismas lecciones que el otro slider). */
+    var heroSlide = hero.querySelector('.hero__slide');
+    if (heroSlide) {
+      var hPid = null, hSx = 0, hSy = 0, hDx = 0, hMode = '', heroSwiped = false;
+      var hThreshold = function () { return Math.max(45, (heroSlide.clientWidth || 0) * 0.15); };
+
+      function endHeroGesture(e, cancelled) {
+        if (hPid === null || e.pointerId !== hPid) return;
+        var wasSwipe = hMode === 'swipe';
+        hPid = null; hMode = '';
+        if (wasSwipe) {
+          try { heroSlide.releasePointerCapture(e.pointerId); } catch (err) { /* no-op */ }
+          if (!cancelled && Math.abs(hDx) >= hThreshold()) {
+            heroSwiped = true;                       // hubo swipe: anular el click resultante
+            render(hDx < 0 ? current + 1 : current - 1);
+          }
+          setTimeout(function () { heroSwiped = false; }, 300);
+        }
+        restart();
+      }
+
+      heroSlide.addEventListener('pointerdown', function (e) {
+        if (e.button !== 0 || hPid !== null) return;
+        hPid = e.pointerId; hSx = e.clientX; hSy = e.clientY; hDx = 0; hMode = '';
+        stop();                                      // pausa el autoplay durante el gesto
+      });
+      heroSlide.addEventListener('pointermove', function (e) {
+        if (hPid === null || e.pointerId !== hPid) return;
+        // Mouse: si el botón ya no está pulsado, aborta (no arrastrar sin botón).
+        if (e.pointerType === 'mouse' && e.buttons === 0) { endHeroGesture(e, true); return; }
+        var mx = e.clientX - hSx, my = e.clientY - hSy;
+        if (!hMode) {
+          if (Math.abs(mx) > 10 && Math.abs(mx) > Math.abs(my)) {
+            hMode = 'swipe';
+            try { heroSlide.setPointerCapture(hPid); } catch (err) { /* no-op */ }
+          } else if (Math.abs(my) > 10) {
+            hMode = 'scroll';                         // gesto vertical: dejar scrollear
+          }
+        }
+        if (hMode !== 'swipe') return;
+        hDx = mx;
+        if (e.cancelable) e.preventDefault();         // evita gestos horizontales del navegador
+      });
+      window.addEventListener('pointerup', function (e) { endHeroGesture(e, false); });
+      window.addEventListener('pointercancel', function (e) { endHeroGesture(e, true); });
+
+      // Tras un swipe, suprime el click (p. ej. sobre el play) para no abrir el video.
+      heroSlide.addEventListener('click', function (e) {
+        if (!heroSwiped) return;
+        heroSwiped = false;
+        e.preventDefault();
+        e.stopPropagation();
+      }, true);
+      // Un gesto nuevo limpia la bandera residual (los taps deben navegar normal).
+      heroSlide.addEventListener('pointerdown', function () { heroSwiped = false; }, true);
+      // Sin drag nativo de imágenes al arrastrar con mouse.
+      heroSlide.addEventListener('dragstart', function (e) { e.preventDefault(); });
+    }
+
     if (slides.length) {
       // La capa 0 ya muestra el slide 0 (desde el HTML); precargamos el
       // siguiente para que el primer crossfade sea instantáneo.
@@ -179,14 +244,16 @@
   }
 
   /* ---- Slider del Centro de Partidos (banner de partido) -------------
-     Track con transform translateX; dots + autoavance. Se pausa al pasar
-     el cursor o enfocar dentro. Respeta prefers-reduced-motion (sin
-     autoavance ni transición; la transición se anula además vía CSS). */
+     Track con transform translateX; dots + autoavance + swipe táctil.
+     Se pausa al pasar el cursor, enfocar dentro o durante el gesto.
+     Respeta prefers-reduced-motion (sin autoavance; el swipe funciona
+     igual pero el cambio es directo: la transición se anula vía CSS). */
   document.querySelectorAll('[data-match-slider]').forEach(function (root) {
     var track = root.querySelector('[data-match-track]');
     var slides = track ? Array.prototype.slice.call(track.children) : [];
     var dots = Array.prototype.slice.call(root.querySelectorAll('[data-match-dot]'));
     if (!track || slides.length < 2) return;
+    var viewport = track.parentElement;
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var idx = 0;
     var timer = null;
@@ -211,6 +278,109 @@
     root.addEventListener('mouseleave', restart);
     root.addEventListener('focusin', stop);
     root.addEventListener('focusout', restart);
+
+    /* --- Swipe / arrastre con Pointer Events ---------------------------
+       - Arrastre EN VIVO: translateX(calc(-idx*100% + dxPx)) sin transición.
+       - Sólo es swipe si la intención es horizontal (|dx|>|dy| y |dx|>10px);
+         un gesto vertical NO se intercepta y la página scrollea normal
+         (touch-action: pan-y en el CSS deja ese eje al navegador).
+       - Al soltar: si |dx| >= 20% del ancho del viewport (mínimo 45px) se
+         confirma el cambio; si no, vuelve al slide actual (snap animado).
+       - Extremos: resistencia (dx*0.35) y regreso; el arrastre NO da la
+         vuelta circular (los dots y el autoavance sí siguen en loop).
+       - Los slides son <a>: un tap navega normal; tras un arrastre real el
+         click se suprime con un listener en fase de captura. */
+    var DECIDE_PX = 10;        // px para decidir la intención del gesto
+    var pointerId = null;
+    var startX = 0, startY = 0;
+    var dx = 0;
+    var mode = '';             // '' indeciso | 'swipe' | 'scroll'
+    var suppressClick = false;
+
+    function threshold() {
+      var w = (viewport && viewport.clientWidth) || track.clientWidth || 0;
+      return Math.max(45, w * 0.2);
+    }
+
+    track.addEventListener('pointerdown', function (e) {
+      if (e.button !== 0 || pointerId !== null) return;
+      pointerId = e.pointerId;
+      startX = e.clientX;
+      startY = e.clientY;
+      dx = 0;
+      mode = '';
+      stop();                              // pausa el autoavance durante el gesto
+    });
+
+    track.addEventListener('pointermove', function (e) {
+      if (pointerId === null || e.pointerId !== pointerId) return;
+      // Mouse: si el botón ya no está pulsado (se soltó fuera del track, o es un
+      // hover con estado residual), aborta el gesto en vez de arrastrar sin botón.
+      if (e.pointerType === 'mouse' && e.buttons === 0) { endGesture(e, true); return; }
+      var mx = e.clientX - startX;
+      var my = e.clientY - startY;
+      if (!mode) {
+        if (Math.abs(mx) > DECIDE_PX && Math.abs(mx) > Math.abs(my)) {
+          mode = 'swipe';
+          suppressClick = true;            // hubo arrastre: anular el click del <a>
+          try { track.setPointerCapture(pointerId); } catch (err) { /* no-op */ }
+          track.style.transition = 'none'; // arrastre 1:1, sin animación
+        } else if (Math.abs(my) > DECIDE_PX) {
+          mode = 'scroll';                 // gesto vertical: no tocar el scroll
+        }
+      }
+      if (mode !== 'swipe') return;
+      dx = mx;
+      // Resistencia en los extremos: no hay loop circular al arrastrar.
+      if ((idx === 0 && dx > 0) || (idx === slides.length - 1 && dx < 0)) dx *= 0.35;
+      track.style.transform = 'translateX(calc(' + (-idx * 100) + '% + ' + dx + 'px))';
+      if (e.cancelable) e.preventDefault();
+    });
+
+    function endGesture(e, cancelled) {
+      if (pointerId === null || e.pointerId !== pointerId) return;
+      var wasSwipe = mode === 'swipe';
+      pointerId = null;
+      mode = '';
+      if (wasSwipe) {
+        try { track.releasePointerCapture(e.pointerId); } catch (err) { /* no-op */ }
+        track.style.transition = '';       // restaurar el snap animado
+        var commit = 0;
+        if (!cancelled && Math.abs(dx) >= threshold()) commit = dx < 0 ? 1 : -1;
+        if (commit === 1 && idx < slides.length - 1) go(idx + 1);
+        else if (commit === -1 && idx > 0) go(idx - 1);
+        else go(idx);                      // por debajo del umbral o extremo: volver
+        // Rearme de la bandera por si el click nunca llega (p. ej. cancel).
+        setTimeout(function () { suppressClick = false; }, 300);
+      }
+      restart();                           // reanuda el autoavance
+    }
+    // pointerup/cancel en WINDOW (no sólo en el track): si el mouse se suelta
+    // FUERA del track (arrastre que sale del banner, o clic resbalado en el borde),
+    // endGesture igual corre y libera el estado. Sin esto el pointerId quedaba
+    // colgado y bloqueaba el siguiente gesto (guarda de pointerdown). endGesture es
+    // idempotente (anula pointerId al entrar), así que no hay doble ejecución.
+    window.addEventListener('pointerup', function (e) { endGesture(e, false); });
+    window.addEventListener('pointercancel', function (e) { endGesture(e, true); });
+
+    // Un TAP navega normal; tras un ARRASTRE el click del <a> se anula.
+    root.addEventListener('click', function (e) {
+      if (!suppressClick) return;
+      suppressClick = false;
+      e.preventDefault();
+      e.stopPropagation();
+    }, true);
+
+    // Un gesto NUEVO (p. ej. tap en un dot) limpia una bandera residual: los
+    // swipes táctiles no generan click, y sin esto la bandera se comería el
+    // siguiente click legítimo dentro de la ventana de rearme.
+    root.addEventListener('pointerdown', function () {
+      suppressClick = false;
+    }, true);
+
+    // Sin drag nativo de <a>/<img> en desktop (rompería el gesto con mouse).
+    track.addEventListener('dragstart', function (e) { e.preventDefault(); });
+
     go(0);
     restart();
   });

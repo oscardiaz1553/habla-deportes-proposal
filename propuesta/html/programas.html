@@ -30,9 +30,9 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap">
 
   <!-- Estilos: tokens PRIMERO, luego componentes. Cache-bust v7. -->
-  <link rel="stylesheet" href="assets/tokens.css?v=45">
-  <link rel="stylesheet" href="assets/css/main.css?v=45">
-  <link rel="stylesheet" href="assets/css/megamenu.css?v=45">
+  <link rel="stylesheet" href="assets/tokens.css?v=47">
+  <link rel="stylesheet" href="assets/css/main.css?v=47">
+  <link rel="stylesheet" href="assets/css/megamenu.css?v=47">
 
   <link rel="icon" href="assets/img/LogoHablaDeportes.webp" type="image/webp">
 
@@ -81,7 +81,12 @@
   <div class="topbar">
     <div class="container topbar__inner">
       <span class="live-dot live-dot--pulse" aria-hidden="true"></span>
-      <p class="topbar__text">El show de la mañana, de lunes a viernes a las 10:00 AM</p>
+      <div class="topbar__viewport">
+        <div class="topbar__track">
+          <p class="topbar__text">El show de la mañana, de lunes a viernes a las 10:00 AM</p>
+          <p class="topbar__text topbar__text--clone" aria-hidden="true">El show de la mañana, de lunes a viernes a las 10:00 AM</p>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -669,7 +674,7 @@
     </div>
   </div>
 
-  <script src="assets/js/home.js?v=45" defer></script>
-  <script src="assets/js/megamenu.js?v=45" defer></script>
+  <script src="assets/js/home.js?v=47" defer></script>
+  <script src="assets/js/megamenu.js?v=47" defer></script>
 </body>
 </html>

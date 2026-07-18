@@ -106,24 +106,81 @@ ul { margin: 0; padding: 0; list-style: none; }
    3. TOPBAR (navy)
    ========================================================================== */
 .topbar {
+  --tb-ink: rgba(255, 255, 255, 0.88);   /* base del texto (AA holgado: ~7:1 sobre navy) */
   background: var(--color-surface-brand);
   color: var(--color-text-inverse);
+  overflow: hidden;                        /* red de seguridad: el marquee nunca genera scroll de página */
 }
+/* MÓVIL (mobile-first): dot fijo a la izquierda + marquee a la derecha, una sola línea */
 .topbar__inner {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: var(--space-2);
-  min-height: 34px;
-  padding-block: var(--space-2);
-  text-align: center;
+  min-height: 30px;
+  padding-block: 5px;
+}
+/* Ventana con overflow oculto: contiene el desplazamiento y difumina los bordes */
+.topbar__viewport {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 90%, transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 90%, transparent 100%);
+}
+/* Riel: dos copias idénticas del texto; se desplaza -50% = ancho de una copia (loop perfecto) */
+.topbar__track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: topbarMarquee 20s linear infinite;
 }
 .topbar__text {
   margin: 0;
+  padding-right: 3.5rem;                    /* separación entre copias para el bucle sin costuras */
+  white-space: nowrap;
   font-size: var(--fs-sm);
   font-weight: var(--fw-medium);
-  color: var(--color-text-inverse);
+  /* Sheen sobre el texto (recortado a los glifos): base semi-blanca + banda blanca */
+  background-image: linear-gradient(100deg,
+    var(--tb-ink) 0%, var(--tb-ink) 42%,
+    #ffffff 50%,
+    var(--tb-ink) 58%, var(--tb-ink) 100%);
+  background-size: 220% 100%;
+  background-position: -40% 0;              /* en reposo: banda fuera → se ve la base */
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
 }
+@keyframes topbarMarquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* DESKTOP (>=900px): una línea centrada, sin marquee; el texto respira con un sheen sutil */
+@media (min-width: 900px) {
+  .topbar__inner { justify-content: center; min-height: 34px; padding-block: var(--space-2); }
+  .topbar__viewport {
+    flex: 0 0 auto;
+    overflow: visible;
+    -webkit-mask-image: none;
+            mask-image: none;
+  }
+  .topbar__track { width: auto; animation: none; transform: none; will-change: auto; }
+  .topbar__text--clone { display: none; }   /* en desktop solo se muestra 1 copia */
+  .topbar__text {
+    padding-right: 0;
+    animation: topbarSheen 6s ease-in-out infinite;
+  }
+}
+@keyframes topbarSheen {
+  0%   { background-position: 150% 0; }      /* banda entra por la derecha */
+  22%  { background-position: -50% 0; }      /* recorre y sale por la izquierda (~1.3s) */
+  100% { background-position: -50% 0; }      /* pausa larga en reposo (~4.7s) */
+}
+
 .live-dot {
   display: inline-block;
   width: 9px; height: 9px;
@@ -598,9 +655,12 @@ ul { margin: 0; padding: 0; list-style: none; }
 .section-head__icon--yt svg { width: 34px; height: 24px; }
 .section-head__icon--crest img { width: 30px; height: auto; }
 .section-head__title {
-  font-size: 24px;                  /* pedido del cliente */
+  font-size: 20px;                  /* móvil: reducido para no saltar a 2 líneas */
   font-weight: var(--fw-semibold);  /* 600 */
   color: var(--color-accent-text);
+}
+@media (min-width: 900px) {
+  .section-head__title { font-size: 24px; }  /* desktop: pedido del cliente */
 }
 .section-head__actions {
   margin-left: auto;
@@ -2979,6 +3039,25 @@ ul { margin: 0; padding: 0; list-style: none; }
 @media (prefers-reduced-motion: reduce) {
   .is-onair .live-flag .live-dot,
   .is-onair .live-state__dot { animation: none; }
+
+  /* TOPBAR: sin marquee, sin sheen, sin pulso. Texto sólido y legible.
+     En móvil se permite que envuelva a 2 líneas antes que cortarse. */
+  .topbar__track { animation: none; transform: none; width: 100%; }
+  .topbar__viewport {
+    overflow: visible;
+    -webkit-mask-image: none;
+            mask-image: none;
+  }
+  .topbar__text {
+    animation: none;
+    background: none;
+    color: var(--color-text-inverse);
+    -webkit-text-fill-color: var(--color-text-inverse);
+    white-space: normal;
+    padding-right: 0;
+  }
+  .topbar__text--clone { display: none; }
+  .topbar .live-dot--pulse { animation: none; }
 }
 
 

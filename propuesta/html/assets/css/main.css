@@ -872,7 +872,11 @@ ul { margin: 0; padding: 0; list-style: none; }
    Todas las medidas salen de propuesta/centro-partidos-spec.md.
    ========================================================================== */
 /* Móvil: una columna (banner arriba, publicidad debajo, §4). */
-.match-center { display: grid; gap: 24px; }
+.match-center { display: grid; gap: 24px; grid-template-columns: minmax(0, 1fr); }
+/* Evita el blowout de grid: los ítems deben poder encoger bajo el ancho intrínseco
+   de su contenido (imagen de publicidad / slides), o el track empuja la página. */
+.match-center > .match-slider,
+.match-center > .match-ad { min-width: 0; }
 @media (min-width: 900px) {
   .match-center {
     /* banner 934 : ad 322 en contenedor 1280, gap 24 (ratio 2.90 : 1) */

@@ -1100,6 +1100,26 @@ ul { margin: 0; padding: 0; list-style: none; }
 .match-banner__tv-logo { height: 20px; width: auto; }   /* móvil §4 */
 @media (min-width: 900px) { .match-banner__tv-logo { height: 24px; } }
 
+/* --- Móvil (<900px): el kicker sale del position:absolute (pensado para desktop)
+   y pasa al FLUJO como primer elemento de la columna, para que el gap lo separe de
+   los escudos y no se encime. Se le da aire subiendo el viewport y bajando el alto
+   de escudos/banderas. Desktop (>=900px) conserva la spec pixel-exact intacta. --- */
+@media (max-width: 899px) {
+  .match-slider__viewport { height: 348px; }
+  /* Reserva abajo para que el contenido no toque los dots (bottom:22px). */
+  .match-banner { justify-content: center; gap: 14px; padding: 20px 18px 46px; }
+  /* Kicker en flujo, centrado y por encima del overlay (relative + z-index:2). */
+  .match-banner__kicker {
+    position: relative; z-index: 2;
+    top: auto; left: auto;
+    align-self: center; text-align: center;
+  }
+  .match-banner__body { gap: 14px; }
+  .match-banner__fixture { gap: 22px; }
+  .match-banner__crest { height: 104px; }
+  .match-banner__flag { width: 92px; height: 92px; font-size: var(--fs-md); }
+}
+
 /* Dots del slider — absolutos, bottom 22, centrados (spec tabla).
    Activo: pill blanco 22×5; inactivo: #4B4B4B 8×5; gap 7. */
 .match-slider__dots {

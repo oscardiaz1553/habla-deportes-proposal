@@ -117,42 +117,35 @@ ul { margin: 0; padding: 0; list-style: none; }
   align-items: center;
   justify-content: flex-start;
   gap: var(--space-2);
-  min-height: 30px;
-  padding-block: 5px;
+  min-height: 32px;                         /* +2px de holgura vertical para acentos/mayúsculas */
+  padding-block: 6px;
 }
-/* Ventana con overflow oculto: contiene el desplazamiento y difumina los bordes */
+/* Ventana con overflow oculto: contiene el desplazamiento y difumina los bordes.
+   Zonas de fade anchas → el texto se DIFUMINA al entrar/salir, no se corta en seco.
+   Extra padding-left tras el punto rojo para que el texto no le quede pegado. */
 .topbar__viewport {
   flex: 1 1 auto;
   min-width: 0;
+  padding-left: var(--space-1);
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 90%, transparent 100%);
-          mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 90%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 10%, #000 85%, transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0, #000 10%, #000 85%, transparent 100%);
 }
 /* Riel: dos copias idénticas del texto; se desplaza -50% = ancho de una copia (loop perfecto) */
 .topbar__track {
   display: flex;
   width: max-content;
   will-change: transform;
-  animation: topbarMarquee 20s linear infinite;
+  animation: topbarMarquee 28s linear infinite;   /* más lento: ritmo cómodo de lectura (~15px/s) */
 }
 .topbar__text {
   margin: 0;
-  padding-right: 3.5rem;                    /* separación entre copias para el bucle sin costuras */
+  padding-right: 2.75rem;                   /* separación pareja entre copias para el bucle sin costuras */
   white-space: nowrap;
+  line-height: 1.45;                        /* holgura vertical para tildes/ñ/mayúsculas */
   font-size: var(--fs-sm);
   font-weight: var(--fw-medium);
-  /* Sheen sobre el texto (recortado a los glifos): base semi-blanca + banda blanca */
-  background-image: linear-gradient(100deg,
-    var(--tb-ink) 0%, var(--tb-ink) 42%,
-    #ffffff 50%,
-    var(--tb-ink) 58%, var(--tb-ink) 100%);
-  background-size: 220% 100%;
-  background-position: -40% 0;              /* en reposo: banda fuera → se ve la base */
-  background-repeat: no-repeat;
-  -webkit-background-clip: text;
-          background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
+  color: var(--tb-ink);                     /* MÓVIL: texto sólido, 100% visible (el sheen es solo desktop) */
 }
 @keyframes topbarMarquee {
   from { transform: translateX(0); }
@@ -172,6 +165,18 @@ ul { margin: 0; padding: 0; list-style: none; }
   .topbar__text--clone { display: none; }   /* en desktop solo se muestra 1 copia */
   .topbar__text {
     padding-right: 0;
+    /* Sheen SOLO en desktop: banda blanca que recorre los glifos (background-clip:text) */
+    background-image: linear-gradient(100deg,
+      var(--tb-ink) 0%, var(--tb-ink) 42%,
+      #ffffff 50%,
+      var(--tb-ink) 58%, var(--tb-ink) 100%);
+    background-size: 220% 100%;
+    background-position: -40% 0;             /* en reposo: banda fuera → se ve la base */
+    background-repeat: no-repeat;
+    -webkit-background-clip: text;
+            background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
     animation: topbarSheen 6s ease-in-out infinite;
   }
 }

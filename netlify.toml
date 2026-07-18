@@ -1,0 +1,20 @@
+# Configuración de despliegue en Netlify — Habla Deportes (prototipo)
+# Sitio estático: sin build, se publica la carpeta del prototipo HTML.
+
+[build]
+  publish = "propuesta/html"
+  command = ""
+
+# Cabeceras de seguridad y de caché
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Los assets llevan cache-bust (?v=N), así que se pueden cachear agresivamente
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

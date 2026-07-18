@@ -268,6 +268,12 @@
   --wa-tint:        rgba(37, 211, 102, 0.08); /* fondo suave de la franja */
   --wa-border:      rgba(37, 211, 102, 0.24); /* borde de la franja */
 
+  /* --- Instagram (ENCAPSULADO en el módulo .ig-cta; nunca fuera) ----------- */
+  --ig-gradient:        linear-gradient(45deg, #F58529 0%, #DD2A7B 45%, #8134AF 72%, #515BD4 100%);
+  --ig-gradient-hover:  linear-gradient(45deg, #E06A1E 0%, #C71E68 45%, #6E2A96 72%, #3F49BD 100%);
+  --ig-tint:            rgba(221, 42, 123, 0.07); /* fondo suave de la franja (rosa IG) */
+  --ig-border:          rgba(221, 42, 123, 0.22); /* borde de la franja */
+
   /* --- Acento Selección (ENCAPSULADO en §Selección; SOLO decorativo) ------ */
   --sel-yellow:     #FCD116;                  /* barra/subrayado o chip con TEXTO NAVY encima */
   --sel-yellow-ink: var(--navy-800);          /* texto sobre el amarillo (≈9:1, AA holgado) */

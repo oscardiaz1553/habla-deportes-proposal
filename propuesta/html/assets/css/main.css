@@ -11,6 +11,7 @@
 :root {
   --brand-red: #D20000;
   --brand-red-hover: #B00000;
+  --hover-orange: #E36209;   /* color de hover de títulos/enlaces (provisional) */
 }
 
 /* ==========================================================================
@@ -617,7 +618,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   padding: var(--space-2);
   min-height: var(--touch-min);
 }
-.section-head__link:hover { text-decoration: underline; }
+.section-head__link:hover { color: var(--hover-orange); }
 
 /* Flechas circulares de carrusel */
 .round-arrow {
@@ -702,7 +703,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-.vcard:hover .vcard__title { text-decoration: underline; }
+.vcard:hover .vcard__title { color: var(--hover-orange); }
 
 /* ==========================================================================
    10. MUNDO JUNIOR — feature + lista
@@ -738,12 +739,12 @@ ul { margin: 0; padding: 0; list-style: none; }
 .feature:hover .feature__play { transform: translate(-50%, -50%) scale(1.06); }
 .feature__title {
   margin-top: var(--space-5);
-  font-size: var(--fs-2xl);
-  font-weight: var(--fw-extrabold);
+  font-size: 2.25rem;               /* 36px */
+  font-weight: var(--fw-semibold);  /* 600 (antes extrabold, se veía muy pesado) */
   color: var(--color-accent-text);
   line-height: var(--lh-snug);
 }
-.feature:hover .feature__title { text-decoration: underline; }
+.feature:hover .feature__title { color: var(--hover-orange); }
 .byline {
   display: flex;
   align-items: center;
@@ -828,7 +829,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-.jitem:hover .jitem__title { text-decoration: underline; }
+.jitem:hover .jitem__title { color: var(--hover-orange); }
 @media (min-width: 560px) {
   .jitem { grid-template-columns: 150px 1fr; }
 }
@@ -1053,10 +1054,10 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 /* --- Panel Publicidad — a color pleno, SIN overlay/filtro (spec §3.2). --- */
 /* Móvil §4: centrada, ancho máx 360, alto auto respetando su aspecto vertical. */
-.match-ad { display: block; max-width: 360px; width: 100%; margin-inline: auto; }
+.match-ad { display: block; width: 100%; margin-inline: auto; }
 .match-ad__link {
   position: relative; display: block; overflow: hidden;
-  aspect-ratio: 0.807;                  /* móvil: alto auto */
+  aspect-ratio: 1.933;                  /* móvil/tablet: banner HORIZONTAL (transelca_mobile.png) */
   border-radius: var(--radius-sm);      /* 8px */
   background: var(--color-surface-brand);
 }
@@ -1064,7 +1065,8 @@ ul { margin: 0; padding: 0; list-style: none; }
   .match-ad { max-width: none; }
   .match-ad__link { aspect-ratio: auto; height: 424px; }   /* = alto del banner (Error 1) */
 }
-/* El creativo VERTICAL LLENA el panel a sangre; sin tinte, sin filtro. */
+/* El creativo LLENA el panel a sangre; sin tinte, sin filtro. */
+.match-ad picture { display: block; width: 100%; height: 100%; }
 .match-ad__img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; filter: none; }
 /* Chip "Publicidad": DENTRO de la imagen, arriba-izquierda, pill navy translúcido. */
 .match-ad__label {
@@ -1245,7 +1247,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-.humo__text:hover { text-decoration: underline; }
+.humo__text:hover { color: var(--hover-orange); }
 
 /* ==========================================================================
    [5] RADIO A LA CARTA — episodios on-demand (play sólido navy = audio)
@@ -1311,7 +1313,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 /* ==========================================================================
    [6] CTA CANAL DE WHATSAPP — verde ENCAPSULADO en la franja
    ========================================================================== */
-.wa-cta {
+.ig-cta {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1319,11 +1321,9 @@ ul { margin: 0; padding: 0; list-style: none; }
   gap: var(--space-4);
   padding: var(--space-6);
   border-radius: var(--radius-lg);
-  background: var(--wa-tint);
-  border: var(--border-hairline) solid var(--wa-border);
 }
 @media (min-width: 760px) {
-  .wa-cta {
+  .ig-cta {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
@@ -1332,33 +1332,33 @@ ul { margin: 0; padding: 0; list-style: none; }
     padding: var(--space-6) var(--space-7);
   }
 }
-.wa-cta__icon {
+.ig-cta__icon {
   flex: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 56px; height: 56px;
   border-radius: var(--radius-circle);
-  background: var(--wa-green);
+  background: var(--ig-gradient);
   color: #fff;
 }
-.wa-cta__icon svg { width: 32px; height: 32px; }
-.wa-cta__text { flex: 1; }
-.wa-cta__title {
+.ig-cta__icon svg { width: 32px; height: 32px; }
+.ig-cta__text { flex: 1; }
+.ig-cta__title {
   font-size: var(--fs-lg);
   font-weight: var(--fw-extrabold);
   color: var(--color-accent-text);
 }
-.wa-cta__sub {
+.ig-cta__sub {
   margin: var(--space-1) 0 0;
   font-size: var(--fs-sm);
   color: var(--color-text-secondary);
 }
-.btn--whatsapp { flex: none; background: var(--wa-green-deep); color: #fff; }
-.btn--whatsapp:hover { background: var(--wa-green-press); }
-.btn--whatsapp:active { transform: translateY(1px); }
-.btn--whatsapp svg { width: 20px; height: 20px; flex: none; }
-@media (max-width: 759px) { .wa-cta .btn--whatsapp { width: 100%; } }
+.btn--instagram { flex: none; background: var(--ig-gradient); color: #fff; }
+.btn--instagram:hover { background: var(--ig-gradient-hover); }
+.btn--instagram:active { transform: translateY(1px); }
+.btn--instagram svg { width: 20px; height: 20px; flex: none; }
+@media (max-width: 759px) { .ig-cta .btn--instagram { width: 100%; } }
 
 /* ==========================================================================
    11. FOOTER (navy)
@@ -1611,7 +1611,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 .breadcrumb__list li { display: inline-flex; align-items: center; }
 .breadcrumb__list a { color: var(--color-accent-text); font-weight: var(--fw-medium); }
-.breadcrumb__list a:hover { text-decoration: underline; }
+.breadcrumb__list a:hover { color: var(--hover-orange); }
 .breadcrumb__sep { color: var(--color-border-strong); }
 .breadcrumb__list [aria-current="page"] { color: var(--color-text-muted); }
 
@@ -1813,7 +1813,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 
 /* --- CTA de suscripción intercalado ------------------------------------- */
-/* Card CLARA con acento navy (mismo patrón que .wa-cta): el botón rojo trabaja
+/* Card CLARA con acento navy (mismo patrón que .ig-cta): el botón rojo trabaja
    nativo sobre el tint claro (borde 5.03:1) sin competir con el navy. */
 .inline-cta {
   margin: var(--space-8) 0;
@@ -2264,7 +2264,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   color: var(--color-accent-text);
 }
 @media (min-width: 640px) { .feature-lg__title { font-size: var(--fs-2xl); } }
-.feature-lg__link:hover .feature-lg__title { text-decoration: underline; }
+.feature-lg__link:hover .feature-lg__title { color: var(--hover-orange); }
 .feature-lg__desc {
   margin-top: var(--space-3);
   font-size: var(--fs-base);
@@ -2478,7 +2478,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   color: var(--color-accent-text);
   line-height: var(--lh-snug);
 }
-.xsection:hover .xsection__name { text-decoration: underline; }
+.xsection:hover .xsection__name { color: var(--hover-orange); }
 .xsection__meta { font-size: var(--fs-xs); color: var(--color-text-muted); }
 
 /* ==========================================================================

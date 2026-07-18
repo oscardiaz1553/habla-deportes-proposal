@@ -30,8 +30,9 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap">
 
   <!-- Estilos: tokens PRIMERO, luego componentes. Cache-bust v6. -->
-  <link rel="stylesheet" href="assets/tokens.css?v=36">
-  <link rel="stylesheet" href="assets/css/main.css?v=36">
+  <link rel="stylesheet" href="assets/tokens.css?v=43">
+  <link rel="stylesheet" href="assets/css/main.css?v=43">
+  <link rel="stylesheet" href="assets/css/megamenu.css?v=44">
 
   <link rel="icon" href="assets/img/LogoHablaDeportes.webp" type="image/webp">
 
@@ -94,21 +95,170 @@
       <nav class="primary-nav" aria-label="Navegación principal">
         <ul class="nav-list">
           <li><a class="nav-link" href="index.html">Inicio</a></li>
-          <li><a class="nav-link" href="seccion.html" aria-current="page">Junior</a></li>
-          <li>
-            <a class="nav-link" href="seccion.html">Futbol
+          <!-- JUNIOR — mega full-width (2 columnas + card destacada) -->
+          <li class="mm mm--full">
+            <a class="nav-link mm-trigger" href="seccion.html" aria-haspopup="true" aria-expanded="false" aria-current="page">Junior
               <svg class="nav-link__caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
             </a>
+            <div class="mm-panel mm-panel--full" role="group" aria-label="Junior FC">
+              <div class="mm-panel__inner mm-panel__inner--full container">
+                <div class="mm-cols mm-cols--2">
+                  <div class="mm-col">
+                    <p class="mm-col__title">Contenido</p>
+                    <a class="mm-link" href="seccion.html">Últimas noticias</a>
+                    <a class="mm-link" href="video.html">Videos</a>
+                    <a class="mm-link" href="seccion.html">Clips</a>
+                    <a class="mm-link" href="seccion.html">Fichajes de Junior</a>
+                  </div>
+                  <div class="mm-col">
+                    <p class="mm-col__title">El equipo</p>
+                    <a class="mm-link" href="en-vivo.html">Próximo partido</a>
+                    <span class="mm-note">Junior vs. Nacional · Dom. 7:30 p.m.</span>
+                  </div>
+                </div>
+                <a class="mm-feat mm-feat--wide" href="articulo.html">
+                  <span class="mm-feat__media">
+                    <img src="assets/img/junior-de-barranquilla-es-bicampeon-de-liga-betplay-2026-I-en-estadio-atanasio-girardot.webp" width="1080" height="1080" loading="lazy" alt="">
+                  </span>
+                  <span class="mm-feat__body">
+                    <span class="mm-feat__eyebrow">Nota destacada</span>
+                    <span class="mm-feat__title">Cuadrado a Junior: ¿qué hay de cierto?</span>
+                  </span>
+                </a>
+              </div>
+            </div>
           </li>
-          <li>
-            <a class="nav-link" href="programas.html">Programas
+          <!-- FÚTBOL — mega full-width (3 columnas + card destacada) -->
+          <li class="mm mm--full">
+            <a class="nav-link mm-trigger" href="seccion.html" aria-haspopup="true" aria-expanded="false">Fútbol
               <svg class="nav-link__caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
             </a>
+            <div class="mm-panel mm-panel--full" role="group" aria-label="Fútbol">
+              <div class="mm-panel__inner mm-panel__inner--full container">
+                <div class="mm-cols mm-cols--3">
+                <div class="mm-col">
+                  <p class="mm-col__title">Equipos</p>
+                  <a class="mm-link" href="seccion.html">Junior FC</a>
+                  <a class="mm-link" href="seccion.html">Selección Colombia</a>
+                  <a class="mm-link" href="seccion.html">Atlético Nacional</a>
+                  <a class="mm-link" href="seccion.html">Millonarios</a>
+                  <a class="mm-link" href="seccion.html">América de Cali</a>
+                  <a class="mm-link" href="seccion.html">Deportes Tolima</a>
+                  <a class="mm-link" href="seccion.html">Independiente Medellín</a>
+                </div>
+                <div class="mm-col">
+                  <p class="mm-col__title">Torneos</p>
+                  <a class="mm-link" href="seccion.html">Liga BetPlay</a>
+                  <a class="mm-link" href="seccion.html">Copa Colombia</a>
+                  <a class="mm-link" href="seccion.html">Copa América</a>
+                  <a class="mm-link" href="seccion.html">Eliminatorias</a>
+                  <a class="mm-link" href="seccion.html">Copa Libertadores</a>
+                </div>
+                <div class="mm-col">
+                  <p class="mm-col__title">Secciones</p>
+                  <a class="mm-link" href="seccion.html">Noticias</a>
+                  <a class="mm-link" href="video.html">Videos</a>
+                  <a class="mm-link" href="seccion.html">Fichajes</a>
+                  <a class="mm-link" href="en-vivo.html">En Vivo</a>
+                </div>
+                </div>
+                <a class="mm-feat mm-feat--wide" href="video.html">
+                  <span class="mm-feat__media">
+                    <img src="assets/img/seleccion-derrota-gira.webp" width="1280" height="720" loading="lazy" alt="">
+                  </span>
+                  <span class="mm-feat__body">
+                    <span class="mm-feat__eyebrow">En tendencia · Video</span>
+                    <span class="mm-feat__title">Contra todo pronóstico: la última hora de la Selección</span>
+                  </span>
+                </a>
+              </div>
+            </div>
           </li>
-          <li>
-            <a class="nav-link" href="seccion.html">Más
+          <!-- PROGRAMAS — mega full-width (2 columnas + card AL AIRE) -->
+          <li class="mm mm--full">
+            <a class="nav-link mm-trigger" href="programas.html" aria-haspopup="true" aria-expanded="false">Programas
               <svg class="nav-link__caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
             </a>
+            <div class="mm-panel mm-panel--full" role="group" aria-label="Programas">
+              <div class="mm-panel__inner mm-panel__inner--full container">
+                <div class="mm-cols mm-cols--2">
+                  <div class="mm-col">
+                    <p class="mm-col__title">El show</p>
+                    <a class="mm-link" href="programas.html">El show de la mañana</a>
+                    <a class="mm-link" href="en-vivo.html">Escuchar en vivo / Radio</a>
+                    <span class="mm-note">Horario: L–V 10:00 a.m. – 12:00 m.</span>
+                  </div>
+                  <div class="mm-col">
+                    <p class="mm-col__title">Contenido del show</p>
+                    <a class="mm-link" href="video.html">Últimos episodios</a>
+                    <a class="mm-link" href="en-vivo.html">Parrilla de la semana</a>
+                    <a class="mm-link" href="programas.html">Presentadores</a>
+                  </div>
+                </div>
+                <a class="mm-feat mm-feat--wide mm-feat--live" href="en-vivo.html">
+                  <span class="mm-feat__media">
+                    <img src="assets/img/juansalvador1.png" width="1715" height="917" loading="lazy" alt="">
+                    <span class="mm-feat__live"><span class="mm-feat__dot" aria-hidden="true"></span>Al aire ahora</span>
+                  </span>
+                  <span class="mm-feat__body">
+                    <span class="mm-feat__eyebrow">Radio en vivo</span>
+                    <span class="mm-feat__title">El show de la mañana</span>
+                    <span class="mm-feat__cta">Escuchar en vivo
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+                    </span>
+                  </span>
+                </a>
+              </div>
+            </div>
+          </li>
+          <!-- MÁS — mega full-width (institucional + redes + card CTA de pauta) -->
+          <li class="mm mm--full">
+            <a class="nav-link mm-trigger" href="#" aria-haspopup="true" aria-expanded="false">Más
+              <svg class="nav-link__caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </a>
+            <div class="mm-panel mm-panel--full" role="group" aria-label="Más">
+              <div class="mm-panel__inner mm-panel__inner--full container">
+                <div class="mm-cols mm-cols--2">
+                  <div class="mm-col">
+                    <p class="mm-col__title">Institucional</p>
+                    <!-- Nosotros / Publicidad / Legales aún no existen como plantillas → placeholders href="#". Contacto va por mailto. -->
+                    <a class="mm-link" href="#">Nosotros</a>
+                    <a class="mm-link" href="#">Publicidad / Pauta</a>
+                    <a class="mm-link" href="mailto:info@habladeportes.co">Contacto</a>
+                    <a class="mm-link" href="#">Política de privacidad</a>
+                    <a class="mm-link" href="#">Términos y condiciones</a>
+                  </div>
+                  <div class="mm-col">
+                    <p class="mm-col__title">Redes</p>
+                    <a class="mm-link mm-link--ext" href="https://www.youtube.com/@HablaDeportesRadio" target="_blank" rel="noopener">YouTube
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
+                    </a>
+                    <a class="mm-link mm-link--ext" href="https://www.instagram.com/habladeportes" target="_blank" rel="noopener">Instagram
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
+                    </a>
+                    <a class="mm-link mm-link--ext" href="#" aria-label="X (Twitter) de Habla Deportes">X (Twitter)
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
+                    </a>
+                  </div>
+                </div>
+                <!-- DECISIÓN: "Más" no tiene una noticia institucional; para conservar
+                     el MISMO patrón visual (card destacada a la derecha) de los otros 3
+                     menús, usamos una card CTA "Pauta con nosotros" del mismo tamaño y
+                     estilo, apuntando a Publicidad/Contacto. -->
+                <a class="mm-feat mm-feat--wide mm-feat--cta" href="#">
+                  <span class="mm-feat__media">
+                    <img src="assets/img/transelca_mobile.png" width="1744" height="902" loading="lazy" alt="">
+                  </span>
+                  <span class="mm-feat__body">
+                    <span class="mm-feat__eyebrow">Publicidad</span>
+                    <span class="mm-feat__title">Pauta con Habla Deportes</span>
+                    <span class="mm-feat__cta">Escríbenos
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+                    </span>
+                  </span>
+                </a>
+              </div>
+            </div>
           </li>
           <li aria-hidden="true"><span class="nav-sep"></span></li>
           <li>
@@ -137,10 +287,73 @@
       </button>
     </div>
     <a class="mobile-menu__link" href="index.html">Inicio</a>
-    <a class="mobile-menu__link" href="seccion.html" aria-current="page">Junior</a>
-    <a class="mobile-menu__link" href="seccion.html">Futbol</a>
-    <a class="mobile-menu__link" href="programas.html">Programas</a>
-    <a class="mobile-menu__link" href="seccion.html">Más</a>
+    <!-- Junior (acordeón) -->
+    <div class="mm-acc">
+      <button class="mm-acc-trigger" type="button" aria-expanded="false" aria-controls="macc-junior">Junior
+        <svg class="mm-acc-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+      <div class="mm-acc-panel" id="macc-junior"><div class="mm-acc-inner">
+        <a class="mobile-menu__link" href="seccion.html" aria-current="page">Últimas noticias</a>
+        <a class="mobile-menu__link" href="video.html">Videos</a>
+        <a class="mobile-menu__link" href="seccion.html">Clips</a>
+        <a class="mobile-menu__link" href="seccion.html">Fichajes de Junior</a>
+        <a class="mobile-menu__link" href="en-vivo.html">Próximo partido</a>
+      </div></div>
+    </div>
+    <!-- Fútbol (acordeón) -->
+    <div class="mm-acc">
+      <button class="mm-acc-trigger" type="button" aria-expanded="false" aria-controls="macc-futbol">Fútbol
+        <svg class="mm-acc-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+      <div class="mm-acc-panel" id="macc-futbol"><div class="mm-acc-inner">
+        <span class="mm-acc-note">Equipos</span>
+        <a class="mobile-menu__link" href="seccion.html">Junior FC</a>
+        <a class="mobile-menu__link" href="seccion.html">Selección Colombia</a>
+        <a class="mobile-menu__link" href="seccion.html">Atlético Nacional</a>
+        <a class="mobile-menu__link" href="seccion.html">Millonarios</a>
+        <a class="mobile-menu__link" href="seccion.html">América de Cali</a>
+        <a class="mobile-menu__link" href="seccion.html">Deportes Tolima</a>
+        <a class="mobile-menu__link" href="seccion.html">Independiente Medellín</a>
+        <span class="mm-acc-note">Torneos</span>
+        <a class="mobile-menu__link" href="seccion.html">Liga BetPlay</a>
+        <a class="mobile-menu__link" href="seccion.html">Copa Colombia</a>
+        <a class="mobile-menu__link" href="seccion.html">Copa América</a>
+        <a class="mobile-menu__link" href="seccion.html">Eliminatorias</a>
+        <a class="mobile-menu__link" href="seccion.html">Copa Libertadores</a>
+        <span class="mm-acc-note">Secciones</span>
+        <a class="mobile-menu__link" href="seccion.html">Noticias</a>
+        <a class="mobile-menu__link" href="video.html">Videos</a>
+        <a class="mobile-menu__link" href="seccion.html">Fichajes</a>
+        <a class="mobile-menu__link" href="en-vivo.html">En Vivo</a>
+      </div></div>
+    </div>
+    <!-- Programas (acordeón) -->
+    <div class="mm-acc">
+      <button class="mm-acc-trigger" type="button" aria-expanded="false" aria-controls="macc-programas">Programas
+        <svg class="mm-acc-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+      <div class="mm-acc-panel" id="macc-programas"><div class="mm-acc-inner">
+        <a class="mobile-menu__link" href="programas.html">El show de la mañana</a>
+        <a class="mobile-menu__link" href="en-vivo.html">Escuchar en vivo / Radio</a>
+        <a class="mobile-menu__link" href="video.html">Últimos episodios</a>
+        <a class="mobile-menu__link" href="en-vivo.html">Parrilla de la semana</a>
+        <a class="mobile-menu__link" href="programas.html">Presentadores</a>
+        <span class="mm-acc-note">Horario: L–V 10:00 a.m. – 12:00 m.</span>
+      </div></div>
+    </div>
+    <!-- Más (acordeón) -->
+    <div class="mm-acc">
+      <button class="mm-acc-trigger" type="button" aria-expanded="false" aria-controls="macc-mas">Más
+        <svg class="mm-acc-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+      <div class="mm-acc-panel" id="macc-mas"><div class="mm-acc-inner">
+        <a class="mobile-menu__link" href="#">Nosotros</a>
+        <a class="mobile-menu__link" href="#">Publicidad / Pauta</a>
+        <a class="mobile-menu__link" href="mailto:info@habladeportes.co">Contacto</a>
+        <a class="mobile-menu__link" href="#">Política de privacidad</a>
+        <a class="mobile-menu__link" href="#">Términos y condiciones</a>
+      </div></div>
+    </div>
     <a class="btn btn--subscribe" href="https://www.youtube.com/@HablaDeportesRadio?sub_confirmation=1" target="_blank" rel="noopener">
       Suscribirse
       <svg class="btn__yt" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31.4 31.4 0 0 0 24 12a31.4 31.4 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.3 3.6-6.3 3.6Z"/></svg>
@@ -548,6 +761,7 @@
     </div>
   </div>
 
-  <script src="assets/js/home.js?v=36" defer></script>
+  <script src="assets/js/home.js?v=43" defer></script>
+  <script src="assets/js/megamenu.js?v=44" defer></script>
 </body>
 </html>

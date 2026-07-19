@@ -1,0 +1,822 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Out. para Habla Deportes — Dossier</title>
+<link rel="icon" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   Out. — Dossier editorial para Habla Deportes
+   Sistema de marca v1.0 · A4 vertical · 10 páginas
+   El azul es el sistema; el cálido, la única excepción por página.
+   ============================================================ */
+:root{
+  --klein:#1b2fcc;
+  --klein-deep:#141e5c;
+  --klein-mid:#4a55c4;
+  --klein-soft:#c8cdf0;
+  --carne:#f2c6b4;
+  --carne-deep:#bc6039;
+  --carne-tinta:#9c3f1c;
+  --paper:#f3ede7;
+  --paper-pure:#fbf8f5;
+  --ink-2:#3c4375;
+  --muted:#585d88;
+  --display:'Bricolage Grotesque','Bricolage Grotesque Variable',sans-serif;
+  --body:'Instrument Sans',sans-serif;
+  --mgn:16mm;      /* margen de composición */
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+
+html{background:var(--muted);}
+body{
+  font-family:var(--body);
+  color:var(--klein-deep);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:geometricPrecision;
+  background:var(--muted);
+  -webkit-print-color-adjust:exact;
+  print-color-adjust:exact;
+}
+
+::selection{background:var(--carne);color:var(--klein-deep);}
+:focus-visible{outline:3px solid var(--carne-tinta);outline-offset:2px;}
+
+/* ---------- Página A4 ---------- */
+.page{
+  position:relative;
+  width:210mm;
+  height:297mm;
+  background:var(--paper);
+  overflow:hidden;
+  page-break-after:always;
+  -webkit-print-color-adjust:exact;
+  print-color-adjust:exact;
+  margin:0 auto;
+}
+.page:last-child{page-break-after:auto;}
+
+/* En pantalla, separa las páginas para revisar */
+@media screen{
+  .page{margin:10mm auto;box-shadow:0 6mm 18mm rgba(20,30,92,.35);}
+}
+
+.pad{
+  position:absolute;inset:0;
+  padding:var(--mgn);
+  display:flex;flex-direction:column;
+}
+
+/* ---------- Tipografía ---------- */
+.kicker{
+  display:flex;align-items:baseline;gap:10pt;
+  font-family:var(--display);
+  font-weight:700;letter-spacing:-.02em;
+}
+.kicker .num{
+  font-size:13pt;color:var(--klein);font-variant-numeric:tabular-nums;
+}
+.kicker .lbl{
+  font-family:var(--body);font-weight:500;font-size:10.5pt;
+  letter-spacing:.01em;color:var(--muted);
+}
+
+.eyebrow{
+  font-family:var(--body);font-weight:500;font-size:9.5pt;
+  color:var(--muted);letter-spacing:.02em;
+}
+
+h1,h2,h3{font-family:var(--display);font-weight:800;letter-spacing:-.035em;line-height:1.0;}
+.h1{font-size:37pt;color:var(--klein-deep);letter-spacing:-.04em;line-height:.98;}
+.h1 .mid{color:var(--klein-mid);}
+.lede{
+  font-family:var(--body);font-weight:400;font-size:12pt;line-height:1.45;
+  color:var(--ink-2);
+}
+.body{font-size:10.5pt;line-height:1.5;color:var(--ink-2);}
+.body strong{color:var(--klein-deep);font-weight:600;}
+.small{font-size:9.5pt;line-height:1.45;color:var(--ink-2);}
+
+.pie{
+  font-family:var(--body);font-weight:400;font-size:8pt;line-height:1.35;
+  color:var(--muted);letter-spacing:.005em;
+}
+
+/* Cita destacada (bloque tesis) */
+.thesis{
+  font-family:var(--display);font-weight:600;letter-spacing:-.02em;
+  font-size:17pt;line-height:1.18;color:var(--klein-deep);
+}
+.thesis .warm{color:var(--carne-tinta);}
+
+/* Pull-quote a dos líneas, segunda en cálido */
+.pull{
+  font-family:var(--display);font-weight:800;letter-spacing:-.045em;
+  line-height:.96;font-size:48pt;color:var(--klein-deep);
+}
+.pull .l2{color:var(--carne-tinta);display:block;}
+
+/* ---------- Wordmark (SVG oficial Out.) ---------- */
+.wm{
+  color:var(--klein-deep);            /* color de las letras (currentColor) */
+  --wm-dot:var(--carne-deep);         /* color del punto cálido */
+  white-space:nowrap;
+}
+.wm .wm-svg{
+  height:.82em;width:auto;vertical-align:-.11em;   /* escala con el font-size, alineado a la baseline */
+}
+.wm.on-blue{color:var(--paper-pure);--wm-dot:var(--carne);}
+
+/* ---------- Numeración/pie de página ---------- */
+.folio{
+  position:absolute;left:var(--mgn);right:var(--mgn);bottom:9mm;
+  display:flex;justify-content:space-between;align-items:center;
+  font-family:var(--body);font-size:8pt;color:var(--muted);letter-spacing:.02em;
+}
+.folio .wm{font-size:9pt;color:var(--muted);--wm-dot:var(--carne-deep);}
+.rule{height:1px;background:var(--klein-soft);width:100%;}
+
+/* ---------- Botánica a sangre ---------- */
+.plate{position:absolute;inset:0;overflow:hidden;background:var(--klein-deep);}
+.plate img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+
+/* ---------- Azulejo cenefa (pequeño, sistemático) ---------- */
+.azulejo-band{
+  background:url('assets/azulejo-band.webp') repeat-x;
+  background-size:auto 100%;
+  width:100%;
+}
+
+/* lista de pilares */
+.pillars{list-style:none;display:flex;flex-direction:column;gap:0;}
+.pillars li{
+  display:grid;grid-template-columns:26mm 1fr;gap:8mm;align-items:baseline;
+  padding:5.5mm 0;border-top:1px solid var(--klein-soft);
+}
+.pillars li:last-child{border-bottom:1px solid var(--klein-soft);}
+.pillars .tag{
+  font-family:var(--display);font-weight:700;font-size:15pt;color:var(--klein);
+  letter-spacing:-.02em;
+}
+.pillars .txt{font-size:10pt;line-height:1.45;color:var(--ink-2);}
+.pillars .txt strong{color:var(--klein-deep);}
+
+/* ---------- Utilidades ---------- */
+.spacer{flex:1 1 auto;}
+.mt-a{margin-top:auto;}
+</style>
+</head>
+<body>
+
+<!-- Wordmark oficial Out. como símbolo reutilizable.
+     Letras: fill currentColor (heredan color de .wm) · Punto: fill var(--wm-dot). -->
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden;">
+  <symbol id="wm-out" viewBox="0 0 171.5 68.8">
+    <path style="fill:currentColor" d="M30.5,68.8c-4.67,0-8.88-.73-12.65-2.2-3.77-1.47-6.98-3.63-9.65-6.5-2.67-2.87-4.7-6.43-6.1-10.7-1.4-4.27-2.1-9.17-2.1-14.7,0-7.87,1.32-14.35,3.95-19.45C6.58,10.15,10.25,6.33,14.95,3.8,19.65,1.27,25.03,0,31.1,0c4.73,0,8.97,.72,12.7,2.15,3.73,1.43,6.93,3.58,9.6,6.45,2.67,2.87,4.7,6.45,6.1,10.75,1.4,4.3,2.1,9.28,2.1,14.95s-.73,10.77-2.2,15.1c-1.47,4.33-3.58,7.93-6.35,10.8-2.77,2.87-6.05,5.02-9.85,6.45-3.8,1.43-8.03,2.15-12.7,2.15Zm.6-13.1c3.07,0,5.63-.77,7.7-2.3,2.07-1.53,3.6-3.83,4.6-6.9,1-3.07,1.5-6.87,1.5-11.4,0-4.87-.53-8.9-1.6-12.1-1.07-3.2-2.65-5.63-4.75-7.3-2.1-1.67-4.75-2.5-7.95-2.5-3,0-5.53,.8-7.6,2.4-2.07,1.6-3.63,3.97-4.7,7.1-1.07,3.13-1.6,7.03-1.6,11.7,0,3.47,.3,6.55,.9,9.25,.6,2.7,1.52,4.93,2.75,6.7,1.23,1.77,2.75,3.1,4.55,4,1.8,.9,3.87,1.35,6.2,1.35Z"/>
+    <path style="fill:currentColor" d="M81.81,68.8c-5.93,0-10.33-2.03-13.2-6.1-2.87-4.07-4.3-10.3-4.3-18.7V14.6h16.2v28.7c0,4.13,.6,7.1,1.8,8.9s2.97,2.7,5.3,2.7c1.53,0,2.93-.4,4.2-1.2,1.27-.8,2.37-2,3.3-3.6,.93-1.6,1.63-3.58,2.1-5.95,.47-2.37,.7-5.12,.7-8.25V14.6h16.2v52.8h-13.5l-.1-19.3h-1.1c-.54,4.8-1.52,8.73-2.95,11.8-1.43,3.07-3.37,5.32-5.8,6.75-2.43,1.43-5.38,2.15-8.85,2.15Z"/>
+    <path style="fill:currentColor" d="M149.25,60.06c0-2.59,.72-5.03,1.98-7.1-.84,.44-1.75,.78-2.74,1.04-1.03,.27-2.05,.4-3.05,.4-2,0-3.6-.53-4.8-1.6s-1.8-2.83-1.8-5.3V27.6h12.3V14.6h-12.3V2.6h-9.3l-.07,1.93c-.03,.71-.08,1.43-.22,2.13-.51,2.67-1.41,3.64-2.84,4.92-1.71,1.55-4.24,2.62-7.77,3.02h-1.8l-.1,12.6h6.3v21.6c0,6.8,1.5,11.8,4.5,15,3,3.2,7.6,4.8,13.8,4.8,1.27,0,2.72-.09,4.35-.25,1.61-.17,3.47-.54,5.57-1.13-1.28-2.09-2.01-4.54-2.01-7.16Z"/>
+    <circle style="fill:var(--wm-dot)" cx="162.97" cy="60.06" r="8.54"/>
+  </symbol>
+</svg>
+
+<!-- ==================================================================
+     PÁGINA 1 — PORTADA
+     Excepción cálida: SOLO el punto del wordmark Out●
+================================================================== -->
+<section class="page" aria-label="Portada">
+  <div class="plate">
+    <img src="assets/botanica.png" alt="Lámina botánica de Out.: peonías azules y mangos, ilustración editorial">
+    <div style="position:absolute;inset:0;background:
+      linear-gradient(115deg, rgba(20,30,92,.92) 0%, rgba(20,30,92,.78) 34%, rgba(20,30,92,.30) 66%, rgba(27,47,204,.10) 100%);
+      -webkit-print-color-adjust:exact;print-color-adjust:exact;"></div>
+  </div>
+
+  <div class="pad" style="color:var(--paper-pure);">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;">
+      <span style="font-family:var(--body);font-weight:500;font-size:10pt;color:var(--klein-soft);letter-spacing:.02em;">Dossier · Diagnóstico y propuesta</span>
+      <span class="wm on-blue" style="font-size:15pt;"><svg class="wm-svg" viewBox="0 0 171.5 68.8" role="img" aria-label="Out."><use href="#wm-out"></use></svg></span>
+    </div>
+
+    <div class="mt-a" style="max-width:150mm;">
+      <div style="font-family:var(--display);font-weight:800;letter-spacing:-.05em;line-height:.9;font-size:72pt;color:var(--paper-pure);">
+        <span class="wm on-blue" style="font-size:72pt;"><svg class="wm-svg" viewBox="0 0 171.5 68.8" role="img" aria-label="Out."><use href="#wm-out"></use></svg></span>
+      </div>
+      <div style="font-family:var(--display);font-weight:700;letter-spacing:-.04em;line-height:.95;font-size:40pt;color:var(--klein-soft);margin-top:1mm;">
+        para Habla&nbsp;Deportes
+      </div>
+
+      <p style="font-family:var(--body);font-weight:500;font-size:13.5pt;line-height:1.35;color:var(--paper-pure);margin-top:9mm;max-width:120mm;">
+        Diagnóstico del sitio actual y propuesta de rediseño.
+      </p>
+      <p style="font-family:var(--body);font-weight:400;font-size:11pt;line-height:1.5;color:var(--klein-soft);margin-top:4mm;max-width:118mm;">
+        Un medio de fútbol colombiano con un gran activo. Y un sitio que todavía no lo muestra.
+      </p>
+
+      <p style="font-family:var(--display);font-weight:700;font-size:15pt;letter-spacing:-.02em;color:var(--paper-pure);margin-top:11mm;">
+        Never the usual.
+      </p>
+    </div>
+
+    <div style="margin-top:12mm;padding-top:5mm;border-top:1px solid rgba(200,205,240,.35);">
+      <span style="font-family:var(--body);font-weight:400;font-size:9.5pt;color:var(--klein-soft);letter-spacing:.02em;">
+        Julio 2026 · Out. Studio · Bogotá
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================================================================
+     PÁGINA 2 — 00 / El contexto
+     Nota cálida única: la cenefa de azulejo (mangos) al pie
+================================================================== -->
+<section class="page" aria-label="00 El contexto">
+  <div class="pad" style="padding-bottom:0;">
+    <div class="kicker"><span class="num">00</span><span class="lbl">El contexto</span></div>
+
+    <h1 class="h1" style="margin-top:7mm;max-width:168mm;">
+      Habla Deportes ya tiene lo difícil: la audiencia.
+    </h1>
+
+    <div class="thesis" style="margin-top:9mm;max-width:158mm;">
+      Es un medio de fútbol colombiano hecho de video y radio, con hinchas propios. Lo que le falta no es contenido. Es una casa donde vivir.
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10mm;margin-top:10mm;max-width:170mm;">
+      <p class="body">
+        Habla Deportes es un medio deportivo de Barranquilla, enfocado en el fútbol colombiano: Junior FC y la Selección Colombia como pilares, más fichajes, torneos y coyuntura. Su formato es video primero.
+      </p>
+      <p class="body">
+        El activo real ya existe y es fuerte. Un canal de YouTube con más de 265 videos. Un programa de radio matutino, de lunes a viernes, de 10:00&nbsp;a.m. a 12:00&nbsp;m. Una hinchada que sigue al Junior y a la Selección todo el año, no solo en día de partido.
+      </p>
+    </div>
+
+    <ul class="pillars" style="margin-top:11mm;max-width:172mm;">
+      <li><span class="tag">Video</span><span class="txt"><strong>Canal de YouTube</strong>, +265 videos publicados.</span></li>
+      <li><span class="tag">Radio</span><span class="txt"><strong>El show de la mañana</strong>, en vivo L–V, 10:00&nbsp;a.m. a 12:00&nbsp;m.</span></li>
+      <li><span class="tag">Foco</span><span class="txt"><strong>Junior FC y Selección Colombia</strong>, los dos equipos que mueven a la audiencia.</span></li>
+    </ul>
+
+    <p class="pie" style="margin-top:7mm;">Fuente: revisión del sitio y del canal de YouTube de Habla Deportes, julio 2026.</p>
+
+    <div class="spacer"></div>
+    <!-- Cenefa de azulejo: pequeña, sistemática, sangra en X. Único acento cálido -->
+    <div class="azulejo-band" style="height:15mm;margin:0 calc(-1 * var(--mgn)) 14mm;width:auto;" role="presentation"></div>
+  </div>
+
+  <div class="folio">
+    <span class="wm"><svg class="wm-svg" viewBox="0 0 171.5 68.8" role="img" aria-label="Out."><use href="#wm-out"></use></svg> Studio — Dossier Habla Deportes</span>
+    <span>02 / 10</span>
+  </div>
+</section>
+
+<!-- ==================================================================
+     PÁGINA 3 — 01 / El diagnóstico
+     Excepción cálida: 2ª línea del pull-quote "no hay un sitio."
+================================================================== -->
+<section class="page" aria-label="01 El diagnóstico">
+  <div class="pad">
+    <div class="kicker"><span class="num">01</span><span class="lbl">El diagnóstico</span></div>
+
+    <h1 class="h1" style="margin-top:7mm;max-width:166mm;">
+      El mejor activo del mercado local, mal presentado.
+    </h1>
+
+    <div style="display:grid;grid-template-columns:82mm 1fr;gap:12mm;margin-top:14mm;align-items:start;">
+      <div class="pull">
+        Detrás del sitio
+        <span class="l2">no hay un sitio.</span>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:6mm;">
+        <div>
+          <div class="eyebrow" style="color:var(--klein-mid);margin-bottom:2mm;">El veredicto</div>
+          <p class="body">
+            Las cuatro auditorías del diagnóstico se hicieron por separado y llegaron a la misma conclusión. El contenido es bueno y ya existe. El problema es que el sitio no funciona como un medio digital: <strong>funciona como una página que redirige a YouTube.</strong>
+          </p>
+        </div>
+        <div>
+          <div class="eyebrow" style="color:var(--klein-mid);margin-bottom:2mm;">El hallazgo raíz</div>
+          <p class="body">
+            Al inspeccionar el WordPress real, el contenido propio es casi inexistente. Las categorías, los posts y las etiquetas siguen siendo el demo del tema, en inglés, de 2021 —con títulos como “Greenland Unicorns”—. Hay una tienda WooCommerce vacía y huérfana. Y la radio, que es la mitad de la propuesta de valor, solo existe como una frase en el pie de página. La home entera es un carrusel de miniaturas de YouTube.
+          </p>
+        </div>
+        <div>
+          <div class="eyebrow" style="color:var(--klein-mid);margin-bottom:2mm;">La lectura positiva</div>
+          <p class="body">
+            Esto tiene un lado bueno. No hay que reorganizar un sitio complejo ni migrar años de contenido. <strong>Partimos casi de cero. Y eso deja hacerlo bien desde el principio.</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-a">
+      <div class="rule" style="margin-bottom:4mm;"></div>
+      <p class="pie">Evidencia: WordPress de habladeportes.co inspeccionado vía API REST, julio 2026.</p>
+    </div>
+  </div>
+
+  <div class="folio">
+    <span class="wm"><svg class="wm-svg" viewBox="0 0 171.5 68.8" role="img" aria-label="Out."><use href="#wm-out"></use></svg> Studio — Dossier Habla Deportes</span>
+    <span>03 / 10</span>
+  </div>
+</section>
+
+<!-- ==================================================================
+     PÁGINA 4 — Los 5 problemas críticos
+     Excepción cálida: el marcador de rango "01–05"
+================================================================== -->
+<section class="page" aria-label="Cinco problemas críticos">
+  <div class="pad">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+      <div>
+        <div class="kicker"><span class="num">01</span><span class="lbl">Lo que cuesta hoy</span></div>
+        <h1 class="h1" style="margin-top:6mm;max-width:150mm;">Cinco problemas. Cinco oportunidades.</h1>
+      </div>
+      <!-- Único acento cálido de la página: el marcador de rango -->
+      <div style="text-align:right;font-family:var(--display);font-weight:800;letter-spacing:-.03em;line-height:1;color:var(--carne-tinta);font-size:20pt;white-space:nowrap;">
+        01–05
+      </div>
+    </div>
+
+    <p class="lede" style="margin-top:5mm;max-width:165mm;font-size:11pt;">
+      Cada problema del sitio actual tiene un costo de negocio hoy y una ganancia clara con el rediseño. Estas son las cinco fichas, ordenadas por impacto.
+    </p>
+
+    <div style="margin-top:6mm;display:flex;flex-direction:column;">
+      <!-- Ficha template -->
+      <article class="ficha">
+        <div class="fnum">01</div>
+        <div class="fbody">
+          <h3 class="ftitle">No hay medio, hay redirección a YouTube.</h3>
+          <div class="fcols">
+            <div><span class="flab">El problema</span><p>Todo el valor vive fuera del sitio. La home es un carrusel de miniaturas que empuja al usuario a YouTube.</p></div>
+            <div><span class="flab">Qué cuesta hoy</span><p>El medio no controla su audiencia ni sus datos. Depende al 100% del algoritmo de YouTube. No retiene ni construye marca.</p></div>
+            <div><span class="flab">Qué gana</span><p>Una casa propia que retiene, con el video jerarquizado —héroe más grilla— en vez del carrusel plano.</p></div>
+          </div>
+        </div>
+      </article>
+      <article class="ficha">
+        <div class="fnum">02</div>
+        <div class="fbody">
+          <h3 class="ftitle">No existe navegación ni arquitectura.</h3>
+          <div class="fcols">
+            <div><span class="flab">El problema</span><p>El menú es solo “Inicio”. No hay secciones por equipo, torneo ni tema.</p></div>
+            <div><span class="flab">Qué cuesta hoy</span><p>El hincha de Junior o de la Selección no encuentra su contenido. Se pierde el tráfico de búsqueda por equipo, el más valioso.</p></div>
+            <div><span class="flab">Qué gana</span><p>Navegación real, más un hub de Junior FC y otro de la Selección. SEO por equipo y retención por interés.</p></div>
+          </div>
+        </div>
+      </article>
+      <article class="ficha">
+        <div class="fnum">03</div>
+        <div class="fbody">
+          <h3 class="ftitle">La radio, segundo pilar, es invisible.</h3>
+          <div class="fcols">
+            <div><span class="flab">El problema</span><p>No hay reproductor ni estado “en vivo”. Solo un texto en el pie de página.</p></div>
+            <div><span class="flab">Qué cuesta hoy</span><p>La mitad de la propuesta de valor no se puede consumir desde la web.</p></div>
+            <div><span class="flab">Qué gana</span><p>Un reproductor de radio fijo, con estado “al aire” (L–V, 10 a 12). Ningún competidor local lo hace bien.</p></div>
+          </div>
+        </div>
+      </article>
+      <article class="ficha">
+        <div class="fnum">04</div>
+        <div class="fbody">
+          <h3 class="ftitle">SEO técnico casi nulo.</h3>
+          <div class="fcols">
+            <div><span class="flab">El problema</span><p>Sin meta description, cero Open Graph, cero datos estructurados. Home sin H1, y el sitio declarado en inglés (<code>lang="en-US"</code>) siendo un medio en español.</p></div>
+            <div><span class="flab">Qué cuesta hoy</span><p>Al compartir en WhatsApp o redes —el canal natural del medio— el enlace sale sin título ni imagen. Es alcance regalado. Y Google no entiende el sitio.</p></div>
+            <div><span class="flab">Qué gana</span><p>Previews ricos al compartir, y elegibilidad para Google News y el carrusel de videos. Se resuelve casi gratis en el HTML.</p></div>
+          </div>
+        </div>
+      </article>
+      <article class="ficha">
+        <div class="fnum">05</div>
+        <div class="fbody">
+          <h3 class="ftitle">Identidad secuestrada por el sponsor.</h3>
+          <div class="fcols">
+            <div><span class="flab">El problema</span><p>La paleta gira en torno al azul del sponsor y el único acento propio es el rojo de YouTube. Con detalles que restan: “YOTUBE” mal escrito, dirección vacía, demo indexable.</p></div>
+            <div><span class="flab">Qué cuesta hoy</span><p>El medio no tiene firma propia memorable. Se ve como plantilla genérica. Baja la credibilidad ante la audiencia y ante los anunciantes.</p></div>
+            <div><span class="flab">Qué gana</span><p>Una firma visual propia y un módulo de sponsor digno y medible. Sube la percepción de calidad, que es lo que vende pauta.</p></div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <p class="pie" style="margin-top:4mm;">Detalle completo en el informe consolidado del diagnóstico, sección 3.</p>
+  </div>
+
+  <div class="folio">
+    <span class="wm"><svg class="wm-svg" viewBox="0 0 171.5 68.8" role="img" aria-label="Out."><use href="#wm-out"></use></svg> Studio — Dossier Habla Deportes</span>
+    <span>04 / 10</span>
+  </div>
+</section>
+
+<!-- ==================================================================
+     PÁGINA 5 — 02 / La propuesta
+     Excepción cálida: el punto de estado "al aire" (Radio)
+================================================================== -->
+<section class="page" aria-label="02 La propuesta">
+  <div class="pad" style="padding-bottom:0;">
+    <div class="kicker"><span class="num">02</span><span class="lbl">La propuesta</span></div>
+
+    <h1 class="h1" style="margin-top:6mm;max-width:150mm;">Construimos el medio digital que faltaba.</h1>
+
+    <div class="thesis" style="margin-top:6mm;max-width:150mm;font-size:15pt;">
+      No es una promesa ni un render. Ya existe como prototipo navegable. Es una prueba, no una maqueta.
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 92mm;gap:11mm;margin-top:9mm;align-items:start;">
+      <!-- Columna izquierda: qué construimos -->
+      <div>
+        <p class="body" style="margin-bottom:5mm;">
+          El rediseño convierte la landing que redirige a YouTube en un medio de verdad. Video primero, con la actualidad jerarquizada y la radio por fin visible. Esto es lo que construimos.
+        </p>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:3.6mm;">
+          <li class="feat"><span class="fb"></span><span><strong>Home de medio, no carrusel</strong> — hero destacado más grilla de video. La historia del día manda.</span></li>
+          <li class="feat"><span class="fb"></span><span><strong>Navegación real y hubs</strong> — menú por equipo y torneo, con hub de Junior FC y de la Selección.</span></li>
+          <li class="feat"><span class="fb live"></span><span><strong>Radio “al aire”</strong> — reproductor fijo con estado en vivo. Pasa de una frase en el footer a un componente de primera clase.</span></li>
+          <li class="feat"><span class="fb"></span><span><strong>SEO técnico y datos estructurados</strong> — Open Graph, Twitter Cards y JSON-LD en cada plantilla.</span></li>
+          <li class="feat"><span class="fb"></span><span><strong>Marca profesionalizada</strong> — la web deja de ser una galería de videos y se vuelve un medio de verdad. Identidad propia y consistente, no prestada al sponsor ni al rojo de YouTube.</span></li>
+          <li class="feat"><span class="fb"></span><span><strong>Módulo de patrocinio digno</strong> — espacio de sponsor claro y medible (“presentado por”), separado de la publicidad intrusiva.</span></li>
+        </ul>
+      </div>
+
+      <!-- Columna derecha: placa con captura del prototipo -->
+      <figure style="margin:0;">
+        <div style="position:relative;border:1px solid var(--klein-soft);background:var(--klein-deep);overflow:hidden;border-radius:2mm;-webkit-print-color-adjust:exact;print-color-adjust:exact;">
+          <img src="assets/proto-home.png" alt="Captura de la home del prototipo navegable de Habla Deportes" style="display:block;width:100%;height:150mm;object-fit:cover;object-position:top center;">
+          <!-- barra de estado del prototipo con el único punto cálido -->
+          <figcaption style="position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;gap:2mm;padding:3mm 4mm;background:linear-gradient(0deg,rgba(20,30,92,.94),rgba(20,30,92,0));-webkit-print-color-adjust:exact;print-color-adjust:exact;">
+            <span class="fb live" style="margin:0;"></span>
+            <span style="font-family:var(--body);font-weight:500;font-size:8.5pt;color:var(--paper-pure);">Prototipo real · home navegable</span>
+          </figcaption>
+        </div>
+        <p class="pie" style="margin-top:2.5mm;">Prototipo navegable en línea. Repositorio y despliegue activos, julio 2026.</p>
+      </figure>
+    </div>
+
+    <div class="mt-a"></div>
+    <div style="background:var(--klein);color:var(--paper-pure);padding:6mm 7mm;border-radius:2mm;margin-bottom:17mm;-webkit-print-color-adjust:exact;print-color-adjust:exact;">
+      <p style="font-family:var(--display);font-weight:600;font-size:14pt;letter-spacing:-.02em;line-height:1.15;">
+        Todo lo anterior ya está desplegado y navegable. Se puede abrir, tocar y probar hoy mismo.
+      </p>
+    </div>
+  </div>
+
+  <div class="folio">
+    <span class="wm"><svg class="wm-svg" viewBox="0 0 171.5 68.8" role="img" aria-label="Out."><use href="#wm-out"></use></svg> Studio — Dossier Habla Deportes</span>
+    <span>05 / 10</span>
+  </div>
+</section>
+
+<!-- ==================================================================
+     PÁGINA 6 — Antes → Después
+     Excepción cálida: 2ª línea del pull-quote "Ahora se nota."
+================================================================== -->
+<section class="page" aria-label="Antes y después">
+  <div class="pad">
+    <div class="kicker"><span class="num">02</span><span class="lbl">El cambio, en corto</span></div>
+
+    <h1 class="h1" style="margin-top:6mm;">Antes. Después.</h1>
+    <p class="lede" style="margin-top:4mm;max-width:150mm;">Cinco pares. El mismo activo, presentado como lo que es.</p>
+
+    <div class="ba" style="margin-top:9mm;">
+      <div class="ba-head">
+        <div class="ba-h ba-antes">Antes</div>
+        <div class="ba-h ba-despues">Después</div>
+      </div>
+      <div class="ba-row">
+        <div class="ba-a">Carrusel de miniaturas que empuja a YouTube.</div>
+        <div class="ba-d">Home de medio: hero + grilla, con la historia del día.</div>
+      </div>
+      <div class="ba-row">
+        <div class="ba-a">Menú de un solo ítem: “Inicio”.</div>
+        <div class="ba-d">Navegación real, con hubs de Junior y Selección.</div>
+      </div>
+      <div class="ba-row">
+        <div class="ba-a">Radio: una frase en el pie de página.</div>
+        <div class="ba-d">Reproductor fijo “al aire”, L–V de 10 a 12.</div>
+      </div>
+      <div class="ba-row">
+        <div class="ba-a">Enlaces que se comparten sin título ni imagen.</div>
+        <div class="ba-d">Previews ricos con Open Graph y datos estructurados.</div>
+      </div>
+      <div class="ba-row">
+        <div class="ba-a">Identidad prestada al sponsor y a YouTube.</div>
+        <div class="ba-d">Marca propia y consistente, con el navy de marca.</div>
+      </div>
+    </div>
+
+    <div class="mt-a"></div>
+    <div class="pull" style="font-size:44pt;margin-bottom:6mm;">
+      El contenido era el mismo.
+      <span class="l2">Ahora se nota.</span>
+    </div>
+  </div>
+
+  <div class="folio">
+    <span class="wm"><svg class="wm-svg" viewBox="0 0 171.5 68.8" role="img" aria-label="Out."><use href="#wm-out"></use></svg> Studio — Dossier Habla Deportes</span>
+    <span>06 / 10</span>
+  </div>
+</section>
+
+<!-- ==================================================================
+     PÁGINA 7 — 03 / Publicidad y monetización (parte 1)
+     Excepción cálida: 2ª línea del pull-quote "Mañana se vende."
+================================================================== -->
+<section class="page" aria-label="03 Publicidad y monetización">
+  <div class="pad">
+    <div class="kicker"><span class="num">03</span><span class="lbl">El patrocinio, en serio</span></div>
+
+    <h1 class="h1" style="margin-top:6mm;max-width:174mm;">El patrocinio ya funciona al aire. La web todavía no ayuda.</h1>
+
+    <div class="thesis" style="margin-top:5mm;max-width:166mm;font-size:14pt;">
+      Habla Deportes ya tiene patrocinadores en sus programas: la radio de la mañana y los videos del canal. Ese modelo funciona. Lo que falta es que la web también sume.
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:11mm;margin-top:6mm;align-items:start;">
+      <div style="display:flex;flex-direction:column;gap:3.4mm;">
+        <p class="body">Hoy el patrocinio vive donde está la audiencia: <strong>al aire.</strong> En la radio matutina y en los videos de YouTube. Es un modelo que ya da resultado, y no hay que cambiarlo.</p>
+        <p class="body">La web, en cambio, no participa de ese patrocinio. No tiene espacios pensados para una marca, se ve como una plantilla genérica, y no hay forma de mostrarle al patrocinador que su marca se vio. El logo aparece suelto en la cabecera y termina marcando el color de todo el sitio.</p>
+        <p class="body">Un sitio profesional ayuda a ese mismo patrocinio. <strong>Le da a la marca un lugar ordenado y con buena imagen</strong>, y suma un canal más además del aire. La misma marca que suena en los programas, ahora también en la web.</p>
+      </div>
+
+      <div>
+        <div class="eyebrow" style="color:var(--klein-mid);margin-bottom:3mm;">Lo que falta hoy</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:3.2mm;">
+          <li class="feat"><span class="fb"></span><span><strong>Sin espacios para la marca</strong> — el patrocinador es un logo suelto, no un lugar pensado para él.</span></li>
+          <li class="feat"><span class="fb"></span><span><strong>Imagen de plantilla</strong> — la web se ve genérica, y eso le resta valor a la marca que la acompaña.</span></li>
+          <li class="feat"><span class="fb"></span><span><strong>Sin forma de mostrar resultados</strong> — hoy no se le puede mostrar al patrocinador cuánta gente pasó por la página.</span></li>
+          <li class="feat"><span class="fb"></span><span><strong>La web fuera del trato</strong> — el patrocinio vive solo al aire; la página no aporta nada.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <figure style="margin:5mm 0 0;max-width:104mm;">
+      <div style="border:1px solid var(--klein-soft);background:var(--paper-pure);overflow:hidden;border-radius:2mm;-webkit-print-color-adjust:exact;print-color-adjust:exact;">
+        <img src="assets/proto-sponsor.png" width="1206" height="486" style="display:block;width:100%;height:auto;" alt="Módulo del prototipo de Habla Deportes: a la izquierda el contenido editorial de un partido de la Selección Colombia; a la derecha un espacio de sponsor claramente rotulado como Publicidad">
+      </div>
+      <p class="pie" style="margin-top:2.5mm;max-width:150mm;">Módulo del prototipo: el contenido del partido y un espacio de patrocinio —rotulado y con buena imagen— conviven sin estorbarse. Fuente: diagnóstico de arquitectura de contenido y auditoría técnica/SEO, julio 2026.</p>
+    </figure>
+
+    <div class="mt-a"></div>
+    <div class="pull" style="font-size:30pt;margin-bottom:13mm;">
+      Hoy el patrocinio suena.
+      <span class="l2">Mañana también se ve.</span>
+    </div>
+  </div>
+
+  <div class="folio">
+    <span class="wm"><svg class="wm-svg" viewBox="0 0 171.5 68.8" role="img" aria-label="Out."><use href="#wm-out"></use></svg> Studio — Dossier Habla Deportes</span>
+    <span>07 / 10</span>
+  </div>
+</section>
+
+<!-- ==================================================================
+     PÁGINA 8 — 03 (continuación) / Herramientas y el círculo del SEO
+     Excepción cálida: el número de la ficha 05 (medición reportable)
+================================================================== -->
+<section class="page" aria-label="03 Publicidad — herramientas y SEO">
+  <div class="pad">
+    <div class="kicker"><span class="num">03</span><span class="lbl">Cómo se maneja</span></div>
+
+    <h1 class="h1" style="margin-top:5mm;max-width:174mm;font-size:31pt;">Espacios de patrocinio ordenados y fáciles de manejar.</h1>
+    <p class="lede" style="margin-top:4mm;max-width:168mm;font-size:11.5pt;">Tres ideas simples. Todas le suman valor al patrocinio, y todas se manejan desde WordPress sin llamar a un programador.</p>
+
+    <div class="fichas8" style="margin-top:8mm;display:flex;flex-direction:column;">
+      <article class="ficha">
+        <div class="fnum">01</div>
+        <div class="fbody">
+          <h3 class="ftitle">Un lugar más para el mismo patrocinador.</h3>
+          <p class="fdesc">Cada programa tendrá su propia página. Ahí puede ir un “presentado por” con la marca del patrocinador. La misma marca que suena al aire, ahora también presente en la web.</p>
+        </div>
+      </article>
+      <article class="ficha">
+        <div class="fnum">02</div>
+        <div class="fbody">
+          <h3 class="ftitle">Espacios ordenados y con buena imagen.</h3>
+          <p class="fdesc">Bloques de patrocinio claros y bien puestos, no un logo suelto. Se cambian desde WordPress subiendo un logo y un enlace: sin tocar código y sin llamar a un programador.</p>
+        </div>
+      </article>
+      <article class="ficha">
+        <div class="fnum warm">03</div>
+        <div class="fbody">
+          <h3 class="ftitle">Mostrarle al patrocinador que su marca se ve.</h3>
+          <p class="fdesc">Algo simple: cuánta gente visita la página. Hoy no hay forma de mostrarlo. Con la web, sí — y eso ayuda a mantener contento al patrocinador y a sostener el acuerdo.</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="mt-a"></div>
+    <div class="seo-box">
+      <div class="eyebrow" style="margin-bottom:2mm;">Y algo más</div>
+      <p style="font-family:var(--display);font-weight:600;font-size:14pt;letter-spacing:-.02em;line-height:1.2;color:var(--paper-pure);">Si la web aparece en Google, la gente la encuentra y entra. Y cuanta más gente entra, más personas ven al patrocinador: esos espacios valen más.</p>
+      <p style="font-family:var(--display);font-weight:700;font-size:15pt;letter-spacing:-.02em;line-height:1.12;color:var(--paper-pure);margin-top:5mm;padding-top:4.5mm;border-top:1px solid rgba(200,205,240,.3);">Más visitas. Más ojos sobre el patrocinador.</p>
+    </div>
+    <p class="pie" style="margin-top:3mm;margin-bottom:3mm;">Fuente: recomendaciones del diagnóstico técnico y manejo de patrocinadores en el benchmark de competencia, julio 2026.</p>
+  </div>
+
+  <div class="folio">
+    <span class="wm"><svg class="wm-svg" viewBox="0 0 171.5 68.8" role="img" aria-label="Out."><use href="#wm-out"></use></svg> Studio — Dossier Habla Deportes</span>
+    <span>08 / 10</span>
+  </div>
+</section>
+
+<!-- ==================================================================
+     PÁGINA 9 — 04 / Alcance y fases
+     Excepción cálida: el marcador "Siguiente" de la Fase 3
+================================================================== -->
+<section class="page" aria-label="04 Alcance y fases">
+  <div class="pad">
+    <div class="kicker"><span class="num">04</span><span class="lbl">Alcance y fases</span></div>
+
+    <h1 class="h1" style="margin-top:6mm;">Dónde estamos y qué sigue.</h1>
+    <p class="lede" style="margin-top:4mm;max-width:158mm;">
+      El trabajo va en tres fases. Dos ya están entregadas. La tercera es la implementación.
+    </p>
+
+    <div style="margin-top:11mm;display:flex;flex-direction:column;gap:0;">
+      <article class="phase">
+        <div class="ph-side">
+          <div class="ph-n">Fase 1</div>
+          <div class="ph-state done">Entregado</div>
+        </div>
+        <div class="ph-body">
+          <h3 class="ph-title">Diagnóstico</h3>
+          <p class="body">Auditoría completa del sitio actual: experiencia, técnica y SEO, arquitectura de contenido y competencia. Cuatro miradas independientes, un solo veredicto. Documento consolidado listo.</p>
+        </div>
+      </article>
+      <article class="phase">
+        <div class="ph-side">
+          <div class="ph-n">Fase 2</div>
+          <div class="ph-state done">Entregado</div>
+        </div>
+        <div class="ph-body">
+          <h3 class="ph-title">Prototipo HTML navegable</h3>
+          <p class="body">El rediseño construido como prototipo de alta fidelidad. Navegable, responsive y desplegado en línea (Netlify). No es una imagen: se puede recorrer y probar. Incluye home, sección, artículo, video, programas y en vivo.</p>
+        </div>
+      </article>
+      <article class="phase next">
+        <div class="ph-side">
+          <div class="ph-n">Fase 3</div>
+          <!-- Único acento cálido: la fase que sigue -->
+          <div class="ph-state next">Siguiente</div>
+        </div>
+        <div class="ph-body">
+          <h3 class="ph-title">Implementación en WordPress</h3>
+          <p class="body">Llevar el prototipo aprobado a producción: tema propio (sin arrastrar el demo actual), tipos de contenido y taxonomías reales (equipos, torneos, temas), plugin de SEO para escalar el schema, y limpieza del contenido demo. Con estimación aparte.</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="mt-a"></div>
+    <div style="background:var(--klein-deep);color:var(--paper-pure);padding:6mm 7mm;border-radius:2mm;-webkit-print-color-adjust:exact;print-color-adjust:exact;">
+      <div class="eyebrow" style="color:var(--klein-soft);margin-bottom:2mm;">Nota de estado</div>
+      <p style="font-family:var(--display);font-weight:600;font-size:14pt;letter-spacing:-.02em;line-height:1.18;">
+        Lo que estás viendo no es un plan. Las fases 1 y 2 ya están hechas. Falta decidir la tres.
+      </p>
+    </div>
+    <p class="pie" style="margin-top:4mm;">Fase 2 desplegada y versionada en repositorio público, julio 2026.</p>
+  </div>
+
+  <div class="folio">
+    <span class="wm"><svg class="wm-svg" viewBox="0 0 171.5 68.8" role="img" aria-label="Out."><use href="#wm-out"></use></svg> Studio — Dossier Habla Deportes</span>
+    <span>09 / 10</span>
+  </div>
+</section>
+
+<!-- ==================================================================
+     PÁGINA 8 — Cierre
+     Excepción cálida: 2ª línea del H1 + el punto del wordmark
+================================================================== -->
+<section class="page" aria-label="Cierre">
+  <div class="plate">
+    <img src="assets/botanica.png" alt="Lámina botánica de cierre de Out.: peonías azules y mangos">
+    <div style="position:absolute;inset:0;background:
+      linear-gradient(160deg, rgba(20,30,92,.90) 0%, rgba(20,30,92,.82) 40%, rgba(20,30,92,.66) 72%, rgba(27,47,204,.34) 100%);
+      -webkit-print-color-adjust:exact;print-color-adjust:exact;"></div>
+  </div>
+
+  <div class="pad" style="color:var(--paper-pure);">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;">
+      <span class="eyebrow" style="color:var(--klein-soft);">Hablemos</span>
+      <span class="wm on-blue" style="font-size:15pt;"><svg class="wm-svg" viewBox="0 0 171.5 68.8" role="img" aria-label="Out."><use href="#wm-out"></use></svg></span>
+    </div>
+
+    <div style="margin-top:14mm;max-width:172mm;">
+      <h1 style="font-family:var(--display);font-weight:800;letter-spacing:-.04em;line-height:.98;font-size:38pt;color:var(--paper-pure);">
+        Hoy Habla Deportes trabaja para YouTube.
+      </h1>
+      <h2 style="font-family:var(--display);font-weight:800;letter-spacing:-.04em;line-height:.98;font-size:38pt;color:var(--carne);margin-top:2mm;">
+        El rediseño hace que YouTube trabaje para Habla Deportes.
+      </h2>
+    </div>
+
+    <p style="font-family:var(--body);font-weight:400;font-size:11.5pt;line-height:1.55;color:var(--klein-soft);margin-top:11mm;max-width:150mm;">
+      El activo ya está: video, radio y una hinchada fiel a Junior y a la Selección. Lo que faltaba era una casa que lo retenga, lo posicione y lo haga vendible. Eso ya existe como prototipo. El siguiente paso es ponerlo en producción.
+    </p>
+
+    <div style="display:flex;align-items:baseline;gap:8mm;margin-top:10mm;">
+      <span style="font-family:var(--display);font-weight:700;font-size:20pt;letter-spacing:-.03em;color:var(--paper-pure);">Hablemos.</span>
+      <span style="font-family:var(--body);font-weight:500;font-size:11pt;color:var(--klein-soft);border-bottom:1.5px solid var(--klein-soft);padding-bottom:1mm;">Ver el prototipo</span>
+    </div>
+
+    <div class="mt-a"></div>
+
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:10mm;padding-top:6mm;border-top:1px solid rgba(200,205,240,.35);margin-bottom:2mm;">
+      <div>
+        <div class="wm on-blue" style="font-size:22pt;margin-bottom:4mm;"><svg class="wm-svg" viewBox="0 0 171.5 68.8" role="img" aria-label="Out."><use href="#wm-out"></use></svg> Studio</div>
+        <p style="font-family:var(--body);font-weight:400;font-size:9.5pt;line-height:1.55;color:var(--klein-soft);max-width:110mm;">
+          Oscar Díaz — UX/UI y desarrollo WordPress/Shopify, potenciado con IA.<br>
+          oscar.diaz@out-studio.net · +57 300 565 8674<br>
+          Bogotá
+        </p>
+      </div>
+      <div style="text-align:right;">
+        <span style="font-family:var(--display);font-weight:700;font-size:14pt;letter-spacing:-.02em;color:var(--klein-soft);">Never the usual.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+/* ---------- Fichas (pág. 4) ---------- */
+.ficha{
+  display:grid;grid-template-columns:16mm 1fr;gap:5mm;
+  padding:4mm 0;border-top:1px solid var(--klein-soft);
+}
+.ficha:first-child{border-top:1px solid var(--klein);}
+.fnum{
+  font-family:var(--display);font-weight:800;font-size:22pt;letter-spacing:-.03em;
+  color:var(--klein-soft);line-height:.9;font-variant-numeric:tabular-nums;
+}
+.ftitle{
+  font-family:var(--display);font-weight:700;font-size:12.5pt;letter-spacing:-.02em;
+  color:var(--klein-deep);line-height:1.02;margin-bottom:2.5mm;
+}
+.fcols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6mm;}
+.fcols .flab{
+  display:block;font-family:var(--body);font-weight:600;font-size:7.5pt;
+  color:var(--klein-mid);letter-spacing:.01em;margin-bottom:1mm;
+}
+.fcols p{font-family:var(--body);font-weight:400;font-size:8.6pt;line-height:1.38;color:var(--ink-2);}
+.fcols code{font-family:var(--body);font-weight:500;color:var(--klein);font-size:8pt;}
+
+/* ---------- Feature list (pág. 5) ---------- */
+.feat{display:grid;grid-template-columns:5mm 1fr;gap:2mm;align-items:start;font-size:9.6pt;line-height:1.4;color:var(--ink-2);}
+.feat strong{color:var(--klein-deep);font-weight:600;}
+.feat .fb{width:3mm;height:3mm;border-radius:50%;background:var(--klein);margin-top:1.6mm;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.feat .fb.live{background:var(--carne-deep);box-shadow:0 0 0 1.5mm rgba(242,198,180,.5);}
+
+/* ---------- Antes / Después (pág. 6) ---------- */
+.ba{border:1px solid var(--klein-soft);border-radius:2mm;overflow:hidden;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.ba-head{display:grid;grid-template-columns:1fr 1fr;}
+.ba-h{font-family:var(--display);font-weight:700;font-size:13pt;letter-spacing:-.02em;padding:4mm 6mm;}
+.ba-antes{background:var(--paper);color:var(--muted);border-right:1px solid var(--klein-soft);}
+.ba-despues{background:var(--klein-deep);color:var(--paper-pure);position:relative;}
+.ba-row{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--klein-soft);}
+.ba-a,.ba-d{padding:4.5mm 6mm;font-family:var(--body);font-size:10pt;line-height:1.4;}
+.ba-a{color:var(--muted);border-right:1px solid var(--klein-soft);background:var(--paper);}
+.ba-d{color:var(--klein-deep);font-weight:500;background:var(--paper-pure);}
+
+/* ---------- Sección Publicidad (págs. 7–8) ---------- */
+/* pág. 7: "Lo que cuesta hoy" reutiliza .feat */
+/* pág. 8: fichas compactas reutilizan .ficha con una descripción simple */
+.ficha .fdesc{font-family:var(--body);font-weight:400;font-size:8.7pt;line-height:1.4;color:var(--ink-2);}
+.ficha .fdesc strong{color:var(--klein-deep);font-weight:600;}
+.fnum.warm{color:var(--carne-tinta);}   /* única excepción cálida de la pág. 8 */
+.fichas8 .ficha{padding:2.7mm 0;}       /* fichas más compactas en la pág. 8 */
+.fichas8 .ftitle{margin-bottom:1.8mm;}
+/* Caja del círculo del SEO (pág. 8) */
+.seo-box{background:var(--klein-deep);color:var(--paper-pure);padding:5.5mm 7mm;border-radius:2mm;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.seo-box .eyebrow{color:var(--klein-soft);}
+.chain{list-style:none;display:flex;flex-direction:column;gap:2.4mm;margin-top:3mm;}
+.chain li{display:grid;grid-template-columns:4.5mm 1fr;gap:2mm;align-items:start;font-family:var(--body);font-weight:400;font-size:8.8pt;line-height:1.38;color:var(--klein-soft);}
+.chain li strong{color:var(--paper-pure);font-weight:600;}
+.chain .cb{width:2.2mm;height:2.2mm;border-radius:50%;background:var(--klein-soft);margin-top:1.5mm;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+
+/* ---------- Fases (pág. 9) ---------- */
+.phase{display:grid;grid-template-columns:34mm 1fr;gap:10mm;padding:6mm 0;border-top:1px solid var(--klein-soft);align-items:start;}
+.phase:last-child{border-bottom:1px solid var(--klein-soft);}
+.ph-n{font-family:var(--display);font-weight:800;font-size:15pt;letter-spacing:-.02em;color:var(--klein);}
+.ph-state{font-family:var(--body);font-weight:600;font-size:9pt;margin-top:2mm;display:inline-block;}
+.ph-state.done{color:var(--muted);}
+.ph-state.done::before{content:"✓  ";color:var(--klein-mid);}
+.ph-state.next{color:var(--paper-pure);background:var(--carne-deep);padding:1mm 3mm;border-radius:10mm;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.ph-title{font-family:var(--display);font-weight:700;font-size:15pt;letter-spacing:-.025em;color:var(--klein-deep);margin-bottom:2.5mm;line-height:1.02;}
+.phase.next .ph-title{color:var(--klein-deep);}
+
+@page{size:A4;margin:0;}
+@media print{
+  html,body{background:var(--paper);}
+  .page{margin:0;box-shadow:none;}
+}
+</style>
+
+</body>
+</html>

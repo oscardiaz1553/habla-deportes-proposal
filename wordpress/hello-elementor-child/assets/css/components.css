@@ -1,0 +1,58 @@
+/* ==========================================================================
+   HABLA DEPORTES — Componentes a medida (WordPress / child theme)
+   --------------------------------------------------------------------------
+   Aquí se van portando, UNO A UNO, los componentes del prototipo aprobado
+   (propuesta/html/assets/css/main.css del repo) a medida que se integran
+   en Elementor como bloques HTML/shortcodes:
+
+   [ ] Topbar (marquee móvil / sheen desktop)
+   [ ] Megamenús full-width con hover-intent + acordeón móvil
+   [ ] Hero crossfade con swipe + facade de YouTube
+   [ ] Centro de Partidos (slider con swipe + panel publicidad)
+   [ ] Clips con autoplay muteado por visibilidad
+   [ ] Botones play unificados (ícono redondeado + sombra)
+   [ ] Reproductor de radio "al aire"
+
+   Regla: copiar el bloque de CSS del prototipo tal cual (ya está probado
+   y verificado en responsive) y ajustar solo los selectores si el markup
+   cambia al integrarlo en WordPress.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Grilla de prueba del importador de YouTube — shortcode [hd_videos].
+   (Provisional: la versión final usará las tarjetas .vcard del prototipo.)
+   -------------------------------------------------------------------------- */
+.hd-videos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+}
+.hd-video-card {
+  display: block;
+  text-decoration: none;
+  color: var(--color-text, #17222E);
+}
+.hd-video-card__thumb img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+}
+.hd-video-card__title {
+  display: block;
+  margin-top: 10px;
+  font-family: var(--font-display, 'Archivo', sans-serif);
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.3;
+  color: var(--color-text, #17222E);
+}
+.hd-video-card:hover .hd-video-card__title { color: var(--hover-orange, #E36209); }
+.hd-video-card__date {
+  display: block;
+  margin-top: 4px;
+  font-size: .85rem;
+  color: var(--color-text-muted, #5E6B77);
+}

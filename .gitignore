@@ -19,3 +19,9 @@ propuesta/html/assets/img/fondo_pelotasyletras.png
 propuesta/html/assets/img/bandera_junior.png
 propuesta/html/assets/img/Banner-Drogueria-Inglesa.png
 propuesta/html/assets/img/image002.webp
+
+# WordPress: imagenes DUPLICADAS de propuesta/html/assets/img/ (40 MB).
+# Solo son copias; el codigo si esta versionado. Ver wordpress/README.md
+# para restaurarlas con un comando.
+wordpress/hello-elementor-child/assets/proto/img/
+wordpress/habla-deportes-core/assets/img/partido-*.png

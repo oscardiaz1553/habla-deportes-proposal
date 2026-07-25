@@ -1,0 +1,53 @@
+{
+  "content": [],
+  "settings": {
+    "system_colors": [
+      { "_id": "primary", "title": "Primary", "color": "#17222E" },
+      { "_id": "secondary", "title": "Secondary", "color": "#4A5866" },
+      { "_id": "text", "title": "Text", "color": "#17222E" },
+      { "_id": "accent", "title": "Accent", "color": "#294D6E" }
+    ],
+    "custom_colors": [
+      { "_id": "hdnavyh", "title": "Navy hover", "color": "#335F86" },
+      { "_id": "hdnavyd", "title": "Navy oscuro", "color": "#1E3A55" },
+      { "_id": "hdazuli", "title": "Azul interacción", "color": "#3E729F" },
+      { "_id": "hdrojov", "title": "Rojo vivo", "color": "#D20000" },
+      { "_id": "hdbgpag", "title": "Fondo página", "color": "#F4F6F8" },
+      { "_id": "hdtxtat", "title": "Texto atenuado", "color": "#5E6B77" },
+      { "_id": "hdnaran", "title": "Naranja hover", "color": "#E36209" }
+    ],
+    "system_typography": [
+      {
+        "_id": "primary",
+        "title": "Primary",
+        "typography_typography": "custom",
+        "typography_font_family": "Archivo",
+        "typography_font_weight": "700"
+      },
+      {
+        "_id": "secondary",
+        "title": "Secondary",
+        "typography_typography": "custom",
+        "typography_font_family": "Archivo",
+        "typography_font_weight": "600"
+      },
+      {
+        "_id": "text",
+        "title": "Text",
+        "typography_typography": "custom",
+        "typography_font_family": "Inter",
+        "typography_font_weight": "400"
+      },
+      {
+        "_id": "accent",
+        "title": "Accent",
+        "typography_typography": "custom",
+        "typography_font_family": "Inter",
+        "typography_font_weight": "600"
+      }
+    ],
+    "custom_typography": [],
+    "default_generic_fonts": "Sans-serif"
+  },
+  "metadata": {}
+}

@@ -1,0 +1,22 @@
+{
+  "name": "habla-deportes-kit",
+  "title": "Habla Deportes — Identidad",
+  "description": "Colores y tipografías globales de Habla Deportes (navy #294D6E, Archivo + Inter).",
+  "author": "Out. Studio — Oscar Díaz",
+  "version": "3.0",
+  "elementor_version": "4.2.0",
+  "created": "2026-07-25 12:00:00",
+  "thumbnail": false,
+  "site": "http://localhost",
+  "site-settings": {
+    "theme": false,
+    "globalColors": true,
+    "globalFonts": true,
+    "themeStyleSettings": true,
+    "generalSettings": true,
+    "experiments": false,
+    "customCode": false,
+    "customIcons": false,
+    "customFonts": false
+  }
+}

@@ -1,0 +1,11 @@
+/*
+Theme Name: Hello Elementor Child — Habla Deportes
+Description: Child theme de Hello Elementor para Habla Deportes. Carga los tokens de diseño del prototipo aprobado y los componentes a medida (hero, centro de partidos, clips, topbar, megamenús). Desarrollado por Out. Studio.
+Author: Out. Studio — Oscar Díaz
+Template: hello-elementor
+Version: 1.0.0
+Text Domain: hello-elementor-child
+*/
+
+/* Los estilos viven en assets/css/ (tokens.css y components.css),
+   encolados desde functions.php. Este archivo solo declara el tema. */

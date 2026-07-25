@@ -1,0 +1,358 @@
+/* ==========================================================================
+   HABLA DEPORTES — Megamenú de navegación (re-temizado a NAVY)
+   --------------------------------------------------------------------------
+   Retoma la base huérfana (assets/css/nav.css + nav.js, paleta oscura/naranja)
+   y la adapta al sistema CLARO EDITORIAL + navy #294D6E de este prototipo.
+
+   Estructura:
+     - Junior / Fútbol / Programas  → megamenús multicolumna
+         · Fútbol  = panel FULL-WIDTH (anclado a .site-header, puente por
+           align-self:stretch en el <li>).
+         · Junior / Programas = paneles anclados al <li> (puente por ::after).
+     - Más → dropdown SIMPLE de 1 columna (anclado, puente por ::after).
+
+   Anti-cierre inmediato (ver megamenu.js): el PUENTE geométrico mantiene el
+   cursor dentro de la región interactiva; el DELAY de cierre (280ms cancelable)
+   es la red de seguridad para trayectorias en diagonal. El JS es dueño de los
+   temporizadores (apertura 120ms / cierre 280ms); el CSS solo estiliza .is-open.
+
+   Se carga DESPUÉS de main.css en las 6 páginas. Cache-bust ?v= al editar.
+   ========================================================================== */
+
+/* ===== li disparador ===================================================== */
+.mm { position: relative; }
+
+/* Fútbol (mega full-width): el <li> se estira a toda la altura de la barra
+   para que NO exista hueco entre el texto del ítem y el borde superior del
+   panel (puente geométrico). Al ser position:static, su panel absoluto se
+   resuelve contra .site-header (sticky) = ancho de viewport. */
+.mm--full {
+  position: static;
+  align-self: stretch;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Puente invisible para los paneles anclados (Junior / Programas / Más):
+   cubre el margen vertical entre el disparador y el panel para que el cursor
+   nunca caiga en un hueco muerto al bajar en línea recta. Solo activo cuando
+   el panel está abierto, para no interceptar clics sobre el hero cuando está
+   cerrado. */
+.mm--anchored::after,
+.mm--simple::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: -8px;
+  right: -8px;
+  height: 16px;
+  display: none;
+}
+.mm--anchored.is-open::after,
+.mm--simple.is-open::after { display: block; }
+
+/* Caret del disparador (SVG .nav-link__caret ya existe en main.css) */
+.nav-link__caret { transition: transform var(--dur-fast) var(--ease-out); }
+.mm-trigger[aria-expanded="true"] .nav-link__caret { transform: rotate(180deg); }
+/* Mantener el subrayado del nav-link mientras el panel está abierto */
+.mm-trigger[aria-expanded="true"]::after { transform: scaleX(1); }
+
+/* ===== Panel ============================================================= */
+.mm-panel {
+  position: absolute;
+  top: 100%;
+  z-index: var(--z-dropdown);          /* 300 — sobre el contenido de página */
+  margin-top: 12px;
+  background: var(--navy-800);         /* navy sólido, coherente con el header */
+  border: 1px solid var(--color-border-on-brand);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition: opacity var(--dur-base) var(--ease-out),
+              transform var(--dur-base) var(--ease-out),
+              visibility 0s linear var(--dur-base);
+}
+.mm.is-open > .mm-panel {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+  transition: opacity var(--dur-base) var(--ease-out),
+              transform var(--dur-base) var(--ease-out),
+              visibility 0s linear 0s;
+}
+
+/* Alineación horizontal del panel anclado (evita desbordes de viewport):
+   ítems de la izquierda abren hacia la derecha; ítems de la derecha, al revés. */
+.mm-panel--start { left: 0; }
+.mm-panel--end   { right: 0; }
+
+/* Panel full-width (Fútbol): se resuelve contra .site-header (el <li> es
+   position:static), así que left:0/right:0 = ancho del header = viewport, sin
+   desbordar por el scrollbar (evita el corte de 100vw). margin-top:0 = pegado
+   al borde inferior del header (puente sin hueco). */
+.mm-panel--full {
+  left: 0;
+  right: 0;
+  margin-top: 0;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  border-top: 0;
+}
+
+/* ===== Contenido interno ================================================ */
+.mm-panel__inner { padding: var(--space-6) var(--space-6) var(--space-7); }
+
+/* Megamenú anclado 2 columnas + destacado (Junior / Programas).
+   Ancho contenido para que el panel de Junior (alineado a la izquierda del
+   ítem) no desborde el borde derecho del viewport en desktop angosto (1024px). */
+.mm-panel--2 { width: min(94vw, 560px); max-width: calc(100vw - 24px); }
+.mm-panel__inner--2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: var(--space-7);
+  row-gap: var(--space-6);
+}
+.mm-panel__inner--2 .mm-feat { grid-column: 1 / -1; }
+
+/* Mega full-width: TODOS los megamenús (Junior / Fútbol / Programas / Más).
+   Dos pistas fijas — grupo de columnas de enlaces (flexible) + card destacada
+   de ancho constante a la derecha. Así los 4 paneles comparten EXACTAMENTE el
+   mismo ancho de card y su misma posición, y solo varía el nº de columnas de
+   enlaces (2 ó 3) según el contenido, sin dejar huecos. */
+.mm-panel__inner--full {
+  padding-block: var(--space-7);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 340px);
+  gap: var(--space-8);
+  align-items: start;
+}
+
+/* Grupo de columnas de enlaces (izquierda). El nº de columnas se ajusta por
+   menú para llenar el ancho sin huecos: --3 (Fútbol) / --2 (Junior, Programas,
+   Más). Tipografía y encabezados idénticos en los cuatro. */
+.mm-cols {
+  display: grid;
+  gap: var(--space-6) var(--space-8);
+  align-items: start;
+}
+.mm-cols--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.mm-cols--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+/* ===== Columnas y enlaces =============================================== */
+.mm-col__title {
+  margin: 0 0 var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--color-border-on-brand);
+  font-family: var(--font-display);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-kicker);
+  color: var(--color-on-brand-muted);
+}
+
+.mm-link {
+  display: block;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  color: rgba(255, 255, 255, 0.92);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-snug);
+  transition: background var(--dur-fast) var(--ease-out),
+              color var(--dur-fast) var(--ease-out);
+}
+.mm-link:hover { background: var(--color-surface-on-brand); color: #fff; }
+.mm-link:focus-visible {
+  outline: none;
+  background: var(--color-surface-on-brand);
+  color: #fff;
+  box-shadow: inset 0 0 0 2px var(--navy-300);
+}
+/* Enlaces externos (redes) del menú "Más": chevron sutil */
+.mm-link--ext { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); }
+.mm-link--ext svg { width: 15px; height: 15px; flex: none; opacity: .6; }
+
+/* Texto informativo NO enlazable (horario del show) */
+.mm-note {
+  display: block;
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--fs-xs);
+  color: var(--color-on-brand-muted);
+  line-height: var(--lh-normal);
+}
+
+/* Separador del dropdown simple */
+.mm-divider {
+  height: 1px;
+  margin: var(--space-2) var(--space-3);
+  background: var(--color-border-on-brand);
+}
+
+/* ===== Card destacada ==================================================== */
+.mm-feat {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+  padding: var(--space-3);
+  background: var(--color-surface-on-brand);
+  border: 1px solid var(--color-border-on-brand);
+  border-radius: var(--radius-md);
+  transition: background var(--dur-fast) var(--ease-out),
+              border-color var(--dur-fast) var(--ease-out);
+}
+.mm-feat:hover { background: rgba(255, 255, 255, 0.1); border-color: var(--navy-300); }
+.mm-feat:focus-visible { outline: none; border-color: var(--navy-300); box-shadow: 0 0 0 2px var(--navy-300); }
+.mm-feat__body { flex: 1 1 auto; min-width: 0; }
+.mm-feat__media {
+  position: relative;
+  flex: none;
+  width: 116px;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--navy-900);
+}
+.mm-feat__media img { width: 100%; height: 100%; object-fit: cover; }
+.mm-feat__eyebrow {
+  display: block;
+  font-size: var(--fs-2xs);
+  font-weight: var(--fw-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-kicker);
+  color: var(--navy-200);
+}
+.mm-feat__title {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-base);
+  line-height: var(--lh-snug);
+  color: #fff;
+}
+
+/* Destacado VERTICAL — base común de la card del mega full-width en los 4
+   menús (Junior / Fútbol / Programas / Más): imagen arriba (16/9) + cuerpo.
+   Misma proporción y tamaño en todos para consistencia visual. */
+.mm-feat--wide { flex-direction: column; align-items: stretch; gap: var(--space-3); }
+.mm-feat--wide .mm-feat__media { width: 100%; aspect-ratio: 16 / 9; }
+
+/* Badge "AL AIRE AHORA" (Programas) — superpuesto sobre la imagen de la card */
+.mm-feat--live .mm-feat__media .mm-feat__live { position: absolute; top: 8px; left: 8px; }
+.mm-feat__live {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--live-600);
+  color: #fff;
+  font-size: var(--fs-2xs);
+  font-weight: var(--fw-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-kicker);
+}
+.mm-feat__dot {
+  width: 7px; height: 7px; border-radius: 50%; background: #fff; flex: none;
+  animation: mmLivePulse 1.6s ease-in-out infinite;
+}
+@keyframes mmLivePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.6); }
+  50%      { box-shadow: 0 0 0 5px rgba(255, 255, 255, 0); }
+}
+.mm-feat__cta {
+  display: inline-flex; align-items: center; gap: 6px;
+  color: var(--navy-100);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+}
+.mm-feat__cta svg { width: 16px; height: 16px; }
+.mm-feat:hover .mm-feat__cta { color: #fff; }
+
+/* ===== Header sólido mientras un panel está abierto =====================
+   En la home el header arranca transparente sobre el hero; con un panel
+   abierto forzamos el fondo navy sólido (igual que .is-stuck) para que el
+   panel no cuelgue de una barra transparente. En páginas internas ya es
+   sólido, así que esto es inofensivo/redundante. */
+.site-header.mm-open {
+  background-color: var(--color-surface-brand);
+  background-image: none;
+  box-shadow: var(--shadow-md);
+  z-index: var(--z-dropdown);          /* asegura el panel por encima del contenido */
+}
+
+/* ===== Acordeón dentro del menú móvil (#mobile-menu) ====================
+   Reutiliza el patrón .mm-trigger/.mm-group del nav.js huérfano, adaptado al
+   overlay claro actual. El disparador es un <button> (no navega); el grupo se
+   expande con el truco de grid (0fr→1fr), sin medir alturas en JS. */
+.mm-acc { display: flex; flex-direction: column; }
+.mm-acc-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: var(--touch-min);
+  padding: var(--space-3) var(--space-2);
+  font-family: inherit;
+  font-size: var(--fs-md);
+  font-weight: var(--fw-medium);
+  color: var(--color-text);
+  text-align: left;
+  background: none;
+  border: 0;
+  border-bottom: var(--border-hairline) solid var(--color-border-subtle);
+  cursor: pointer;
+}
+.mm-acc-trigger:hover { color: var(--color-accent-text); }
+.mm-acc-trigger:focus-visible { outline: 2px solid var(--color-focus-ring); outline-offset: -2px; border-radius: var(--radius-sm); }
+.mm-acc-caret {
+  width: 20px; height: 20px; flex: none;
+  color: var(--color-text-muted);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+.mm-acc-trigger[aria-expanded="true"] .mm-acc-caret { transform: rotate(180deg); }
+
+.mm-acc-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+  visibility: hidden;
+  transition: grid-template-rows var(--dur-base) var(--ease-out),
+              visibility 0s linear var(--dur-base);
+}
+.mm-acc-panel.is-open {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition: grid-template-rows var(--dur-base) var(--ease-out),
+              visibility 0s;
+}
+.mm-acc-inner { min-height: 0; overflow: hidden; }
+.mm-acc-inner .mobile-menu__link {
+  padding-left: var(--space-6);
+  font-size: var(--fs-base);
+  color: var(--color-text-secondary);
+}
+.mm-acc-inner .mm-acc-note {
+  display: block;
+  padding: var(--space-2) var(--space-2) var(--space-2) var(--space-6);
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+  border-bottom: var(--border-hairline) solid var(--color-border-subtle);
+}
+
+/* ===== Movimiento reducido ============================================== */
+@media (prefers-reduced-motion: reduce) {
+  .mm-panel,
+  .mm.is-open > .mm-panel { transition: none; transform: none; }
+  .nav-link__caret,
+  .mm-acc-caret,
+  .mm-acc-panel,
+  .mm-feat,
+  .mm-link { transition: none; }
+  .mm-feat__dot { animation: none; }
+}

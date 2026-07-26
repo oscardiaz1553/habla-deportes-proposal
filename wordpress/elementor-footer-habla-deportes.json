@@ -1,0 +1,939 @@
+{
+  "title": "Habla Deportes — Footer",
+  "type": "footer",
+  "version": "0.4",
+  "page_settings": {
+    "custom_css": "/* ===== Footer Habla Deportes — CSS de la plantilla ===== */\n\n/* 1. Grilla de 4 columnas.\n   El control \"Columnas\" del contenedor grid ya lleva la unidad Personalizada\n   con estos mismos valores; este bloque es la red de seguridad por si la\n   unidad no se serializa al importar. Sin !important: si el control funciona,\n   manda el control. */\n.hd-footer.hd-footer-grid {\n\t--e-con-grid-template-columns: 1.6fr 1fr 1fr 1.2fr;\n\t--e-con-grid-template-rows: auto;\n}\n@media (max-width: 1023px) {\n\t.hd-footer.hd-footer-grid { --e-con-grid-template-columns: 1.4fr 1fr 1fr; }\n}\n@media (max-width: 767px) {\n\t.hd-footer.hd-footer-grid { --e-con-grid-template-columns: 1fr; }\n}\n\n/* 2. Franja inferior: la línea separadora debe medir lo mismo que el\n   contenido (1280 px), no todo el ancho de la pantalla. Por eso va sobre\n   .e-con-inner y no sobre el contenedor. */\n.hd-footer-bottom > .e-con-inner {\n\tborder-top: 1px solid rgba(255, 255, 255, .15);\n\tpadding-block: 20px;\n}\n\n/* 3. Enlaces del footer (cualquiera que no venga de la lista de iconos). */\n.hd-footer a,\n.hd-footer-bottom a { color: rgba(255, 255, 255, .72); }\n.hd-footer a:hover,\n.hd-footer-bottom a:hover { color: #FFFFFF; }\n\n/* 4. La bajada de marca no debe pasar de ~34 caracteres por línea. */\n.hd-footer-tagline { max-width: 34ch; }\n\n/* 5. Iconos sociales: sin fondo ni borde, solo el glifo en blanco. */\n.hd-footer-social .elementor-social-icon {\n\tbackground-color: transparent;\n\tborder: 0;\n}\n.hd-footer-social .elementor-social-icon:hover { opacity: .75; }\n\n/* 6. Área táctil mínima en los enlaces de las listas. */\n.hd-footer .elementor-icon-list-item > a { min-height: 24px; }\n\n/* Crédito de autoría (Out. Studio) */\n#hd-credit a{color:inherit;text-decoration:none;transition:color .2s}\n#hd-credit a:hover{color:#fff}\n"
+  },
+  "content": [
+    {
+      "id": "1a2b3da",
+      "elType": "container",
+      "isInner": false,
+      "settings": {
+        "container_type": "grid",
+        "content_width": "boxed",
+        "boxed_width": {
+          "unit": "px",
+          "size": 1280,
+          "sizes": []
+        },
+        "grid_columns_grid": {
+          "unit": "custom",
+          "size": "1.6fr 1fr 1fr 1.2fr",
+          "sizes": []
+        },
+        "grid_columns_grid_tablet": {
+          "unit": "custom",
+          "size": "1.4fr 1fr 1fr",
+          "sizes": []
+        },
+        "grid_columns_grid_mobile": {
+          "unit": "custom",
+          "size": "1fr",
+          "sizes": []
+        },
+        "grid_rows_grid": {
+          "unit": "custom",
+          "size": "auto",
+          "sizes": []
+        },
+        "grid_rows_grid_tablet": {
+          "unit": "custom",
+          "size": "auto",
+          "sizes": []
+        },
+        "grid_rows_grid_mobile": {
+          "unit": "custom",
+          "size": "auto",
+          "sizes": []
+        },
+        "grid_gaps": {
+          "unit": "px",
+          "column": "40",
+          "row": "40",
+          "isLinked": true
+        },
+        "grid_gaps_tablet": {
+          "unit": "px",
+          "column": "32",
+          "row": "32",
+          "isLinked": true
+        },
+        "grid_gaps_mobile": {
+          "unit": "px",
+          "column": "32",
+          "row": "32",
+          "isLinked": true
+        },
+        "grid_auto_flow": "row",
+        "grid_align_items": "start",
+        "grid_justify_items": "stretch",
+        "background_background": "classic",
+        "background_color": "#294D6E",
+        "__globals__": {
+          "background_color": "globals/colors?id=accent"
+        },
+        "margin": {
+          "unit": "px",
+          "top": "80",
+          "right": "0",
+          "bottom": "0",
+          "left": "0",
+          "isLinked": false
+        },
+        "margin_mobile": {
+          "unit": "px",
+          "top": "56",
+          "right": "0",
+          "bottom": "0",
+          "left": "0",
+          "isLinked": false
+        },
+        "padding": {
+          "unit": "px",
+          "top": "48",
+          "right": "48",
+          "bottom": "40",
+          "left": "48",
+          "isLinked": false
+        },
+        "padding_tablet": {
+          "unit": "px",
+          "top": "48",
+          "right": "24",
+          "bottom": "40",
+          "left": "24",
+          "isLinked": false
+        },
+        "padding_mobile": {
+          "unit": "px",
+          "top": "40",
+          "right": "16",
+          "bottom": "32",
+          "left": "16",
+          "isLinked": false
+        },
+        "css_classes": "hd-footer hd-footer-grid"
+      },
+      "elements": [
+        {
+          "id": "1a2b3c6",
+          "elType": "container",
+          "isInner": false,
+          "settings": {
+            "container_type": "flex",
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_justify_content": "flex-start",
+            "flex_align_items": "flex-start",
+            "flex_gap": {
+              "unit": "px",
+              "column": "0",
+              "row": "0",
+              "isLinked": true
+            },
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": false
+            }
+          },
+          "elements": [
+            {
+              "id": "1a2b3c0",
+              "elType": "widget",
+              "widgetType": "theme-site-logo",
+              "settings": {
+                "image_size": "full",
+                "link_to": "site_url",
+                "align": "left",
+                "height": {
+                  "unit": "px",
+                  "size": 34,
+                  "sizes": []
+                },
+                "_flex_size": "none",
+                "custom_css": "selector img { width: auto; max-width: none; display: block; }"
+              },
+              "elements": []
+            },
+            {
+              "id": "1a2b3c1",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Video, análisis y radio del fútbol colombiano",
+                "header_size": "p",
+                "align": "left",
+                "title_color": "rgba(255,255,255,0.72)",
+                "typography_typography": "custom",
+                "typography_font_family": "Inter",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 15,
+                  "sizes": []
+                },
+                "typography_font_weight": "400",
+                "typography_line_height": {
+                  "unit": "em",
+                  "size": 1.6,
+                  "sizes": []
+                },
+                "_margin": {
+                  "unit": "px",
+                  "top": "16",
+                  "right": "0",
+                  "bottom": "0",
+                  "left": "0",
+                  "isLinked": false
+                },
+                "_css_classes": "hd-footer-tagline"
+              },
+              "elements": []
+            },
+            {
+              "id": "1a2b3c5",
+              "elType": "widget",
+              "widgetType": "social-icons",
+              "settings": {
+                "social_icon_list": [
+                  {
+                    "_id": "1a2b3c2",
+                    "social_icon": {
+                      "value": "fab fa-youtube",
+                      "library": "fa-brands"
+                    },
+                    "link": {
+                      "url": "https://www.youtube.com/@HablaDeportesRadio",
+                      "is_external": "on",
+                      "nofollow": "",
+                      "custom_attributes": ""
+                    },
+                    "item_icon_color": "default"
+                  },
+                  {
+                    "_id": "1a2b3c3",
+                    "social_icon": {
+                      "value": "fab fa-instagram",
+                      "library": "fa-brands"
+                    },
+                    "link": {
+                      "url": "#",
+                      "is_external": "",
+                      "nofollow": "",
+                      "custom_attributes": ""
+                    },
+                    "item_icon_color": "default"
+                  },
+                  {
+                    "_id": "1a2b3c4",
+                    "social_icon": {
+                      "value": "fab fa-twitter",
+                      "library": "fa-brands"
+                    },
+                    "link": {
+                      "url": "#",
+                      "is_external": "",
+                      "nofollow": "",
+                      "custom_attributes": ""
+                    },
+                    "item_icon_color": "default"
+                  }
+                ],
+                "shape": "circle",
+                "align": "left",
+                "icon_color": "custom",
+                "icon_primary_color": "rgba(255,255,255,0)",
+                "icon_secondary_color": "#FFFFFF",
+                "icon_size": {
+                  "unit": "px",
+                  "size": 20,
+                  "sizes": []
+                },
+                "icon_padding": {
+                  "unit": "px",
+                  "size": 0,
+                  "sizes": []
+                },
+                "icon_spacing": {
+                  "unit": "px",
+                  "size": 18,
+                  "sizes": []
+                },
+                "hover_primary_color": "rgba(255,255,255,0)",
+                "hover_secondary_color": "#FFFFFF",
+                "_margin": {
+                  "unit": "px",
+                  "top": "20",
+                  "right": "0",
+                  "bottom": "0",
+                  "left": "0",
+                  "isLinked": false
+                },
+                "_css_classes": "hd-footer-social"
+              },
+              "elements": []
+            }
+          ]
+        },
+        {
+          "id": "1a2b3ce",
+          "elType": "container",
+          "isInner": false,
+          "settings": {
+            "container_type": "flex",
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_justify_content": "flex-start",
+            "flex_align_items": "flex-start",
+            "flex_gap": {
+              "unit": "px",
+              "column": "0",
+              "row": "0",
+              "isLinked": true
+            },
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": false
+            }
+          },
+          "elements": [
+            {
+              "id": "1a2b3c7",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Secciones",
+                "header_size": "h3",
+                "align": "left",
+                "title_color": "rgba(255,255,255,0.6)",
+                "typography_typography": "custom",
+                "typography_font_family": "Archivo",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 14,
+                  "sizes": []
+                },
+                "typography_font_weight": "700",
+                "typography_text_transform": "uppercase",
+                "typography_letter_spacing": {
+                  "unit": "em",
+                  "size": 0.08,
+                  "sizes": []
+                },
+                "typography_line_height": {
+                  "unit": "em",
+                  "size": 1.3,
+                  "sizes": []
+                },
+                "_margin": {
+                  "unit": "px",
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "16",
+                  "left": "0",
+                  "isLinked": false
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "1a2b3cd",
+              "elType": "widget",
+              "widgetType": "icon-list",
+              "settings": {
+                "view": "traditional",
+                "icon_list": [
+                  {
+                    "_id": "1a2b3c8",
+                    "text": "Junior",
+                    "selected_icon": {
+                      "value": "",
+                      "library": ""
+                    },
+                    "link": {
+                      "url": "http://localhost:8882/equipo/junior/",
+                      "is_external": "",
+                      "nofollow": "",
+                      "custom_attributes": ""
+                    }
+                  },
+                  {
+                    "_id": "1a2b3c9",
+                    "text": "Fútbol",
+                    "selected_icon": {
+                      "value": "",
+                      "library": ""
+                    },
+                    "link": {
+                      "url": "http://localhost:8882/videos/",
+                      "is_external": "",
+                      "nofollow": "",
+                      "custom_attributes": ""
+                    }
+                  },
+                  {
+                    "_id": "1a2b3ca",
+                    "text": "Videos",
+                    "selected_icon": {
+                      "value": "",
+                      "library": ""
+                    },
+                    "link": {
+                      "url": "http://localhost:8882/videos/",
+                      "is_external": "",
+                      "nofollow": "",
+                      "custom_attributes": ""
+                    }
+                  },
+                  {
+                    "_id": "1a2b3cb",
+                    "text": "Clips",
+                    "selected_icon": {
+                      "value": "",
+                      "library": ""
+                    },
+                    "link": {
+                      "url": "http://localhost:8882/tema/clip/",
+                      "is_external": "",
+                      "nofollow": "",
+                      "custom_attributes": ""
+                    }
+                  },
+                  {
+                    "_id": "1a2b3cc",
+                    "text": "Fichajes",
+                    "selected_icon": {
+                      "value": "",
+                      "library": ""
+                    },
+                    "link": {
+                      "url": "http://localhost:8882/tema/fichaje/",
+                      "is_external": "",
+                      "nofollow": "",
+                      "custom_attributes": ""
+                    }
+                  }
+                ],
+                "divider": "",
+                "space_between": {
+                  "unit": "px",
+                  "size": 10,
+                  "sizes": []
+                },
+                "icon_size": {
+                  "unit": "px",
+                  "size": 0,
+                  "sizes": []
+                },
+                "text_indent": {
+                  "unit": "px",
+                  "size": 0,
+                  "sizes": []
+                },
+                "icon_color": "rgba(255,255,255,0.72)",
+                "text_color": "rgba(255,255,255,0.72)",
+                "text_color_hover": "#FFFFFF",
+                "icon_typography_typography": "custom",
+                "icon_typography_font_family": "Inter",
+                "icon_typography_font_size": {
+                  "unit": "px",
+                  "size": 15,
+                  "sizes": []
+                },
+                "icon_typography_font_weight": "400",
+                "icon_typography_line_height": {
+                  "unit": "em",
+                  "size": 1.5,
+                  "sizes": []
+                }
+              },
+              "elements": []
+            }
+          ]
+        },
+        {
+          "id": "1a2b3d2",
+          "elType": "container",
+          "isInner": false,
+          "settings": {
+            "container_type": "flex",
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_justify_content": "flex-start",
+            "flex_align_items": "flex-start",
+            "flex_gap": {
+              "unit": "px",
+              "column": "0",
+              "row": "0",
+              "isLinked": true
+            },
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": false
+            }
+          },
+          "elements": [
+            {
+              "id": "1a2b3cf",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "El programa",
+                "header_size": "h3",
+                "align": "left",
+                "title_color": "rgba(255,255,255,0.6)",
+                "typography_typography": "custom",
+                "typography_font_family": "Archivo",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 14,
+                  "sizes": []
+                },
+                "typography_font_weight": "700",
+                "typography_text_transform": "uppercase",
+                "typography_letter_spacing": {
+                  "unit": "em",
+                  "size": 0.08,
+                  "sizes": []
+                },
+                "typography_line_height": {
+                  "unit": "em",
+                  "size": 1.3,
+                  "sizes": []
+                },
+                "_margin": {
+                  "unit": "px",
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "16",
+                  "left": "0",
+                  "isLinked": false
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "1a2b3d0",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "El show de la mañana",
+                "header_size": "p",
+                "align": "left",
+                "title_color": "#FFFFFF",
+                "typography_typography": "custom",
+                "typography_font_family": "Archivo",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 16,
+                  "sizes": []
+                },
+                "typography_font_weight": "700",
+                "typography_line_height": {
+                  "unit": "em",
+                  "size": 1.35,
+                  "sizes": []
+                },
+                "_margin": {
+                  "unit": "px",
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "8",
+                  "left": "0",
+                  "isLinked": false
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "1a2b3d1",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "<p>Lunes a viernes<br>10:00 a.m. – 12:00 m.<br>Barranquilla, Colombia</p>",
+                "align": "left",
+                "text_color": "rgba(255,255,255,0.72)",
+                "typography_typography": "custom",
+                "typography_font_family": "Inter",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 14,
+                  "sizes": []
+                },
+                "typography_font_weight": "400",
+                "typography_line_height": {
+                  "unit": "em",
+                  "size": 1.7,
+                  "sizes": []
+                }
+              },
+              "elements": []
+            }
+          ]
+        },
+        {
+          "id": "1a2b3d9",
+          "elType": "container",
+          "isInner": false,
+          "settings": {
+            "container_type": "flex",
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_justify_content": "flex-start",
+            "flex_align_items": "flex-start",
+            "flex_gap": {
+              "unit": "px",
+              "column": "0",
+              "row": "0",
+              "isLinked": true
+            },
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": false
+            }
+          },
+          "elements": [
+            {
+              "id": "1a2b3d3",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Institucional",
+                "header_size": "h3",
+                "align": "left",
+                "title_color": "rgba(255,255,255,0.6)",
+                "typography_typography": "custom",
+                "typography_font_family": "Archivo",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 14,
+                  "sizes": []
+                },
+                "typography_font_weight": "700",
+                "typography_text_transform": "uppercase",
+                "typography_letter_spacing": {
+                  "unit": "em",
+                  "size": 0.08,
+                  "sizes": []
+                },
+                "typography_line_height": {
+                  "unit": "em",
+                  "size": 1.3,
+                  "sizes": []
+                },
+                "_margin": {
+                  "unit": "px",
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "16",
+                  "left": "0",
+                  "isLinked": false
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "1a2b3d8",
+              "elType": "widget",
+              "widgetType": "icon-list",
+              "settings": {
+                "view": "traditional",
+                "icon_list": [
+                  {
+                    "_id": "1a2b3d4",
+                    "text": "Nosotros",
+                    "selected_icon": {
+                      "value": "",
+                      "library": ""
+                    },
+                    "link": {
+                      "url": "#",
+                      "is_external": "",
+                      "nofollow": "",
+                      "custom_attributes": ""
+                    }
+                  },
+                  {
+                    "_id": "1a2b3d5",
+                    "text": "Publicidad",
+                    "selected_icon": {
+                      "value": "",
+                      "library": ""
+                    },
+                    "link": {
+                      "url": "#",
+                      "is_external": "",
+                      "nofollow": "",
+                      "custom_attributes": ""
+                    }
+                  },
+                  {
+                    "_id": "1a2b3d6",
+                    "text": "Contacto",
+                    "selected_icon": {
+                      "value": "",
+                      "library": ""
+                    },
+                    "link": {
+                      "url": "#",
+                      "is_external": "",
+                      "nofollow": "",
+                      "custom_attributes": ""
+                    }
+                  },
+                  {
+                    "_id": "1a2b3d7",
+                    "text": "Aviso legal",
+                    "selected_icon": {
+                      "value": "",
+                      "library": ""
+                    },
+                    "link": {
+                      "url": "#",
+                      "is_external": "",
+                      "nofollow": "",
+                      "custom_attributes": ""
+                    }
+                  }
+                ],
+                "divider": "",
+                "space_between": {
+                  "unit": "px",
+                  "size": 10,
+                  "sizes": []
+                },
+                "icon_size": {
+                  "unit": "px",
+                  "size": 0,
+                  "sizes": []
+                },
+                "text_indent": {
+                  "unit": "px",
+                  "size": 0,
+                  "sizes": []
+                },
+                "icon_color": "rgba(255,255,255,0.72)",
+                "text_color": "rgba(255,255,255,0.72)",
+                "text_color_hover": "#FFFFFF",
+                "icon_typography_typography": "custom",
+                "icon_typography_font_family": "Inter",
+                "icon_typography_font_size": {
+                  "unit": "px",
+                  "size": 15,
+                  "sizes": []
+                },
+                "icon_typography_font_weight": "400",
+                "icon_typography_line_height": {
+                  "unit": "em",
+                  "size": 1.5,
+                  "sizes": []
+                }
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "1a2b3df",
+      "elType": "container",
+      "isInner": false,
+      "settings": {
+        "container_type": "flex",
+        "content_width": "boxed",
+        "boxed_width": {
+          "unit": "px",
+          "size": 1280,
+          "sizes": []
+        },
+        "flex_direction": "row",
+        "flex_justify_content": "space-between",
+        "flex_align_items": "center",
+        "flex_wrap": "wrap",
+        "flex_gap": {
+          "unit": "px",
+          "column": "16",
+          "row": "12",
+          "isLinked": false
+        },
+        "background_background": "classic",
+        "background_color": "#294D6E",
+        "__globals__": {
+          "background_color": "globals/colors?id=accent"
+        },
+        "padding": {
+          "unit": "px",
+          "top": "0",
+          "right": "48",
+          "bottom": "0",
+          "left": "48",
+          "isLinked": false
+        },
+        "padding_tablet": {
+          "unit": "px",
+          "top": "0",
+          "right": "24",
+          "bottom": "0",
+          "left": "24",
+          "isLinked": false
+        },
+        "padding_mobile": {
+          "unit": "px",
+          "top": "0",
+          "right": "16",
+          "bottom": "0",
+          "left": "16",
+          "isLinked": false
+        },
+        "css_classes": "hd-footer-bottom"
+      },
+      "elements": [
+        {
+          "id": "1a2b3db",
+          "elType": "widget",
+          "widgetType": "heading",
+          "settings": {
+            "title": "© 2026 Habla Deportes. Todos los derechos reservados.",
+            "header_size": "p",
+            "align": "left",
+            "align_mobile": "left",
+            "title_color": "rgba(255,255,255,0.6)",
+            "typography_typography": "custom",
+            "typography_font_family": "Inter",
+            "typography_font_size": {
+              "unit": "px",
+              "size": 13,
+              "sizes": []
+            },
+            "typography_font_weight": "400",
+            "typography_line_height": {
+              "unit": "em",
+              "size": 1.5,
+              "sizes": []
+            },
+            "_flex_size": "none"
+          },
+          "elements": []
+        },
+        {
+          "id": "1a2b3e1",
+          "elType": "widget",
+          "widgetType": "heading",
+          "settings": {
+            "title": "Desarrollado por <a href=\"https://out-studio.net\" target=\"_blank\" rel=\"noopener\">Out<span style=\"color:#BC6039\">.</span> Studio</a>",
+            "header_size": "p",
+            "align": "right",
+            "align_mobile": "left",
+            "title_color": "rgba(255,255,255,0.5)",
+            "typography_typography": "custom",
+            "typography_font_family": "Inter",
+            "typography_font_size": {
+              "unit": "px",
+              "size": 12,
+              "sizes": []
+            },
+            "typography_font_weight": "400",
+            "typography_line_height": {
+              "unit": "em",
+              "size": 1.5,
+              "sizes": []
+            },
+            "_flex_size": "none",
+            "_element_id": "hd-credit"
+          },
+          "elements": []
+        },
+        {
+          "id": "1a2b3de",
+          "elType": "widget",
+          "widgetType": "icon-list",
+          "settings": {
+            "view": "inline",
+            "icon_list": [
+              {
+                "_id": "1a2b3dc",
+                "text": "Aviso legal",
+                "selected_icon": {
+                  "value": "",
+                  "library": ""
+                },
+                "link": {
+                  "url": "#",
+                  "is_external": "",
+                  "nofollow": "",
+                  "custom_attributes": ""
+                }
+              },
+              {
+                "_id": "1a2b3dd",
+                "text": "Privacidad",
+                "selected_icon": {
+                  "value": "",
+                  "library": ""
+                },
+                "link": {
+                  "url": "#",
+                  "is_external": "",
+                  "nofollow": "",
+                  "custom_attributes": ""
+                }
+              }
+            ],
+            "divider": "",
+            "space_between": {
+              "unit": "px",
+              "size": 20,
+              "sizes": []
+            },
+            "icon_size": {
+              "unit": "px",
+              "size": 0,
+              "sizes": []
+            },
+            "text_indent": {
+              "unit": "px",
+              "size": 0,
+              "sizes": []
+            },
+            "icon_color": "rgba(255,255,255,0.72)",
+            "text_color": "rgba(255,255,255,0.72)",
+            "text_color_hover": "#FFFFFF",
+            "icon_typography_typography": "custom",
+            "icon_typography_font_family": "Inter",
+            "icon_typography_font_size": {
+              "unit": "px",
+              "size": 12,
+              "sizes": []
+            },
+            "icon_typography_font_weight": "400",
+            "icon_typography_line_height": {
+              "unit": "em",
+              "size": 1.5,
+              "sizes": []
+            },
+            "_flex_size": "none"
+          },
+          "elements": []
+        }
+      ]
+    }
+  ]
+}

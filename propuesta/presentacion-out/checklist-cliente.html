@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Out. para Habla Deportes — Checklist de arranque</title>
+<link rel="icon" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   Out. — Checklist para Habla Deportes
+   Mismo sistema de marca del dossier · A4 vertical · 2 páginas
+   Una sola excepción cálida por página.
+   ============================================================ */
+:root{
+  --klein:#1b2fcc;
+  --klein-deep:#141e5c;
+  --klein-mid:#4a55c4;
+  --klein-soft:#c8cdf0;
+  --carne:#f2c6b4;
+  --carne-deep:#bc6039;
+  --carne-tinta:#9c3f1c;
+  --paper:#f3ede7;
+  --paper-pure:#fbf8f5;
+  --ink-2:#3c4375;
+  --muted:#585d88;
+  --display:'Bricolage Grotesque','Bricolage Grotesque Variable',sans-serif;
+  --body:'Instrument Sans',sans-serif;
+  --mgn:16mm;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{background:var(--muted);}
+body{
+  font-family:var(--body);
+  color:var(--klein-deep);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:geometricPrecision;
+  background:var(--muted);
+  -webkit-print-color-adjust:exact;
+  print-color-adjust:exact;
+}
+::selection{background:var(--carne);color:var(--klein-deep);}
+
+@page{size:A4;margin:0;}
+.page{
+  position:relative;
+  width:210mm;
+  height:297mm;
+  background:var(--paper);
+  overflow:hidden;
+  page-break-after:always;
+  -webkit-print-color-adjust:exact;
+  print-color-adjust:exact;
+  margin:0 auto;
+}
+.page:last-child{page-break-after:auto;}
+@media screen{ .page{margin:10mm auto;box-shadow:0 6mm 18mm rgba(20,30,92,.35);} }
+
+.pad{position:absolute;inset:0;padding:var(--mgn);display:flex;flex-direction:column;}
+
+/* ---------- Tipografía (idéntica al dossier) ---------- */
+.kicker{display:flex;align-items:baseline;gap:10pt;font-family:var(--display);font-weight:700;letter-spacing:-.02em;}
+.kicker .num{font-size:13pt;color:var(--klein);font-variant-numeric:tabular-nums;}
+.kicker .lbl{font-family:var(--body);font-weight:500;font-size:10.5pt;letter-spacing:.01em;color:var(--muted);}
+.eyebrow{font-family:var(--body);font-weight:500;font-size:9.5pt;color:var(--muted);letter-spacing:.02em;}
+h1,h2{font-family:var(--display);font-weight:800;letter-spacing:-.035em;line-height:1.0;}
+.h1{font-size:34pt;color:var(--klein-deep);letter-spacing:-.04em;line-height:.98;}
+.lede{font-family:var(--body);font-weight:400;font-size:12pt;line-height:1.45;color:var(--ink-2);}
+.lede .warm{color:var(--carne-tinta);font-weight:600;}
+.body{font-size:10.5pt;line-height:1.5;color:var(--ink-2);}
+.body strong{color:var(--klein-deep);font-weight:600;}
+.small{font-size:9.5pt;line-height:1.45;color:var(--ink-2);}
+.pie{font-family:var(--body);font-weight:400;font-size:8pt;line-height:1.35;color:var(--muted);letter-spacing:.005em;}
+.thesis{font-family:var(--display);font-weight:800;letter-spacing:-.045em;font-size:30pt;line-height:.98;color:var(--klein-deep);}
+.thesis .l2{color:var(--carne-tinta);display:block;}
+
+/* ---------- Wordmark (SVG oficial Out.) ---------- */
+.wm{color:var(--klein-deep);--wm-dot:var(--carne-deep);white-space:nowrap;}
+.wm .wm-svg{height:.82em;width:auto;vertical-align:-.11em;}
+.folio{
+  position:absolute;left:var(--mgn);right:var(--mgn);bottom:9mm;
+  display:flex;justify-content:space-between;align-items:center;
+  font-family:var(--body);font-size:8pt;color:var(--muted);letter-spacing:.02em;
+}
+.folio .wm{font-size:9pt;color:var(--muted);--wm-dot:var(--carne-deep);}
+
+/* ---------- Secciones del checklist ---------- */
+.sec{margin-top:9mm;}
+.sec-head{display:flex;align-items:baseline;gap:8pt;padding-bottom:2.5mm;border-bottom:2px solid var(--klein-deep);}
+.sec-head .n{font-family:var(--display);font-weight:800;font-size:15pt;color:var(--klein);letter-spacing:-.02em;font-variant-numeric:tabular-nums;}
+.sec-head .t{font-family:var(--display);font-weight:700;font-size:14.5pt;color:var(--klein-deep);letter-spacing:-.025em;}
+.sec-why{margin-top:2.5mm;font-size:9.5pt;color:var(--muted);}
+
+.check{list-style:none;margin-top:2mm;}
+.check li{
+  display:grid;grid-template-columns:6mm 1fr;gap:4mm;align-items:start;
+  padding:3.6mm 0;border-top:1px solid var(--klein-soft);
+}
+.check li:first-child{border-top:0;}
+.check .box{
+  width:4.4mm;height:4.4mm;margin-top:1mm;
+  border:1.6px solid var(--klein-mid);border-radius:1.1mm;
+  background:var(--paper-pure);
+}
+.check .txt{font-size:10.5pt;line-height:1.45;color:var(--ink-2);}
+.check .txt strong{color:var(--klein-deep);font-weight:600;}
+.check .txt .det{display:block;font-size:9pt;color:var(--muted);margin-top:.6mm;}
+
+.note{
+  margin-top:4mm;padding:4mm 5mm;
+  background:var(--paper-pure);border-left:2.5px solid var(--klein);
+  font-size:9.5pt;line-height:1.45;color:var(--ink-2);
+}
+
+.spacer{flex:1 1 auto;}
+</style>
+</head>
+<body>
+
+<!-- Wordmark oficial Out. -->
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden;">
+  <symbol id="wm-out" viewBox="0 0 171.5 68.8">
+    <path style="fill:currentColor" d="M30.5,68.8c-4.67,0-8.88-.73-12.65-2.2-3.77-1.47-6.98-3.63-9.65-6.5-2.67-2.87-4.7-6.43-6.1-10.7-1.4-4.27-2.1-9.17-2.1-14.7,0-7.87,1.32-14.35,3.95-19.45C6.58,10.15,10.25,6.33,14.95,3.8,19.65,1.27,25.03,0,31.1,0c4.73,0,8.97,.72,12.7,2.15,3.73,1.43,6.93,3.58,9.6,6.45,2.67,2.87,4.7,6.45,6.1,10.75,1.4,4.3,2.1,9.28,2.1,14.95s-.73,10.77-2.2,15.1c-1.47,4.33-3.58,7.93-6.35,10.8-2.77,2.87-6.05,5.02-9.85,6.45-3.8,1.43-8.03,2.15-12.7,2.15Zm.6-13.1c3.07,0,5.63-.77,7.7-2.3,2.07-1.53,3.6-3.83,4.6-6.9,1-3.07,1.5-6.87,1.5-11.4,0-4.87-.53-8.9-1.6-12.1-1.07-3.2-2.65-5.63-4.75-7.3-2.1-1.67-4.75-2.5-7.95-2.5-3,0-5.53,.8-7.6,2.4-2.07,1.6-3.63,3.97-4.7,7.1-1.07,3.13-1.6,7.03-1.6,11.7,0,3.47,.3,6.55,.9,9.25,.6,2.7,1.52,4.93,2.75,6.7,1.23,1.77,2.75,3.1,4.55,4,1.8,.9,3.87,1.35,6.2,1.35Z"/>
+    <path style="fill:currentColor" d="M81.81,68.8c-5.93,0-10.33-2.03-13.2-6.1-2.87-4.07-4.3-10.3-4.3-18.7V14.6h16.2v28.7c0,4.13,.6,7.1,1.8,8.9s2.97,2.7,5.3,2.7c1.53,0,2.93-.4,4.2-1.2,1.27-.8,2.37-2,3.3-3.6,.93-1.6,1.63-3.58,2.1-5.95,.47-2.37,.7-5.12,.7-8.25V14.6h16.2v52.8h-13.5l-.1-19.3h-1.1c-.54,4.8-1.52,8.73-2.95,11.8-1.43,3.07-3.37,5.32-5.8,6.75-2.43,1.43-5.38,2.15-8.85,2.15Z"/>
+    <path style="fill:currentColor" d="M149.25,60.06c0-2.59,.72-5.03,1.98-7.1-.84,.44-1.75,.78-2.74,1.04-1.03,.27-2.05,.4-3.05,.4-2,0-3.6-.53-4.8-1.6s-1.8-2.83-1.8-5.3V27.6h12.3V14.6h-12.3V2.6h-9.3l-.07,1.93c-.03,.71-.08,1.43-.22,2.13-.51,2.67-1.41,3.64-2.84,4.92-1.71,1.55-4.24,2.62-7.77,3.02h-1.8l-.1,12.6h6.3v21.6c0,6.8,1.5,11.8,4.5,15,3,3.2,7.6,4.8,13.8,4.8,1.27,0,2.72-.09,4.35-.25,1.61-.17,3.47-.54,5.57-1.13-1.28-2.09-2.01-4.54-2.01-7.16Z"/>
+    <circle style="fill:var(--wm-dot)" cx="162.97" cy="60.06" r="8.54"/>
+  </symbol>
+</svg>
+
+<!-- ==================================================================
+     PÁGINA 1 — Acceso técnico + Contenido y marca
+     Excepción cálida: "tres cosas" en el lede (+ punto del wordmark)
+================================================================== -->
+<section class="page" aria-label="Checklist, página 1">
+  <div class="pad">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;">
+      <span class="eyebrow">Checklist · Fase 3, implementación · Julio 2026</span>
+      <span class="wm" style="font-family:var(--display);font-weight:800;font-size:13pt;letter-spacing:-.045em;">
+        <svg class="wm-svg" viewBox="0 0 171.5 68.8" aria-label="Out."><use href="#wm-out"></use></svg>
+      </span>
+    </div>
+
+    <h1 class="h1" style="margin-top:8mm;">Para pasar del prototipo<br>al sitio real.</h1>
+
+    <p class="lede" style="margin-top:5mm;max-width:158mm;">
+      El rediseño está aprobado y en construcción. Para llevarlo a su sitio definitivo
+      necesitamos <span class="warm">tres cosas</span> de su lado. Esta es la lista —
+      clara, corta y completa.
+    </p>
+
+    <!-- 01 · Acceso técnico -->
+    <div class="sec">
+      <div class="sec-head"><span class="n">01</span><span class="t">Acceso técnico</span></div>
+      <p class="sec-why">Para poder publicar el sitio nuevo donde hoy vive el actual.</p>
+      <ul class="check">
+        <li><span class="box"></span><span class="txt"><strong>Acceso al panel del hosting</strong> (cPanel o similar): usuario y contraseña, o crearnos un usuario propio.</span></li>
+        <li><span class="box"></span><span class="txt"><strong>Quién administra el dominio</strong> habladeportes.co (el mismo hosting, GoDaddy u otro proveedor).<span class="det">Por ahora solo necesitamos saber quién es; el acceso se coordina al final.</span></span></li>
+        <li><span class="box"></span><span class="txt"><strong>Un usuario administrador del WordPress actual</strong>, para revisar y respaldar lo que hay antes del cambio.</span></li>
+      </ul>
+      <p class="note">Nada de esto detiene el trabajo de hoy: el sitio se sigue construyendo mientras llega. Pero sin esto no hay salida en vivo.</p>
+    </div>
+
+    <!-- 02 · Contenido y marca -->
+    <div class="sec">
+      <div class="sec-head"><span class="n">02</span><span class="t">Contenido y marca</span></div>
+      <p class="sec-why">Para que el sitio nazca con material real, no de relleno.</p>
+      <ul class="check">
+        <li><span class="box"></span><span class="txt"><strong>Logo oficial en alta resolución</strong> — ideal en formato vectorial (.svg o .ai).</span></li>
+        <li><span class="box"></span><span class="txt"><strong>Fotos del estudio y del equipo</strong> al aire, en buena calidad.</span></li>
+        <li><span class="box"></span><span class="txt"><strong>Patrocinadores vigentes</strong> y sus logos en buena calidad.</span></li>
+        <li><span class="box"></span><span class="txt"><strong>Redes oficiales</strong>: Instagram y X. <span class="det">El canal de YouTube ya lo tenemos.</span></span></li>
+        <li><span class="box"></span><span class="txt"><strong>Datos de contacto reales</strong>: correo, teléfono y dirección.</span></li>
+        <li><span class="box"></span><span class="txt"><strong>Datos legales</strong> para el pie de página: razón social y NIT.</span></li>
+      </ul>
+    </div>
+
+    <div class="folio">
+      <span class="wm"><svg class="wm-svg" viewBox="0 0 171.5 68.8" aria-label="Out."><use href="#wm-out"></use></svg> Studio — Checklist Habla Deportes</span>
+      <span>01 / 02</span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================================================================
+     PÁGINA 2 — Decisiones de negocio + cierre
+     Excepción cálida: 2ª línea de la tesis de cierre
+================================================================== -->
+<section class="page" aria-label="Checklist, página 2">
+  <div class="pad">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;">
+      <span class="eyebrow">Checklist · Fase 3, implementación</span>
+      <span class="wm" style="font-family:var(--display);font-weight:800;font-size:13pt;letter-spacing:-.045em;">
+        <svg class="wm-svg" viewBox="0 0 171.5 68.8" aria-label="Out."><use href="#wm-out"></use></svg>
+      </span>
+    </div>
+
+    <!-- 03 · Decisiones de negocio -->
+    <div class="sec" style="margin-top:10mm;">
+      <div class="sec-head"><span class="n">03</span><span class="t">Decisiones de negocio</span></div>
+      <p class="sec-why">Para cerrar el alcance de esta fase, sin sorpresas después.</p>
+      <ul class="check">
+        <li><span class="box"></span><span class="txt"><strong>Espacios de patrocinio</strong> que quieren mostrar y vender en la web — los que vimos juntos en la propuesta.</span></li>
+        <li><span class="box"></span><span class="txt"><strong>Qué viene después</strong>, si algo: newsletter, tienda, otros.<span class="det">Solo para tenerlo en el mapa; no entra en esta fase.</span></span></li>
+        <li><span class="box"></span><span class="txt"><strong>Tiempos y presupuesto</strong> con los que se sienten cómodos.</span></li>
+      </ul>
+    </div>
+
+    <div class="spacer"></div>
+
+    <p class="thesis">Con esto en la mano,<span class="l2">la implementación arranca de inmediato.</span></p>
+
+    <p class="body" style="margin-top:6mm;max-width:150mm;">
+      Cualquier duda sobre un punto de la lista, la resolvemos en la reunión.
+      Lo importante: nada de esto frena el trabajo — solo define qué tan rápido salimos en vivo.
+    </p>
+
+    <div style="margin-top:10mm;padding-top:5mm;border-top:1px solid var(--klein-soft);">
+      <p class="small" style="color:var(--ink-2);">
+        <strong style="color:var(--klein-deep);">Oscar Díaz</strong> — UX/UI y desarrollo WordPress/Shopify, potenciado con IA.<br>
+        oscar.diaz@out-studio.net · +57 300 565 8674 · Bogotá
+      </p>
+      <p class="eyebrow" style="margin-top:3mm;">Never the usual.</p>
+    </div>
+
+    <div class="folio">
+      <span class="wm"><svg class="wm-svg" viewBox="0 0 171.5 68.8" aria-label="Out."><use href="#wm-out"></use></svg> Studio — Checklist Habla Deportes</span>
+      <span>02 / 02</span>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

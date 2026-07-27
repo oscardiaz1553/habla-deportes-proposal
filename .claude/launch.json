@@ -12,6 +12,12 @@
       "runtimeExecutable": "python",
       "runtimeArgs": ["-m", "http.server", "8090", "--directory", "diagnostico"],
       "port": 8090
+    },
+    {
+      "name": "dossier-out",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "8095", "--directory", "propuesta/presentacion-out"],
+      "port": 8095
     }
   ]
 }

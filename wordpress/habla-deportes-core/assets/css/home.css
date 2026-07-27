@@ -297,6 +297,196 @@
 	.hd-ticker__viewport { overflow-x: auto; }
 }
 
+/* ==========================================================================
+   CENTRO DE PARTIDOS
+   --------------------------------------------------------------------------
+   Medidas pixel-exact de propuesta/centro-partidos-spec.md (main.css §[1]).
+   Aquí va SOLO el slider: la retícula de dos columnas con la publicidad se
+   arma en Elementor (contenedor 2.9fr / 1fr + widget Imagen).
+   ========================================================================== */
+.hd-match-slider {
+	--hd-navy: #294D6E;
+	--hd-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+	--hd-dur-fast: 120ms;
+	position: relative;
+	display: block;
+	min-width: 0;   /* evita el blowout si vive dentro de una rejilla */
+}
+.hd-match-slider__viewport {
+	overflow: hidden;
+	border-radius: 8px;
+	box-shadow: 0 4px 16px rgba(14, 27, 41, 0.14);
+	height: 348px;                /* móvil */
+	touch-action: pan-y;          /* el swipe horizontal lo lleva el JS */
+}
+@media (min-width: 900px) {
+	.hd-match-slider__viewport { height: 424px; }
+}
+.hd-match-slider__track {
+	display: flex;
+	width: 100%;
+	height: 100%;
+	transition: transform 0.5s var(--hd-ease-out);
+	will-change: transform;
+	touch-action: pan-y;
+	user-select: none;
+	-webkit-user-select: none;
+}
+@media (prefers-reduced-motion: reduce) {
+	.hd-match-slider__track { transition: none; }
+}
+
+.hd-match-banner {
+	position: relative;
+	flex: 0 0 100%;
+	min-width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 16px;
+	padding: 22px 21px;
+	text-decoration: none;
+	color: #fff;
+	background: #0e141c center / cover no-repeat;
+	isolation: isolate;
+}
+/* Overlay negro único, vertical. Nunca baja de 0.40 —por eso el centro no se
+   lava— y se oscurece hacia abajo. Sin tinte ni filtros. */
+.hd-match-banner__overlay {
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	background: linear-gradient(to bottom,
+		rgba(0, 0, 0, 0.40) 0%,
+		rgba(0, 0, 0, 0.55) 30%,
+		rgba(0, 0, 0, 0.68) 50%,
+		rgba(0, 0, 0, 0.82) 72%,
+		rgba(0, 0, 0, 0.95) 100%);
+}
+/* El contenido va sobre el overlay. El kicker se excluye a propósito: es
+   absoluto en desktop y esta regla, más específica, le pisaba el position. */
+.hd-match-banner > *:not(.hd-match-banner__overlay):not(.hd-match-banner__kicker) {
+	position: relative;
+	z-index: 2;
+}
+.hd-match-banner__kicker {
+	position: absolute;
+	top: 22px;
+	left: 21px;
+	z-index: 2;
+	font-size: 13px;
+	font-weight: 500;
+	color: #fff;
+	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+.hd-match-banner__body {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 16px;
+	width: 100%;
+}
+.hd-match-banner__fixture {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 30px;
+}
+/* Escudos igualados por ALTO, ancho automático para respetar su proporción. */
+.hd-match-banner__crest {
+	height: 140px;
+	width: auto;
+	object-fit: contain;
+	filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.55));
+}
+@media (min-width: 900px) { .hd-match-banner__crest { height: 180px; } }
+.hd-match-banner__vs {
+	font-weight: 500;
+	font-size: 16px;
+	text-transform: lowercase;
+	color: #fff;
+	text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+.hd-match-banner__info {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 8px 36px;
+	font-size: 14px;
+	font-weight: 700;
+	color: #fff;
+	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+	text-align: center;
+}
+@media (min-width: 900px) { .hd-match-banner__info { font-size: 16px; } }
+.hd-match-banner__info-item {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+}
+.hd-match-banner__info-item svg { width: 18px; height: 18px; flex: none; }
+.hd-match-banner__tv { display: inline-flex; align-items: center; }
+.hd-match-banner__tv-text {
+	font-size: 13px;
+	font-weight: 600;
+	color: rgba(255, 255, 255, 0.9);
+}
+
+/* Móvil: el kicker sale del absoluto y entra en el flujo como primer
+   elemento, para que el gap lo separe de los escudos y no se encimen. */
+@media (max-width: 899px) {
+	.hd-match-banner { gap: 14px; padding: 20px 18px 46px; }
+	.hd-match-banner__kicker {
+		position: relative;
+		z-index: 2;
+		top: auto;
+		left: auto;
+		align-self: center;
+		text-align: center;
+	}
+	.hd-match-banner__body { gap: 14px; }
+	.hd-match-banner__fixture { gap: 22px; }
+	.hd-match-banner__crest { height: 104px; }
+}
+
+/* Dots absolutos sobre el banner. Activo: pill blanco 22×5. */
+.hd-match-slider__dots {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 22px;
+	z-index: 3;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 7px;
+}
+.hd-match-slider__dot {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 8px;              /* área táctil sin engordar el pill */
+	background: none;
+	border: 0;
+	cursor: pointer;
+}
+.hd-match-slider__dot::before {
+	content: "";
+	width: 8px;
+	height: 5px;
+	border-radius: 999px;
+	background: #4B4B4B;
+	transition: background var(--hd-dur-fast) var(--hd-ease-out),
+	            width var(--hd-dur-fast) var(--hd-ease-out);
+}
+.hd-match-slider__dot[aria-current="true"]::before {
+	width: 22px;
+	background: #fff;
+}
+
 /* Aviso de configuración: solo lo ven los editores. */
 .hd-aviso {
 	padding: 16px;

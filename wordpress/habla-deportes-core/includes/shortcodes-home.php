@@ -215,6 +215,162 @@ function hd_hero_shortcode( $atts ) {
 }
 
 /* ---------------------------------------------------------------
+ * [hd_partidos cantidad="5"]
+ * ---------------------------------------------------------------
+ * Carrusel de próximos partidos, alimentado por el CPT `partido`.
+ * Medidas y comportamiento del prototipo (main.css §[1], spec en
+ * propuesta/centro-partidos-spec.md): banner a sangre con overlay,
+ * escudos por term meta, dots y arrastre en vivo con Pointer Events.
+ *
+ * IMPORTANTE: esto pinta SOLO el slider, no la retícula de dos
+ * columnas con el panel de publicidad que tiene el prototipo. El
+ * anuncio es material del cliente y su sitio natural es un widget
+ * Imagen de Elementor al lado, dentro de un contenedor a 2.9fr / 1fr.
+ * El plugin pone el comportamiento; Elementor, la maquetación.
+ * ------------------------------------------------------------- */
+add_shortcode( 'hd_partidos', 'hd_partidos_shortcode' );
+function hd_partidos_shortcode( $atts ) {
+	$a = shortcode_atts( array( 'cantidad' => 5 ), $atts );
+
+	$partidos = function_exists( 'hd_partidos_proximos' )
+		? hd_partidos_proximos( max( 1, (int) $a['cantidad'] ) )
+		: array();
+
+	if ( empty( $partidos ) ) {
+		return current_user_can( 'edit_posts' )
+			? '<p class="hd-aviso">Centro de Partidos: no hay partidos con fecha futura. Añádelos en Partidos → Añadir partido.</p>'
+			: '';
+	}
+
+	wp_enqueue_style( 'hd-home' );
+	wp_enqueue_script( 'hd-home' );
+
+	ob_start();
+	?>
+	<div class="hd-match-slider" data-hd-match-slider>
+		<div class="hd-match-slider__viewport">
+			<div class="hd-match-slider__track" data-hd-match-track>
+				<?php foreach ( $partidos as $pid ) : ?>
+					<?php hd_render_match_banner( $pid ); ?>
+				<?php endforeach; ?>
+			</div>
+		</div>
+		<?php if ( count( $partidos ) > 1 ) : ?>
+			<div class="hd-match-slider__dots" aria-label="Seleccionar partido">
+				<?php foreach ( $partidos as $i => $pid ) : ?>
+					<?php hd_render_match_dot( $pid, $i ); ?>
+				<?php endforeach; ?>
+			</div>
+		<?php endif; ?>
+	</div>
+	<?php
+	return ob_get_clean();
+}
+
+/** Icono de calendario del prototipo. */
+function hd_svg_cal() {
+	return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg>';
+}
+
+/** Icono de chincheta del prototipo. */
+function hd_svg_pin() {
+	return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>';
+}
+
+/**
+ * Un banner de partido. Si la entrada tiene imagen destacada se usa a
+ * sangre de fondo; si no, queda el navy oscuro de respaldo del CSS.
+ *
+ * @param int $post_id ID de la entrada `partido`.
+ */
+function hd_render_match_banner( $post_id ) {
+	$local_id     = (int) get_post_meta( $post_id, '_hd_local', true );
+	$visitante_id = (int) get_post_meta( $post_id, '_hd_visitante', true );
+	$torneo_id    = (int) get_post_meta( $post_id, '_hd_torneo', true );
+	$fecha        = (string) get_post_meta( $post_id, '_hd_fecha', true );
+	$hora         = (string) get_post_meta( $post_id, '_hd_hora', true );
+	$estadio      = (string) get_post_meta( $post_id, '_hd_estadio', true );
+	$canal        = (string) get_post_meta( $post_id, '_hd_canal', true );
+
+	$local_nom     = hd_equipo_nombre( $local_id );
+	$visitante_nom = hd_equipo_nombre( $visitante_id );
+	$local_escudo  = hd_equipo_escudo_url( $local_id, 'medium' );
+	$visit_escudo  = hd_equipo_escudo_url( $visitante_id, 'medium' );
+
+	$torneo_nom = '';
+	if ( $torneo_id > 0 ) {
+		$t = get_term( $torneo_id, 'torneo' );
+		if ( $t && ! is_wp_error( $t ) ) {
+			$torneo_nom = $t->name;
+		}
+	}
+
+	$fecha_larga = hd_fecha_larga_es( $fecha );
+
+	$kicker = implode( ' · ', array_filter( array( $torneo_nom, $fecha_larga ) ) );
+	if ( '' === $kicker ) {
+		$kicker = get_the_title( $post_id );
+	}
+
+	$fecha_info = $hora ? trim( $fecha_larga . ' · ' . $hora ) : $fecha_larga;
+
+	$aria = trim(
+		( $torneo_nom ? $torneo_nom . ': ' : '' )
+		. $local_nom . ' vs ' . $visitante_nom . '. '
+		. $fecha_larga . ( $estadio ? ' en ' . $estadio : '' ) . '.'
+	);
+
+	$bg    = get_the_post_thumbnail_url( $post_id, 'large' );
+	$style = $bg ? ' style="background-image:url(\'' . esc_url( $bg ) . '\');"' : '';
+
+	echo '<a class="hd-match-banner" href="' . esc_url( get_permalink( $post_id ) ) . '"' . $style . ' aria-label="' . esc_attr( $aria ) . '">';
+	echo '<span class="hd-match-banner__overlay" aria-hidden="true"></span>';
+	echo '<span class="hd-match-banner__kicker">' . esc_html( $kicker ) . '</span>';
+	echo '<span class="hd-match-banner__body">';
+
+	echo '<span class="hd-match-banner__fixture">';
+	if ( $local_escudo ) {
+		echo '<img class="hd-match-banner__crest" src="' . esc_url( $local_escudo ) . '" width="200" height="200" loading="lazy" alt="' . esc_attr( 'Escudo de ' . $local_nom ) . '">';
+	}
+	echo '<span class="hd-match-banner__vs">vs</span>';
+	if ( $visit_escudo ) {
+		echo '<img class="hd-match-banner__crest" src="' . esc_url( $visit_escudo ) . '" width="200" height="200" loading="lazy" alt="' . esc_attr( 'Escudo de ' . $visitante_nom ) . '">';
+	}
+	echo '</span>';
+
+	echo '<span class="hd-match-banner__info">';
+	if ( $fecha_info ) {
+		echo '<span class="hd-match-banner__info-item">' . hd_svg_cal() . ' ' . esc_html( $fecha_info ) . '</span>';
+	}
+	if ( $estadio ) {
+		echo '<span class="hd-match-banner__info-item">' . hd_svg_pin() . ' ' . esc_html( $estadio ) . '</span>';
+	}
+	echo '</span>';
+
+	if ( $canal ) {
+		echo '<span class="hd-match-banner__tv"><span class="hd-match-banner__tv-text">' . esc_html( $canal ) . '</span></span>';
+	}
+
+	echo '</span>'; // .hd-match-banner__body
+	echo '</a>';
+}
+
+/**
+ * Un dot del slider (paridad con el número de banners).
+ *
+ * @param int $post_id ID del partido.
+ * @param int $i       Índice base 0; el primero queda aria-current="true".
+ */
+function hd_render_match_dot( $post_id, $i ) {
+	$local     = hd_equipo_nombre( (int) get_post_meta( $post_id, '_hd_local', true ) );
+	$visitante = hd_equipo_nombre( (int) get_post_meta( $post_id, '_hd_visitante', true ) );
+	$label     = 'Partido ' . ( (int) $i + 1 ) . ': ' . $local . ' vs ' . $visitante;
+
+	echo '<button class="hd-match-slider__dot" type="button" data-hd-match-dot aria-current="'
+		. ( 0 === (int) $i ? 'true' : 'false' ) . '" aria-label="' . esc_attr( $label ) . '"></button>';
+}
+
+/* ---------------------------------------------------------------
  * [hd_ticker cantidad="8" etiqueta="Noticias"]
  * ------------------------------------------------------------- */
 add_shortcode( 'hd_ticker', 'hd_ticker_shortcode' );

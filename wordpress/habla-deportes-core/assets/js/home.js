@@ -194,6 +194,136 @@
 		}
 	}
 
+	/* ---- Centro de Partidos: slider con arrastre en vivo ---------------
+	   Track con translateX; dots, autoavance y arrastre. Se pausa al pasar
+	   el cursor, al enfocar dentro y durante el gesto. Bajo
+	   prefers-reduced-motion no hay autoavance y el cambio es directo (la
+	   transición la anula el CSS). */
+	document.querySelectorAll('[data-hd-match-slider]').forEach(function (root) {
+		var track = root.querySelector('[data-hd-match-track]');
+		var slides = track ? Array.prototype.slice.call(track.children) : [];
+		var dots = Array.prototype.slice.call(root.querySelectorAll('[data-hd-match-dot]'));
+		if (!track || slides.length < 2) return;
+
+		var viewport = track.parentElement;
+		var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		var idx = 0;
+		var timer = null;
+
+		function go(i) {
+			idx = (i + slides.length) % slides.length;
+			track.style.transform = 'translateX(' + (-idx * 100) + '%)';
+			dots.forEach(function (d, di) {
+				d.setAttribute('aria-current', di === idx ? 'true' : 'false');
+			});
+		}
+		function stop() { if (timer) { clearInterval(timer); timer = null; } }
+		function restart() {
+			if (reduce) return;
+			stop();
+			timer = setInterval(function () { go(idx + 1); }, 6000);
+		}
+
+		dots.forEach(function (d, di) {
+			d.addEventListener('click', function () { go(di); restart(); });
+		});
+		root.addEventListener('mouseenter', stop);
+		root.addEventListener('mouseleave', restart);
+		root.addEventListener('focusin', stop);
+		root.addEventListener('focusout', restart);
+
+		/* Arrastre EN VIVO con Pointer Events: el track sigue al dedo sin
+		   transición. Solo es swipe si la intención es horizontal; un gesto
+		   vertical no se intercepta y la página scrollea normal. Al soltar,
+		   si el recorrido supera el 20% del ancho (mínimo 45px) se confirma
+		   el cambio; si no, vuelve al slide actual. En los extremos hay
+		   resistencia y no da la vuelta (los dots y el autoavance sí). */
+		var DECIDE_PX = 10;
+		var pointerId = null;
+		var startX = 0, startY = 0, dx = 0;
+		var mode = '';                 // '' indeciso | 'swipe' | 'scroll'
+		var suppressClick = false;
+
+		function threshold() {
+			var w = (viewport && viewport.clientWidth) || track.clientWidth || 0;
+			return Math.max(45, w * 0.2);
+		}
+
+		function endGesture(e, cancelled) {
+			if (pointerId === null || e.pointerId !== pointerId) return;
+			var wasSwipe = mode === 'swipe';
+			pointerId = null;
+			mode = '';
+			if (wasSwipe) {
+				try { track.releasePointerCapture(e.pointerId); } catch (err) { /* no-op */ }
+				track.style.transition = '';       // restaurar el snap animado
+				var commit = 0;
+				if (!cancelled && Math.abs(dx) >= threshold()) commit = dx < 0 ? 1 : -1;
+				if (commit === 1 && idx < slides.length - 1) go(idx + 1);
+				else if (commit === -1 && idx > 0) go(idx - 1);
+				else go(idx);                      // bajo el umbral o extremo: volver
+				setTimeout(function () { suppressClick = false; }, 300);
+			}
+			restart();
+		}
+
+		track.addEventListener('pointerdown', function (e) {
+			if (e.button !== 0 || pointerId !== null) return;
+			pointerId = e.pointerId;
+			startX = e.clientX;
+			startY = e.clientY;
+			dx = 0;
+			mode = '';
+			stop();
+		});
+
+		track.addEventListener('pointermove', function (e) {
+			if (pointerId === null || e.pointerId !== pointerId) return;
+			// Ratón: si el botón ya no está pulsado, aborta en vez de arrastrar.
+			if (e.pointerType === 'mouse' && e.buttons === 0) { endGesture(e, true); return; }
+			var mx = e.clientX - startX;
+			var my = e.clientY - startY;
+			if (!mode) {
+				if (Math.abs(mx) > DECIDE_PX && Math.abs(mx) > Math.abs(my)) {
+					mode = 'swipe';
+					suppressClick = true;          // hubo arrastre: anular el click del <a>
+					try { track.setPointerCapture(pointerId); } catch (err) { /* no-op */ }
+					track.style.transition = 'none';
+				} else if (Math.abs(my) > DECIDE_PX) {
+					mode = 'scroll';
+				}
+			}
+			if (mode !== 'swipe') return;
+			dx = mx;
+			// Resistencia en los extremos: el arrastre no da la vuelta circular.
+			if ((idx === 0 && dx > 0) || (idx === slides.length - 1 && dx < 0)) dx *= 0.35;
+			track.style.transform = 'translateX(calc(' + (-idx * 100) + '% + ' + dx + 'px))';
+			if (e.cancelable) e.preventDefault();
+		});
+
+		/* pointerup/cancel en WINDOW, no solo en el track: si se suelta fuera
+		   (arrastre que sale del banner), endGesture igual corre y libera el
+		   estado. Sin esto el pointerId quedaba colgado y bloqueaba el
+		   siguiente gesto. endGesture es idempotente. */
+		window.addEventListener('pointerup', function (e) { endGesture(e, false); });
+		window.addEventListener('pointercancel', function (e) { endGesture(e, true); });
+
+		// Un tap navega normal; tras un arrastre real, el click se anula.
+		root.addEventListener('click', function (e) {
+			if (!suppressClick) return;
+			suppressClick = false;
+			e.preventDefault();
+			e.stopPropagation();
+		}, true);
+		// Un gesto nuevo limpia la bandera residual (p. ej. tap en un dot).
+		root.addEventListener('pointerdown', function () { suppressClick = false; }, true);
+		// Sin arrastre nativo de <a>/<img>, que rompería el gesto con ratón.
+		track.addEventListener('dragstart', function (e) { e.preventDefault(); });
+
+		go(0);
+		restart();
+	});
+
 	/* ---- Ticker: duplicar la pista para un bucle sin costuras ---------- */
 	var track = document.querySelector('[data-hd-ticker-track]');
 	if (track && track.parentNode) {

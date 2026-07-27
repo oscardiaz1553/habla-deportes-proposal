@@ -55,6 +55,7 @@
 		var metaEl = hero.querySelector('.hd-hero__meta');
 		var metaTimeEl = hero.querySelector('[data-hd-hero-time]');
 		var playLink = hero.querySelector('[data-hd-hero-play]');
+		var fuenteEl = hero.querySelector('[data-hd-hero-fuente]');
 		var dots = Array.prototype.slice.call(hero.querySelectorAll('[data-hd-hero-dot]'));
 		var current = 0;
 		var active = 0; // índice (0/1) de la capa visible
@@ -74,6 +75,11 @@
 			if (titleEl) titleEl.textContent = s.title;
 			if (metaTimeEl) metaTimeEl.textContent = s.time;
 			if (playLink && s.url) playLink.setAttribute('href', s.url);
+
+			/* El play y el sello de YouTube solo valen para un video: con la
+			   fuente mixta, cada slide decide si se ven. */
+			if (playLink) playLink.classList.toggle('is-oculto', !s.video);
+			if (fuenteEl) fuenteEl.classList.toggle('is-oculto', !s.video);
 			replay(titleEl);
 			replay(metaEl);
 			dots.forEach(function (d, di) {

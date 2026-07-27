@@ -57,6 +57,46 @@ function hd_home_latest_videos( $cantidad ) {
 }
 
 /**
+ * Últimas piezas para el hero, según la fuente elegida.
+ * ---------------------------------------------------------------
+ * `video`  solo videos del canal (deben tener ID de YouTube).
+ * `post`   solo entradas: noticias y notas escritas por la redacción.
+ * `ambos`  lo más reciente de las dos, mezclado por fecha.
+ *
+ * Existe porque las portadas de YouTube son de baja resolución y sus
+ * títulos, largos y en mayúsculas: para una pieza tan grande como el
+ * hero, una nota con foto propia y titular escrito queda mejor.
+ *
+ * @param int    $cantidad Cuántas como máximo.
+ * @param string $fuente   video|post|ambos.
+ * @return WP_Post[]
+ */
+function hd_home_latest_destacados( $cantidad, $fuente = 'video' ) {
+	$cantidad = max( 1, (int) $cantidad );
+
+	if ( 'post' === $fuente ) {
+		return get_posts( array(
+			'post_type'      => 'post',
+			'post_status'    => 'publish',
+			'posts_per_page' => $cantidad,
+			'no_found_rows'  => true,
+		) );
+	}
+
+	if ( 'ambos' === $fuente ) {
+		// Sin meta_key: exigir el ID de YouTube dejaría fuera las entradas.
+		return get_posts( array(
+			'post_type'      => array( 'video', 'post' ),
+			'post_status'    => 'publish',
+			'posts_per_page' => $cantidad,
+			'no_found_rows'  => true,
+		) );
+	}
+
+	return hd_home_latest_videos( $cantidad );
+}
+
+/**
  * URL de la imagen destacada, con la miniatura de YouTube como respaldo
  * si el post no tiene imagen (p. ej. si falló la descarga al importar).
  *
@@ -132,6 +172,7 @@ add_shortcode( 'hd_hero', 'hd_hero_shortcode' );
 function hd_hero_shortcode( $atts ) {
 	$a = shortcode_atts( array(
 		'cantidad' => 3,
+		'fuente'   => 'video', // video | post | ambos
 		'autoplay' => 'yes',
 		'interval' => 6000,
 		'flechas'  => 'yes',
@@ -151,6 +192,7 @@ function hd_hero_shortcode( $atts ) {
 function hd_hero_render( $a ) {
 	$a = wp_parse_args( $a, array(
 		'cantidad' => 3,
+		'fuente'   => 'video',
 		'autoplay' => 'yes',
 		'interval' => 6000,
 		'flechas'  => 'yes',
@@ -158,18 +200,19 @@ function hd_hero_render( $a ) {
 	) );
 
 	$cantidad = max( 2, (int) $a['cantidad'] ); // el crossfade necesita 2 capas.
+	$fuente   = in_array( $a['fuente'], array( 'video', 'post', 'ambos' ), true ) ? $a['fuente'] : 'video';
 	$autoplay = in_array( $a['autoplay'], array( 'yes', '1', 1, true ), true ) ? 'yes' : 'no';
 	$interval = max( 1000, (int) $a['interval'] );
 	$flechas  = in_array( $a['flechas'], array( 'yes', '1', 1, true ), true );
 	$dots     = in_array( $a['dots'], array( 'yes', '1', 1, true ), true );
 
-	$videos = hd_home_latest_videos( $cantidad );
+	$piezas = hd_home_latest_destacados( $cantidad, $fuente );
 
 	$slides = array();
-	foreach ( $videos as $v ) {
-		$img = hd_home_thumb_url( $v->ID, 'large' );
+	foreach ( $piezas as $v ) {
+		$img = hd_home_thumb_url( $v->ID, 'full' );
 		if ( '' === $img ) {
-			continue;
+			continue; // sin imagen no hay slide que pintar.
 		}
 		$slides[] = array(
 			'img'   => $img,
@@ -177,14 +220,24 @@ function hd_hero_render( $a ) {
 			'title' => get_the_title( $v ),
 			'time'  => hd_home_hace( $v->ID ),
 			'url'   => get_permalink( $v ),
+			// El play y el sello de YouTube solo tienen sentido en un video.
+			'video' => 'video' === get_post_type( $v ),
 		);
 	}
 
-	// Sin al menos dos videos utilizables no hay hero que pintar.
 	if ( count( $slides ) < 2 ) {
-		return current_user_can( 'edit_posts' )
-			? '<p class="hd-aviso">Hero: hacen falta al menos 2 videos con imagen. Corre el importador en Videos → Importar de YouTube.</p>'
-			: '';
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			return '';
+		}
+
+		$que = array(
+			'video' => 'videos',
+			'post'  => 'entradas',
+			'ambos' => 'videos o entradas',
+		);
+
+		return '<p class="hd-aviso">Hero: hacen falta al menos 2 ' . esc_html( $que[ $fuente ] )
+			. ' con imagen destacada. Cambia la fuente en el panel del widget o publica más contenido.</p>';
 	}
 
 	wp_enqueue_style( 'hd-home' );
@@ -220,18 +273,20 @@ function hd_hero_render( $a ) {
 				</button>
 			<?php endif; ?>
 
-			<a class="hd-play-btn hd-hero__play" data-hd-hero-play
+			<a class="hd-play-btn hd-hero__play<?php echo $s0['video'] ? '' : ' is-oculto'; ?>" data-hd-hero-play
 				href="<?php echo esc_url( $s0['url'] ); ?>"
-				aria-label="Ver el video destacado">
+				aria-label="Ver la pieza destacada">
 				<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
 			</a>
 
 			<div class="hd-hero__content">
 				<h2 class="hd-hero__title" data-hd-hero-title><?php echo esc_html( $s0['title'] ); ?></h2>
 				<p class="hd-hero__meta">
-					<svg class="hd-yt-mark" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31.4 31.4 0 0 0 24 12a31.4 31.4 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.3 3.6-6.3 3.6Z"/></svg>
-					<span>YouTube</span>
-					<span class="hd-meta-sep" aria-hidden="true">•</span>
+					<span class="hd-hero__fuente<?php echo $s0['video'] ? '' : ' is-oculto'; ?>" data-hd-hero-fuente>
+						<svg class="hd-yt-mark" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31.4 31.4 0 0 0 24 12a31.4 31.4 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.3 3.6-6.3 3.6Z"/></svg>
+						<span>YouTube</span>
+						<span class="hd-meta-sep" aria-hidden="true">•</span>
+					</span>
 					<span data-hd-hero-time><?php echo esc_html( $s0['time'] ); ?></span>
 				</p>
 				<?php if ( $dots ) : ?>

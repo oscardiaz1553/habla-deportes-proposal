@@ -195,8 +195,17 @@
 	font-size: 0.875rem;
 	font-weight: 500;
 }
+.hd-hero__fuente {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+}
 .hd-hero__meta .hd-yt-mark { width: 20px; height: 15px; }
 .hd-meta-sep { opacity: .6; }
+
+/* Piezas que no aplican al slide actual (el play y el sello de YouTube en
+   una nota escrita). Con !important porque pisan un display de flex. */
+.hd-hero .is-oculto { display: none !important; }
 
 /* Entrada del titular y la meta al cambiar de slide, con un leve stagger. */
 @keyframes hdHeroTextIn {

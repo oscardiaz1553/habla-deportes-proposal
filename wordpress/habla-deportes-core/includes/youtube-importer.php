@@ -436,17 +436,100 @@ add_action( 'init', function () {
 	update_option( 'hd_videos_classified', '1' );
 }, 25 );
 
-/* Miniatura de YouTube como imagen destacada (hqdefault siempre existe). */
+/**
+ * Mejor miniatura disponible para un video.
+ * ---------------------------------------------------------------
+ * YouTube publica varias resoluciones, pero no todas existen para todos
+ * los videos: `maxresdefault` (1280×720, 16:9) solo está si el video se
+ * subió en HD. Se prueban de mayor a menor y se devuelve la primera que
+ * responda 200.
+ *
+ * Importa porque `hqdefault` son 480×360: en un hero de 1280px de ancho
+ * se ve pixelado. Además viene en 4:3 con bandas negras, que el recorte
+ * 16:9 se come — o sea que del original queda todavía menos.
+ *
+ * @param string $yt_id ID del video.
+ * @return string URL de la mejor miniatura (hqdefault como último recurso).
+ */
+function hd_yt_thumbnail_url( $yt_id ) {
+	$base = 'https://i.ytimg.com/vi/' . rawurlencode( $yt_id ) . '/';
+
+	foreach ( array( 'maxresdefault', 'sddefault' ) as $variante ) {
+		$url = $base . $variante . '.jpg';
+		$res = wp_remote_head( $url, array( 'timeout' => 10 ) );
+
+		if ( ! is_wp_error( $res ) && 200 === (int) wp_remote_retrieve_response_code( $res ) ) {
+			return $url;
+		}
+	}
+
+	return $base . 'hqdefault.jpg'; // este existe siempre.
+}
+
+/** Miniatura de YouTube como imagen destacada, en la mejor resolución. */
 function hd_yt_set_thumbnail( $post_id, $yt_id, $title ) {
 	require_once ABSPATH . 'wp-admin/includes/media.php';
 	require_once ABSPATH . 'wp-admin/includes/file.php';
 	require_once ABSPATH . 'wp-admin/includes/image.php';
 
-	$url = 'https://i.ytimg.com/vi/' . rawurlencode( $yt_id ) . '/hqdefault.jpg';
-	$att = media_sideload_image( $url, $post_id, $title, 'id' );
+	$att = media_sideload_image( hd_yt_thumbnail_url( $yt_id ), $post_id, $title, 'id' );
 	if ( ! is_wp_error( $att ) ) {
 		set_post_thumbnail( $post_id, $att );
+		return (int) $att;
 	}
+
+	return 0;
+}
+
+/**
+ * Vuelve a descargar la miniatura de los videos que se importaron en
+ * baja resolución, si YouTube tiene una mejor.
+ * ---------------------------------------------------------------
+ * Solo actúa cuando la imagen actual mide menos de 1000px de ancho: así
+ * no repite trabajo ni toca las que ya están bien. La imagen anterior se
+ * deja en la biblioteca en vez de borrarla, por si estuviera en uso en
+ * otra parte; se puede limpiar a mano desde Medios.
+ *
+ * @return array( 'mejoradas', 'revisados' )
+ */
+function hd_yt_mejorar_miniaturas() {
+	$ids = get_posts( array(
+		'post_type'      => 'video',
+		'post_status'    => 'any',
+		'posts_per_page' => -1,
+		'fields'         => 'ids',
+		'no_found_rows'  => true,
+	) );
+
+	$mejoradas = 0;
+	foreach ( $ids as $pid ) {
+		$yt_id = get_post_meta( $pid, '_hd_youtube_id', true );
+		if ( ! $yt_id ) {
+			continue;
+		}
+
+		$att_actual = get_post_thumbnail_id( $pid );
+		if ( $att_actual ) {
+			$meta = wp_get_attachment_metadata( $att_actual );
+			if ( ! empty( $meta['width'] ) && (int) $meta['width'] >= 1000 ) {
+				continue; // ya está en buena resolución.
+			}
+		}
+
+		// Si YouTube no ofrece nada mejor, no merece la pena descargar.
+		if ( false === strpos( hd_yt_thumbnail_url( $yt_id ), 'maxresdefault' ) ) {
+			continue;
+		}
+
+		if ( hd_yt_set_thumbnail( $pid, $yt_id, get_the_title( $pid ) ) ) {
+			$mejoradas++;
+		}
+	}
+
+	return array(
+		'mejoradas' => $mejoradas,
+		'revisados' => count( $ids ),
+	);
 }
 
 /* ---------------------------------------------------------------
@@ -472,6 +555,7 @@ function hd_yt_admin_page() {
 	$reclass   = null;
 	$backfill  = null;
 	$clips     = null;
+	$minis     = null;
 	if ( isset( $_POST['hd_yt_run'] ) && check_admin_referer( 'hd_yt_import_now' ) ) {
 		$resultado = hd_yt_import();
 	}
@@ -483,6 +567,9 @@ function hd_yt_admin_page() {
 	}
 	if ( isset( $_POST['hd_yt_clips'] ) && check_admin_referer( 'hd_yt_import_now' ) ) {
 		$clips = hd_yt_detect_clips_all();
+	}
+	if ( isset( $_POST['hd_yt_minis'] ) && check_admin_referer( 'hd_yt_import_now' ) ) {
+		$minis = hd_yt_mejorar_miniaturas();
 	}
 	$last_run    = get_option( 'hd_yt_last_run', 'nunca' );
 	$last_result = get_option( 'hd_yt_last_result', '—' );
@@ -536,6 +623,17 @@ function hd_yt_admin_page() {
 			</p></div>
 		<?php endif; ?>
 
+		<?php if ( null !== $minis ) : ?>
+			<div class="notice notice-success"><p>
+				Miniaturas mejoradas: <strong><?php echo (int) $minis['mejoradas']; ?></strong>
+				de <?php echo (int) $minis['revisados']; ?> video(s) revisado(s).
+				<?php if ( 0 === (int) $minis['mejoradas'] ) : ?>
+					No había ninguna mejorable: o ya estaban en alta resolución, o YouTube
+					no publica una versión mejor de esos videos.
+				<?php endif; ?>
+			</p></div>
+		<?php endif; ?>
+
 		<form method="post">
 			<?php wp_nonce_field( 'hd_yt_import_now' ); ?>
 			<p>
@@ -543,12 +641,19 @@ function hd_yt_admin_page() {
 				<button type="submit" name="hd_yt_reclass" value="1" class="button">Reclasificar existentes</button>
 				<button type="submit" name="hd_yt_backfill" value="1" class="button">Rellenar descripciones existentes</button>
 				<button type="submit" name="hd_yt_clips" value="1" class="button">Detectar clips</button>
+				<button type="submit" name="hd_yt_minis" value="1" class="button">Mejorar miniaturas</button>
 			</p>
 			<p class="description">
 				<strong>Reclasificar existentes</strong> recorre los videos ya importados y les
 				añade términos de <code>equipo</code>/<code>tema</code> según el título (no borra los
 				que pongas a mano). <code>tema:clip</code> no sale del título: lo asigna
 				<strong>Detectar clips</strong>.
+			</p>
+			<p class="description">
+				<strong>Mejorar miniaturas</strong> vuelve a descargar la portada de los videos
+				que se importaron a 480×360, si YouTube publica la versión de 1280×720 (solo
+				existe para los videos subidos en HD). No toca las que ya están en buena
+				resolución. La imagen antigua se queda en Medios por si estuviera en uso.
 			</p>
 			<p class="description">
 				<strong>Detectar clips</strong> marca como <code>tema:clip</code> los videos que

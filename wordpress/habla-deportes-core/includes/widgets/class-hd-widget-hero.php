@@ -56,13 +56,25 @@ class HD_Widget_Hero extends \Elementor\Widget_Base {
 			'label' => 'Contenido',
 		) );
 
+		$this->add_control( 'fuente', array(
+			'label'       => 'Qué se destaca',
+			'type'        => Controls_Manager::SELECT,
+			'default'     => 'video',
+			'options'     => array(
+				'video' => 'Videos del canal',
+				'post'  => 'Noticias y notas',
+				'ambos' => 'Ambos, por fecha',
+			),
+			'description' => 'Las notas suelen quedar mejor en el hero: llevan foto propia en alta y titular escrito, no la portada de YouTube.',
+		) );
+
 		$this->add_control( 'cantidad', array(
-			'label'       => 'Videos en el hero',
+			'label'       => 'Piezas en el hero',
 			'type'        => Controls_Manager::NUMBER,
 			'min'         => 2,
 			'max'         => 8,
 			'default'     => 3,
-			'description' => 'Se toman los más recientes. Mínimo 2: el fundido necesita dos capas.',
+			'description' => 'Se toman las más recientes. Mínimo 2: el fundido necesita dos capas.',
 		) );
 
 		$this->add_control( 'flechas', array(
@@ -291,6 +303,7 @@ class HD_Widget_Hero extends \Elementor\Widget_Base {
 
 		echo hd_hero_render( array(
 			'cantidad' => $s['cantidad'],
+			'fuente'   => $s['fuente'],
 			'autoplay' => $s['autoplay'],
 			'interval' => $s['interval'],
 			'flechas'  => $s['flechas'],

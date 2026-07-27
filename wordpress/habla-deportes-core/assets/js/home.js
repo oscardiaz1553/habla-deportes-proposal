@@ -324,12 +324,22 @@
 		restart();
 	});
 
-	/* ---- Ticker: duplicar la pista para un bucle sin costuras ---------- */
-	var track = document.querySelector('[data-hd-ticker-track]');
-	if (track && track.parentNode) {
-		var clone = track.cloneNode(true);
-		clone.setAttribute('aria-hidden', 'true');
-		clone.removeAttribute('data-hd-ticker-track');
-		track.parentNode.appendChild(clone);
-	}
+	/* ---- Ticker: duplicar los ÍTEMS dentro de la misma pista -----------
+	   El CSS desplaza la pista un -50%. Para que eso caiga justo sobre el
+	   inicio de la segunda copia, las dos copias tienen que vivir en la
+	   MISMA pista: duplicar la pista entera como hermana dejaba el empalme
+	   más estrecho que la separación normal y se veía un tirón por vuelta.
+	   Las copias son decorativas: fuera del árbol de accesibilidad y fuera
+	   del recorrido del tabulador, para no leer ni tabular dos veces. */
+	document.querySelectorAll('[data-hd-ticker-track]').forEach(function (track) {
+		var originales = Array.prototype.slice.call(track.children);
+		if (!originales.length) return;
+
+		originales.forEach(function (item) {
+			var copia = item.cloneNode(true);
+			copia.setAttribute('aria-hidden', 'true');
+			copia.setAttribute('tabindex', '-1');
+			track.appendChild(copia);
+		});
+	});
 })();

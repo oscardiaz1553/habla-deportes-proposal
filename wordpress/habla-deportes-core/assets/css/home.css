@@ -245,6 +245,9 @@
 	gap: 8px;
 	flex: none;
 	padding: 12px var(--hd-page-margin);
+	/* El aire hasta el primer titular vive AQUÍ y no en la pista: cualquier
+	   padding dentro de la pista entra en su ancho y descuadra el -50%. */
+	margin-right: 24px;
 	font-weight: 700;
 	font-size: 0.875rem;
 	background: var(--hd-navy);
@@ -265,12 +268,16 @@
 	display: flex;
 	align-items: center;
 }
+/* Marquesina: UNA sola pista con el contenido duplicado dentro (lo duplica
+   home.js). Al desplazarla un -50% cae exactamente sobre el inicio de la
+   segunda copia, así que el bucle no tiene ni salto ni costura.
+   La separación entre titulares es `margin-right` en cada ítem, NO `gap` en
+   la pista: con gap, la mitad del ancho cae media separación desplazada y
+   el empalme queda más estrecho que el resto (era el tirón de cada vuelta). */
 .hd-ticker__track {
 	display: inline-flex;
 	align-items: center;
-	gap: 40px;
 	white-space: nowrap;
-	padding-left: 24px;
 	animation: hdTickerScroll 38s linear infinite;
 	will-change: transform;
 }
@@ -283,6 +290,7 @@
 	display: inline-flex;
 	align-items: baseline;
 	gap: 8px;
+	margin-right: 40px;
 	font-size: 0.875rem;
 	text-decoration: none;
 }

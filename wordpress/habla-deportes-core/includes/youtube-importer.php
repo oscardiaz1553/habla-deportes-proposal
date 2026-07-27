@@ -148,7 +148,8 @@ function hd_yt_import() {
 
 		update_post_meta( $post_id, '_hd_youtube_id', sanitize_text_field( $v['id'] ) );
 		hd_yt_set_thumbnail( $post_id, $v['id'], $v['title'] );
-		hd_yt_classify( $post_id, $v['title'] ); // etiqueta equipo/tema por título
+		hd_yt_classify( $post_id, $v['title'] );      // equipo/tema por título
+		hd_yt_tag_if_short( $post_id, $v['id'] );     // tema:clip si es un short
 		$nuevos++;
 	}
 
@@ -248,6 +249,89 @@ function hd_yt_backfill_descriptions() {
 }
 
 /* ---------------------------------------------------------------
+ * 2c) Detección de shorts → `tema:clip`.
+ * ---------------------------------------------------------------
+ * El feed RSS no expone el formato del video. El truco fiable sin API:
+ * pedir youtube.com/shorts/{id} SIN seguir redirecciones. YouTube
+ * responde 200 si el video es de verdad un short, y 303 (redirección a
+ * /watch?v=) si es un video normal. Comprobado contra este canal: los
+ * shorts dan 200 y los videos largos 303, sin falsos positivos.
+ *
+ * El resultado se cachea en la meta `_hd_is_short` ('1'/'0') para no
+ * repetir la petición en cada corrida. Si la petición falla NO se
+ * cachea, para reintentarlo más adelante.
+ * ------------------------------------------------------------- */
+function hd_yt_is_short( $post_id, $yt_id ) {
+	$cache = get_post_meta( $post_id, '_hd_is_short', true );
+	if ( '' !== $cache ) {
+		return '1' === $cache;
+	}
+
+	$res = wp_remote_head(
+		'https://www.youtube.com/shorts/' . rawurlencode( $yt_id ),
+		array(
+			'timeout'     => 10,
+			'redirection' => 0, // clave: sin esto seguiríamos el 303 y todo daría 200.
+		)
+	);
+	if ( is_wp_error( $res ) ) {
+		return false;
+	}
+
+	$es_short = 200 === (int) wp_remote_retrieve_response_code( $res );
+	update_post_meta( $post_id, '_hd_is_short', $es_short ? '1' : '0' );
+
+	return $es_short;
+}
+
+/** Añade `tema:clip` si el video es un short. Devuelve true si etiquetó. */
+function hd_yt_tag_if_short( $post_id, $yt_id ) {
+	if ( ! hd_yt_is_short( $post_id, $yt_id ) ) {
+		return false;
+	}
+
+	$term = get_term_by( 'slug', 'clip', 'tema' );
+	if ( ! $term || is_wp_error( $term ) ) {
+		return false;
+	}
+
+	wp_set_object_terms( $post_id, array( (int) $term->term_id ), 'tema', true ); // append
+	return true;
+}
+
+/**
+ * Recorre los videos ya importados y etiqueta los que sean shorts.
+ * Una petición HTTP por video sin comprobar todavía (los ya
+ * comprobados salen de la meta cacheada, sin red). Devuelve el
+ * recuento: array( 'clips', 'revisados' ).
+ */
+function hd_yt_detect_clips_all() {
+	$ids = get_posts( array(
+		'post_type'      => 'video',
+		'post_status'    => 'any',
+		'posts_per_page' => -1,
+		'fields'         => 'ids',
+		'no_found_rows'  => true,
+	) );
+
+	$clips = 0;
+	foreach ( $ids as $pid ) {
+		$yt_id = get_post_meta( $pid, '_hd_youtube_id', true );
+		if ( ! $yt_id ) {
+			continue;
+		}
+		if ( hd_yt_tag_if_short( $pid, $yt_id ) ) {
+			$clips++;
+		}
+	}
+
+	return array(
+		'clips'     => $clips,
+		'revisados' => count( $ids ),
+	);
+}
+
+/* ---------------------------------------------------------------
  * 2b) Clasificador automático por TÍTULO (heurística conservadora).
  * ---------------------------------------------------------------
  * Solo AÑADE términos (wp_set_object_terms con append=true); nunca
@@ -260,8 +344,9 @@ function hd_yt_backfill_descriptions() {
  *   /am[eé]rica/                      -> equipo `america`
  *   /fichaj|fich[oó]|refuerzo|contrat/-> tema   `fichaje`
  *
- * NOTA: `tema:clip` se deja para asignación MANUAL — el RSS del canal
- * no expone si un video es "short", así que no hay señal fiable.
+ * NOTA: `tema:clip` NO se asigna aquí. El título no dice si un video es
+ * un short; eso lo resuelve hd_yt_tag_if_short() más abajo, con una
+ * señal fiable.
  * Devuelve true si aplicó al menos un término.
  */
 function hd_yt_classify( $post_id, $title ) {
@@ -386,6 +471,7 @@ function hd_yt_admin_page() {
 	$resultado = null;
 	$reclass   = null;
 	$backfill  = null;
+	$clips     = null;
 	if ( isset( $_POST['hd_yt_run'] ) && check_admin_referer( 'hd_yt_import_now' ) ) {
 		$resultado = hd_yt_import();
 	}
@@ -394,6 +480,9 @@ function hd_yt_admin_page() {
 	}
 	if ( isset( $_POST['hd_yt_backfill'] ) && check_admin_referer( 'hd_yt_import_now' ) ) {
 		$backfill = hd_yt_backfill_descriptions();
+	}
+	if ( isset( $_POST['hd_yt_clips'] ) && check_admin_referer( 'hd_yt_import_now' ) ) {
+		$clips = hd_yt_detect_clips_all();
 	}
 	$last_run    = get_option( 'hd_yt_last_run', 'nunca' );
 	$last_result = get_option( 'hd_yt_last_result', '—' );
@@ -439,17 +528,33 @@ function hd_yt_admin_page() {
 			<?php endif; ?>
 		<?php endif; ?>
 
+		<?php if ( null !== $clips ) : ?>
+			<div class="notice notice-success"><p>
+				Detección de clips completa: <strong><?php echo (int) $clips['clips']; ?></strong>
+				short(s) etiquetado(s) como <code>tema:clip</code>
+				sobre <?php echo (int) $clips['revisados']; ?> video(s) revisado(s).
+			</p></div>
+		<?php endif; ?>
+
 		<form method="post">
 			<?php wp_nonce_field( 'hd_yt_import_now' ); ?>
 			<p>
 				<button type="submit" name="hd_yt_run" value="1" class="button button-primary">Importar ahora</button>
 				<button type="submit" name="hd_yt_reclass" value="1" class="button">Reclasificar existentes</button>
 				<button type="submit" name="hd_yt_backfill" value="1" class="button">Rellenar descripciones existentes</button>
+				<button type="submit" name="hd_yt_clips" value="1" class="button">Detectar clips</button>
 			</p>
 			<p class="description">
 				<strong>Reclasificar existentes</strong> recorre los videos ya importados y les
 				añade términos de <code>equipo</code>/<code>tema</code> según el título (no borra los
-				que pongas a mano). <code>tema:clip</code> se asigna manualmente.
+				que pongas a mano). <code>tema:clip</code> no sale del título: lo asigna
+				<strong>Detectar clips</strong>.
+			</p>
+			<p class="description">
+				<strong>Detectar clips</strong> marca como <code>tema:clip</code> los videos que
+				son shorts (formato vertical). Lo comprueba contra YouTube y guarda el resultado,
+				así que la primera corrida tarda unos segundos y las siguientes son inmediatas.
+				Los videos nuevos se detectan solos al importarse.
 			</p>
 			<p class="description">
 				<strong>Rellenar descripciones existentes</strong> completa la descripción de los

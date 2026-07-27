@@ -12,6 +12,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Tamaño de imagen 16:9 recortado.
+ * ---------------------------------------------------------------
+ * Las miniaturas de YouTube vienen en 4:3 con bandas negras arriba y
+ * abajo (hqdefault). Registrando el recorte como tamaño de WordPress,
+ * el widget Imagen de Elementor lo elige en un desplegable y la tarjeta
+ * sale en 16:9 sin recortes por CSS ni contenedores auxiliares.
+ */
+add_action( 'after_setup_theme', function () {
+	add_image_size( 'hd-16x9', 640, 360, true );
+	add_image_size( 'hd-16x9-grande', 1280, 720, true );
+} );
+
+/** Que los dos tamaños aparezcan con nombre legible en los selectores. */
+add_filter( 'image_size_names_choose', function ( $sizes ) {
+	$sizes['hd-16x9']        = 'Video 16:9 (640×360)';
+	$sizes['hd-16x9-grande'] = 'Video 16:9 grande (1280×720)';
+
+	return $sizes;
+} );
+
 add_action( 'init', 'hd_register_content_model' );
 function hd_register_content_model() {
 

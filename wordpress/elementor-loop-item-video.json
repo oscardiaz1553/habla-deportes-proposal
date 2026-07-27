@@ -1,0 +1,143 @@
+{
+  "title": "Habla Deportes — Tarjeta de video",
+  "type": "loop-item",
+  "version": "0.4",
+  "page_settings": {
+    "custom_css": "/* ===== Tarjeta de video (Loop Item) =====\n   El recorte del titular a dos lineas, el zoom de la miniatura y el naranja\n   de marca al pasar viven en el CSS del plugin (assets/css/home.css), en las\n   clases hd-vcard, hd-vcard__thumb y hd-vcard__title. Todo lo demas se\n   ajusta desde el panel de cada widget. */\n\n/* La tarjeta entera es la zona sensible al hover. */\n.hd-vcard { cursor: pointer; }\n"
+  },
+  "content": [
+    {
+      "id": "hdv1a001",
+      "elType": "container",
+      "settings": {
+        "content_width": "full",
+        "flex_direction": "column",
+        "flex_gap": {
+          "unit": "px",
+          "size": 0,
+          "column": "0",
+          "row": "0",
+          "isLinked": true
+        },
+        "padding": {
+          "unit": "px",
+          "top": "0",
+          "right": "0",
+          "bottom": "0",
+          "left": "0",
+          "isLinked": true
+        },
+        "_css_classes": "hd-vcard"
+      },
+      "elements": [
+        {
+          "id": "hdv1b002",
+          "elType": "widget",
+          "widgetType": "image",
+          "settings": {
+            "image": {
+              "url": "",
+              "id": ""
+            },
+            "__dynamic__": {
+              "image": "[elementor-tag id=\"hdvtag01\" name=\"hd-video-miniatura\" settings=\"%7B%7D\"]",
+              "link": "[elementor-tag id=\"hdvtag02\" name=\"post-url\" settings=\"%7B%7D\"]"
+            },
+            "image_size": "hd-16x9",
+            "link_to": "custom",
+            "image_border_radius": {
+              "unit": "px",
+              "top": "10",
+              "right": "10",
+              "bottom": "10",
+              "left": "10",
+              "isLinked": true
+            },
+            "_css_classes": "hd-vcard__thumb"
+          },
+          "elements": []
+        },
+        {
+          "id": "hdv1c003",
+          "elType": "widget",
+          "widgetType": "heading",
+          "settings": {
+            "title": "Hace 2 horas",
+            "__dynamic__": {
+              "title": "[elementor-tag id=\"hdvtag03\" name=\"hd-video-hace\" settings=\"%7B%7D\"]"
+            },
+            "header_size": "p",
+            "align": "left",
+            "title_color": "#5E6B77",
+            "typography_typography": "custom",
+            "typography_font_family": "Inter",
+            "typography_font_size": {
+              "unit": "px",
+              "size": 14,
+              "sizes": []
+            },
+            "typography_font_weight": "500",
+            "typography_line_height": {
+              "unit": "em",
+              "size": 1.5,
+              "sizes": []
+            },
+            "_margin": {
+              "unit": "px",
+              "top": "12",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": false
+            },
+            "_css_classes": "hd-vcard__date"
+          },
+          "elements": []
+        },
+        {
+          "id": "hdv1d004",
+          "elType": "widget",
+          "widgetType": "heading",
+          "settings": {
+            "title": "Titular del video a dos lineas como maximo",
+            "__dynamic__": {
+              "title": "[elementor-tag id=\"hdvtag04\" name=\"post-title\" settings=\"%7B%7D\"]",
+              "link": "[elementor-tag id=\"hdvtag05\" name=\"post-url\" settings=\"%7B%7D\"]"
+            },
+            "header_size": "h3",
+            "align": "left",
+            "title_color": "#17222E",
+            "typography_typography": "custom",
+            "typography_font_family": "Archivo",
+            "typography_font_size": {
+              "unit": "px",
+              "size": 16,
+              "sizes": []
+            },
+            "typography_font_weight": "700",
+            "typography_line_height": {
+              "unit": "em",
+              "size": 1.3,
+              "sizes": []
+            },
+            "typography_letter_spacing": {
+              "unit": "px",
+              "size": -0.2,
+              "sizes": []
+            },
+            "_margin": {
+              "unit": "px",
+              "top": "4",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": false
+            },
+            "_css_classes": "hd-vcard__title"
+          },
+          "elements": []
+        }
+      ]
+    }
+  ]
+}

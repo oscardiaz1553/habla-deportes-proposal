@@ -53,11 +53,18 @@ def titulo_seccion(texto, enlace_texto="Ver todo"):
 
 
 def consulta(term_ttid=None, cuantos=4):
-    """Ajustes del grupo de consulta del Loop Grid / Loop Carousel."""
-    q = {"query_post_type": "video", "query_posts_per_page": cuantos}
+    """Ajustes de la consulta del Loop Grid / Loop Carousel.
+
+    Los controles del grupo los registra el SKIN, y Elementor prefija los
+    controles de skin con su id. El skin de estos widgets es `post`, y el
+    grupo se llama `query`, asi que los ids quedan `post_query_*`. El
+    conteo NO va en el grupo: el skin lo excluye a proposito porque el
+    widget ya trae `posts_per_page` en la seccion Diseno.
+    """
+    q = {"post_query_post_type": "video", "posts_per_page": cuantos}
     if term_ttid is not None:
-        q["query_include"] = ["terms"]
-        q["query_include_term_ids"] = [str(term_ttid)]
+        q["post_query_include"] = ["terms"]
+        q["post_query_include_term_ids"] = [str(term_ttid)]
     return q
 
 
@@ -156,7 +163,10 @@ def resumen(els, p=""):
         extra = ""
         if k in ("loop-grid", "loop-carousel"):
             s = e["settings"]
-            extra = f"  tpl={s['template_id']} terms={s.get('query_include_term_ids', '-')} n={s['query_posts_per_page']}"
+            extra = (f"  tpl={s['template_id']}"
+                     f" tipo={s.get('post_query_post_type')}"
+                     f" terms={s.get('post_query_include_term_ids', '-')}"
+                     f" n={s['posts_per_page']}")
         elif k == "heading":
             extra = "  " + e["settings"].get("title", "")
         print(p + k + extra)

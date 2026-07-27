@@ -68,6 +68,17 @@ class HD_Widget_Hero extends \Elementor\Widget_Base {
 			'description' => 'Las notas suelen quedar mejor en el hero: llevan foto propia en alta y titular escrito, no la portada de YouTube.',
 		) );
 
+		$this->add_control( 'seleccion', array(
+			'label'       => 'Qué piezas',
+			'type'        => Controls_Manager::SELECT,
+			'default'     => 'destacados',
+			'options'     => array(
+				'destacados' => 'Las marcadas para portada',
+				'recientes'  => 'Siempre lo más reciente',
+			),
+			'description' => 'La redacción marca lo que va al hero con la casilla «Mostrar en portada», en la propia pieza o con la estrella del listado. Si no hay suficientes marcadas, el hueco se rellena con lo último publicado.',
+		) );
+
 		$this->add_control( 'cantidad', array(
 			'label'       => 'Piezas en el hero',
 			'type'        => Controls_Manager::NUMBER,
@@ -302,12 +313,13 @@ class HD_Widget_Hero extends \Elementor\Widget_Base {
 		$s = $this->get_settings_for_display();
 
 		echo hd_hero_render( array(
-			'cantidad' => $s['cantidad'],
-			'fuente'   => $s['fuente'],
-			'autoplay' => $s['autoplay'],
-			'interval' => $s['interval'],
-			'flechas'  => $s['flechas'],
-			'dots'     => $s['dots'],
+			'cantidad'  => $s['cantidad'],
+			'fuente'    => $s['fuente'],
+			'seleccion' => $s['seleccion'],
+			'autoplay'  => $s['autoplay'],
+			'interval'  => $s['interval'],
+			'flechas'   => $s['flechas'],
+			'dots'      => $s['dots'],
 		) );
 	}
 }

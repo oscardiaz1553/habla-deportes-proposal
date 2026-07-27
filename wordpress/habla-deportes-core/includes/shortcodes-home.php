@@ -71,8 +71,34 @@ function hd_home_latest_videos( $cantidad ) {
  * @param string $fuente   video|post|ambos.
  * @return WP_Post[]
  */
-function hd_home_latest_destacados( $cantidad, $fuente = 'video' ) {
+function hd_home_latest_destacados( $cantidad, $fuente = 'video', $seleccion = 'recientes' ) {
 	$cantidad = max( 1, (int) $cantidad );
+
+	/* Marcadas para portada, y si no llegan a la cantidad pedida se
+	   completa con lo último publicado. Rellenar en vez de quedarse corto
+	   es deliberado: el hero necesita 2 piezas como mínimo para el fundido,
+	   y la portada no puede romperse porque ese día solo se marcara una. */
+	if ( 'destacados' === $seleccion ) {
+		$marcadas = hd_destacados( $cantidad, $fuente );
+
+		if ( count( $marcadas ) >= $cantidad ) {
+			return $marcadas;
+		}
+
+		$ya      = wp_list_pluck( $marcadas, 'ID' );
+		$relleno = hd_home_latest_destacados( $cantidad + count( $ya ), $fuente, 'recientes' );
+
+		foreach ( $relleno as $p ) {
+			if ( count( $marcadas ) >= $cantidad ) {
+				break;
+			}
+			if ( ! in_array( $p->ID, $ya, true ) ) {
+				$marcadas[] = $p;
+			}
+		}
+
+		return $marcadas;
+	}
 
 	if ( 'post' === $fuente ) {
 		return get_posts( array(
@@ -171,12 +197,13 @@ function hd_home_hace( $post_id ) {
 add_shortcode( 'hd_hero', 'hd_hero_shortcode' );
 function hd_hero_shortcode( $atts ) {
 	$a = shortcode_atts( array(
-		'cantidad' => 3,
-		'fuente'   => 'video', // video | post | ambos
-		'autoplay' => 'yes',
-		'interval' => 6000,
-		'flechas'  => 'yes',
-		'dots'     => 'yes',
+		'cantidad'  => 3,
+		'fuente'    => 'video',      // video | post | ambos
+		'seleccion' => 'destacados', // destacados | recientes
+		'autoplay'  => 'yes',
+		'interval'  => 6000,
+		'flechas'   => 'yes',
+		'dots'      => 'yes',
 	), $atts );
 
 	return hd_hero_render( $a );
@@ -191,22 +218,24 @@ function hd_hero_shortcode( $atts ) {
  */
 function hd_hero_render( $a ) {
 	$a = wp_parse_args( $a, array(
-		'cantidad' => 3,
-		'fuente'   => 'video',
-		'autoplay' => 'yes',
-		'interval' => 6000,
-		'flechas'  => 'yes',
-		'dots'     => 'yes',
+		'cantidad'  => 3,
+		'fuente'    => 'video',
+		'seleccion' => 'destacados',
+		'autoplay'  => 'yes',
+		'interval'  => 6000,
+		'flechas'   => 'yes',
+		'dots'      => 'yes',
 	) );
 
-	$cantidad = max( 2, (int) $a['cantidad'] ); // el crossfade necesita 2 capas.
-	$fuente   = in_array( $a['fuente'], array( 'video', 'post', 'ambos' ), true ) ? $a['fuente'] : 'video';
+	$cantidad  = max( 2, (int) $a['cantidad'] ); // el crossfade necesita 2 capas.
+	$fuente    = in_array( $a['fuente'], array( 'video', 'post', 'ambos' ), true ) ? $a['fuente'] : 'video';
+	$seleccion = 'recientes' === $a['seleccion'] ? 'recientes' : 'destacados';
 	$autoplay = in_array( $a['autoplay'], array( 'yes', '1', 1, true ), true ) ? 'yes' : 'no';
 	$interval = max( 1000, (int) $a['interval'] );
 	$flechas  = in_array( $a['flechas'], array( 'yes', '1', 1, true ), true );
 	$dots     = in_array( $a['dots'], array( 'yes', '1', 1, true ), true );
 
-	$piezas = hd_home_latest_destacados( $cantidad, $fuente );
+	$piezas = hd_home_latest_destacados( $cantidad, $fuente, $seleccion );
 
 	$slides = array();
 	foreach ( $piezas as $v ) {

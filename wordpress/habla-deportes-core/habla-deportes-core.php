@@ -42,6 +42,16 @@ require_once HDC_PATH . 'includes/cpt-partido.php';
 require_once HDC_PATH . 'includes/shortcodes.php';
 require_once HDC_PATH . 'includes/shortcodes-home.php';
 
+/* Widgets propios de Elementor. Solo si Elementor está activo: el plugin
+   debe seguir funcionando (CPT, importador, shortcodes) sin él. */
+if ( did_action( 'elementor/loaded' ) || defined( 'ELEMENTOR_VERSION' ) ) {
+	require_once HDC_PATH . 'includes/elementor.php';
+} else {
+	add_action( 'elementor/loaded', function () {
+		require_once HDC_PATH . 'includes/elementor.php';
+	} );
+}
+
 /* ============================================================
  * Activación / desactivación
  * ============================================================

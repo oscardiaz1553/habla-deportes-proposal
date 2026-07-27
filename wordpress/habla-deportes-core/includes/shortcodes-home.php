@@ -130,8 +130,38 @@ function hd_home_hace( $post_id ) {
  * ------------------------------------------------------------- */
 add_shortcode( 'hd_hero', 'hd_hero_shortcode' );
 function hd_hero_shortcode( $atts ) {
-	$a        = shortcode_atts( array( 'cantidad' => 3 ), $atts );
+	$a = shortcode_atts( array(
+		'cantidad' => 3,
+		'autoplay' => 'yes',
+		'interval' => 6000,
+		'flechas'  => 'yes',
+		'dots'     => 'yes',
+	), $atts );
+
+	return hd_hero_render( $a );
+}
+
+/**
+ * Render del hero. Lo comparten el shortcode [hd_hero] y el widget de
+ * Elementor `hd-hero`, para que no haya dos maquetaciones que mantener.
+ *
+ * @param array $a cantidad, autoplay, interval, flechas, dots.
+ * @return string HTML.
+ */
+function hd_hero_render( $a ) {
+	$a = wp_parse_args( $a, array(
+		'cantidad' => 3,
+		'autoplay' => 'yes',
+		'interval' => 6000,
+		'flechas'  => 'yes',
+		'dots'     => 'yes',
+	) );
+
 	$cantidad = max( 2, (int) $a['cantidad'] ); // el crossfade necesita 2 capas.
+	$autoplay = in_array( $a['autoplay'], array( 'yes', '1', 1, true ), true ) ? 'yes' : 'no';
+	$interval = max( 1000, (int) $a['interval'] );
+	$flechas  = in_array( $a['flechas'], array( 'yes', '1', 1, true ), true );
+	$dots     = in_array( $a['dots'], array( 'yes', '1', 1, true ), true );
 
 	$videos = hd_home_latest_videos( $cantidad );
 
@@ -166,6 +196,8 @@ function hd_hero_shortcode( $atts ) {
 	ob_start();
 	?>
 	<section class="hd-hero" data-hd-hero aria-label="Video destacado"
+		data-autoplay="<?php echo esc_attr( $autoplay ); ?>"
+		data-interval="<?php echo esc_attr( $interval ); ?>"
 		data-slides="<?php echo esc_attr( wp_json_encode( $slides ) ); ?>">
 		<div class="hd-hero__slide">
 			<?php // Dos capas apiladas: el crossfade real lo hace home.js. ?>
@@ -179,12 +211,14 @@ function hd_hero_shortcode( $atts ) {
 			</div>
 			<div class="hd-hero__scrim" aria-hidden="true"></div>
 
-			<button class="hd-hero__arrow hd-hero__arrow--prev" type="button" data-hd-hero-prev aria-label="Video anterior">
-				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
-			</button>
-			<button class="hd-hero__arrow hd-hero__arrow--next" type="button" data-hd-hero-next aria-label="Siguiente video">
-				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-			</button>
+			<?php if ( $flechas ) : ?>
+				<button class="hd-hero__arrow hd-hero__arrow--prev" type="button" data-hd-hero-prev aria-label="Video anterior">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+				</button>
+				<button class="hd-hero__arrow hd-hero__arrow--next" type="button" data-hd-hero-next aria-label="Siguiente video">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+				</button>
+			<?php endif; ?>
 
 			<a class="hd-play-btn hd-hero__play" data-hd-hero-play
 				href="<?php echo esc_url( $s0['url'] ); ?>"
@@ -200,13 +234,15 @@ function hd_hero_shortcode( $atts ) {
 					<span class="hd-meta-sep" aria-hidden="true">•</span>
 					<span data-hd-hero-time><?php echo esc_html( $s0['time'] ); ?></span>
 				</p>
-				<div class="hd-hero__dots">
-					<?php foreach ( $slides as $i => $slide ) : ?>
-						<button class="hd-hero__dot" type="button" data-hd-hero-dot
-							aria-current="<?php echo 0 === $i ? 'true' : 'false'; ?>"
-							aria-label="Video <?php echo esc_attr( $i + 1 ); ?>"></button>
-					<?php endforeach; ?>
-				</div>
+				<?php if ( $dots ) : ?>
+					<div class="hd-hero__dots">
+						<?php foreach ( $slides as $i => $slide ) : ?>
+							<button class="hd-hero__dot" type="button" data-hd-hero-dot
+								aria-current="<?php echo 0 === $i ? 'true' : 'false'; ?>"
+								aria-label="Video <?php echo esc_attr( $i + 1 ); ?>"></button>
+						<?php endforeach; ?>
+					</div>
+				<?php endif; ?>
 			</div>
 		</div>
 	</section>
@@ -230,7 +266,34 @@ function hd_hero_shortcode( $atts ) {
  * ------------------------------------------------------------- */
 add_shortcode( 'hd_partidos', 'hd_partidos_shortcode' );
 function hd_partidos_shortcode( $atts ) {
-	$a = shortcode_atts( array( 'cantidad' => 5 ), $atts );
+	$a = shortcode_atts( array(
+		'cantidad' => 5,
+		'autoplay' => 'yes',
+		'interval' => 6000,
+		'dots'     => 'yes',
+	), $atts );
+
+	return hd_partidos_render( $a );
+}
+
+/**
+ * Render del Centro de Partidos, compartido por el shortcode y el widget
+ * de Elementor `hd-partidos`.
+ *
+ * @param array $a cantidad, autoplay, interval, dots.
+ * @return string HTML.
+ */
+function hd_partidos_render( $a ) {
+	$a = wp_parse_args( $a, array(
+		'cantidad' => 5,
+		'autoplay' => 'yes',
+		'interval' => 6000,
+		'dots'     => 'yes',
+	) );
+
+	$autoplay = in_array( $a['autoplay'], array( 'yes', '1', 1, true ), true ) ? 'yes' : 'no';
+	$interval = max( 1000, (int) $a['interval'] );
+	$dots     = in_array( $a['dots'], array( 'yes', '1', 1, true ), true );
 
 	$partidos = function_exists( 'hd_partidos_proximos' )
 		? hd_partidos_proximos( max( 1, (int) $a['cantidad'] ) )
@@ -247,7 +310,9 @@ function hd_partidos_shortcode( $atts ) {
 
 	ob_start();
 	?>
-	<div class="hd-match-slider" data-hd-match-slider>
+	<div class="hd-match-slider" data-hd-match-slider
+		data-autoplay="<?php echo esc_attr( $autoplay ); ?>"
+		data-interval="<?php echo esc_attr( $interval ); ?>">
 		<div class="hd-match-slider__viewport">
 			<div class="hd-match-slider__track" data-hd-match-track>
 				<?php foreach ( $partidos as $pid ) : ?>
@@ -255,7 +320,7 @@ function hd_partidos_shortcode( $atts ) {
 				<?php endforeach; ?>
 			</div>
 		</div>
-		<?php if ( count( $partidos ) > 1 ) : ?>
+		<?php if ( $dots && count( $partidos ) > 1 ) : ?>
 			<div class="hd-match-slider__dots" aria-label="Seleccionar partido">
 				<?php foreach ( $partidos as $i => $pid ) : ?>
 					<?php hd_render_match_dot( $pid, $i ); ?>
@@ -376,9 +441,27 @@ function hd_render_match_dot( $post_id, $i ) {
 add_shortcode( 'hd_ticker', 'hd_ticker_shortcode' );
 function hd_ticker_shortcode( $atts ) {
 	$a = shortcode_atts( array(
-		'cantidad' => 8,
-		'etiqueta' => 'Noticias',
+		'cantidad'  => 8,
+		'etiqueta'  => 'Noticias',
+		'categoria' => 'Videos',
 	), $atts );
+
+	return hd_ticker_render( $a );
+}
+
+/**
+ * Render del ticker, compartido por el shortcode y el widget de
+ * Elementor `hd-ticker`.
+ *
+ * @param array $a cantidad, etiqueta, categoria.
+ * @return string HTML.
+ */
+function hd_ticker_render( $a ) {
+	$a = wp_parse_args( $a, array(
+		'cantidad'  => 8,
+		'etiqueta'  => 'Noticias',
+		'categoria' => 'Videos',
+	) );
 
 	$videos = hd_home_latest_videos( $a['cantidad'] );
 	if ( empty( $videos ) ) {
@@ -396,7 +479,7 @@ function hd_ticker_shortcode( $atts ) {
 			<div class="hd-ticker__track" data-hd-ticker-track>
 				<?php foreach ( $videos as $v ) : ?>
 					<a class="hd-ticker__item" href="<?php echo esc_url( get_permalink( $v ) ); ?>">
-						<span class="hd-ticker__cat">Videos</span>
+						<span class="hd-ticker__cat"><?php echo esc_html( $a['categoria'] ); ?></span>
 						<span class="hd-ticker__headline"><?php echo esc_html( get_the_title( $v ) ); ?></span>
 					</a>
 				<?php endforeach; ?>

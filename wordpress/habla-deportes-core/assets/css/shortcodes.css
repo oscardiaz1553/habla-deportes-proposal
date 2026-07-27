@@ -1,9 +1,18 @@
 /* ==========================================================================
-   Habla Deportes Core — CSS mínimo del shortcode [hd_videos].
+   Habla Deportes Core — CSS mínimo de los shortcodes del plugin.
    Autónomo: no depende de tokens ni de clases del child theme. Solo se
-   encola cuando el shortcode se usa realmente en la página.
+   encola cuando alguno de los shortcodes se usa realmente en la página.
+
+   Contiene:
+     1. [hd_videos]        — grilla de respaldo/verificación.
+     2. [hd_video_player]  — reproductor 16:9 con facade.
+     3. Aviso de administrador cuando falta el ID de YouTube.
+   ========================================================================== */
+
+/* ==========================================================================
+   1. [hd_videos] — grilla de respaldo.
    Para el diseño definitivo el usuario maqueta con Elementor sobre el
-   CPT `video`; esto es una grilla de respaldo/verificación.
+   CPT `video`; esto es una grilla de verificación.
    ========================================================================== */
 
 .hd-videos-grid {
@@ -60,4 +69,149 @@
   padding: 0 12px 12px;
   font-size: .8125rem;
   color: #5E6B77;
+}
+
+/* ==========================================================================
+   2. [hd_video_player] — reproductor 16:9 con facade.
+   La portada (imagen destacada o miniatura de YouTube) vive dentro de un
+   <button> real; al hacer clic el JS la reemplaza por el <iframe>.
+   ========================================================================== */
+
+.hd-player {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #294D6E;                        /* navy de marca */
+  box-shadow: 0 10px 28px rgba(23, 34, 46, .14);
+}
+
+/* Respaldo para navegadores sin aspect-ratio (Safari < 15). */
+@supports not (aspect-ratio: 16 / 9) {
+  .hd-player::before {
+    content: "";
+    display: block;
+    padding-top: 56.25%;
+  }
+}
+
+.hd-player__facade {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Foco visible: aro por dentro para que no lo recorte el overflow. */
+.hd-player__facade:focus-visible {
+  outline: 3px solid #FFFFFF;
+  outline-offset: -5px;
+}
+
+.hd-player__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .35s cubic-bezier(.22, .61, .36, 1);
+}
+
+.hd-player__facade:hover .hd-player__img,
+.hd-player__facade:focus-visible .hd-player__img {
+  transform: scale(1.03);
+}
+
+/* Velo suave: asegura contraste del play sobre portadas claras. */
+.hd-player__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(23, 34, 46, .10) 0%, rgba(23, 34, 46, .34) 100%);
+}
+
+/* Botón de play: triángulo blanco con sombra. Sin fondo ni aro. */
+.hd-player__play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 84px;
+  height: 84px;
+  color: #fff;
+  transition: transform .2s cubic-bezier(.22, .61, .36, 1);
+}
+
+.hd-player__play svg {
+  width: 42%;
+  height: 42%;
+  margin-left: 8%;                            /* centra ópticamente el triángulo */
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, .5));
+}
+
+.hd-player__play svg path {
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.hd-player__facade:hover .hd-player__play,
+.hd-player__facade:focus-visible .hd-player__play {
+  transform: translate(-50%, -50%) scale(1.06);
+}
+
+@media (max-width: 600px) {
+  .hd-player { border-radius: 12px; }
+  .hd-player__play { width: 64px; height: 64px; }
+}
+
+.hd-player__iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Sin animaciones si el sistema las desaconseja. */
+@media (prefers-reduced-motion: reduce) {
+  .hd-player__img,
+  .hd-player__play {
+    transition: none;
+  }
+  .hd-player__facade:hover .hd-player__img,
+  .hd-player__facade:focus-visible .hd-player__img {
+    transform: none;
+  }
+  .hd-player__facade:hover .hd-player__play,
+  .hd-player__facade:focus-visible .hd-player__play {
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* ==========================================================================
+   3. Aviso solo para editores (nunca se imprime para el visitante).
+   ========================================================================== */
+
+.hd-shortcode-notice {
+  margin: 12px 0;
+  padding: 10px 14px;
+  border-left: 4px solid #D20000;
+  background: #FDF1F1;
+  color: #17222E;
+  font-size: .875rem;
+  line-height: 1.5;
 }

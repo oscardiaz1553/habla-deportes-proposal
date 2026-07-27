@@ -15,11 +15,14 @@
  *   - Importador RSS del canal de YouTube (cron horario + página admin).
  *   - CPT `partido` con meta box "Detalles del partido", escudo por
  *     equipo (term meta) y siembra de 3 partidos demo.
+ *   - Shortcodes de presentación del video ([hd_video_player] y
+ *     [hd_youtube_url]) en includes/shortcodes.php.
  *
- * NO contiene plantillas, CSS ni JS del prototipo: el front lo diseña
- * el usuario con Elementor. La única pieza con markup propio es el
- * shortcode [hd_videos] (autónomo, con su CSS mínimo en
- * assets/css/shortcodes.css, encolado solo si el shortcode se usa).
+ * NO contiene plantillas del prototipo: el front lo diseña el usuario
+ * con Elementor. Las únicas piezas con markup propio son los shortcodes
+ * ([hd_videos], [hd_video_player]), autónomos, con su CSS/JS mínimo en
+ * assets/css/shortcodes.css y assets/js/shortcodes.js, encolados solo
+ * si el shortcode correspondiente se usa en la página.
  * ---------------------------------------------------------------
  */
 
@@ -36,6 +39,7 @@ require_once HDC_PATH . 'includes/cpt.php';
 require_once HDC_PATH . 'includes/taxonomy-seed.php';
 require_once HDC_PATH . 'includes/youtube-importer.php';
 require_once HDC_PATH . 'includes/cpt-partido.php';
+require_once HDC_PATH . 'includes/shortcodes.php';
 
 /* ============================================================
  * Activación / desactivación

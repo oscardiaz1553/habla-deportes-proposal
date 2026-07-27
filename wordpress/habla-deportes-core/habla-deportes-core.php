@@ -40,6 +40,7 @@ require_once HDC_PATH . 'includes/taxonomy-seed.php';
 require_once HDC_PATH . 'includes/youtube-importer.php';
 require_once HDC_PATH . 'includes/cpt-partido.php';
 require_once HDC_PATH . 'includes/shortcodes.php';
+require_once HDC_PATH . 'includes/shortcodes-home.php';
 
 /* ============================================================
  * Activación / desactivación

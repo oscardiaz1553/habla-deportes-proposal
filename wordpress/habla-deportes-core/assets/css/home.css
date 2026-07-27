@@ -1,0 +1,307 @@
+/* ==========================================================================
+   HABLA DEPORTES — CSS de los shortcodes de portada ([hd_hero], [hd_ticker])
+   --------------------------------------------------------------------------
+   Portado de propuesta/html/assets/css/main.css §6 (hero) y §7 (ticker).
+   Cambios respecto al prototipo:
+     - Clases con prefijo `hd-`: en WordPress conviven con Elementor y con
+       Hello Elementor, y nombres como .hero o .play-btn son demasiado
+       genéricos para arriesgarse a una colisión.
+     - Las variables del sistema de diseño se declaran aquí acotadas a los
+       componentes, para no depender de tokens.css ni pisar el kit global
+       de Elementor.
+     - Sin el margen negativo que metía el hero bajo el header transparente:
+       aquí el header lo controla Elementor.
+   ========================================================================== */
+
+.hd-hero,
+.hd-ticker {
+	--hd-navy: #294D6E;
+	--hd-red: #D20000;
+	--hd-on-media: #FFFFFF;
+	--hd-on-media-muted: rgba(255, 255, 255, 0.82);
+	--hd-on-brand-muted: rgba(255, 255, 255, 0.68);
+	--hd-scrim: linear-gradient(180deg, rgba(14, 27, 41, 0.05) 0%, rgba(14, 27, 41, 0.30) 52%, rgba(14, 27, 41, 0.82) 100%);
+	--hd-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+	--hd-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+	--hd-dur-fast: 120ms;
+	--hd-dur-base: 180ms;
+	--hd-touch-min: 44px;
+	--hd-page-margin: clamp(16px, 4vw, 48px);
+}
+
+/* ==========================================================================
+   HERO
+   ========================================================================== */
+.hd-hero {
+	position: relative;
+	width: 100%;
+}
+
+.hd-hero__slide {
+	position: relative;
+	width: 100%;
+	height: min(70vh, 580px);
+	min-height: 460px;         /* aire para el titular centrado en pantallas estrechas */
+	overflow: hidden;
+	background: var(--hd-navy);
+	touch-action: pan-y;       /* el swipe horizontal lo gestiona el JS; el scroll vertical, el navegador */
+	-webkit-user-select: none;
+	user-select: none;
+}
+@media (min-width: 768px)  { .hd-hero__slide { height: min(78vh, 680px); min-height: 520px; } }
+@media (min-width: 1280px) { .hd-hero__slide { height: min(80vh, 720px); min-height: 600px; } }
+
+/* Capas apiladas: crossfade por opacidad + Ken Burns en la activa. */
+.hd-hero__layers {
+	position: absolute;
+	inset: 0;
+	overflow: hidden;
+}
+.hd-hero__img {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	/* Encuadre alto: deja la zona centro-inferior libre para el titular. */
+	object-position: 50% 25%;
+	opacity: 0;
+	transform: scale(1.001);
+	will-change: opacity, transform;
+	backface-visibility: hidden;
+}
+.hd-hero__img.is-active { opacity: 1; }
+
+@media (prefers-reduced-motion: no-preference) {
+	.hd-hero__img {
+		transition: opacity 620ms var(--hd-ease-in-out),
+		            transform 620ms var(--hd-ease-out);
+	}
+	.hd-hero__img.is-active {
+		animation: hdHeroKenBurns 9500ms var(--hd-ease-out) forwards;
+	}
+}
+@keyframes hdHeroKenBurns {
+	from { transform: scale(1.02) translate3d(0, 0, 0); }
+	to   { transform: scale(1.10) translate3d(-1.4%, -1.2%, 0); }
+}
+
+.hd-hero__scrim {
+	position: absolute;
+	inset: 0;
+	background: var(--hd-scrim);
+}
+
+/* Botón play: solo el icono, sin caja ni aro (criterio unificado del sitio). */
+.hd-play-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background: transparent;
+	border: 0;
+	color: #fff;
+	transition: transform var(--hd-dur-base) var(--hd-ease-out);
+}
+.hd-play-btn:hover,
+.hd-play-btn:focus-visible { color: #fff; transform: scale(1.06); }
+.hd-play-btn svg {
+	width: 42%;
+	height: 42%;
+	margin-left: 8%;
+	filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.5));
+}
+.hd-play-btn svg path {
+	stroke: currentColor;
+	stroke-width: 2;
+	stroke-linejoin: round;
+	stroke-linecap: round;
+}
+
+.hd-hero__play {
+	position: absolute;
+	top: 56%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 84px;
+	height: 84px;
+}
+.hd-hero__play:hover,
+.hd-hero__play:focus-visible { transform: translate(-50%, -50%) scale(1.06); }
+
+/* Flechas laterales, a la misma altura que el play para que los tres
+   botones queden alineados en una sola línea. */
+.hd-hero__arrow {
+	position: absolute;
+	top: 56%;
+	transform: translateY(-50%);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: var(--hd-touch-min);
+	height: var(--hd-touch-min);
+	border-radius: 50%;
+	background: transparent;
+	border: 0;
+	padding: 0;
+	color: #fff;
+	cursor: pointer;
+	transition: transform var(--hd-dur-fast) var(--hd-ease-out),
+	            opacity var(--hd-dur-fast) var(--hd-ease-out);
+}
+.hd-hero__arrow:hover { transform: translateY(-50%) scale(1.14); }
+.hd-hero__arrow svg {
+	width: 26px;
+	height: 26px;
+	/* Sin caja detrás, el chevron necesita sombra propia para leerse
+	   sobre cualquier miniatura. */
+	filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.6));
+}
+.hd-hero__arrow--prev { left: clamp(8px, 2vw, 28px); }
+.hd-hero__arrow--next { right: clamp(8px, 2vw, 28px); }
+
+/* Bloque de texto anclado abajo: posición constante en todos los slides. */
+.hd-hero__content {
+	position: absolute;
+	left: 50%;
+	bottom: clamp(25.2px, 4.05vh, 46.8px);
+	transform: translateX(-50%);
+	width: 100%;
+	padding-inline: clamp(60px, 12vw, 120px);
+	text-align: center;
+}
+.hd-hero__title {
+	color: var(--hd-on-media);
+	font-size: clamp(1.6rem, 3.4vw, 3rem);
+	line-height: 1.06;
+	letter-spacing: -0.02em;
+	max-width: 24ch;
+	margin: 0 auto;
+	text-shadow: 0 2px 18px rgba(6, 14, 22, 0.5);
+	/* Máximo 2 líneas; lo que sobra se recorta con … */
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	line-clamp: 2;
+	overflow: hidden;
+}
+.hd-hero__meta {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	margin: 12px 0 0;
+	line-height: 1;
+	color: var(--hd-on-media-muted);
+	font-size: 0.875rem;
+	font-weight: 500;
+}
+.hd-hero__meta .hd-yt-mark { width: 20px; height: 15px; }
+.hd-meta-sep { opacity: .6; }
+
+/* Entrada del titular y la meta al cambiar de slide, con un leve stagger. */
+@keyframes hdHeroTextIn {
+	from { opacity: 0; transform: translateY(12px); }
+	to   { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: no-preference) {
+	.hd-hero__title.is-enter { animation: hdHeroTextIn 460ms var(--hd-ease-out) both; }
+	.hd-hero__meta.is-enter  { animation: hdHeroTextIn 460ms var(--hd-ease-out) 90ms both; }
+}
+
+.hd-hero__dots {
+	margin-top: 60px;
+	display: flex;
+	justify-content: center;
+	gap: 8px;
+	z-index: 2;
+}
+.hd-hero__dot {
+	width: 28px;
+	height: 5px;
+	border: 0;
+	padding: 0;
+	min-height: 0;
+	border-radius: 999px;
+	background: rgba(255, 255, 255, 0.45);
+	cursor: pointer;
+	transition: background var(--hd-dur-fast) var(--hd-ease-out),
+	            width var(--hd-dur-fast);
+}
+.hd-hero__dot[aria-current="true"] { background: #fff; }
+
+/* ==========================================================================
+   TICKER
+   ========================================================================== */
+.hd-ticker {
+	display: flex;
+	align-items: stretch;
+	background: var(--hd-navy);
+	color: #fff;
+	overflow: hidden;
+}
+.hd-ticker__label {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	flex: none;
+	padding: 12px var(--hd-page-margin);
+	font-weight: 700;
+	font-size: 0.875rem;
+	background: var(--hd-navy);
+	white-space: nowrap;
+}
+.hd-live-dot {
+	display: inline-block;
+	width: 9px;
+	height: 9px;
+	border-radius: 50%;
+	background: var(--hd-red);
+	flex: none;
+}
+.hd-ticker__viewport {
+	position: relative;
+	flex: 1;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+}
+.hd-ticker__track {
+	display: inline-flex;
+	align-items: center;
+	gap: 40px;
+	white-space: nowrap;
+	padding-left: 24px;
+	animation: hdTickerScroll 38s linear infinite;
+	will-change: transform;
+}
+.hd-ticker__viewport:hover .hd-ticker__track { animation-play-state: paused; }
+@keyframes hdTickerScroll {
+	from { transform: translateX(0); }
+	to   { transform: translateX(-50%); }
+}
+.hd-ticker__item {
+	display: inline-flex;
+	align-items: baseline;
+	gap: 8px;
+	font-size: 0.875rem;
+	text-decoration: none;
+}
+.hd-ticker__cat { font-weight: 700; color: #fff; }
+.hd-ticker__headline { color: var(--hd-on-brand-muted); }
+.hd-ticker__item:hover .hd-ticker__headline { color: #fff; }
+
+/* Sin autoavance ni marquesina si el usuario pidió reducir movimiento:
+   el ticker pasa a ser una fila desplazable a mano. */
+@media (prefers-reduced-motion: reduce) {
+	.hd-ticker__track { animation: none; }
+	.hd-ticker__viewport { overflow-x: auto; }
+}
+
+/* Aviso de configuración: solo lo ven los editores. */
+.hd-aviso {
+	padding: 16px;
+	border-left: 4px solid var(--hd-red, #D20000);
+	background: #FFF6F6;
+	color: #3C4753;
+	font-size: 0.9375rem;
+}

@@ -88,6 +88,34 @@ function hd_yt_fetch_feed() {
 	return $videos;
 }
 
+/**
+ * Descripción del feed → HTML seguro para `post_content`.
+ * ---------------------------------------------------------------
+ * El feed entrega texto plano (SimpleXML ya decodificó las entidades),
+ * así que se escapa, se respetan los saltos de línea con wpautop y se
+ * pasa por wp_kses_post. Las URLs quedan como TEXTO, no como enlaces:
+ * las descripciones del canal traen links a redes y patrocinadores que
+ * no queremos convertir en salidas del sitio.
+ * Devuelve '' si el video no trae descripción (los clips/shorts casi
+ * nunca la traen) — así el widget de Elementor no pinta un bloque vacío.
+ */
+function hd_yt_desc_to_content( $desc ) {
+	$desc = trim( wp_strip_all_tags( (string) $desc ) );
+	if ( '' === $desc ) {
+		return '';
+	}
+	return wp_kses_post( wpautop( esc_html( $desc ) ) );
+}
+
+/** Extracto corto para tarjetas y listados (mismo criterio desde el día 1). */
+function hd_yt_desc_to_excerpt( $desc ) {
+	$desc = trim( wp_strip_all_tags( (string) $desc ) );
+	if ( '' === $desc ) {
+		return '';
+	}
+	return wp_trim_words( $desc, 40, '…' );
+}
+
 /* ---------------------------------------------------------------
  * 2) Importar los que no existan todavía.
  * ------------------------------------------------------------- */
@@ -109,7 +137,8 @@ function hd_yt_import() {
 			'post_type'    => 'video',
 			'post_status'  => HD_YT_AUTOPUBLISH ? 'publish' : 'draft',
 			'post_title'   => wp_strip_all_tags( $v['title'] ),
-			'post_excerpt' => wp_trim_words( wp_strip_all_tags( $v['desc'] ), 40, '…' ),
+			'post_content' => hd_yt_desc_to_content( $v['desc'] ),
+			'post_excerpt' => hd_yt_desc_to_excerpt( $v['desc'] ),
 			'post_date'    => get_date_from_gmt( gmdate( 'Y-m-d H:i:s', strtotime( $v['published'] ) ) ),
 		) );
 
@@ -128,8 +157,9 @@ function hd_yt_import() {
 	return $nuevos;
 }
 
-function hd_yt_video_exists( $yt_id ) {
-	$q = new WP_Query( array(
+/** ID de la entrada `video` que corresponde a un ID de YouTube (0 si no existe). */
+function hd_yt_find_video( $yt_id ) {
+	$ids = get_posts( array(
 		'post_type'      => 'video',
 		'post_status'    => 'any',
 		'meta_key'       => '_hd_youtube_id',
@@ -138,7 +168,83 @@ function hd_yt_video_exists( $yt_id ) {
 		'posts_per_page' => 1,
 		'no_found_rows'  => true,
 	) );
-	return $q->have_posts();
+	return $ids ? (int) $ids[0] : 0;
+}
+
+function hd_yt_video_exists( $yt_id ) {
+	return (bool) hd_yt_find_video( $yt_id );
+}
+
+/**
+ * Rellena la descripción (`post_content`) de los videos YA importados
+ * releyendo el feed del canal, sin volver a crear entradas.
+ * ---------------------------------------------------------------
+ * Reglas:
+ *   - Solo toca videos cuyo `post_content` esté VACÍO: nunca pisa un
+ *     texto que el editor haya escrito a mano.
+ *   - Si además falta el extracto, lo genera de paso.
+ *   - El feed público solo expone las últimas ~15 entradas del canal:
+ *     los videos más antiguos que eso no se pueden completar sin usar
+ *     la API de YouTube. Se reportan como "pendientes".
+ * Devuelve un array con el recuento, o WP_Error si el feed falló.
+ */
+function hd_yt_backfill_descriptions() {
+	$videos = hd_yt_fetch_feed();
+	if ( is_wp_error( $videos ) ) {
+		return $videos;
+	}
+
+	$actualizados = 0;
+	foreach ( $videos as $v ) {
+		$post_id = hd_yt_find_video( $v['id'] );
+		if ( ! $post_id ) {
+			continue; // todavía no importado; de eso se encarga "Importar ahora".
+		}
+
+		$contenido = hd_yt_desc_to_content( $v['desc'] );
+		if ( '' === $contenido ) {
+			continue; // el video no trae descripción en YouTube.
+		}
+
+		$post = get_post( $post_id );
+		if ( ! $post || '' !== trim( (string) $post->post_content ) ) {
+			continue; // ya tiene texto (importado nuevo o escrito a mano).
+		}
+
+		$update = array(
+			'ID'           => $post_id,
+			'post_content' => $contenido,
+		);
+		if ( '' === trim( (string) $post->post_excerpt ) ) {
+			$update['post_excerpt'] = hd_yt_desc_to_excerpt( $v['desc'] );
+		}
+
+		if ( ! is_wp_error( wp_update_post( $update ) ) ) {
+			$actualizados++;
+		}
+	}
+
+	// Cuántos siguen sin descripción después de la pasada.
+	$pendientes = 0;
+	$todos      = get_posts( array(
+		'post_type'      => 'video',
+		'post_status'    => 'any',
+		'posts_per_page' => -1,
+		'fields'         => 'ids',
+		'no_found_rows'  => true,
+	) );
+	foreach ( $todos as $pid ) {
+		$p = get_post( $pid );
+		if ( $p && '' === trim( (string) $p->post_content ) ) {
+			$pendientes++;
+		}
+	}
+
+	return array(
+		'actualizados' => $actualizados,
+		'pendientes'   => $pendientes,
+		'total'        => count( $todos ),
+	);
 }
 
 /* ---------------------------------------------------------------
@@ -279,11 +385,15 @@ function hd_yt_admin_page() {
 
 	$resultado = null;
 	$reclass   = null;
+	$backfill  = null;
 	if ( isset( $_POST['hd_yt_run'] ) && check_admin_referer( 'hd_yt_import_now' ) ) {
 		$resultado = hd_yt_import();
 	}
 	if ( isset( $_POST['hd_yt_reclass'] ) && check_admin_referer( 'hd_yt_import_now' ) ) {
 		$reclass = hd_yt_reclassify_all();
+	}
+	if ( isset( $_POST['hd_yt_backfill'] ) && check_admin_referer( 'hd_yt_import_now' ) ) {
+		$backfill = hd_yt_backfill_descriptions();
 	}
 	$last_run    = get_option( 'hd_yt_last_run', 'nunca' );
 	$last_result = get_option( 'hd_yt_last_result', '—' );
@@ -313,16 +423,39 @@ function hd_yt_admin_page() {
 			</p></div>
 		<?php endif; ?>
 
+		<?php if ( null !== $backfill ) : ?>
+			<?php if ( is_wp_error( $backfill ) ) : ?>
+				<div class="notice notice-error"><p><?php echo esc_html( $backfill->get_error_message() ); ?></p></div>
+			<?php else : ?>
+				<div class="notice notice-success"><p>
+					Descripciones rellenadas: <strong><?php echo (int) $backfill['actualizados']; ?></strong> video(s) actualizado(s).
+					<?php if ( $backfill['pendientes'] > 0 ) : ?>
+						Quedan <strong><?php echo (int) $backfill['pendientes']; ?></strong> de
+						<?php echo (int) $backfill['total']; ?> sin descripción: o el video no la trae en
+						YouTube (típico en los clips), o es más antiguo que las últimas ~15 entradas
+						que expone el feed.
+					<?php endif; ?>
+				</p></div>
+			<?php endif; ?>
+		<?php endif; ?>
+
 		<form method="post">
 			<?php wp_nonce_field( 'hd_yt_import_now' ); ?>
 			<p>
 				<button type="submit" name="hd_yt_run" value="1" class="button button-primary">Importar ahora</button>
 				<button type="submit" name="hd_yt_reclass" value="1" class="button">Reclasificar existentes</button>
+				<button type="submit" name="hd_yt_backfill" value="1" class="button">Rellenar descripciones existentes</button>
 			</p>
 			<p class="description">
 				<strong>Reclasificar existentes</strong> recorre los videos ya importados y les
 				añade términos de <code>equipo</code>/<code>tema</code> según el título (no borra los
 				que pongas a mano). <code>tema:clip</code> se asigna manualmente.
+			</p>
+			<p class="description">
+				<strong>Rellenar descripciones existentes</strong> completa la descripción de los
+				videos importados antes de esta versión, que se guardaron sin ella. Relee el feed
+				del canal (últimas ~15 entradas) y solo escribe donde la descripción está vacía:
+				nunca pisa un texto editado a mano.
 			</p>
 		</form>
 

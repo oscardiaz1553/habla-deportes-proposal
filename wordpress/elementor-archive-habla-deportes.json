@@ -1,0 +1,368 @@
+{
+  "title": "Habla Deportes — Archivo",
+  "type": "archive",
+  "version": "0.4",
+  "page_settings": {
+    "custom_css": "/* ===== Archivo Habla Deportes — CSS de la plantilla ===== */\n\n/* 1. Rejilla intermedia: 2 columnas desde 520 px.\n   Elementor solo expone los cortes Tablet (<=1024) y Movil (<=767); este\n   bloque cubre la franja 520-767 px que el prototipo si contempla. */\n@media (min-width: 520px) and (max-width: 767px) {\n\t.hd-archive-grid .elementor-posts-container.elementor-grid {\n\t\tgrid-template-columns: repeat(2, 1fr);\n\t}\n}\n\n/* 2. La fecha va ENCIMA del titulo.\n   El skin Classic imprime el orden titulo -> meta; lo invertimos con flex\n   en lugar de tocar el markup. */\n.hd-archive-grid .elementor-post__text {\n\tdisplay: flex;\n\tflex-direction: column;\n}\n.hd-archive-grid .elementor-post__meta-data { order: -1; margin-top: 0; }\n.hd-archive-grid .elementor-post__title { order: 0; }\n\n/* 3. Titulo a 2 lineas maximo + hover naranja de marca. */\n.hd-archive-grid .elementor-post__title {\n\tdisplay: -webkit-box;\n\t-webkit-line-clamp: 2;\n\t-webkit-box-orient: vertical;\n\toverflow: hidden;\n}\n.hd-archive-grid .elementor-post__title a { transition: color .2s ease; }\n.hd-archive-grid .elementor-post:hover .elementor-post__title a { color: #E36209; }\n\n/* 4. La miniatura recorta en 16:9 sin deformar la imagen. */\n.hd-archive-grid .elementor-post__thumbnail img { object-fit: cover; }\n\n/* 5. Bajada del hero: medida de lectura comoda (no mas de ~62 caracteres). */\n.hd-archive-lede { max-width: 62ch; }\n\n/* 6. Paginacion: area tactil minima en cada numero. */\n.hd-archive-grid .elementor-pagination .page-numbers {\n\tdisplay: inline-block;\n\tmin-width: 34px;\n\tpadding: 6px 4px;\n}\n\n/* 7. Mensaje \"sin resultados\" centrado dentro del ancho de contenido. */\n.hd-archive-grid .elementor-posts-nothing-found {\n\tpadding: 48px 0;\n\ttext-align: center;\n}\n"
+  },
+  "content": [
+    {
+      "id": "a1c3e50",
+      "elType": "container",
+      "isInner": false,
+      "settings": {
+        "container_type": "flex",
+        "content_width": "boxed",
+        "boxed_width": {
+          "unit": "px",
+          "size": 1280,
+          "sizes": []
+        },
+        "flex_direction": "column",
+        "flex_gap": {
+          "unit": "px",
+          "column": "32",
+          "row": "32",
+          "isLinked": true
+        },
+        "flex_gap_mobile": {
+          "unit": "px",
+          "column": "24",
+          "row": "24",
+          "isLinked": true
+        },
+        "padding": {
+          "unit": "px",
+          "top": "32",
+          "right": "48",
+          "bottom": "72",
+          "left": "48",
+          "isLinked": false
+        },
+        "padding_tablet": {
+          "unit": "px",
+          "top": "28",
+          "right": "24",
+          "bottom": "56",
+          "left": "24",
+          "isLinked": false
+        },
+        "padding_mobile": {
+          "unit": "px",
+          "top": "24",
+          "right": "16",
+          "bottom": "48",
+          "left": "16",
+          "isLinked": false
+        },
+        "background_background": "classic",
+        "background_color": "#F4F6F8",
+        "__globals__": {
+          "background_color": "globals/colors?id=hdbgpag"
+        },
+        "css_classes": "hd-archive-page"
+      },
+      "elements": [
+        {
+          "id": "b2d4f61",
+          "elType": "container",
+          "isInner": false,
+          "settings": {
+            "container_type": "flex",
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_align_items": "stretch",
+            "flex_gap": {
+              "unit": "px",
+              "column": "16",
+              "row": "8",
+              "isLinked": false
+            },
+            "padding": {
+              "unit": "px",
+              "top": "32",
+              "right": "32",
+              "bottom": "32",
+              "left": "32",
+              "isLinked": true
+            },
+            "padding_tablet": {
+              "unit": "px",
+              "top": "28",
+              "right": "28",
+              "bottom": "28",
+              "left": "28",
+              "isLinked": true
+            },
+            "padding_mobile": {
+              "unit": "px",
+              "top": "24",
+              "right": "20",
+              "bottom": "24",
+              "left": "20",
+              "isLinked": false
+            },
+            "background_background": "classic",
+            "background_color": "rgba(41,77,110,0.08)",
+            "border_border": "solid",
+            "border_width": {
+              "unit": "px",
+              "top": "1",
+              "right": "1",
+              "bottom": "1",
+              "left": "1",
+              "isLinked": true
+            },
+            "border_color": "#D6E0EA",
+            "border_radius": {
+              "unit": "px",
+              "top": "16",
+              "right": "16",
+              "bottom": "16",
+              "left": "16",
+              "isLinked": true
+            },
+            "css_classes": "hd-archive-hero"
+          },
+          "elements": [
+            {
+              "id": "c3e5a72",
+              "elType": "widget",
+              "widgetType": "theme-archive-title",
+              "settings": {
+                "__dynamic__": {
+                  "title": "[elementor-tag id=\"f6b8da5\" name=\"archive-title\" settings=\"%7B%7D\"]"
+                },
+                "header_size": "h1",
+                "align": "left",
+                "title_color": "#294D6E",
+                "__globals__": {
+                  "title_color": "globals/colors?id=accent"
+                },
+                "typography_typography": "custom",
+                "typography_font_family": "Archivo",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 36,
+                  "sizes": []
+                },
+                "typography_font_size_tablet": {
+                  "unit": "px",
+                  "size": 32,
+                  "sizes": []
+                },
+                "typography_font_size_mobile": {
+                  "unit": "px",
+                  "size": 28,
+                  "sizes": []
+                },
+                "typography_font_weight": "700",
+                "typography_line_height": {
+                  "unit": "em",
+                  "size": 1.12,
+                  "sizes": []
+                },
+                "typography_letter_spacing": {
+                  "unit": "px",
+                  "size": -0.5,
+                  "sizes": []
+                },
+                "_css_classes": "hd-archive-heading"
+              },
+              "elements": []
+            },
+            {
+              "id": "d4f6b83",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Todo el contenido de esta sección: videos, notas y análisis del equipo de Habla Deportes, de lo más reciente a lo más antiguo.",
+                "header_size": "p",
+                "align": "left",
+                "title_color": "#5E6B77",
+                "__globals__": {
+                  "title_color": "globals/colors?id=hdtxtat"
+                },
+                "typography_typography": "custom",
+                "typography_font_family": "Inter",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 16,
+                  "sizes": []
+                },
+                "typography_font_size_mobile": {
+                  "unit": "px",
+                  "size": 15,
+                  "sizes": []
+                },
+                "typography_font_weight": "400",
+                "typography_line_height": {
+                  "unit": "em",
+                  "size": 1.6,
+                  "sizes": []
+                },
+                "_css_classes": "hd-archive-lede"
+              },
+              "elements": []
+            }
+          ]
+        },
+        {
+          "id": "e5a7c94",
+          "elType": "widget",
+          "widgetType": "archive-posts",
+          "settings": {
+            "_skin": "archive_classic",
+            "archive_classic_columns": "3",
+            "archive_classic_columns_tablet": "2",
+            "archive_classic_columns_mobile": "1",
+            "archive_classic_thumbnail": "top",
+            "archive_classic_masonry": "",
+            "archive_classic_thumbnail_size_size": "medium_large",
+            "archive_classic_item_ratio": {
+              "unit": "px",
+              "size": 0.5625,
+              "sizes": []
+            },
+            "archive_classic_item_ratio_tablet": {
+              "unit": "px",
+              "size": 0.5625,
+              "sizes": []
+            },
+            "archive_classic_item_ratio_mobile": {
+              "unit": "px",
+              "size": 0.5625,
+              "sizes": []
+            },
+            "archive_classic_image_width": {
+              "unit": "%",
+              "size": 100,
+              "sizes": []
+            },
+            "archive_classic_show_title": "yes",
+            "archive_classic_title_tag": "h3",
+            "archive_classic_show_excerpt": "",
+            "archive_classic_show_read_more": "",
+            "archive_classic_meta_data": [
+              "date"
+            ],
+            "archive_classic_meta_separator": "",
+            "archive_classic_open_new_tab": "no",
+            "archive_classic_column_gap": {
+              "unit": "px",
+              "size": 20,
+              "sizes": []
+            },
+            "archive_classic_column_gap_tablet": {
+              "unit": "px",
+              "size": 20,
+              "sizes": []
+            },
+            "archive_classic_column_gap_mobile": {
+              "unit": "px",
+              "size": 16,
+              "sizes": []
+            },
+            "archive_classic_row_gap": {
+              "unit": "px",
+              "size": 32,
+              "sizes": []
+            },
+            "archive_classic_row_gap_mobile": {
+              "unit": "px",
+              "size": 28,
+              "sizes": []
+            },
+            "archive_classic_alignment": "left",
+            "archive_classic_img_border_radius": {
+              "unit": "px",
+              "top": "12",
+              "right": "12",
+              "bottom": "12",
+              "left": "12",
+              "isLinked": true
+            },
+            "archive_classic_image_spacing": {
+              "unit": "px",
+              "size": 12,
+              "sizes": []
+            },
+            "archive_classic_title_color": "#294D6E",
+            "archive_classic_title_typography_typography": "custom",
+            "archive_classic_title_typography_font_family": "Archivo",
+            "archive_classic_title_typography_font_size": {
+              "unit": "px",
+              "size": 16,
+              "sizes": []
+            },
+            "archive_classic_title_typography_font_weight": "700",
+            "archive_classic_title_typography_line_height": {
+              "unit": "em",
+              "size": 1.3,
+              "sizes": []
+            },
+            "archive_classic_title_typography_letter_spacing": {
+              "unit": "px",
+              "size": -0.2,
+              "sizes": []
+            },
+            "archive_classic_title_spacing": {
+              "unit": "px",
+              "size": 0,
+              "sizes": []
+            },
+            "archive_classic_meta_color": "#5E6B77",
+            "archive_classic_meta_typography_typography": "custom",
+            "archive_classic_meta_typography_font_family": "Inter",
+            "archive_classic_meta_typography_font_size": {
+              "unit": "px",
+              "size": 14,
+              "sizes": []
+            },
+            "archive_classic_meta_typography_font_weight": "500",
+            "archive_classic_meta_spacing": {
+              "unit": "px",
+              "size": 4,
+              "sizes": []
+            },
+            "pagination_type": "numbers",
+            "pagination_page_limit": "5",
+            "pagination_align": "center",
+            "pagination_color": "#294D6E",
+            "pagination_hover_color": "#E36209",
+            "pagination_active_color": "#D20000",
+            "pagination_typography_typography": "custom",
+            "pagination_typography_font_family": "Inter",
+            "pagination_typography_font_size": {
+              "unit": "px",
+              "size": 15,
+              "sizes": []
+            },
+            "pagination_typography_font_weight": "600",
+            "pagination_spacing": {
+              "unit": "px",
+              "size": 10,
+              "sizes": []
+            },
+            "pagination_spacing_top": {
+              "unit": "px",
+              "size": 40,
+              "sizes": []
+            },
+            "nothing_found_message": "Todavía no hay contenido publicado en esta sección.",
+            "nothing_found_color": "#5E6B77",
+            "nothing_found_typography_typography": "custom",
+            "nothing_found_typography_font_family": "Inter",
+            "nothing_found_typography_font_size": {
+              "unit": "px",
+              "size": 16,
+              "sizes": []
+            },
+            "_css_classes": "hd-archive-grid"
+          },
+          "elements": []
+        }
+      ]
+    }
+  ]
+}

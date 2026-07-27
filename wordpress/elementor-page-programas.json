@@ -1,0 +1,1205 @@
+{
+  "title": "Habla Deportes — Programas",
+  "type": "page",
+  "version": "0.4",
+  "page_settings": {
+    "custom_css": "/* ===== Programas — El show de la mañana =====\n   Solo lo que los controles de Elementor no cubren de forma fiable. */\n\n/* 1. Medida de lectura de la bajada del hero. */\n.hd-prog-desc { max-width: 60ch; }\n\n/* 2. El bloque del presentador no se estira a todo el ancho. */\n.hd-prog-host { width: auto; max-width: 100%; align-self: flex-start; }\n\n/* 3. La ultima fila de segmentos no lleva linea inferior. */\n.hd-prog-seg-card > .hd-prog-seg:last-child { border-bottom: 0 !important; }\n\n/* 4. En movil el segmento apila hora sobre nombre. */\n@media (max-width: 767px) {\n\t.hd-prog-seg { flex-direction: column; gap: 4px; }\n\t.hd-prog-seg-hora { width: auto !important; max-width: none !important; }\n}\n\n/* 5. Rejilla intermedia de emisiones: 2 columnas entre 520 y 767 px,\n   franja que Elementor no expone como breakpoint propio. */\n@media (min-width: 520px) and (max-width: 767px) {\n\t.hd-prog-grid .elementor-loop-container { grid-template-columns: repeat(2, 1fr); }\n}\n"
+  },
+  "content": [
+    {
+      "id": "b7a0121",
+      "elType": "container",
+      "isInner": false,
+      "settings": {
+        "container_type": "flex",
+        "content_width": "boxed",
+        "boxed_width": {
+          "unit": "px",
+          "size": 1280,
+          "sizes": []
+        },
+        "flex_direction": "column",
+        "flex_gap": {
+          "unit": "px",
+          "column": "40",
+          "row": "40",
+          "isLinked": true
+        },
+        "flex_gap_mobile": {
+          "unit": "px",
+          "column": "32",
+          "row": "32",
+          "isLinked": true
+        },
+        "padding": {
+          "unit": "px",
+          "top": "32",
+          "right": "48",
+          "bottom": "72",
+          "left": "48",
+          "isLinked": false
+        },
+        "padding_tablet": {
+          "unit": "px",
+          "top": "28",
+          "right": "24",
+          "bottom": "56",
+          "left": "24",
+          "isLinked": false
+        },
+        "padding_mobile": {
+          "unit": "px",
+          "top": "24",
+          "right": "16",
+          "bottom": "48",
+          "left": "16",
+          "isLinked": false
+        },
+        "background_background": "classic",
+        "background_color": "#F4F6F8",
+        "__globals__": {
+          "background_color": "globals/colors?id=hdbgpag"
+        },
+        "css_classes": "hd-prog-page"
+      },
+      "elements": [
+        {
+          "id": "b7a0106",
+          "elType": "container",
+          "isInner": false,
+          "settings": {
+            "container_type": "flex",
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_align_items": "flex-start",
+            "flex_gap": {
+              "unit": "px",
+              "column": "0",
+              "row": "12",
+              "isLinked": false
+            },
+            "padding": {
+              "unit": "px",
+              "top": "40",
+              "right": "40",
+              "bottom": "40",
+              "left": "40",
+              "isLinked": true
+            },
+            "padding_tablet": {
+              "unit": "px",
+              "top": "32",
+              "right": "32",
+              "bottom": "32",
+              "left": "32",
+              "isLinked": true
+            },
+            "padding_mobile": {
+              "unit": "px",
+              "top": "24",
+              "right": "20",
+              "bottom": "24",
+              "left": "20",
+              "isLinked": false
+            },
+            "background_background": "gradient",
+            "background_color": "#294D6E",
+            "background_color_stop": {
+              "unit": "%",
+              "size": 0,
+              "sizes": []
+            },
+            "background_color_b": "#1E3A55",
+            "background_color_b_stop": {
+              "unit": "%",
+              "size": 100,
+              "sizes": []
+            },
+            "background_gradient_type": "linear",
+            "background_gradient_angle": {
+              "unit": "deg",
+              "size": 160,
+              "sizes": []
+            },
+            "border_radius": {
+              "unit": "px",
+              "top": "16",
+              "right": "16",
+              "bottom": "16",
+              "left": "16",
+              "isLinked": true
+            },
+            "css_classes": "hd-prog-hero",
+            "__globals__": {
+              "background_color": "globals/colors?id=accent",
+              "background_color_b": "globals/colors?id=hdnavyd"
+            }
+          },
+          "elements": [
+            {
+              "id": "b7a0101",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Programa",
+                "header_size": "p",
+                "align": "left",
+                "title_color": "rgba(255,255,255,0.7)",
+                "typography_typography": "custom",
+                "typography_font_family": "Inter",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 13,
+                  "sizes": []
+                },
+                "typography_font_weight": "600",
+                "typography_text_transform": "uppercase",
+                "typography_letter_spacing": {
+                  "unit": "em",
+                  "size": 0.08,
+                  "sizes": []
+                },
+                "typography_line_height": {
+                  "unit": "em",
+                  "size": 1.2,
+                  "sizes": []
+                },
+                "_css_classes": "hd-prog-eyebrow"
+              },
+              "elements": []
+            },
+            {
+              "id": "b7a0102",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "El show de la mañana",
+                "header_size": "h1",
+                "align": "left",
+                "title_color": "#FFFFFF",
+                "typography_typography": "custom",
+                "typography_font_family": "Archivo",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 44,
+                  "sizes": []
+                },
+                "typography_font_size_tablet": {
+                  "unit": "px",
+                  "size": 38,
+                  "sizes": []
+                },
+                "typography_font_size_mobile": {
+                  "unit": "px",
+                  "size": 32,
+                  "sizes": []
+                },
+                "typography_font_weight": "700",
+                "typography_line_height": {
+                  "unit": "em",
+                  "size": 1.1,
+                  "sizes": []
+                },
+                "typography_letter_spacing": {
+                  "unit": "px",
+                  "size": -0.6,
+                  "sizes": []
+                },
+                "_css_classes": "hd-prog-title"
+              },
+              "elements": []
+            },
+            {
+              "id": "b7a0103",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Lunes a viernes · 10:00 a.m. – 12:00 m.",
+                "header_size": "p",
+                "align": "left",
+                "title_color": "rgba(255,255,255,0.85)",
+                "typography_typography": "custom",
+                "typography_font_family": "Inter",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 16,
+                  "sizes": []
+                },
+                "typography_font_size_mobile": {
+                  "unit": "px",
+                  "size": 15,
+                  "sizes": []
+                },
+                "typography_font_weight": "600",
+                "typography_line_height": {
+                  "unit": "em",
+                  "size": 1.5,
+                  "sizes": []
+                },
+                "_css_classes": "hd-prog-schedule"
+              },
+              "elements": []
+            },
+            {
+              "id": "b7a0104",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Dos horas en directo para arrancar el día hablando de fútbol colombiano: la actualidad del Junior, la Selección y todo lo que mueve al FPC.",
+                "header_size": "p",
+                "align": "left",
+                "title_color": "rgba(255,255,255,0.75)",
+                "typography_typography": "custom",
+                "typography_font_family": "Inter",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 16,
+                  "sizes": []
+                },
+                "typography_font_size_mobile": {
+                  "unit": "px",
+                  "size": 15,
+                  "sizes": []
+                },
+                "typography_font_weight": "400",
+                "typography_line_height": {
+                  "unit": "em",
+                  "size": 1.6,
+                  "sizes": []
+                },
+                "_margin": {
+                  "unit": "px",
+                  "top": "4",
+                  "right": "0",
+                  "bottom": "0",
+                  "left": "0",
+                  "isLinked": false
+                },
+                "_css_classes": "hd-prog-desc"
+              },
+              "elements": []
+            },
+            {
+              "id": "b7a0105",
+              "elType": "widget",
+              "widgetType": "button",
+              "settings": {
+                "text": "Suscribirse en YouTube",
+                "link": {
+                  "url": "https://www.youtube.com/@HablaDeportesRadio?sub_confirmation=1",
+                  "is_external": "on",
+                  "nofollow": "",
+                  "custom_attributes": ""
+                },
+                "size": "md",
+                "align": "left",
+                "selected_icon": {
+                  "value": "fab fa-youtube",
+                  "library": "fa-brands"
+                },
+                "icon_align": "left",
+                "icon_indent": {
+                  "unit": "px",
+                  "size": 8,
+                  "sizes": []
+                },
+                "typography_typography": "custom",
+                "typography_font_family": "Inter",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 15,
+                  "sizes": []
+                },
+                "typography_font_weight": "600",
+                "button_text_color": "#FFFFFF",
+                "background_background": "classic",
+                "background_color": "#D20000",
+                "hover_color": "#FFFFFF",
+                "button_background_hover_background": "classic",
+                "button_background_hover_color": "#B00000",
+                "button_hover_transition_duration": {
+                  "unit": "s",
+                  "size": 0.2,
+                  "sizes": []
+                },
+                "border_radius": {
+                  "unit": "px",
+                  "top": "999",
+                  "right": "999",
+                  "bottom": "999",
+                  "left": "999",
+                  "isLinked": true
+                },
+                "text_padding": {
+                  "unit": "px",
+                  "top": "12",
+                  "right": "24",
+                  "bottom": "12",
+                  "left": "24",
+                  "isLinked": false
+                },
+                "__globals__": {
+                  "background_color": "globals/colors?id=hdrojov"
+                },
+                "_margin": {
+                  "unit": "px",
+                  "top": "16",
+                  "right": "0",
+                  "bottom": "0",
+                  "left": "0",
+                  "isLinked": false
+                },
+                "_css_classes": "hd-prog-cta"
+              },
+              "elements": []
+            }
+          ]
+        },
+        {
+          "id": "b7a010b",
+          "elType": "container",
+          "isInner": false,
+          "settings": {
+            "container_type": "flex",
+            "content_width": "full",
+            "flex_direction": "row",
+            "flex_align_items": "center",
+            "flex_gap": {
+              "unit": "px",
+              "column": "14",
+              "row": "14",
+              "isLinked": true
+            },
+            "padding": {
+              "unit": "px",
+              "top": "10",
+              "right": "24",
+              "bottom": "10",
+              "left": "10",
+              "isLinked": false
+            },
+            "background_background": "classic",
+            "background_color": "rgba(41,77,110,0.08)",
+            "border_radius": {
+              "unit": "px",
+              "top": "999",
+              "right": "999",
+              "bottom": "999",
+              "left": "999",
+              "isLinked": true
+            },
+            "css_classes": "hd-prog-host"
+          },
+          "elements": [
+            {
+              "id": "b7a0107",
+              "elType": "widget",
+              "widgetType": "icon",
+              "settings": {
+                "selected_icon": {
+                  "value": "fas fa-microphone",
+                  "library": "fa-solid"
+                },
+                "view": "stacked",
+                "shape": "circle",
+                "size": {
+                  "unit": "px",
+                  "size": 22,
+                  "sizes": []
+                },
+                "primary_color": "#294D6E",
+                "secondary_color": "#FFFFFF",
+                "icon_padding": {
+                  "unit": "px",
+                  "size": 21,
+                  "sizes": []
+                },
+                "align": "left",
+                "__globals__": {
+                  "primary_color": "globals/colors?id=accent"
+                },
+                "_element_width": "initial",
+                "_element_custom_width": {
+                  "unit": "px",
+                  "size": 64,
+                  "sizes": []
+                },
+                "_css_classes": "hd-prog-host-avatar"
+              },
+              "elements": []
+            },
+            {
+              "id": "b7a010a",
+              "elType": "container",
+              "isInner": false,
+              "settings": {
+                "container_type": "flex",
+                "content_width": "full",
+                "flex_direction": "column",
+                "flex_gap": {
+                  "unit": "px",
+                  "column": "0",
+                  "row": "2",
+                  "isLinked": false
+                },
+                "padding": {
+                  "unit": "px",
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "0",
+                  "left": "0",
+                  "isLinked": true
+                },
+                "_flex_size": "grow"
+              },
+              "elements": [
+                {
+                  "id": "b7a0108",
+                  "elType": "widget",
+                  "widgetType": "heading",
+                  "settings": {
+                    "title": "Presenta",
+                    "header_size": "p",
+                    "align": "left",
+                    "title_color": "#5E6B77",
+                    "typography_typography": "custom",
+                    "typography_font_family": "Inter",
+                    "typography_font_size": {
+                      "unit": "px",
+                      "size": 13,
+                      "sizes": []
+                    },
+                    "typography_font_weight": "600",
+                    "typography_text_transform": "uppercase",
+                    "typography_letter_spacing": {
+                      "unit": "em",
+                      "size": 0.06,
+                      "sizes": []
+                    },
+                    "typography_line_height": {
+                      "unit": "em",
+                      "size": 1.2,
+                      "sizes": []
+                    },
+                    "__globals__": {
+                      "title_color": "globals/colors?id=hdtxtat"
+                    }
+                  },
+                  "elements": []
+                },
+                {
+                  "id": "b7a0109",
+                  "elType": "widget",
+                  "widgetType": "heading",
+                  "settings": {
+                    "title": "Juan Salvador Bárcena",
+                    "header_size": "p",
+                    "align": "left",
+                    "title_color": "#294D6E",
+                    "typography_typography": "custom",
+                    "typography_font_family": "Archivo",
+                    "typography_font_size": {
+                      "unit": "px",
+                      "size": 18,
+                      "sizes": []
+                    },
+                    "typography_font_weight": "700",
+                    "typography_line_height": {
+                      "unit": "em",
+                      "size": 1.25,
+                      "sizes": []
+                    },
+                    "__globals__": {
+                      "title_color": "globals/colors?id=accent"
+                    }
+                  },
+                  "elements": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b7a010e",
+          "elType": "container",
+          "isInner": false,
+          "settings": {
+            "container_type": "flex",
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_gap": {
+              "unit": "px",
+              "column": "0",
+              "row": "20",
+              "isLinked": false
+            },
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            },
+            "css_classes": "hd-prog-emisiones"
+          },
+          "elements": [
+            {
+              "id": "b7a010c",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Últimas emisiones",
+                "header_size": "h2",
+                "align": "left",
+                "title_color": "#294D6E",
+                "typography_typography": "custom",
+                "typography_font_family": "Archivo",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 28,
+                  "sizes": []
+                },
+                "typography_font_size_mobile": {
+                  "unit": "px",
+                  "size": 24,
+                  "sizes": []
+                },
+                "typography_font_weight": "700",
+                "typography_line_height": {
+                  "unit": "em",
+                  "size": 1.2,
+                  "sizes": []
+                },
+                "typography_letter_spacing": {
+                  "unit": "px",
+                  "size": -0.4,
+                  "sizes": []
+                },
+                "__globals__": {
+                  "title_color": "globals/colors?id=accent"
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "b7a010d",
+              "elType": "widget",
+              "widgetType": "loop-grid",
+              "settings": {
+                "_skin": "post",
+                "template_id": 146,
+                "columns": "4",
+                "columns_tablet": "2",
+                "columns_mobile": "1",
+                "posts_per_page": 8,
+                "pagination_type": "",
+                "row_gap": {
+                  "unit": "px",
+                  "size": 24,
+                  "sizes": []
+                },
+                "column_gap": {
+                  "unit": "px",
+                  "size": 20,
+                  "sizes": []
+                },
+                "post_query_post_type": "video",
+                "_css_classes": "hd-prog-grid"
+              },
+              "elements": []
+            }
+          ]
+        },
+        {
+          "id": "b7a0120",
+          "elType": "container",
+          "isInner": false,
+          "settings": {
+            "container_type": "flex",
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_gap": {
+              "unit": "px",
+              "column": "0",
+              "row": "16",
+              "isLinked": false
+            },
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            },
+            "css_classes": "hd-prog-segmentos"
+          },
+          "elements": [
+            {
+              "id": "b7a010f",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Los segmentos del show",
+                "header_size": "h2",
+                "align": "left",
+                "title_color": "#294D6E",
+                "typography_typography": "custom",
+                "typography_font_family": "Archivo",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 28,
+                  "sizes": []
+                },
+                "typography_font_size_mobile": {
+                  "unit": "px",
+                  "size": 24,
+                  "sizes": []
+                },
+                "typography_font_weight": "700",
+                "typography_line_height": {
+                  "unit": "em",
+                  "size": 1.2,
+                  "sizes": []
+                },
+                "typography_letter_spacing": {
+                  "unit": "px",
+                  "size": -0.4,
+                  "sizes": []
+                },
+                "__globals__": {
+                  "title_color": "globals/colors?id=accent"
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "b7a011f",
+              "elType": "container",
+              "isInner": false,
+              "settings": {
+                "container_type": "flex",
+                "content_width": "full",
+                "flex_direction": "column",
+                "flex_gap": {
+                  "unit": "px",
+                  "column": "0",
+                  "row": "0",
+                  "isLinked": true
+                },
+                "padding": {
+                  "unit": "px",
+                  "top": "6",
+                  "right": "24",
+                  "bottom": "6",
+                  "left": "24",
+                  "isLinked": false
+                },
+                "padding_mobile": {
+                  "unit": "px",
+                  "top": "4",
+                  "right": "16",
+                  "bottom": "4",
+                  "left": "16",
+                  "isLinked": false
+                },
+                "background_background": "classic",
+                "background_color": "#FFFFFF",
+                "border_border": "solid",
+                "border_width": {
+                  "unit": "px",
+                  "top": "1",
+                  "right": "1",
+                  "bottom": "1",
+                  "left": "1",
+                  "isLinked": true
+                },
+                "border_color": "#E3E9EF",
+                "border_radius": {
+                  "unit": "px",
+                  "top": "16",
+                  "right": "16",
+                  "bottom": "16",
+                  "left": "16",
+                  "isLinked": true
+                },
+                "css_classes": "hd-prog-seg-card"
+              },
+              "elements": [
+                {
+                  "id": "b7a0114",
+                  "elType": "container",
+                  "isInner": false,
+                  "settings": {
+                    "container_type": "flex",
+                    "content_width": "full",
+                    "flex_direction": "row",
+                    "flex_align_items": "flex-start",
+                    "flex_gap": {
+                      "unit": "px",
+                      "column": "16",
+                      "row": "16",
+                      "isLinked": true
+                    },
+                    "padding": {
+                      "unit": "px",
+                      "top": "18",
+                      "right": "0",
+                      "bottom": "18",
+                      "left": "0",
+                      "isLinked": false
+                    },
+                    "border_border": "solid",
+                    "border_width": {
+                      "unit": "px",
+                      "top": "0",
+                      "right": "0",
+                      "bottom": "1",
+                      "left": "0",
+                      "isLinked": false
+                    },
+                    "border_color": "#E3E9EF",
+                    "css_classes": "hd-prog-seg"
+                  },
+                  "elements": [
+                    {
+                      "id": "b7a0110",
+                      "elType": "widget",
+                      "widgetType": "heading",
+                      "settings": {
+                        "title": "10:00",
+                        "header_size": "p",
+                        "align": "left",
+                        "title_color": "#294D6E",
+                        "typography_typography": "custom",
+                        "typography_font_family": "Archivo",
+                        "typography_font_size": {
+                          "unit": "px",
+                          "size": 16,
+                          "sizes": []
+                        },
+                        "typography_font_weight": "700",
+                        "typography_line_height": {
+                          "unit": "em",
+                          "size": 1.45,
+                          "sizes": []
+                        },
+                        "__globals__": {
+                          "title_color": "globals/colors?id=accent"
+                        },
+                        "_element_width": "initial",
+                        "_element_custom_width": {
+                          "unit": "px",
+                          "size": 72,
+                          "sizes": []
+                        },
+                        "_css_classes": "hd-prog-seg-hora"
+                      },
+                      "elements": []
+                    },
+                    {
+                      "id": "b7a0113",
+                      "elType": "container",
+                      "isInner": false,
+                      "settings": {
+                        "container_type": "flex",
+                        "content_width": "full",
+                        "flex_direction": "column",
+                        "flex_gap": {
+                          "unit": "px",
+                          "column": "0",
+                          "row": "4",
+                          "isLinked": false
+                        },
+                        "padding": {
+                          "unit": "px",
+                          "top": "0",
+                          "right": "0",
+                          "bottom": "0",
+                          "left": "0",
+                          "isLinked": true
+                        },
+                        "_flex_size": "grow"
+                      },
+                      "elements": [
+                        {
+                          "id": "b7a0111",
+                          "elType": "widget",
+                          "widgetType": "heading",
+                          "settings": {
+                            "title": "Arranca la mañana",
+                            "header_size": "h3",
+                            "align": "left",
+                            "title_color": "#17222E",
+                            "typography_typography": "custom",
+                            "typography_font_family": "Archivo",
+                            "typography_font_size": {
+                              "unit": "px",
+                              "size": 16,
+                              "sizes": []
+                            },
+                            "typography_font_weight": "700",
+                            "typography_line_height": {
+                              "unit": "em",
+                              "size": 1.35,
+                              "sizes": []
+                            },
+                            "__globals__": {
+                              "title_color": "globals/colors?id=primary"
+                            }
+                          },
+                          "elements": []
+                        },
+                        {
+                          "id": "b7a0112",
+                          "elType": "widget",
+                          "widgetType": "heading",
+                          "settings": {
+                            "title": "El repaso de todo lo que pasó en la noche: resultados, la tabla y lo que se viene en la fecha.",
+                            "header_size": "p",
+                            "align": "left",
+                            "title_color": "#5E6B77",
+                            "typography_typography": "custom",
+                            "typography_font_family": "Inter",
+                            "typography_font_size": {
+                              "unit": "px",
+                              "size": 14,
+                              "sizes": []
+                            },
+                            "typography_font_weight": "400",
+                            "typography_line_height": {
+                              "unit": "em",
+                              "size": 1.6,
+                              "sizes": []
+                            },
+                            "__globals__": {
+                              "title_color": "globals/colors?id=hdtxtat"
+                            }
+                          },
+                          "elements": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "b7a0119",
+                  "elType": "container",
+                  "isInner": false,
+                  "settings": {
+                    "container_type": "flex",
+                    "content_width": "full",
+                    "flex_direction": "row",
+                    "flex_align_items": "flex-start",
+                    "flex_gap": {
+                      "unit": "px",
+                      "column": "16",
+                      "row": "16",
+                      "isLinked": true
+                    },
+                    "padding": {
+                      "unit": "px",
+                      "top": "18",
+                      "right": "0",
+                      "bottom": "18",
+                      "left": "0",
+                      "isLinked": false
+                    },
+                    "border_border": "solid",
+                    "border_width": {
+                      "unit": "px",
+                      "top": "0",
+                      "right": "0",
+                      "bottom": "1",
+                      "left": "0",
+                      "isLinked": false
+                    },
+                    "border_color": "#E3E9EF",
+                    "css_classes": "hd-prog-seg"
+                  },
+                  "elements": [
+                    {
+                      "id": "b7a0115",
+                      "elType": "widget",
+                      "widgetType": "heading",
+                      "settings": {
+                        "title": "10:40",
+                        "header_size": "p",
+                        "align": "left",
+                        "title_color": "#294D6E",
+                        "typography_typography": "custom",
+                        "typography_font_family": "Archivo",
+                        "typography_font_size": {
+                          "unit": "px",
+                          "size": 16,
+                          "sizes": []
+                        },
+                        "typography_font_weight": "700",
+                        "typography_line_height": {
+                          "unit": "em",
+                          "size": 1.45,
+                          "sizes": []
+                        },
+                        "__globals__": {
+                          "title_color": "globals/colors?id=accent"
+                        },
+                        "_element_width": "initial",
+                        "_element_custom_width": {
+                          "unit": "px",
+                          "size": 72,
+                          "sizes": []
+                        },
+                        "_css_classes": "hd-prog-seg-hora"
+                      },
+                      "elements": []
+                    },
+                    {
+                      "id": "b7a0118",
+                      "elType": "container",
+                      "isInner": false,
+                      "settings": {
+                        "container_type": "flex",
+                        "content_width": "full",
+                        "flex_direction": "column",
+                        "flex_gap": {
+                          "unit": "px",
+                          "column": "0",
+                          "row": "4",
+                          "isLinked": false
+                        },
+                        "padding": {
+                          "unit": "px",
+                          "top": "0",
+                          "right": "0",
+                          "bottom": "0",
+                          "left": "0",
+                          "isLinked": true
+                        },
+                        "_flex_size": "grow"
+                      },
+                      "elements": [
+                        {
+                          "id": "b7a0116",
+                          "elType": "widget",
+                          "widgetType": "heading",
+                          "settings": {
+                            "title": "Mesa tiburona",
+                            "header_size": "h3",
+                            "align": "left",
+                            "title_color": "#17222E",
+                            "typography_typography": "custom",
+                            "typography_font_family": "Archivo",
+                            "typography_font_size": {
+                              "unit": "px",
+                              "size": 16,
+                              "sizes": []
+                            },
+                            "typography_font_weight": "700",
+                            "typography_line_height": {
+                              "unit": "em",
+                              "size": 1.35,
+                              "sizes": []
+                            },
+                            "__globals__": {
+                              "title_color": "globals/colors?id=primary"
+                            }
+                          },
+                          "elements": []
+                        },
+                        {
+                          "id": "b7a0117",
+                          "elType": "widget",
+                          "widgetType": "heading",
+                          "settings": {
+                            "title": "Análisis a fondo de Junior de Barranquilla: rendimiento, fichajes y el pulso del vestuario.",
+                            "header_size": "p",
+                            "align": "left",
+                            "title_color": "#5E6B77",
+                            "typography_typography": "custom",
+                            "typography_font_family": "Inter",
+                            "typography_font_size": {
+                              "unit": "px",
+                              "size": 14,
+                              "sizes": []
+                            },
+                            "typography_font_weight": "400",
+                            "typography_line_height": {
+                              "unit": "em",
+                              "size": 1.6,
+                              "sizes": []
+                            },
+                            "__globals__": {
+                              "title_color": "globals/colors?id=hdtxtat"
+                            }
+                          },
+                          "elements": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "b7a011e",
+                  "elType": "container",
+                  "isInner": false,
+                  "settings": {
+                    "container_type": "flex",
+                    "content_width": "full",
+                    "flex_direction": "row",
+                    "flex_align_items": "flex-start",
+                    "flex_gap": {
+                      "unit": "px",
+                      "column": "16",
+                      "row": "16",
+                      "isLinked": true
+                    },
+                    "padding": {
+                      "unit": "px",
+                      "top": "18",
+                      "right": "0",
+                      "bottom": "18",
+                      "left": "0",
+                      "isLinked": false
+                    },
+                    "border_border": "solid",
+                    "border_width": {
+                      "unit": "px",
+                      "top": "0",
+                      "right": "0",
+                      "bottom": "1",
+                      "left": "0",
+                      "isLinked": false
+                    },
+                    "border_color": "#E3E9EF",
+                    "css_classes": "hd-prog-seg"
+                  },
+                  "elements": [
+                    {
+                      "id": "b7a011a",
+                      "elType": "widget",
+                      "widgetType": "heading",
+                      "settings": {
+                        "title": "11:20",
+                        "header_size": "p",
+                        "align": "left",
+                        "title_color": "#294D6E",
+                        "typography_typography": "custom",
+                        "typography_font_family": "Archivo",
+                        "typography_font_size": {
+                          "unit": "px",
+                          "size": 16,
+                          "sizes": []
+                        },
+                        "typography_font_weight": "700",
+                        "typography_line_height": {
+                          "unit": "em",
+                          "size": 1.45,
+                          "sizes": []
+                        },
+                        "__globals__": {
+                          "title_color": "globals/colors?id=accent"
+                        },
+                        "_element_width": "initial",
+                        "_element_custom_width": {
+                          "unit": "px",
+                          "size": 72,
+                          "sizes": []
+                        },
+                        "_css_classes": "hd-prog-seg-hora"
+                      },
+                      "elements": []
+                    },
+                    {
+                      "id": "b7a011d",
+                      "elType": "container",
+                      "isInner": false,
+                      "settings": {
+                        "container_type": "flex",
+                        "content_width": "full",
+                        "flex_direction": "column",
+                        "flex_gap": {
+                          "unit": "px",
+                          "column": "0",
+                          "row": "4",
+                          "isLinked": false
+                        },
+                        "padding": {
+                          "unit": "px",
+                          "top": "0",
+                          "right": "0",
+                          "bottom": "0",
+                          "left": "0",
+                          "isLinked": true
+                        },
+                        "_flex_size": "grow"
+                      },
+                      "elements": [
+                        {
+                          "id": "b7a011b",
+                          "elType": "widget",
+                          "widgetType": "heading",
+                          "settings": {
+                            "title": "La hinchada habla",
+                            "header_size": "h3",
+                            "align": "left",
+                            "title_color": "#17222E",
+                            "typography_typography": "custom",
+                            "typography_font_family": "Archivo",
+                            "typography_font_size": {
+                              "unit": "px",
+                              "size": 16,
+                              "sizes": []
+                            },
+                            "typography_font_weight": "700",
+                            "typography_line_height": {
+                              "unit": "em",
+                              "size": 1.35,
+                              "sizes": []
+                            },
+                            "__globals__": {
+                              "title_color": "globals/colors?id=primary"
+                            }
+                          },
+                          "elements": []
+                        },
+                        {
+                          "id": "b7a011c",
+                          "elType": "widget",
+                          "widgetType": "heading",
+                          "settings": {
+                            "title": "Las llamadas y mensajes de la afición al aire. El termómetro real de lo que se dice en la calle.",
+                            "header_size": "p",
+                            "align": "left",
+                            "title_color": "#5E6B77",
+                            "typography_typography": "custom",
+                            "typography_font_family": "Inter",
+                            "typography_font_size": {
+                              "unit": "px",
+                              "size": 14,
+                              "sizes": []
+                            },
+                            "typography_font_weight": "400",
+                            "typography_line_height": {
+                              "unit": "em",
+                              "size": 1.6,
+                              "sizes": []
+                            },
+                            "__globals__": {
+                              "title_color": "globals/colors?id=hdtxtat"
+                            }
+                          },
+                          "elements": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

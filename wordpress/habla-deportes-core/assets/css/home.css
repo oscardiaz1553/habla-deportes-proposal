@@ -495,6 +495,20 @@
 	background: #fff;
 }
 
+/* ==========================================================================
+   MARQUESINA NATIVA (Loop Carousel)
+   --------------------------------------------------------------------------
+   Un Loop Carousel con retardo de autoavance 0 y velocidad alta se desplaza
+   de forma continua, que es justo una marquesina. Lo único que le falta es
+   la aceleración: Swiper usa una curva suave por defecto y el movimiento
+   "respira" en cada ciclo. Esta clase la fuerza a lineal.
+
+   Uso: en el widget, Avanzado → Clases CSS → escribir `hd-marquesina`.
+   ========================================================================== */
+.hd-marquesina .swiper-wrapper {
+	transition-timing-function: linear !important;
+}
+
 /* Aviso de configuración: solo lo ven los editores. */
 .hd-aviso {
 	padding: 16px;

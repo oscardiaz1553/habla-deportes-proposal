@@ -26,6 +26,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/* Etiquetas dinámicas: exponen los datos del proyecto (escudos por term
+   meta, fecha del partido, ID de YouTube…) a los widgets NATIVOS de
+   Elementor. Son lo que permite montar el sitio sin widgets a medida. */
+require_once HDC_PATH . 'includes/dynamic-tags.php';
+
 /** Categoría propia en el panel de widgets. */
 add_action( 'elementor/elements/categories_registered', function ( $manager ) {
 	$manager->add_category( 'habla-deportes', array(

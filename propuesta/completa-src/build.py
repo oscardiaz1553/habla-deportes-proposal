@@ -124,8 +124,8 @@ def build():
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#122338">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,500&display=swap">
-<link rel="stylesheet" href="assets/css/completa.css?v=1">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="assets/css/completa.css?v=2">
 <link rel="icon" href="../assets/img/LogoHablaDeportes.webp" type="image/webp">
 </head>
 <body>

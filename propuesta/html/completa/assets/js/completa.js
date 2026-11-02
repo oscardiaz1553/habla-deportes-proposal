@@ -79,4 +79,23 @@
     root.addEventListener('mouseenter',function(){clearInterval(t)});root.addEventListener('mouseleave',reset);
     show();reset();
   });
+
+  // Megamenú: botón de flecha, un panel abierto a la vez, Esc y clic fuera cierran
+  var chevs=$$('[data-chev]');
+  function closeMega(except){$$('.has-mega.is-open').forEach(function(li){if(li!==except){li.classList.remove('is-open');var b=$('[data-chev]',li);if(b)b.setAttribute('aria-expanded','false')}})}
+  chevs.forEach(function(b){b.addEventListener('click',function(e){e.stopPropagation();var li=b.closest('.has-mega'),o=!li.classList.contains('is-open');closeMega(li);li.classList.toggle('is-open',o);b.setAttribute('aria-expanded',o)})});
+  document.addEventListener('click',function(){closeMega()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMega()});
+
+  // Banner de partidos (slider)
+  $$('[data-mc]').forEach(function(root){
+    var ss=$$('.mc__s',root),ds=$$('[data-mc-dots] i',root),i=0,t;
+    function show(){ss.forEach(function(s,k){s.classList.toggle('is-on',k===i)});ds.forEach(function(d,k){d.className=k===i?'on':''})}
+    function go(n){i=(i+n+ss.length)%ss.length;show();reset()}
+    function reset(){clearInterval(t);if(!matchMedia('(prefers-reduced-motion: reduce)').matches)t=setInterval(function(){go(1)},6000)}
+    var pv=$('[data-mc-prev]',root),nx=$('[data-mc-next]',root);
+    if(pv)pv.addEventListener('click',function(){go(-1)});if(nx)nx.addEventListener('click',function(){go(1)});
+    root.addEventListener('mouseenter',function(){clearInterval(t)});root.addEventListener('mouseleave',reset);
+    show();reset();
+  });
 })();

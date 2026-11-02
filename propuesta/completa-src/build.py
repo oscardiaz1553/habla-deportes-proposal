@@ -50,11 +50,24 @@ def icons(s): return re.sub(r"\{\{i:([a-z]+)\}\}", r'<svg class="ico" aria-hidde
 def esc(s): return re.sub(r"@esc/([a-z]+)", lambda m: "../assets/img/"+ESC[m.group(1)], s)
 def imgs(s): return s.replace("@img/", "../assets/img/")
 
+MEGA = {'junior': [('Noticias', 'equipo.html'), ('Plantilla', 'equipo.html'), ('Calendario', 'equipo.html'), ('Fichajes', 'seccion.html#fichajes'), ('Estadísticas', 'datos.html'), ('Videos', 'redes.html#youtube'), ('Un día como hoy', 'seccion.html#efemerides'), ('Ver todo Junior FC', 'equipo.html')], 'seleccion': [('Noticias', 'seccion.html'), ('Convocatoria', 'seccion.html'), ('Próximo partido', 'partido.html'), ('Calendario', 'datos.html#resultados'), ('Estadísticas', 'datos.html#estadisticas'), ('Videos', 'redes.html#youtube'), ('Ver toda la Selección', 'seccion.html')], 'datos': [('Posiciones', 'datos.html#posiciones'), ('Resultados', 'datos.html#resultados'), ('Goleadores', 'datos.html#goleadores'), ('Estadísticas', 'datos.html#estadisticas'), ('Partido en vivo', 'partido.html'), ('Ver centro de datos', 'datos.html')], 'videos': [('YouTube', 'redes.html#youtube'), ('Shorts', 'redes.html#shorts'), ('Instagram', 'redes.html#instagram'), ('X', 'redes.html#x'), ('TikTok', 'redes.html#tiktok'), ('Canal de WhatsApp', 'redes.html#whatsapp'), ('Ver todas las redes', 'redes.html')], 'radio': [('En vivo', 'radio.html'), ('Parrilla', 'radio.html#programas'), ('Episodios anteriores', 'radio.html#episodios'), ('Cómo escucharnos', 'radio.html'), ('Participa', 'radio.html'), ('Ver radio', 'radio.html')], 'opinion': [('Juan Salvador', 'juan-salvador.html'), ('Columnistas', 'juan-salvador.html'), ('Sus videos', 'juan-salvador.html'), ('Pregúntale a Juan', 'juan-salvador.html'), ('Ver opinión', 'juan-salvador.html')]}
+
+def _mega(links, right=False):
+    items = "".join('<li><a href="%s"%s>%s</a></li>' % (h, ' class="is-all"' if t.startswith("Ver ") else '', t) for t,h in links)
+    return '<div class="mega%s"><ul>%s</ul></div>' % (' mega--r' if right else '', items)
+
 def header(cur):
-    items = "".join(
-      '<li class="nav__item"><a class="nav__link" href="%s"%s>%s</a></li>' % (h, ' aria-current="page"' if k==cur else '', t) for k,t,h in NAV)
-    more = "".join('<a href="%s">%s</a>' % (h,t) for t,h in MORE)
-    items += '<li class="nav__item"><button class="nav__link" aria-haspopup="true" aria-expanded="false" data-more>Más {{i:down}}</button><div class="nav__drop">%s</div></li>' % more
+    out = []
+    n = len(NAV)
+    for i,(k,t,h) in enumerate(NAV):
+        cur_attr = ' aria-current="page"' if k==cur else ''
+        if k in MEGA:
+            out.append('<li class="nav__item has-mega"><a class="nav__link" href="%s"%s>%s</a><button class="nav__chev" data-chev aria-expanded="false" aria-label="Abrir submenú de %s">{{i:down}}</button>%s</li>' % (h, cur_attr, t, t, _mega(MEGA[k], right=(i>=n-2))))
+        else:
+            out.append('<li class="nav__item"><a class="nav__link" href="%s"%s>%s</a></li>' % (h, cur_attr, t))
+    more_links = [(t,h) for t,h in MORE]
+    out.append('<li class="nav__item has-mega"><button class="nav__link nav__link--btn" data-chev aria-expanded="false" aria-haspopup="true">Más {{i:down}}</button>%s</li>' % _mega(more_links, right=True))
+    items = "".join(out)
     mob = "".join('<a href="%s"%s>%s</a>' % (h, ' aria-current="page"' if k==cur else '', t) for k,t,h in NAV) + "".join('<a href="%s">%s</a>' % (h,t) for t,h in MORE)
     return """
 <a class="skip" href="#main">Saltar al contenido</a>
@@ -64,15 +77,14 @@ def header(cur):
   <div class="hdr1__info"><span>{{i:pin}} Barranquilla · 31°C</span><span data-fecha>Lunes, 2 de noviembre de 2026</span></div>
   <div class="hdr1__tools">
    <div class="hdr1__soc" aria-label="Redes de Habla Deportes"><a href="redes.html#youtube" aria-label="YouTube">{{i:yt}}</a><a href="redes.html#instagram" aria-label="Instagram">{{i:ig}}</a><a href="redes.html#x" aria-label="X">{{i:x}}</a><a href="redes.html#whatsapp" aria-label="Canal de WhatsApp">{{i:wa}}</a></div>
-   <a class="btn hdr__radio" href="radio.html"><span class="badge badge--live">Al aire</span> Escuchar</a>
    <button class="iconbtn" aria-label="Buscar" data-search>{{i:search}}</button>
    <button class="iconbtn burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mnav" data-burger>{{i:menu}}</button>
   </div>
  </div>
  <nav class="mnav" id="mnav" aria-label="Menú móvil">""" + mob + """</nav>
 </header>
-<div class="hdr2"><div class="wrap hdr2__in"><nav class="nav" aria-label="Principal"><ul class="nav__list">""" + items + """</ul></nav><a class="hdr2__radio" href="radio.html">Radio · L–V 10:00 a.m.–12:00 m.</a></div></div>
-{SCOREBAR}"""
+<div class="hdr2"><div class="wrap hdr2__in"><nav class="nav" aria-label="Principal"><ul class="nav__list">""" + items + """</ul></nav></div></div>
+"""
 
 SCOREBAR = """<div class="sbd" data-sbd role="region" aria-label="Marcadores"><div class="wrap sbd__in">
   <span class="sbd__tag">Marcadores</span>
@@ -136,7 +148,7 @@ def build():
 <meta name="theme-color" content="#122338">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="assets/css/completa.css?v=5">
+<link rel="stylesheet" href="assets/css/completa.css?v=6">
 <link rel="icon" href="../assets/img/LogoHablaDeportes.webp" type="image/webp">
 </head>
 <body>

@@ -50,23 +50,31 @@ def icons(s): return re.sub(r"\{\{i:([a-z]+)\}\}", r'<svg class="ico" aria-hidde
 def esc(s): return re.sub(r"@esc/([a-z]+)", lambda m: "../assets/img/"+ESC[m.group(1)], s)
 def imgs(s): return s.replace("@img/", "../assets/img/")
 
-MEGA = {'junior': [('Noticias', 'equipo.html'), ('Plantilla', 'equipo.html'), ('Calendario', 'equipo.html'), ('Fichajes', 'seccion.html#fichajes'), ('Estadísticas', 'datos.html'), ('Videos', 'redes.html#youtube'), ('Un día como hoy', 'seccion.html#efemerides'), ('Ver todo Junior FC', 'equipo.html')], 'seleccion': [('Noticias', 'seccion.html'), ('Convocatoria', 'seccion.html'), ('Próximo partido', 'partido.html'), ('Calendario', 'datos.html#resultados'), ('Estadísticas', 'datos.html#estadisticas'), ('Videos', 'redes.html#youtube'), ('Ver toda la Selección', 'seccion.html')], 'datos': [('Posiciones', 'datos.html#posiciones'), ('Resultados', 'datos.html#resultados'), ('Goleadores', 'datos.html#goleadores'), ('Estadísticas', 'datos.html#estadisticas'), ('Partido en vivo', 'partido.html'), ('Ver centro de datos', 'datos.html')], 'videos': [('YouTube', 'redes.html#youtube'), ('Shorts', 'redes.html#shorts'), ('Instagram', 'redes.html#instagram'), ('X', 'redes.html#x'), ('TikTok', 'redes.html#tiktok'), ('Canal de WhatsApp', 'redes.html#whatsapp'), ('Ver todas las redes', 'redes.html')], 'radio': [('En vivo', 'radio.html'), ('Parrilla', 'radio.html#programas'), ('Episodios anteriores', 'radio.html#episodios'), ('Cómo escucharnos', 'radio.html'), ('Participa', 'radio.html'), ('Ver radio', 'radio.html')], 'opinion': [('Juan Salvador', 'juan-salvador.html'), ('Columnistas', 'juan-salvador.html'), ('Sus videos', 'juan-salvador.html'), ('Pregúntale a Juan', 'juan-salvador.html'), ('Ver opinión', 'juan-salvador.html')]}
+SUB = {'inicio': ('Habla Deportes', [('Portada', 'index.html'), ('Último programa', 'video.html'), ('Fichajes', 'seccion.html#fichajes'), ('Un día como hoy', 'seccion.html#efemerides'), ('Datos', 'datos.html'), ('Opinión', 'juan-salvador.html'), ('Contacto', 'contacto.html')]), 'junior': ('Junior FC', [('Inicio', 'equipo.html'), ('Noticias', 'seccion.html'), ('Partidos', 'datos.html#resultados'), ('Plantilla', 'equipo.html'), ('Fichajes', 'seccion.html#fichajes'), ('Estadísticas', 'datos.html#estadisticas'), ('Videos', 'redes.html#youtube'), ('Historia', None, [('Un día como hoy', 'seccion.html#efemerides'), ('Títulos', 'equipo.html'), ('Ídolos', 'equipo.html')])]), 'seleccion': ('Selección Colombia', [('Inicio', 'seccion.html'), ('Noticias', 'seccion.html'), ('Convocatoria', 'seccion.html'), ('Partidos', 'partido.html'), ('Eliminatorias', None, [('Tabla de posiciones', 'datos.html#posiciones'), ('Resultados', 'datos.html#resultados'), ('Goleadores', 'datos.html#goleadores')]), ('Estadísticas', 'datos.html#estadisticas'), ('Videos', 'redes.html#youtube')]), 'datos': ('Datos', [('Inicio', 'datos.html'), ('Posiciones', 'datos.html#posiciones'), ('Resultados', 'datos.html#resultados'), ('Goleadores', 'datos.html#goleadores'), ('Estadísticas', 'datos.html#estadisticas'), ('Partido en vivo', 'partido.html'), ('Torneos', None, [('Liga BetPlay', 'datos.html'), ('Copa Colombia', 'datos.html'), ('Eliminatorias', 'datos.html'), ('Copa Libertadores', 'datos.html'), ('Sudamericana', 'datos.html')])]), 'videos': ('Videos y redes', [('Inicio', 'redes.html'), ('YouTube', 'redes.html#youtube'), ('Shorts', 'redes.html#shorts'), ('Instagram', 'redes.html#instagram'), ('X', 'redes.html#x'), ('TikTok', 'redes.html#tiktok'), ('WhatsApp', 'redes.html#whatsapp')]), 'radio': ('Radio', [('En vivo', 'radio.html'), ('Parrilla', 'radio.html#programas'), ('Episodios anteriores', 'radio.html#episodios'), ('Cómo escucharnos', 'radio.html'), ('Participa', 'radio.html')]), 'opinion': ('Opinión', [('Juan Salvador', 'juan-salvador.html'), ('Columnistas', 'juan-salvador.html'), ('Sus videos', 'juan-salvador.html'), ('Pregúntale a Juan', 'juan-salvador.html')])}
 
-def _mega(links, right=False):
-    items = "".join('<li><a href="%s"%s>%s</a></li>' % (h, ' class="is-all"' if t.startswith("Ver ") else '', t) for t,h in links)
-    return '<div class="mega%s"><ul>%s</ul></div>' % (' mega--r' if right else '', items)
+def _panel(children):
+    return '<div class="mega"><ul>%s</ul></div>' % "".join('<li><a href="%s">%s</a></li>' % (h,t) for t,h in children)
 
-def header(cur):
-    out = []
-    n = len(NAV)
-    for i,(k,t,h) in enumerate(NAV):
-        cur_attr = ' aria-current="page"' if k==cur else ''
-        if k in MEGA:
-            out.append('<li class="nav__item has-mega"><a class="nav__link" href="%s"%s>%s</a><button class="nav__chev" data-chev aria-expanded="false" aria-label="Abrir submenú de %s">{{i:down}}</button>%s</li>' % (h, cur_attr, t, t, _mega(MEGA[k], right=(i>=n-2))))
+def subbar(cur, page):
+    title, items = SUB.get(cur, SUB["inicio"])
+    li = []
+    for it in items:
+        label = it[0]
+        if len(it) == 3:
+            li.append('<li class="sub__i has-mega"><button class="sub__l" data-chev aria-expanded="false" aria-haspopup="true">%s {{i:down}}</button>%s</li>' % (label, _panel(it[2])))
         else:
-            out.append('<li class="nav__item"><a class="nav__link" href="%s"%s>%s</a></li>' % (h, cur_attr, t))
-    more_links = [(t,h) for t,h in MORE]
-    out.append('<li class="nav__item has-mega"><button class="nav__link nav__link--btn" data-chev aria-expanded="false" aria-haspopup="true">Más {{i:down}}</button>%s</li>' % _mega(more_links, right=True))
+            href = it[1]
+            on = ' aria-current="page"' if href.split("#")[0] == page and "#" not in href else ''
+            li.append('<li class="sub__i"><a class="sub__l" href="%s"%s>%s</a></li>' % (href, on, label))
+    return '<div class="hdr3"><div class="wrap hdr3__in"><span class="hdr3__t">%s</span><nav class="sub" aria-label="Submenú de %s"><ul class="sub__list">%s</ul></nav></div></div>' % (title, title, "".join(li))
+
+def header(cur, page="index.html"):
+    out = []
+    for k,t,h in NAV:
+        cur_attr = ' aria-current="page"' if k==cur else ''
+        out.append('<li class="nav__item"><a class="nav__link" href="%s"%s>%s</a></li>' % (h, cur_attr, t))
+    more = "".join('<li><a href="%s">%s</a></li>' % (h,t) for t,h in MORE)
+    out.append('<li class="nav__item has-mega"><button class="nav__link nav__link--btn" data-chev aria-expanded="false" aria-haspopup="true">Más {{i:down}}</button><div class="mega mega--r"><ul>%s</ul></div></li>' % more)
     items = "".join(out)
     mob = "".join('<a href="%s"%s>%s</a>' % (h, ' aria-current="page"' if k==cur else '', t) for k,t,h in NAV) + "".join('<a href="%s">%s</a>' % (h,t) for t,h in MORE)
     return """
@@ -83,7 +91,10 @@ def header(cur):
  </div>
  <nav class="mnav" id="mnav" aria-label="Menú móvil">""" + mob + """</nav>
 </header>
+<div class="hdrstack">
 <div class="hdr2"><div class="wrap hdr2__in"><nav class="nav" aria-label="Principal"><ul class="nav__list">""" + items + """</ul></nav></div></div>
+""" + subbar(cur, page) + """
+</div>
 """
 
 SCOREBAR = """<div class="sbd" data-sbd role="region" aria-label="Marcadores"><div class="wrap sbd__in">
@@ -148,12 +159,12 @@ def build():
 <meta name="theme-color" content="#122338">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="assets/css/completa.css?v=6">
+<link rel="stylesheet" href="assets/css/completa.css?v=7">
 <link rel="icon" href="../assets/img/LogoHablaDeportes.webp" type="image/webp">
 </head>
 <body>
 {SPRITE}
-{header(cur).replace("{SCOREBAR}", SCOREBAR)}
+{header(cur, f.name)}
 <main id="main">
 {body}
 </main>

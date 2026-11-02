@@ -1243,3 +1243,42 @@ body{background:#fff}
 .mc__adl{position:absolute;left:0;top:0;z-index:2;background:rgba(255,255,255,.92);color:var(--ink);font:700 11px var(--f-sans);letter-spacing:.06em;text-transform:uppercase;padding:6px 10px;border-radius:0 0 8px 0}
 @media(min-width:1000px){.mc__ad{display:block;height:400px}}
 .mc-sec{padding-block:36px 44px}
+
+/* ==========================================================================
+   v10 — Menú de dos barras como ESPN: barra azul de secciones + barra blanca
+   contextual SIEMPRE visible (título de la sección y sus enlaces; algunos
+   abren panel). La barra azul ya no abre menús, salvo "Más".
+   ========================================================================== */
+.hdrstack{position:sticky;top:64px;z-index:100;background:#fff;box-shadow:0 2px 10px rgba(14,27,41,.12)}
+@media(min-width:1040px){.hdrstack{top:0}}
+.hdr2 .nav__item.has-mega:not(:last-child){display:flex}
+/* barra azul: enlaces simples */
+.hdr2 .nav__link{padding:0 18px}
+/* barra blanca contextual */
+.hdr3{background:#fff;border-bottom:1px solid var(--line)}
+.hdr3__in{display:flex;align-items:center;gap:20px;min-height:52px}
+.hdr3__t{flex:none;font:800 17px var(--f-serif);color:var(--navy-800);padding-right:20px;border-right:1px solid var(--line-2);line-height:1.1}
+.sub{flex:1;min-width:0}
+.sub__list{display:flex;align-items:stretch;gap:2px;margin:0;padding:0;list-style:none}
+.sub__i{position:relative;display:flex;align-items:stretch}
+.sub__l{display:inline-flex;align-items:center;gap:4px;min-height:52px;padding:0 13px;font:500 14.5px var(--f-sans);color:var(--ink-3);background:none;border:0;border-bottom:3px solid transparent;cursor:pointer;text-decoration:none;white-space:nowrap}
+.sub__l:hover{color:var(--navy-800);text-decoration:none}
+.sub__l[aria-current="page"]{color:var(--navy-800);font-weight:700;border-bottom-color:var(--navy-700)}
+.sub__l .ico{width:15px;height:15px;transition:transform .15s}
+.sub__i.has-mega:hover>.sub__l,.sub__i.is-open>.sub__l,.sub__i.has-mega:focus-within>.sub__l{color:var(--navy-800);border-bottom-color:var(--navy-700)}
+.sub__i.has-mega:hover .ico,.sub__i.is-open .ico{transform:rotate(180deg)}
+.sub__i .mega{top:100%;min-width:300px;border-top:0;border-radius:0 0 6px 6px}
+.sub__i .mega ul{grid-template-columns:1fr}
+/* móvil: la barra blanca se desliza horizontalmente; los paneles pasan a enlaces */
+@media(max-width:1039px){
+  .hdr3__in{gap:12px;overflow-x:auto;scrollbar-width:none;padding-inline:var(--gut);max-width:none}
+  .hdr3__in::-webkit-scrollbar{display:none}
+  .hdr3__t{font-size:15px;padding-right:12px}
+  .sub{overflow:visible}
+  .sub__l{min-height:46px;padding:0 10px;font-size:14px}
+  .hdr3{border-bottom:1px solid var(--line)}
+  .sub__i.has-mega .ico{display:none}
+  .sub__i.has-mega .mega{display:none!important}
+}
+.rd-bar{top:104px}
+@media(max-width:1039px){.rd-bar{top:110px}}

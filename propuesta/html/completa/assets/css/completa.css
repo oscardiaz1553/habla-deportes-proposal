@@ -1098,3 +1098,57 @@ body{padding-bottom:66px}
 .dxs__all{display:flex;align-items:center;min-height:44px;padding:0 16px;font:600 14px var(--f-sans);color:var(--navy-700);border-top:1px solid var(--line)}
 .dx-seal{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:0 0 12px;font:600 12px var(--f-sans);letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3)}
 .spons__logo--dk{color:var(--navy-700);border-color:var(--line-2);font-size:15px;padding:6px 12px}
+
+/* ==========================================================================
+   v7 — PERSONALIDAD: encabezado azul de marca, fondo azulado, títulos con presencia
+   ========================================================================== */
+:root{--paper:#EAF0F6;--paper-2:#DCE7F1}
+body{background:var(--paper)}
+/* nivel 1: azul profundo con logo blanco */
+.hdr{background:var(--navy-900);border-bottom:0}
+.hdr1 .hdr__logo img{height:40px;filter:none}
+.hdr1__info{color:#B7CADB;border-left-color:rgba(255,255,255,.18)}
+.hdr1__soc a{color:#fff}.hdr1__soc a:hover{background:rgba(255,255,255,.12)}
+.hdr1 .iconbtn{color:#fff}.hdr1 .iconbtn:hover{background:rgba(255,255,255,.12)}
+.hdr__radio.btn{background:#fff;color:var(--navy-800)}.hdr__radio.btn:hover{background:var(--navy-50)}
+.hdr__radio .badge--live{background:var(--live);color:#fff}
+.mnav{background:var(--navy-900);border-top:1px solid rgba(255,255,255,.12)}
+.mnav a{color:#fff;border-bottom-color:rgba(255,255,255,.12)}
+.mnav a[aria-current="page"]{color:#fff;box-shadow:inset 3px 0 #fff}
+/* nivel 2: azul de marca, un tono arriba */
+.hdr2{background:var(--navy-700)}
+@media(min-width:1040px){.hdr1{min-height:92px}.hdr1 .hdr__logo img{height:60px}}
+/* marcador: franja azul clara con presencia */
+.sbd{background:var(--navy-800);border-bottom:0;color:#fff}
+.sbd__tag{color:var(--navy-300);border-right-color:rgba(255,255,255,.18)}
+.sbd__m{color:#fff}.sbd__m strong{color:#fff}.sbd__m:hover strong{color:var(--navy-300)}
+.sbd__m em{color:#B7CADB}
+.sbd__b{background:#fff;color:var(--navy-800)}.sbd__b--live{background:var(--live);color:#fff}
+.sbd__b--next{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.5)}
+.sbd__ctl button{color:#fff}.sbd__ctl button:hover{background:rgba(255,255,255,.14)}
+.sbd__pg i{background:rgba(255,255,255,.3)}.sbd__pg i.on{background:#fff}
+.sbd__all{color:#fff}
+/* títulos de sección: bloque azul con presencia */
+.sh{border-bottom:0;margin-bottom:22px}
+.sh__title{position:relative;padding-left:16px;font-size:clamp(24px,2.6vw,30px);font-weight:700}
+.sh__title::before{content:"";position:absolute;left:0;top:2px;bottom:2px;width:6px;border-radius:3px;background:var(--navy-700)}
+.section--ink .sh__title::before{background:var(--navy-300)}
+.sh__more{background:var(--navy-700);color:#fff;border-radius:99px;padding:0 16px;min-height:38px;font-size:13px}
+.sh__more:hover{background:var(--navy-600);text-decoration:none}.sh__more::after{content:" ›"}
+.section--ink .sh__more{background:#fff;color:var(--navy-800)}
+/* secciones y fondos alternados con color */
+.section--soft,.section--paper2{background:var(--paper-2)}
+.section:not(.section--soft):not(.section--paper2):not(.section--ink):not(.sky){background:transparent}
+.sky.section--soft{background:var(--paper-2)}
+.sky-lead,.sky-card,.panel,.fig,.xpost,.lastnews{border-color:#C9D8E6}
+/* portada: banda azul detrás de la noticia principal */
+.sky{background:linear-gradient(180deg,var(--navy-700) 0,var(--navy-700) 250px,var(--paper-2) 250px)!important;padding-top:32px}
+.sky .sky-lead{box-shadow:0 10px 30px rgba(14,27,41,.22)}
+/* pie y detalles */
+.crumbs{color:var(--ink-2)}
+.page-h h1{color:var(--navy-800)}
+.tabbar{background:var(--navy-900);border-top:0}
+.tabbar a{color:#B7CADB}.tabbar a:hover{color:#fff}
+.tabbar a[aria-current="page"]{color:#fff}.tabbar a[aria-current="page"]::before{background:#fff}
+.ad{background:#fff}
+.sh__more::after{content:"\00a0›"}

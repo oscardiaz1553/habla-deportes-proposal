@@ -60,7 +60,7 @@ def header(cur):
 <a class="skip" href="#main">Saltar al contenido</a>
 <header class="hdr">
  <div class="wrap hdr1">
-  <a class="hdr__logo" href="index.html" aria-label="Habla Deportes — inicio"><img src="../assets/img/LogoHablaDeportes.webp" width="1600" height="545" alt="Habla Deportes"></a>
+  <a class="hdr__logo" href="index.html" aria-label="Habla Deportes — inicio"><img src="../assets/img/LogoHablaDeportes-white.png" width="800" height="272" alt="Habla Deportes"></a>
   <div class="hdr1__info"><span>{{i:pin}} Barranquilla · 31°C</span><span data-fecha>Lunes, 2 de noviembre de 2026</span></div>
   <div class="hdr1__tools">
    <div class="hdr1__soc" aria-label="Redes de Habla Deportes"><a href="redes.html#youtube" aria-label="YouTube">{{i:yt}}</a><a href="redes.html#instagram" aria-label="Instagram">{{i:ig}}</a><a href="redes.html#x" aria-label="X">{{i:x}}</a><a href="redes.html#whatsapp" aria-label="Canal de WhatsApp">{{i:wa}}</a></div>
@@ -136,7 +136,7 @@ def build():
 <meta name="theme-color" content="#122338">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="assets/css/completa.css?v=4">
+<link rel="stylesheet" href="assets/css/completa.css?v=5">
 <link rel="icon" href="../assets/img/LogoHablaDeportes.webp" type="image/webp">
 </head>
 <body>

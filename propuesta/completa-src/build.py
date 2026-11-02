@@ -42,6 +42,7 @@ SPRITE = """<svg width="0" height="0" style="position:absolute" aria-hidden="tru
 <symbol id="i-sun" viewBox="0 0 24 24"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0-5h-1v3h2V2zm0 17h-1v3h2v-3zM2 11v2h3v-2zm17 0v2h3v-2zM5.600 4.200 4.200 5.600l2.100 2.100 1.400-1.400zm12.700 12.700-1.400 1.400 2.100 2.100 1.400-1.400zM4.200 18.400l1.400 1.400 2.100-2.100-1.400-1.400zM18.400 5.600l-1.400-1.400-2.100 2.100 1.400 1.400z"/></symbol>
 <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 5h18v14H3zm9 7L5 7v1.500l7 5 7-5V7z"/></symbol>
 <symbol id="i-down" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></symbol>
+<symbol id="i-news" viewBox="0 0 24 24"><path d="M4 4h13v16H4zm15 4h1v10a2 2 0 0 1-2 2h-1V8zM7 8h7v2H7zm0 4h7v2H7zm0 4h5v2H7z"/></symbol>
 <symbol id="i-cam" viewBox="0 0 24 24"><path d="M4 7h3l2-2h6l2 2h3v12H4zm8 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/></symbol>
 </defs></svg>"""
 
@@ -86,6 +87,15 @@ SCOREBAR = """<div class="sbd" data-sbd role="region" aria-label="Marcadores"><d
   <a class="sbd__all" href="datos.html">Todos los marcadores ›</a>
 </div></div>"""
 
+def prefooter(meta):
+    if meta.get("ads")=="0": return ""
+    return '<div class="wrap prefooter"><div class="ad ad--lb"><span>970 × 90 · Espacio publicitario · Publicidad</span></div></div>'
+
+def tabbar(cur):
+    act = {"inicio":"noticias","junior":"noticias","seleccion":"noticias","opinion":"noticias","videos":"videos","datos":"datos","radio":"radio"}.get(cur,"noticias")
+    items=[("noticias","Noticias","index.html","news"),("videos","Videos","redes.html","play"),("datos","Datos","datos.html","chart"),("radio","Radio","radio.html","radio")]
+    return '<nav class="tabbar" aria-label="Navegación inferior">'+"".join('<a href="%s"%s>{{i:%s}}<span>%s</span></a>' % (h,' aria-current="page"' if k==act else '',ic,t) for k,t,h,ic in items)+'</nav>'
+
 def footer():
     return """
 <footer class="ftr"><div class="wrap">
@@ -126,7 +136,7 @@ def build():
 <meta name="theme-color" content="#122338">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="assets/css/completa.css?v=3">
+<link rel="stylesheet" href="assets/css/completa.css?v=4">
 <link rel="icon" href="../assets/img/LogoHablaDeportes.webp" type="image/webp">
 </head>
 <body>
@@ -135,7 +145,9 @@ def build():
 <main id="main">
 {body}
 </main>
+{prefooter(meta)}
 {footer()}
+{tabbar(cur)}
 <script src="assets/js/completa.js?v=1" defer></script>
 </body>
 </html>"""

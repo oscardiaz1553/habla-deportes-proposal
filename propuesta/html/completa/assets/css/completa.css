@@ -810,3 +810,6 @@ table.tbl{width:100%;border-collapse:collapse;font-size:14px;min-width:420px}
 .rx-app:hover{text-decoration:none;border-color:var(--navy-700)}
 .rx-ep .meta span{display:inline-flex;align-items:center;gap:5px}
 .rx-ep .meta .ico{display:inline-block;width:14px;height:14px}
+.art>*,.split>*{min-width:0}
+.art{grid-template-columns:minmax(0,1fr)}
+@media(min-width:1000px){.art{grid-template-columns:minmax(0,1fr) 320px}}

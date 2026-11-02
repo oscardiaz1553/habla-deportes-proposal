@@ -36,7 +36,7 @@ SPRITE = """<svg width="0" height="0" style="position:absolute" aria-hidden="tru
 <symbol id="i-comment" viewBox="0 0 24 24"><path d="M4 4h16v12H8l-4 4z"/></symbol>
 <symbol id="i-repeat" viewBox="0 0 24 24"><path d="M7 7h10v3l4-4-4-4v3H5v6h2zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2z"/></symbol>
 <symbol id="i-share" viewBox="0 0 24 24"><path d="M18 16a3 3 0 0 0-2.200 1L8.900 13.100a3 3 0 0 0 0-2.200L15.800 7A3 3 0 1 0 15 5a3 3 0 0 0 .1.800L8.200 9.700a3 3 0 1 0 0 4.600l6.900 3.900A3 3 0 1 0 18 16z"/></symbol>
-<symbol id="i-clock" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 5h-2v6l5 3 1-1.700-4-2.300z"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 5h-2v6l5 3 1-1.700-4-2.300z"/></symbol>
 <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.500A2.500 2.500 0 1 1 12 6.500a2.500 2.500 0 0 1 0 5z"/></symbol>
 <symbol id="i-mic" viewBox="0 0 24 24"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.900V21h2v-3.100A7 7 0 0 0 19 11z"/></symbol>
 <symbol id="i-arrl" viewBox="0 0 24 24"><path d="M15.400 5.400 14 4l-8 8 8 8 1.400-1.400L8.800 12z"/></symbol>

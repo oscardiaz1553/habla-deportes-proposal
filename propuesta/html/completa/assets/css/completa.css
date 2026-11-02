@@ -961,3 +961,117 @@ h1,h2,h3,.card__title,.sh__title,.opcard__t,.lastnews li,.most li{color:var(--na
 .sb--live:hover{border-color:var(--live);border-top-color:var(--live)}
 @media(max-width:560px){.scorebar__tag small{display:none}.scorebar__tag{padding-right:10px;margin-right:8px}.scorebar__tag::before{width:28px;height:28px}.sb{min-width:190px}}
 @media(max-width:560px){.scorebar__tag span{display:none}.scorebar__tag{padding-right:8px;margin-right:8px}.sb{min-width:176px}}
+
+/* ==========================================================================
+   v5 — Encabezado de dos niveles SIN escudos, marcador rotativo (D),
+        franja por jornada (B) en Datos, y portada estilo Sky Sports.
+   ========================================================================== */
+/* --- nivel 1: logo --- */
+.util,.scorebar{display:none}
+.hdr{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid var(--line)}
+.hdr1{display:flex;align-items:center;gap:20px;min-height:64px}
+.hdr1 .hdr__logo img{height:40px;width:auto}
+.hdr1__info{display:none;flex-direction:column;gap:2px;font-size:12.5px;color:var(--ink-3);line-height:1.35;padding-left:20px;border-left:1px solid var(--line)}
+.hdr1__info span{display:inline-flex;align-items:center;gap:6px}
+.hdr1__tools{margin-left:auto;display:flex;align-items:center;gap:8px}
+.hdr1__soc{display:none;gap:2px;margin-right:6px}
+.hdr1__soc a{width:40px;height:40px;display:grid;place-items:center;border-radius:50%;color:var(--navy-700)}
+.hdr1__soc a:hover{background:var(--navy-50)}
+.hdr1__soc .ico{width:19px;height:19px}
+/* --- nivel 2: menú (una sola barra de color de marca) --- */
+.hdr2{display:none;background:var(--navy-700);color:#fff}
+.hdr2__in{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.hdr2 .nav{display:block;flex:1}
+.hdr2 .nav__link{color:#fff;min-height:52px;padding:0 16px;font-weight:600;border-bottom:3px solid transparent}
+.hdr2 .nav__link:hover{color:#fff;background:rgba(255,255,255,.08);text-decoration:none}
+.hdr2 .nav__link[aria-current="page"]{color:#fff;border-bottom-color:#fff;background:rgba(255,255,255,.06)}
+.hdr2__radio{font-size:13px;color:#DCE7F1;white-space:nowrap}
+.hdr2__radio:hover{color:#fff}
+.hdr2 .nav__drop a{color:var(--ink)}
+@media(min-width:1040px){
+  .hdr{position:static}
+  .hdr1{min-height:88px}.hdr1 .hdr__logo img{height:54px}
+  .hdr1__info{display:flex}
+  .hdr1__soc{display:flex}
+  .hdr2{display:block;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(14,27,41,.18)}
+  .hdr__radio{display:inline-flex}
+}
+@media(max-width:1039px){.rd-bar{top:64px}}
+.rd-bar{top:52px}
+@media(max-width:1039px){.rd-bar{top:64px}}
+/* --- marcador rotativo (variante D) --- */
+.sbd{background:var(--paper-2);border-bottom:1px solid var(--line)}
+.sbd__in{display:flex;align-items:center;gap:12px;min-height:54px}
+.sbd__tag{flex:none;font:700 11px var(--f-sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);padding-right:12px;border-right:1px solid var(--line-2)}
+.sbd__list{flex:1;min-width:0;display:flex;justify-content:center}
+.sbd__m{display:none;align-items:center;justify-content:center;gap:14px;min-width:0;max-width:100%;color:var(--ink);font:700 15px var(--f-serif);text-decoration:none;animation:sbdIn .35s}
+.sbd__m.is-on{display:flex}
+@keyframes sbdIn{from{opacity:0;transform:translateY(5px)}}
+.sbd__m:hover{text-decoration:none}.sbd__m:hover strong{color:var(--navy-500)}
+.sbd__t{display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.sbd__t img{width:22px;height:22px;object-fit:contain}
+.sbd__m strong{font:800 20px var(--f-num);color:var(--navy-800);min-width:54px;text-align:center}
+.sbd__m em{font:500 12.5px var(--f-sans);font-style:normal;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sbd__b{flex:none;display:inline-flex;align-items:center;gap:6px;border-radius:4px;padding:4px 8px;font:700 11px var(--f-sans);letter-spacing:.07em;text-transform:uppercase;background:var(--navy-700);color:#fff}
+.sbd__b--live{background:var(--live)}.sbd__b--live .dot{background:#fff}
+.sbd__b--next{background:#fff;color:var(--navy-700);border:1px solid var(--navy-200,#BBD2E6)}
+.sbd__ctl{flex:none;display:flex;align-items:center;gap:2px}
+.sbd__ctl button{width:36px;height:36px;border-radius:50%;border:0;background:transparent;color:var(--navy-700);display:grid;place-items:center}
+.sbd__ctl button:hover{background:var(--navy-100)}.sbd__ctl .ico{width:18px;height:18px}
+.sbd__pg{display:flex;gap:5px;margin:0 4px}.sbd__pg i{width:6px;height:6px;border-radius:50%;background:var(--navy-200,#BBD2E6)}.sbd__pg i.on{background:var(--navy-700)}
+.sbd__all{flex:none;font:600 13px var(--f-sans);color:var(--navy-700);white-space:nowrap}
+@media(max-width:900px){.sbd__all,.sbd__m em,.sbd__pg,.sbd__tag{display:none}.sbd__m{gap:10px;font-size:14px}}
+@media(max-width:480px){.sbd__in{gap:6px}.sbd__b{display:none}.sbd__m.is-on{gap:8px}}
+/* --- franja por jornada (variante B) en Datos --- */
+.sbb{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:14px 16px 16px;margin-bottom:16px}
+.sbb__top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.sbb__title{font:700 16px var(--f-serif);margin-right:auto;color:var(--navy-700)}.sbb__title small{display:block;font:500 12px var(--f-sans);color:var(--ink-3)}
+.sbb__days{display:flex;gap:4px;background:var(--navy-50);border-radius:99px;padding:3px}
+.sbb__days button{border:0;background:transparent;border-radius:99px;min-height:36px;padding:0 16px;font:600 13px var(--f-sans);color:var(--navy-700)}
+.sbb__days button[aria-pressed="true"]{background:var(--navy-700);color:#fff}
+.sbb__track{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;scroll-snap-type:x proximity}
+.sbb__track[hidden]{display:none}.sbb__track::-webkit-scrollbar{display:none}
+.sbb__c{flex:none;scroll-snap-align:start;width:172px;border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center;text-decoration:none;color:inherit;background:#fff}
+.sbb__c:hover{border-color:var(--navy-700);text-decoration:none}
+.sbb__c--live{border-color:var(--live);box-shadow:0 0 0 1px var(--live-glow)}
+.sbb__st{font:600 11px var(--f-sans);text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);display:flex;justify-content:center;gap:5px;align-items:center}
+.sbb__c--live .sbb__st{color:var(--live)}.sbb__c--live .dot{background:var(--live)}
+.sbb__row{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:6px;margin:10px 0 6px}
+.sbb__row img{width:38px;height:38px;object-fit:contain;margin-inline:auto}
+.sbb__sc{font:800 24px var(--f-num);color:var(--navy-800);white-space:nowrap}
+.sbb__n{display:grid;grid-template-columns:1fr 1fr;font:600 12px var(--f-sans)}
+/* --- portada estilo Sky --- */
+.sky{padding-top:28px}
+.ring{position:absolute;left:24px;bottom:24px;width:52px;height:52px;border-radius:50%;border:3px solid #fff;color:#fff;display:grid;place-items:center;background:rgba(0,0,0,.25);transition:transform .2s}
+.ring svg{width:22px;height:22px;margin-left:3px}
+.ring--lg{width:72px;height:72px;left:28px;bottom:28px}.ring--lg svg{width:30px;height:30px}
+a:hover>.ring,.sky-card:hover .ring{transform:scale(1.08)}
+.chip-t{display:inline-flex;align-items:center;gap:6px;background:var(--navy-700);color:#fff;font:700 11px/1 var(--f-sans);letter-spacing:.06em;text-transform:uppercase;padding:5px 8px;border-radius:3px}
+.chip-t--live{background:var(--live)}.chip-t--live .dot{background:#fff}
+.sky-lead{display:grid;background:#fff;border:1px solid var(--line);border-radius:4px;box-shadow:0 1px 3px rgba(23,34,46,.08);overflow:hidden}
+.sky-lead__m{position:relative;display:block;aspect-ratio:16/10;background:#000;overflow:hidden}
+.sky-lead__m img{width:100%;height:100%;object-fit:cover}
+.sky-lead__m .dur{right:12px;bottom:12px}
+.sky-lead__t{padding:22px 22px 24px;display:flex;flex-direction:column;gap:14px}
+.sky-lead__tags{display:flex;gap:6px;flex-wrap:wrap}
+.sky-lead__t h2{font:500 clamp(28px,2.9vw,40px)/1.12 var(--f-serif);letter-spacing:-.012em;color:var(--navy-800)}
+.sky-lead__t h2 a:hover{color:var(--navy-500);text-decoration:none}
+.sky-lead__t>p{color:var(--ink-2);font-size:16px}
+.sky-lead__links{margin:auto 0 0;padding:14px 0 0;border-top:1px solid var(--line);display:grid;gap:6px}
+.sky-lead__links a{font:600 14px var(--f-sans);color:var(--navy-700);display:inline-flex;min-height:32px;align-items:center}
+@media(min-width:1000px){.sky-lead{grid-template-columns:1.85fr 1fr}.sky-lead__m{aspect-ratio:auto;min-height:420px}}
+.sky-grid{display:grid;gap:16px;margin-top:16px;grid-template-columns:1fr}
+@media(min-width:640px){.sky-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1000px){.sky-grid{grid-template-columns:repeat(3,1fr)}}
+.sky-card{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:4px;box-shadow:0 1px 3px rgba(23,34,46,.08);overflow:hidden;color:inherit;text-decoration:none}
+.sky-card:hover{box-shadow:0 6px 18px rgba(23,34,46,.14);text-decoration:none}
+.sky-card__m{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000}
+.sky-card__m img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.sky-card:hover .sky-card__m img{transform:scale(1.04)}
+.sky-card .ring{width:44px;height:44px;left:14px;bottom:14px;border-width:2.5px}.sky-card .ring svg{width:18px;height:18px}
+.sky-card__b{padding:16px 16px 20px;display:flex;flex-direction:column;gap:10px}
+.sky-card__b h3{font:500 19px/1.25 var(--f-serif);color:var(--navy-800);letter-spacing:-.005em}
+.sky-card:hover h3{color:var(--navy-500)}
+.sky-ad{display:grid}.sky-ad .ad{width:100%;height:100%;aspect-ratio:auto;min-height:260px;border-radius:4px}
+.sky-card__b{align-items:flex-start}
+.dx-attr b{color:#fff}

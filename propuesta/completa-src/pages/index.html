@@ -1,39 +1,33 @@
 <!--title=Portada|desc=Fútbol colombiano, Junior y Selección: noticias, datos en vivo, videos, shorts y radio de Habla Deportes.|nav=inicio|og=juansalvador1.png-->
-<!-- ===== PORTADA ===== -->
-<section class="section section--tight" aria-labelledby="h-portada">
+<!-- ===== PORTADA (estilo Sky Sports: principal horizontal + cuadrícula de tarjetas iguales) ===== -->
+<section class="section section--soft section--tight sky" aria-labelledby="h-portada">
  <div class="wrap">
   <h1 class="vh" id="h-portada">Portada de Habla Deportes</h1>
-  <div class="front front--lead">
-   <!-- noticia / video principal, con todo el peso -->
-   <a class="card card--lg card--lead" href="video.html">
-    <div class="card__media" style="aspect-ratio:16/9"><img src="@img/juansalvador1.png" width="1715" height="917" alt="Juan Salvador reacciona en vivo a la posible llegada de Cuadrado a Junior" fetchpriority="high" style="object-position:50% 25%"><span class="badge badge--live lbl">En vivo ahora</span><span class="play play--lg" aria-hidden="true">{{i:play}}</span><span class="dur">1:48:12</span></div>
-    <div class="card__body"><span class="kicker">Junior FC · Mercado · Video</span><h2 class="card__title">Cuadrado a Junior: lo que hay de cierto, minuto a minuto</h2><p class="card__dek">Juan Salvador y el panel desmenuzan la negociación y las claves del posible regreso, en directo desde las 10:00 a.m. Todo lo que se sabe, lo que se rumora y lo que falta por confirmar.</p><div class="byl"><img src="@img/juansalvador2.png" width="1719" height="915" alt=""><b>Juan Salvador</b><span class="dotsep">Hace 2 horas</span><span class="dotsep">186 mil visualizaciones</span></div></div>
-   </a>
-   <aside class="front__col front__col--rows" aria-label="Más videos y noticias destacadas">
-    <a class="card card--row" href="video.html"><div class="card__media"><img src="@img/img-04.jpg" width="520" height="358" alt="Mesa del programa con las novedades de Junior"><span class="play play--sm" aria-hidden="true">{{i:play}}</span></div><div class="card__body"><span class="kicker">Video · Junior</span><h3 class="card__title">Junior vs. Nacional: la previa completa de la final</h3><div class="byl">24:10 · Ayer</div></div></a>
-    <a class="card card--row" href="articulo.html"><div class="card__media"><img src="@img/img-02.jpg" width="1440" height="706" alt="Técnico de la Selección Colombia en rueda de prensa" style="object-position:30% 30%"></div><div class="card__body"><span class="kicker">Selección Colombia</span><h3 class="card__title">Lorenzo define la lista: quién entra y quién se queda afuera</h3><div class="byl">Hace 3 horas</div></div></a>
-    <a class="card card--row" href="video.html"><div class="card__media"><img src="@img/juansalvador2.png" width="1719" height="915" alt="Juan Salvador reacciona a una tanda de penales" style="object-position:50% 20%"><span class="play play--sm" aria-hidden="true">{{i:play}}</span></div><div class="card__body"><span class="kicker">Video · Reacción</span><h3 class="card__title">La tanda de penales que no se olvida, con Juan Salvador</h3><div class="byl">9:05 · Hace 2 días</div></div></a>
-    <a class="card card--row" href="articulo.html"><div class="card__media"><img src="@img/img-03.jpg" width="520" height="358" alt="Hinchas de Junior celebran con una bandera"></div><div class="card__body"><span class="kicker">Junior FC</span><h3 class="card__title">Así se vivió la noche del bicampeonato en el Metropolitano</h3><div class="byl">Hace 5 horas</div></div></a>
-    <a class="card card--row" href="video.html"><div class="card__media"><img src="@img/img-08.jpg" width="520" height="358" alt="Rueda de prensa del técnico tras el clásico"><span class="play play--sm" aria-hidden="true">{{i:play}}</span></div><div class="card__body"><span class="kicker">Video · Análisis</span><h3 class="card__title">El análisis táctico del clásico, sin filtros</h3><div class="byl">31:44 · Hace 3 días</div></div></a>
-   </aside>
+  <article class="sky-lead">
+   <a class="sky-lead__m" href="video.html" aria-label="Ver el programa: Cuadrado a Junior"><img src="@img/juansalvador1.png" width="1715" height="917" alt="Juan Salvador reacciona en vivo a la posible llegada de Cuadrado a Junior" fetchpriority="high" style="object-position:50% 25%"><span class="ring ring--lg" aria-hidden="true">{{i:play}}</span><span class="dur">1:48:12</span></a>
+   <div class="sky-lead__t">
+    <div class="sky-lead__tags"><span class="chip-t chip-t--live"><i class="dot"></i>En vivo</span><span class="chip-t">Exclusivo</span></div>
+    <h2><a href="video.html">Cuadrado a Junior: lo que hay de cierto, minuto a minuto</a></h2>
+    <p>Juan Salvador y el panel desmenuzan la negociación y las claves del posible regreso, en directo desde las 10:00 a.m.</p>
+    <div class="byl"><img src="@img/juansalvador2.png" width="1719" height="915" alt=""><b>Juan Salvador</b><span class="dotsep">Hace 2 horas</span></div>
+    <ul class="sky-lead__links"><li><a href="video.html">Ver el programa completo ›</a></li><li><a href="radio.html">Escuchar en la radio ›</a></li><li><a href="articulo.html">Leer la nota con todos los datos ›</a></li></ul>
+   </div>
+  </article>
+  <div class="sky-grid">
+   <a class="sky-card" href="video.html"><div class="sky-card__m"><img src="@img/img-04.jpg" alt="Mesa del programa con las novedades de Junior" loading="lazy"><span class="ring" aria-hidden="true">{{i:play}}</span></div><div class="sky-card__b"><span class="chip-t">Video</span><h3>Junior vs. Nacional: la previa completa de la final</h3></div></a>
+   <a class="sky-card" href="articulo.html"><div class="sky-card__m"><img src="@img/img-02.jpg" alt="Técnico de la Selección Colombia en rueda de prensa" loading="lazy" style="object-position:30% 30%"></div><div class="sky-card__b"><span class="chip-t">Selección</span><h3>Lorenzo define la lista: quién entra y quién se queda afuera</h3></div></a>
+   <div class="sky-ad"><div class="ad ad--mpu"><span>300 × 250<br>Espacio publicitario</span></div></div>
+   <a class="sky-card" href="video.html"><div class="sky-card__m"><img src="@img/juansalvador2.png" alt="Juan Salvador reacciona a una tanda de penales" loading="lazy" style="object-position:50% 20%"><span class="ring" aria-hidden="true">{{i:play}}</span></div><div class="sky-card__b"><span class="chip-t">Video</span><h3>La tanda de penales que no se olvida, con Juan Salvador</h3></div></a>
+   <a class="sky-card" href="articulo.html"><div class="sky-card__m"><img src="@img/img-03.jpg" alt="Hinchas de Junior celebran con una bandera" loading="lazy"></div><div class="sky-card__b"><span class="chip-t">Junior</span><h3>Así se vivió la noche del bicampeonato en el Metropolitano</h3></div></a>
+   <a class="sky-card" href="video.html"><div class="sky-card__m"><img src="@img/img-08.jpg" alt="Rueda de prensa del técnico tras el clásico" loading="lazy"><span class="ring" aria-hidden="true">{{i:play}}</span></div><div class="sky-card__b"><span class="chip-t">Análisis</span><h3>El análisis táctico del clásico, sin filtros</h3></div></a>
+   <a class="sky-card" href="articulo.html"><div class="sky-card__m"><img src="@img/img-07.jpg" alt="Futbolista argentino celebra un gol" loading="lazy"></div><div class="sky-card__b"><span class="chip-t">Mundo</span><h3>La noche en que Argentina volvió a tocar el cielo</h3></div></a>
+   <a class="sky-card" href="articulo.html"><div class="sky-card__m"><img src="@img/img-09.jpg" alt="Futbolista francés levanta el brazo tras anotar" loading="lazy"></div><div class="sky-card__b"><span class="chip-t">Internacional</span><h3>Mbappé y el récord que se le escapa por un gol</h3></div></a>
+   <a class="sky-card" href="articulo.html"><div class="sky-card__m"><img src="@img/img-10.jpg" alt="Hinchas de Junior en las tribunas" loading="lazy"></div><div class="sky-card__b"><span class="chip-t">Opinión</span><h3>Lo que el Metropolitano le debe a su gente</h3></div></a>
   </div>
  </div>
 </section>
 
-<div class="wrap"><div class="ad ad--lb"><span>970 × 90 · Espacio publicitario</span></div></div>
-
-<!-- ===== MÁS NOTICIAS ===== -->
-<section class="section" id="noticias" aria-labelledby="h-noticias">
- <div class="wrap">
-  <div class="sh"><h2 class="sh__title" id="h-noticias">Más noticias</h2><a class="sh__more" href="seccion.html">Ver todo</a></div>
-  <div class="grid g4">
-   <a class="card card--sm" href="articulo.html"><div class="card__media"><img src="@img/img-08.jpg" width="520" height="358" loading="lazy" alt="Dos jugadores de Atlético Nacional celebran"></div><div class="card__body"><span class="kicker">Liga BetPlay</span><h3 class="card__title">Nacional llega a la final con dudas en defensa</h3><div class="byl">Hace 1 hora</div></div></a>
-   <a class="card card--sm" href="articulo.html"><div class="card__media"><img src="@img/img-02.jpg" width="1440" height="706" loading="lazy" alt="Técnico de la Selección Colombia durante una rueda de prensa" style="object-position:30% 30%"></div><div class="card__body"><span class="kicker">Análisis</span><h3 class="card__title">Contra todo pronóstico: la Selección que nadie esperaba</h3><div class="byl">Hace 4 horas</div></div></a>
-   <a class="card card--sm" href="articulo.html"><div class="card__media"><img src="@img/img-07.jpg" width="520" height="358" loading="lazy" alt="Futbolista argentino celebra un gol con los brazos abiertos"></div><div class="card__body"><span class="kicker">Mundo</span><h3 class="card__title">La noche en que Argentina volvió a tocar el cielo</h3><div class="byl">Hace 6 horas</div></div></a>
-   <a class="card card--sm" href="articulo.html"><div class="card__media"><img src="@img/img-09.jpg" width="520" height="358" loading="lazy" alt="Futbolista francés levanta el brazo tras anotar"></div><div class="card__body"><span class="kicker">Internacional</span><h3 class="card__title">Mbappé y el récord que se le escapa por un gol</h3><div class="byl">Hace 7 horas</div></div></a>
-  </div>
- </div>
-</section>
+<div class="wrap" style="margin-top:32px"><div class="ad ad--lb"><span>970 × 90 · Espacio publicitario</span></div></div>
 
 <!-- ===== CENTRO DE DATOS (Data Factory) ===== -->
 <section class="section section--ink" id="datos" aria-labelledby="h-datos">

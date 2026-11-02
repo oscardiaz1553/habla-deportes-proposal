@@ -67,4 +67,16 @@
 
   // Copiar enlace
   $$('[data-copy]').forEach(function(b){b.addEventListener('click',function(){var o=b.textContent;try{navigator.clipboard.writeText(location.href)}catch(e){}b.textContent='¡Enlace copiado!';setTimeout(function(){b.textContent=o},1800)})});
+
+  // Marcador rotativo (una línea)
+  $$('[data-sbd]').forEach(function(root){
+    var ms=$$('.sbd__m',root),pg=$$('[data-sbd-pg] i',root),i=0,t;
+    function show(){ms.forEach(function(m,k){m.classList.toggle('is-on',k===i)});pg.forEach(function(d,k){d.className=k===i?'on':''})}
+    function go(n){i=(i+n+ms.length)%ms.length;show();reset()}
+    function reset(){clearInterval(t);if(!matchMedia('(prefers-reduced-motion: reduce)').matches)t=setInterval(function(){go(1)},4500)}
+    var pv=$('[data-sbd-prev]',root),nx=$('[data-sbd-next]',root);
+    if(pv)pv.addEventListener('click',function(){go(-1)});if(nx)nx.addEventListener('click',function(){go(1)});
+    root.addEventListener('mouseenter',function(){clearInterval(t)});root.addEventListener('mouseleave',reset);
+    show();reset();
+  });
 })();

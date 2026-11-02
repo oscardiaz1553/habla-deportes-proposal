@@ -51,39 +51,40 @@ def imgs(s): return s.replace("@img/", "../assets/img/")
 
 def header(cur):
     items = "".join(
-      f'<li class="nav__item"><a class="nav__link" href="{h}"{" aria-current=\"page\"" if k==cur else ""}>{t}</a></li>' for k,t,h in NAV)
-    more = "".join(f'<a href="{h}">{t}</a>' for t,h in MORE)
-    items += f'<li class="nav__item"><button class="nav__link" aria-haspopup="true" aria-expanded="false" data-more>Más {{{{i:down}}}}</button><div class="nav__drop">{more}</div></li>'
-    mob = "".join(f'<a href="{h}"{" aria-current=\"page\"" if k==cur else ""}>{t}</a>' for k,t,h in NAV) + "".join(f'<a href="{h}">{t}</a>' for t,h in MORE)
-    return f"""
+      '<li class="nav__item"><a class="nav__link" href="%s"%s>%s</a></li>' % (h, ' aria-current="page"' if k==cur else '', t) for k,t,h in NAV)
+    more = "".join('<a href="%s">%s</a>' % (h,t) for t,h in MORE)
+    items += '<li class="nav__item"><button class="nav__link" aria-haspopup="true" aria-expanded="false" data-more>Más {{i:down}}</button><div class="nav__drop">%s</div></li>' % more
+    mob = "".join('<a href="%s"%s>%s</a>' % (h, ' aria-current="page"' if k==cur else '', t) for k,t,h in NAV) + "".join('<a href="%s">%s</a>' % (h,t) for t,h in MORE)
+    return """
 <a class="skip" href="#main">Saltar al contenido</a>
-<div class="util"><div class="wrap util__in">
-  <div class="util__l"><span>{{{{i:pin}}}} Barranquilla</span><span class="clima">{{{{i:sun}}}} 31°C · Soleado</span><span id="fecha" data-fecha>Lunes, 2 de noviembre de 2026</span></div>
-  <div class="util__r"><a href="radio.html">{{{{i:mic}}}} Radio: L–V 10:00 a.m.–12:00 m.</a>
-    <div class="util__soc" aria-label="Redes de Habla Deportes">
-      <a href="redes.html#youtube" aria-label="YouTube">{{{{i:yt}}}}</a><a href="redes.html#instagram" aria-label="Instagram">{{{{i:ig}}}}</a><a href="redes.html#x" aria-label="X">{{{{i:x}}}}</a><a href="redes.html#whatsapp" aria-label="Canal de WhatsApp">{{{{i:wa}}}}</a></div></div>
-</div></div>
-<header class="hdr"><div class="wrap hdr__in">
+<header class="hdr">
+ <div class="wrap hdr1">
   <a class="hdr__logo" href="index.html" aria-label="Habla Deportes — inicio"><img src="../assets/img/LogoHablaDeportes.webp" width="1600" height="545" alt="Habla Deportes"></a>
-  <nav class="nav" aria-label="Principal"><ul class="nav__list">{items}</ul></nav>
-  <div class="hdr__tools">
-    <a class="btn btn--sun hdr__radio" href="radio.html"><span class="badge badge--live" style="background:var(--live);color:#fff">Al aire</span> Escuchar</a>
-    <button class="iconbtn" aria-label="Buscar" data-search>{{{{i:search}}}}</button>
-    <button class="iconbtn burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mnav" data-burger>{{{{i:menu}}}}</button>
-  </div></div>
-  <nav class="mnav" id="mnav" aria-label="Menú móvil">{mob}</nav>
+  <div class="hdr1__info"><span>{{i:pin}} Barranquilla · 31°C</span><span data-fecha>Lunes, 2 de noviembre de 2026</span></div>
+  <div class="hdr1__tools">
+   <div class="hdr1__soc" aria-label="Redes de Habla Deportes"><a href="redes.html#youtube" aria-label="YouTube">{{i:yt}}</a><a href="redes.html#instagram" aria-label="Instagram">{{i:ig}}</a><a href="redes.html#x" aria-label="X">{{i:x}}</a><a href="redes.html#whatsapp" aria-label="Canal de WhatsApp">{{i:wa}}</a></div>
+   <a class="btn hdr__radio" href="radio.html"><span class="badge badge--live">Al aire</span> Escuchar</a>
+   <button class="iconbtn" aria-label="Buscar" data-search>{{i:search}}</button>
+   <button class="iconbtn burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mnav" data-burger>{{i:menu}}</button>
+  </div>
+ </div>
+ <nav class="mnav" id="mnav" aria-label="Menú móvil">""" + mob + """</nav>
 </header>
+<div class="hdr2"><div class="wrap hdr2__in"><nav class="nav" aria-label="Principal"><ul class="nav__list">""" + items + """</ul></nav><a class="hdr2__radio" href="radio.html">Radio · L–V 10:00 a.m.–12:00 m.</a></div></div>
 {SCOREBAR}"""
 
-SCOREBAR = """<div class="scorebar" role="region" aria-label="Marcadores"><div class="wrap scorebar__in">
-  <div class="scorebar__tag"><span>Marcadores<small>Datos: Data Factory</small></span></div>
-  <div class="scorebar__track">
-    <a class="sb sb--live" href="partido.html"><span class="sb__t"><img src="@esc/junior" alt="" width="18" height="18">Junior</span><span class="sb__n">2</span><span class="sb__t"><img src="@esc/nacional" alt="" width="18" height="18">Nacional</span><span class="sb__n">1</span><span class="sb__s"><b>67'</b><span>Liga BetPlay · Final ida</span></span></a>
-    <a class="sb" href="datos.html#resultados"><span class="sb__t"><img src="@esc/millonarios" alt="" width="18" height="18">Millonarios</span><span class="sb__n">1</span><span class="sb__t"><img src="@esc/tolima" alt="" width="18" height="18">Tolima</span><span class="sb__n">1</span><span class="sb__s">Final · Ayer</span></a>
-    <a class="sb" href="datos.html#resultados"><span class="sb__t"><img src="@esc/america" alt="" width="18" height="18">América</span><span class="sb__n">0</span><span class="sb__t"><img src="@esc/medellin" alt="" width="18" height="18">Medellín</span><span class="sb__n">2</span><span class="sb__s">Final · Ayer</span></a>
-    <a class="sb" href="partido.html"><span class="sb__t"><img src="@esc/colombia" alt="" width="18" height="18">Colombia</span><span class="sb__n">–</span><span class="sb__t"><img src="@esc/fcf" alt="" width="18" height="18">Perú</span><span class="sb__n">–</span><span class="sb__s">Jue 13 nov · 7:30 p.m.</span></a>
-    <a class="sb" href="datos.html#resultados"><span class="sb__t"><img src="@esc/tolima" alt="" width="18" height="18">Tolima</span><span class="sb__n">–</span><span class="sb__t"><img src="@esc/america" alt="" width="18" height="18">América</span><span class="sb__n">–</span><span class="sb__s">Sáb 8 nov · 4:00 p.m.</span></a>
-  </div></div></div>"""
+SCOREBAR = """<div class="sbd" data-sbd role="region" aria-label="Marcadores"><div class="wrap sbd__in">
+  <span class="sbd__tag">Marcadores</span>
+  <div class="sbd__list">
+   <a class="sbd__m is-on" href="partido.html" data-live><span class="sbd__b sbd__b--live"><i class="dot"></i>En vivo</span><span class="sbd__t"><img src="@esc/junior" alt="" width="22" height="22">Junior</span><strong>2 – 1</strong><span class="sbd__t">Nacional<img src="@esc/nacional" alt="" width="22" height="22"></span><em><span data-minuto="67">67'</span> · Liga BetPlay · Final ida</em></a>
+   <a class="sbd__m" href="datos.html#resultados"><span class="sbd__b">Final</span><span class="sbd__t"><img src="@esc/millonarios" alt="" width="22" height="22">Millonarios</span><strong>1 – 1</strong><span class="sbd__t">Tolima<img src="@esc/tolima" alt="" width="22" height="22"></span><em>Ayer · Liga BetPlay</em></a>
+   <a class="sbd__m" href="datos.html#resultados"><span class="sbd__b">Final</span><span class="sbd__t"><img src="@esc/america" alt="" width="22" height="22">América</span><strong>0 – 2</strong><span class="sbd__t">Medellín<img src="@esc/medellin" alt="" width="22" height="22"></span><em>Ayer · Liga BetPlay</em></a>
+   <a class="sbd__m" href="partido.html"><span class="sbd__b sbd__b--next">Próximo</span><span class="sbd__t"><img src="@esc/colombia" alt="" width="22" height="22">Colombia</span><strong>vs</strong><span class="sbd__t">Perú<img src="@esc/fcf" alt="" width="22" height="22"></span><em>Jue 13 nov · 7:30 p.m. · Amistoso</em></a>
+   <a class="sbd__m" href="datos.html#resultados"><span class="sbd__b sbd__b--next">Próximo</span><span class="sbd__t"><img src="@esc/tolima" alt="" width="22" height="22">Tolima</span><strong>vs</strong><span class="sbd__t">América<img src="@esc/america" alt="" width="22" height="22"></span><em>Sáb 8 nov · 4:00 p.m. · Liga BetPlay</em></a>
+  </div>
+  <div class="sbd__ctl"><button aria-label="Partido anterior" data-sbd-prev>{{i:arrl}}</button><span class="sbd__pg" data-sbd-pg><i></i><i></i><i></i><i></i><i></i></span><button aria-label="Partido siguiente" data-sbd-next>{{i:arrr}}</button></div>
+  <a class="sbd__all" href="datos.html">Todos los marcadores ›</a>
+</div></div>"""
 
 def footer():
     return """
@@ -125,7 +126,7 @@ def build():
 <meta name="theme-color" content="#122338">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="assets/css/completa.css?v=2">
+<link rel="stylesheet" href="assets/css/completa.css?v=3">
 <link rel="icon" href="../assets/img/LogoHablaDeportes.webp" type="image/webp">
 </head>
 <body>

@@ -813,3 +813,5 @@ table.tbl{width:100%;border-collapse:collapse;font-size:14px;min-width:420px}
 .art>*,.split>*{min-width:0}
 .art{grid-template-columns:minmax(0,1fr)}
 @media(min-width:1000px){.art{grid-template-columns:minmax(0,1fr) 320px}}
+.eq-pos .pl__img{aspect-ratio:4/3;font-size:52px}
+@media(min-width:1000px){.eq-pos .sq{grid-template-columns:repeat(4,minmax(0,220px))}}

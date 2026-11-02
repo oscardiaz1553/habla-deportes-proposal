@@ -9,12 +9,7 @@ import re, pathlib, sys
 SRC = pathlib.Path(__file__).parent / "pages"
 OUT = pathlib.Path(__file__).parent.parent / "html" / "completa"
 
-ESC = {
- "junior":"Escudo_Junior_de_Barranquilla_2018.png","nacional":"Atlético_Nacional.png",
- "millonarios":"Escudo_Millos.png","america":"Escudo_América_de_Cali.png",
- "tolima":"Escudo_Deportes_Tolima.png","medellin":"Escudo_del_Deportivo_Independiente_Medellín.png",
- "colombia":"Escudo_Colombia_optimizado.png","fcf":"Escudo_de_la_Federación_Colombiana_de_Fútbol.png",
-}
+ESC = {'junior': 'escudo-junior.png', 'nacional': 'escudo-nacional.png', 'millonarios': 'escudo-millonarios.png', 'america': 'escudo-america.png', 'tolima': 'escudo-tolima.png', 'medellin': 'escudo-medellin.png', 'colombia': 'escudo-colombia.png', 'fcf': 'escudo-fcf.png'}
 NAV = [("inicio","Inicio","index.html"),("junior","Junior FC","equipo.html"),("seleccion","Selección","seccion.html"),
        ("datos","Datos","datos.html"),("videos","Videos y redes","redes.html"),("radio","Radio","radio.html"),
        ("opinion","Opinión","juan-salvador.html")]

@@ -1152,3 +1152,26 @@ body{background:var(--paper)}
 .tabbar a[aria-current="page"]{color:#fff}.tabbar a[aria-current="page"]::before{background:#fff}
 .ad{background:#fff}
 .sh__more::after{content:"\00a0›"}
+
+/* v8 — fondo blanco. Azul solo en encabezado, menú y acentos. */
+:root{--paper:#FFFFFF;--paper-2:#F4F6F8}
+body{background:#fff}
+.sky,.sky.section--soft{background:#fff!important;padding-top:28px}
+.sky .sky-lead{box-shadow:0 1px 3px rgba(23,34,46,.08)}
+.section--soft,.section--paper2{background:var(--paper-2)}
+.sky-lead,.sky-card,.panel,.fig,.xpost,.lastnews{border-color:var(--line)}
+/* marcadores: franja clara, solo el estado en color */
+.sbd{background:var(--paper-2);border-bottom:1px solid var(--line);color:var(--ink)}
+.sbd__tag{color:var(--ink-3);border-right-color:var(--line-2)}
+.sbd__m,.sbd__m strong{color:var(--navy-800)}.sbd__m:hover strong{color:var(--navy-500)}
+.sbd__m em{color:var(--ink-3)}
+.sbd__b{background:var(--navy-700);color:#fff}.sbd__b--live{background:var(--live);color:#fff}
+.sbd__b--next{background:#fff;color:var(--navy-700);border:1px solid var(--navy-200,#BBD2E6)}
+.sbd__ctl button{color:var(--navy-700)}.sbd__ctl button:hover{background:var(--navy-100)}
+.sbd__pg i{background:var(--navy-200,#BBD2E6)}.sbd__pg i.on{background:var(--navy-700)}
+.sbd__all{color:var(--navy-700)}
+/* barra inferior móvil: clara */
+.tabbar{background:#fff;border-top:1px solid var(--line)}
+.tabbar a{color:var(--ink-3)}.tabbar a:hover{color:var(--navy-700)}
+.tabbar a[aria-current="page"]{color:var(--navy-700)}.tabbar a[aria-current="page"]::before{background:var(--navy-700)}
+.ad{background:var(--paper-2)}

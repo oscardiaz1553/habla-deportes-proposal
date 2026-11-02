@@ -76,9 +76,9 @@ def header(cur):
 {SCOREBAR}"""
 
 SCOREBAR = """<div class="scorebar" role="region" aria-label="Marcadores"><div class="wrap scorebar__in">
-  <div class="scorebar__tag">Marcadores<small>Datos: Data Factory</small></div>
+  <div class="scorebar__tag"><span>Marcadores<small>Datos: Data Factory</small></span></div>
   <div class="scorebar__track">
-    <a class="sb sb--live" href="partido.html"><span class="sb__t"><img src="@esc/junior" alt="" width="18" height="18">Junior</span><span class="sb__n">2</span><span class="sb__t"><img src="@esc/nacional" alt="" width="18" height="18">Nacional</span><span class="sb__n">1</span><span class="sb__s"><b>● 67'</b> · Liga BetPlay · Final ida</span></a>
+    <a class="sb sb--live" href="partido.html"><span class="sb__t"><img src="@esc/junior" alt="" width="18" height="18">Junior</span><span class="sb__n">2</span><span class="sb__t"><img src="@esc/nacional" alt="" width="18" height="18">Nacional</span><span class="sb__n">1</span><span class="sb__s"><b>67'</b><span>Liga BetPlay · Final ida</span></span></a>
     <a class="sb" href="datos.html#resultados"><span class="sb__t"><img src="@esc/millonarios" alt="" width="18" height="18">Millonarios</span><span class="sb__n">1</span><span class="sb__t"><img src="@esc/tolima" alt="" width="18" height="18">Tolima</span><span class="sb__n">1</span><span class="sb__s">Final · Ayer</span></a>
     <a class="sb" href="datos.html#resultados"><span class="sb__t"><img src="@esc/america" alt="" width="18" height="18">América</span><span class="sb__n">0</span><span class="sb__t"><img src="@esc/medellin" alt="" width="18" height="18">Medellín</span><span class="sb__n">2</span><span class="sb__s">Final · Ayer</span></a>
     <a class="sb" href="partido.html"><span class="sb__t"><img src="@esc/colombia" alt="" width="18" height="18">Colombia</span><span class="sb__n">–</span><span class="sb__t"><img src="@esc/fcf" alt="" width="18" height="18">Perú</span><span class="sb__n">–</span><span class="sb__s">Jue 13 nov · 7:30 p.m.</span></a>

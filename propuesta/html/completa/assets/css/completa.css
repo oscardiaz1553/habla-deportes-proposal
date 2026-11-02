@@ -936,3 +936,8 @@ h1,h2,h3,.card__title,.sh__title,.opcard__t,.lastnews li,.most li{color:var(--na
 @media(max-width:560px){.tr{grid-template-columns:70px 1fr auto}.tr__c{display:none}}
 @media(min-width:1000px){.g4{grid-template-columns:repeat(4,1fr)}}
 .byl{flex-wrap:wrap}.byl>span{white-space:nowrap}
+.front__col--rows{gap:0}
+.front__col--rows .card{padding-block:16px;border-top:1px solid var(--line)}
+.front__col--rows .card:first-child{border-top:0;padding-top:0}
+.front__col--rows .card--row{grid-template-columns:128px 1fr}
+.front__col--rows .card--row .card__media{aspect-ratio:4/3}

@@ -1189,11 +1189,11 @@ body{background:#fff}
 .nav__chev{width:30px;border:0;background:none;color:rgba(255,255,255,.75);display:grid;place-items:center;cursor:pointer;margin-right:4px}
 .nav__chev .ico{width:16px;height:16px;transition:transform .15s}
 .nav__chev:hover{color:#fff}
-.has-mega:hover .nav__chev .ico,.has-mega.is-open .nav__chev .ico{transform:rotate(180deg)}
-.has-mega:hover>.nav__link,.has-mega.is-open>.nav__link,.has-mega:focus-within>.nav__link{background:rgba(255,255,255,.1)}
+.has-mega:hover .nav__chev .ico{transform:rotate(180deg)}
+.has-mega:hover>.nav__link{background:rgba(255,255,255,.1)}
 .mega{display:none;position:absolute;top:100%;left:0;z-index:120;min-width:400px;background:#fff;color:var(--ink);border-radius:0 0 6px 6px;box-shadow:0 14px 30px rgba(14,27,41,.28);padding:10px 8px 8px;border-top:3px solid var(--navy-300)}
 .mega--r{left:auto;right:0}
-.has-mega:hover>.mega,.has-mega:focus-within>.mega,.has-mega.is-open>.mega{display:block}
+.has-mega:hover>.mega,.has-mega:has(>:focus-visible)>.mega{display:block}
 .mega ul{display:grid;grid-template-columns:1fr 1fr;gap:0 8px;margin:0;padding:0;list-style:none}
 .mega a{display:flex;align-items:center;min-height:42px;padding:0 14px;border-radius:6px;font:500 14.5px var(--f-sans);color:var(--ink-2);text-decoration:none}
 .mega a:hover{background:var(--navy-50);color:var(--navy-700);text-decoration:none}
@@ -1265,8 +1265,8 @@ body{background:#fff}
 .sub__l:hover{color:var(--navy-800);text-decoration:none}
 .sub__l[aria-current="page"]{color:var(--navy-800);font-weight:700;border-bottom-color:var(--navy-700)}
 .sub__l .ico{width:15px;height:15px;transition:transform .15s}
-.sub__i.has-mega:hover>.sub__l,.sub__i.is-open>.sub__l,.sub__i.has-mega:focus-within>.sub__l{color:var(--navy-800);border-bottom-color:var(--navy-700)}
-.sub__i.has-mega:hover .ico,.sub__i.is-open .ico{transform:rotate(180deg)}
+.sub__i.has-mega:hover>.sub__l{color:var(--navy-800);border-bottom-color:var(--navy-700)}
+.sub__i.has-mega:hover .ico{transform:rotate(180deg)}
 .sub__i .mega{top:100%;min-width:300px;border-top:0;border-radius:0 0 6px 6px}
 .sub__i .mega ul{grid-template-columns:1fr}
 /* móvil: la barra blanca se desliza horizontalmente; los paneles pasan a enlaces */

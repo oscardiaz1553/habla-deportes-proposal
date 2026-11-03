@@ -1193,7 +1193,7 @@ body{background:#fff}
 .has-mega:hover>.nav__link{background:rgba(255,255,255,.1)}
 .mega{display:none;position:absolute;top:100%;left:0;z-index:120;min-width:400px;background:#fff;color:var(--ink);border-radius:0 0 6px 6px;box-shadow:0 14px 30px rgba(14,27,41,.28);padding:10px 8px 8px;border-top:3px solid var(--navy-300)}
 .mega--r{left:auto;right:0}
-.has-mega:hover>.mega,.has-mega:has(>:focus-visible)>.mega{display:block}
+.has-mega:hover>.mega{display:block}
 .mega ul{display:grid;grid-template-columns:1fr 1fr;gap:0 8px;margin:0;padding:0;list-style:none}
 .mega a{display:flex;align-items:center;min-height:42px;padding:0 14px;border-radius:6px;font:500 14.5px var(--f-sans);color:var(--ink-2);text-decoration:none}
 .mega a:hover{background:var(--navy-50);color:var(--navy-700);text-decoration:none}
@@ -1282,3 +1282,25 @@ body{background:#fff}
 }
 .rd-bar{top:104px}
 @media(max-width:1039px){.rd-bar{top:110px}}
+
+/* ==========================================================================
+   v11 — Imágenes y miniaturas con esquinas rectas (sin redondeado).
+   Se mantienen redondos solo los controles (play, flechas, puntos, botones).
+   ========================================================================== */
+img,
+.card__media,.card__media img,
+.vcard__media,.vcard__media img,
+.scard__media,.scard__media img,
+.sky-lead,.sky-lead__m,.sky-card,.sky-card__m,.sky-mini,.sky-mini__m,
+.ig a,.ig img,
+.xpost__img,.xpost__img img,
+.embed,.embed img,
+.art__fig img,.fig,.fig img,
+.js-hero__img,.vid-player,.rd-pl a,.pl__img,
+.mc__slider,.mc__ad,.mc__ad img,
+.mcard,.mcard__bg,
+.ad,
+.ftr img,.hdr__logo img,
+.lastnews,.panel,
+.byl img,.profile__av,.xpost__av,.opcard img,.rd-st i,.rd-st img,.av,
+.vid-chan img,.rd-chat__h img{border-radius:0!important}

@@ -263,12 +263,12 @@ def centro_partidos():
         f'<p class="match-center__note">Datos de ejemplo</p>'
         f'<a class="match-center__all" href="datos.html#hoy">Todos los partidos{icono("caret-right", "icon icon--sm")}</a>'
         f'</div></div>'
-        f'<aside class="match-center__sponsor" aria-label="Patrocinio del Centro de Partidos">'
+        f'<div class="match-center__sponsor">'
         f'<!-- Pieza del patrocinador (322×424). Fija: no rota con las diapositivas (04 §4). -->'
         f'{img("anuncio-transelca", clase="match-center__ad")}'
         f'<p class="sponsor-seal sponsor-seal--inline"><span class="sponsor-seal__text">Centro de Partidos presentado por</span> '
         f'<span class="sponsor-seal__logo" data-logo-pendiente="transelca">Transelca</span></p>'
-        f'</aside></section>')
+        f'</div></section>')
 
 
 def _cuenta_texto(iso, ahora=AHORA):

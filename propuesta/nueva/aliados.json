@@ -1,0 +1,138 @@
+{
+  "_aviso": "Logo provisional tomado del sitio web del aliado para esta maqueta; no es el archivo oficial. Reemplazar por el logo oficial que entregue el cliente. Lista de aliados según el cuestionario del cliente (6-nov-2026), más Transelca como aliado principal (supuesto del dueño, por confirmar con el cliente).",
+  "_regla_muro": "Muro monocromo: logos en gris con tono unificado; color solo al pasar el mouse cuando el logo tiene color. Todos al mismo alto visual. Los aliados sin logo se muestran con su nombre en texto (marcador provisional).",
+  "aliados": [
+    {
+      "id": "transelca",
+      "nombre": "Transelca",
+      "rol": "principal",
+      "archivo": null,
+      "ancho": null,
+      "alto": null,
+      "tono": "texto",
+      "web": "https://www.transelca.com.co",
+      "sitio_confirmado": false,
+      "nota": "Aliado principal por decisión del dueño; NO figura en la lista del cliente: confirmar. Hay anuncio propio en propuesta/html/assets/img/publicidad.png. Logo vectorial pendiente."
+    },
+    {
+      "id": "alcaldia-barranquilla",
+      "nombre": "Alcaldía de Barranquilla",
+      "rol": "aliado",
+      "archivo": null,
+      "ancho": null,
+      "alto": null,
+      "tono": "texto",
+      "web": "https://www.barranquilla.gov.co",
+      "sitio_confirmado": true,
+      "nota": "El sitio bloqueó la descarga automática del logo. Pendiente de conseguir. Entidad pública: preguntar condiciones de su pauta."
+    },
+    {
+      "id": "gobernacion-atlantico",
+      "nombre": "Gobernación del Atlántico",
+      "rol": "aliado",
+      "archivo": "assets/img/aliados/gobernacion.webp",
+      "ancho": null,
+      "alto": null,
+      "tono": "color",
+      "web": "https://www.atlantico.gov.co",
+      "sitio_confirmado": true,
+      "nota": "Entidad pública: preguntar condiciones de su pauta."
+    },
+    {
+      "id": "tecnoglass",
+      "nombre": "Tecnoglass",
+      "rol": "aliado",
+      "archivo": "assets/img/aliados/tecnoglass.svg",
+      "ancho": 219,
+      "alto": 58,
+      "tono": "blanco",
+      "web": "https://www.tecnoglass.com",
+      "sitio_confirmado": true,
+      "nota": "El SVG disponible es la versión en blanco con detalle azul (#00A2E2)."
+    },
+    {
+      "id": "vp-global",
+      "nombre": "VP Global",
+      "rol": "aliado",
+      "archivo": "assets/img/aliados/vp-global.webp",
+      "ancho": 250,
+      "alto": 83,
+      "tono": "color",
+      "web": "https://grupovpglobal.com",
+      "sitio_confirmado": false,
+      "nota": "Sitio atribuido por un directorio de terceros (empresa de vigilancia y seguridad de Barranquilla); confirmar que es el mismo aliado. Imagen de solo 250 px: se verá borrosa en pantallas retina."
+    },
+    {
+      "id": "stake",
+      "nombre": "Stake",
+      "rol": "aliado",
+      "archivo": null,
+      "ancho": null,
+      "alto": null,
+      "tono": "texto",
+      "web": "https://stake.com",
+      "sitio_confirmado": true,
+      "nota": "Marca de apuestas en línea (confirmar). El sitio bloqueó la descarga del logo. Reglas: nunca en el encabezado ni primero; leyenda \"Juega con responsabilidad. Solo mayores de 18 años.\""
+    },
+    {
+      "id": "vitali",
+      "nombre": "Vitali",
+      "rol": "aliado",
+      "archivo": null,
+      "ancho": null,
+      "alto": null,
+      "tono": "texto",
+      "web": null,
+      "sitio_confirmado": false,
+      "nota": "No se pudo identificar con certeza a qué empresa corresponde. Pedir logo y sitio al cliente."
+    },
+    {
+      "id": "bq-city",
+      "nombre": "BQ City",
+      "rol": "aliado",
+      "archivo": null,
+      "ancho": null,
+      "alto": null,
+      "tono": "texto",
+      "web": null,
+      "sitio_confirmado": false,
+      "nota": "No se pudo identificar con certeza a qué empresa corresponde. Pedir logo y sitio al cliente."
+    },
+    {
+      "id": "unisimon",
+      "nombre": "Unisimón",
+      "rol": "aliado",
+      "archivo": "assets/img/aliados/unisimon.webp",
+      "ancho": 400,
+      "alto": 65,
+      "tono": "color",
+      "web": "https://www.unisimon.edu.co",
+      "sitio_confirmado": true,
+      "nota": "Universidad Simón Bolívar."
+    },
+    {
+      "id": "drogueria-inglesa",
+      "nombre": "Droguería Inglesa",
+      "rol": "aliado",
+      "archivo": null,
+      "ancho": null,
+      "alto": null,
+      "tono": "texto",
+      "web": null,
+      "sitio_confirmado": false,
+      "nota": "No se encontró sitio oficial propio. Pedir logo al cliente."
+    },
+    {
+      "id": "expreso-brasilia",
+      "nombre": "Expreso Brasilia",
+      "rol": "aliado",
+      "archivo": "assets/img/aliados/expreso-brasilia.webp",
+      "ancho": 500,
+      "alto": 236,
+      "tono": "blanco",
+      "web": "https://www.expresobrasilia.com",
+      "sitio_confirmado": true,
+      "nota": "El logo disponible es blanco sobre transparente."
+    }
+  ]
+}

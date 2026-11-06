@@ -308,7 +308,7 @@
 .context-nav__list {
   display: flex;
   height: 100%;
-  gap: var(--space-3);
+  gap: var(--space-1); /* + 8 px de relleno a cada lado = 24 px entre textos */
   padding-right: var(--space-3);
 }
 
@@ -324,7 +324,10 @@
   display: flex;
   align-items: center;
   gap: var(--space-half);
+  min-width: var(--touch-min);
   min-height: var(--touch-min);
+  padding-inline: var(--space-1);
+  justify-content: center;
   color: var(--color-text-secondary);
   font-size: var(--fs-ui);
   font-weight: var(--fw-medium);
@@ -341,9 +344,9 @@
 .context-nav__link[aria-current="page"]::after {
   content: "";
   position: absolute;
-  right: 0;
+  right: var(--space-1);
   bottom: calc(-1 * var(--border-hair));
-  left: 0;
+  left: var(--space-1);
   height: var(--border-active);
   background: var(--color-border-selected);
 }
@@ -885,9 +888,10 @@
 }
 
 @media (min-width: 1280px) {
-  /* Seis visibles: el carril ocupa el ancho exacto del contenedor */
+  /* Cinco visibles (03 §1.6): el carril ocupa el ancho exacto del contenedor */
   .rail__track {
-    grid-auto-columns: calc((100% - 5 * var(--space-2)) / 6);
+    grid-auto-columns: calc((100% - 4 * var(--space-3)) / 5);
+    gap: var(--space-3);
   }
 }
 
@@ -2492,7 +2496,8 @@
 
 .headline-list__link {
   display: flex;
-  align-items: baseline;
+  align-items: center;
+  min-height: var(--touch-min);
   gap: var(--space-1);
   color: var(--color-text);
   font-family: var(--font-display);
@@ -3141,6 +3146,9 @@
 /* Enlace «Saltar al contenido» ------------------------------------------------ */
 .skip-link {
   position: absolute;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--touch-min);
   top: calc(-1 * var(--space-12));
   left: var(--space-2);
   z-index: var(--z-skip);

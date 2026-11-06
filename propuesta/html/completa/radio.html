@@ -10,7 +10,7 @@
 <meta name="theme-color" content="#122338">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="assets/css/completa.css?v=7">
+<link rel="stylesheet" href="assets/css/completa.css?v=8">
 <link rel="icon" href="../assets/img/LogoHablaDeportes.webp" type="image/webp">
 </head>
 <body>
@@ -57,7 +57,7 @@
  </div>
  <nav class="mnav" id="mnav" aria-label="Menú móvil"><a href="index.html">Inicio</a><a href="equipo.html">Junior FC</a><a href="seccion.html">Selección</a><a href="datos.html">Datos</a><a href="redes.html">Videos y redes</a><a href="radio.html" aria-current="page">Radio</a><a href="juan-salvador.html">Opinión</a><a href="seccion.html">Noticias</a><a href="partido.html">Partido en vivo</a><a href="seccion.html#fichajes">Fichajes</a><a href="seccion.html#efemerides">Efemérides</a><a href="radio.html#programas">Programas</a><a href="contacto.html">Publicidad</a></nav>
 </header>
-<div class="hdrstack">
+<div class="hdrstack" role="region" aria-label="Menú de secciones">
 <div class="hdr2"><div class="wrap hdr2__in"><nav class="nav" aria-label="Principal"><ul class="nav__list"><li class="nav__item"><a class="nav__link" href="index.html">Inicio</a></li><li class="nav__item"><a class="nav__link" href="equipo.html">Junior FC</a></li><li class="nav__item"><a class="nav__link" href="seccion.html">Selección</a></li><li class="nav__item"><a class="nav__link" href="datos.html">Datos</a></li><li class="nav__item"><a class="nav__link" href="redes.html">Videos y redes</a></li><li class="nav__item"><a class="nav__link" href="radio.html" aria-current="page">Radio</a></li><li class="nav__item"><a class="nav__link" href="juan-salvador.html">Opinión</a></li><li class="nav__item has-mega"><button class="nav__link nav__link--btn" data-chev aria-expanded="false" aria-haspopup="true">Más <svg class="ico" aria-hidden="true"><use href="#i-down"/></svg></button><div class="mega mega--r"><ul><li><a href="seccion.html">Noticias</a></li><li><a href="partido.html">Partido en vivo</a></li><li><a href="seccion.html#fichajes">Fichajes</a></li><li><a href="seccion.html#efemerides">Efemérides</a></li><li><a href="radio.html#programas">Programas</a></li><li><a href="contacto.html">Publicidad</a></li></ul></div></li></ul></nav></div></div>
 <div class="hdr3"><div class="wrap hdr3__in"><span class="hdr3__t">Radio</span><nav class="sub" aria-label="Submenú de Radio"><ul class="sub__list"><li class="sub__i"><a class="sub__l" href="radio.html" aria-current="page">En vivo</a></li><li class="sub__i"><a class="sub__l" href="radio.html#programas">Parrilla</a></li><li class="sub__i"><a class="sub__l" href="radio.html#episodios">Episodios anteriores</a></li><li class="sub__i"><a class="sub__l" href="radio.html" aria-current="page">Cómo escucharnos</a></li><li class="sub__i"><a class="sub__l" href="radio.html" aria-current="page">Participa</a></li></ul></nav></div></div>
 </div>
@@ -110,7 +110,7 @@ g.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)re
 </script>
 
 </main>
-<div class="wrap prefooter"><div class="ad ad--lb"><span>970 × 90 · Espacio publicitario · Publicidad</span></div></div>
+<aside class="wrap prefooter" aria-label="Publicidad"><div class="ad ad--lb"><span>970 × 90 · Espacio publicitario · Publicidad</span></div></aside>
 
 <footer class="ftr"><div class="wrap">
  <div class="ftr__top">

@@ -93,4 +93,7 @@
     root.addEventListener('mouseenter',function(){clearInterval(t)});root.addEventListener('mouseleave',reset);
     show();reset();
   });
+
+  // Tablas y zonas con desplazamiento horizontal: enfocables con teclado y con nombre
+  $$('.tbl-wrap,.rx-grid-w,.tw').forEach(function(el){if(!el.hasAttribute('tabindex'))el.setAttribute('tabindex','0');el.setAttribute('role','region');if(!el.getAttribute('aria-label')){var c=el.querySelector('caption');el.setAttribute('aria-label',c?c.textContent.trim():'Tabla desplazable')}});
 })();

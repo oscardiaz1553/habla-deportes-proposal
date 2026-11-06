@@ -1304,3 +1304,22 @@ img,
 .lastnews,.panel,
 .byl img,.profile__av,.xpost__av,.opcard img,.rd-st i,.rd-st img,.av,
 .vid-chan img,.rd-chat__h img{border-radius:0!important}
+
+/* ==========================================================================
+   v12 — Revisión de accesibilidad: contraste, objetivos táctiles de 44 px,
+   orden de encabezados y enlaces dentro de texto.
+   ========================================================================== */
+.panel__h h2.ph2{font:700 13px var(--f-sans);letter-spacing:.08em;text-transform:uppercase}
+.section--ink .tab{color:#B7CADB}.section--ink .tab[aria-selected="true"]{color:#fff}
+.ftr .spons,.ftr .spons span{color:#B7CADB}
+p a:not(.btn):not(.chip):not([class*="__"]){text-decoration:underline;text-underline-offset:3px}
+@media (max-width:1039px){
+  .chip{min-height:44px}
+  .sh__more{min-height:44px}
+  .sbb__days button{min-height:44px}
+  .sky-lead__links a{min-height:44px}
+  .ftr li a{min-height:44px}
+  .crumbs a{display:inline-flex;align-items:center;min-height:44px}
+  .sub__l{min-width:44px;justify-content:center}
+}
+.meta a,.note a,.sub a:not(.sub__l),.byl a{text-decoration:underline;text-underline-offset:3px}

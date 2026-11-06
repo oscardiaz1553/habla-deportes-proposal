@@ -91,7 +91,7 @@ def header(cur, page="index.html"):
  </div>
  <nav class="mnav" id="mnav" aria-label="Menú móvil">""" + mob + """</nav>
 </header>
-<div class="hdrstack">
+<div class="hdrstack" role="region" aria-label="Menú de secciones">
 <div class="hdr2"><div class="wrap hdr2__in"><nav class="nav" aria-label="Principal"><ul class="nav__list">""" + items + """</ul></nav></div></div>
 """ + subbar(cur, page) + """
 </div>
@@ -112,7 +112,7 @@ SCOREBAR = """<div class="sbd" data-sbd role="region" aria-label="Marcadores"><d
 
 def prefooter(meta):
     if meta.get("ads")=="0": return ""
-    return '<div class="wrap prefooter"><div class="ad ad--lb"><span>970 × 90 · Espacio publicitario · Publicidad</span></div></div>'
+    return '<aside class="wrap prefooter" aria-label="Publicidad"><div class="ad ad--lb"><span>970 × 90 · Espacio publicitario · Publicidad</span></div></aside>'
 
 def tabbar(cur):
     act = {"inicio":"noticias","junior":"noticias","seleccion":"noticias","opinion":"noticias","videos":"videos","datos":"datos","radio":"radio"}.get(cur,"noticias")
@@ -159,7 +159,7 @@ def build():
 <meta name="theme-color" content="#122338">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="assets/css/completa.css?v=7">
+<link rel="stylesheet" href="assets/css/completa.css?v=8">
 <link rel="icon" href="../assets/img/LogoHablaDeportes.webp" type="image/webp">
 </head>
 <body>

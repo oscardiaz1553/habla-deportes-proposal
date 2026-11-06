@@ -1,0 +1,28 @@
+{
+ "0": {
+  "_nota": "Copia como datos-<idioma>.json. La clave es el ID del post en ESE idioma (mapa base→segundo idioma con pll_get_post). Borra este bloque. title ≤ 60 y metadesc ≤ 156 caracteres una vez expandidas las variables; og_image = ID de adjunto; schema: CollectionPage | AboutPage | ContactPage | WebPage.",
+  "title": "", "metadesc": ""
+ },
+ "<ID_PORTADA>": {
+  "title": "%%sitename%% %%sep%% <eslogan de la portada>",
+  "metadesc": "<descripción de la portada, 120-156 caracteres, con la frase clave>",
+  "focuskw": "<frase clave principal>",
+  "related": ["<frase relacionada 1>", "<frase relacionada 2>"],
+  "synonyms": ["<sinónimo>"],
+  "og_title": "<título para redes>",
+  "og_desc": "<descripción para redes>",
+  "og_image": 0
+ },
+ "<ID_LISTADO>": {
+  "title": "<título del listado> %%sep%% %%sitename%%",
+  "metadesc": "<…>",
+  "focuskw": "<…>",
+  "og_title": "<…>",
+  "og_desc": "<…>",
+  "og_image": 0,
+  "schema": "CollectionPage",
+  "cornerstone": true
+ },
+ "<ID_HISTORIA>": { "title": "<…> %%sep%% %%sitename%%", "metadesc": "<…>", "focuskw": "<…>", "schema": "AboutPage" },
+ "<ID_CONTACTO>": { "title": "<…> %%sep%% %%sitename%%", "metadesc": "<…>", "focuskw": "<…>", "schema": "ContactPage" }
+}

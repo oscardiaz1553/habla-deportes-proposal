@@ -1,0 +1,94 @@
+## htaccess-bloques.plantilla · .htaccess de la raíz de WordPress en producción, por bloques y en orden.
+##
+## Uso: la rellena componer-htaccess.sh (runbook F7): sustituye <DOMINIO>, <DOMINIO_ESCAPADO> y
+##   <PREFIJO>, pone la cortina en la línea «# <<CORTINA>>» y el mapa de SEO en «# <<MAPA-301>>», y
+##   quita estas líneas «##». También sirve de referencia para montarlo a mano.
+## Estado: probado en HomeMaker (Apache 2.4 + mod_lsapi en cPanel); marcadores generalizados.
+## Orden y porqué:
+##   1 https + dominio canónico, con .well-known fuera (si no, la renovación ACME falla semanas después)
+##   2 cortina 503 con paso a wp-cron.php (se retira con un solo sed; ver cortina-503.plantilla)
+##   3 mapa 301/410 del sitio anterior, encima de WordPress (no en un plugin de redirecciones)
+##   4 ErrorDocument 410 default (cPanel tiene una página 410 global y WordPress acababa respondiendo 404)
+##   5 XML-RPC cerrado (bloque de SG Security con sus marcadores: quítalo si no usas ese plugin)
+##   6 WebP por Accept + Vary (sustituye al nginx del hosting de origen; opcional según D10)
+##   7 WordPress
+##   8 caché de estáticos (WP versiona con ?ver= y el tema hijo con filemtime)
+##   9 el bloque «# php -- BEGIN cPanel-generated handler» lo añade MultiPHP al final (F9): no se escribe a mano
+## No se copian: bloques del proveedor de origen («SGO Unset Vary» quita Vary y perjudica gzip),
+##   bloques del sitio anterior (Next.js: index.html, barra final, .txt, ErrorDocument 404 /404/index.html)
+##   ni php_value (con mod_lsapi y lsapi_mod_php_behaviour Off no funcionan: los ajustes van en .user.ini).
+# BEGIN <PREFIJO> · https y dominio canónico (sin www); .well-known queda fuera (AutoSSL)
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{REQUEST_URI} !^/\.well-known/
+  RewriteCond %{HTTPS} !=on [OR]
+  RewriteCond %{HTTP_HOST} !^<DOMINIO_ESCAPADO>$ [NC]
+  RewriteRule ^(.*)$ https://<DOMINIO>/$1 [R=301,L]
+</IfModule>
+# END <PREFIJO> · https y dominio canónico
+
+# <<CORTINA>>
+
+# BEGIN <PREFIJO> · 301 del sitio anterior (dueña: sesión SEO)
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+# <<MAPA-301>>
+</IfModule>
+# END <PREFIJO> · 301 del sitio anterior
+# Las 410 del mapa: sin esto Apache pasa el error a la página global de cPanel y WordPress la contesta con 404
+ErrorDocument 410 default
+
+# SGS XMLRPC Disable Service
+<Files xmlrpc.php>
+	order deny,allow
+	deny from all
+</Files>
+# SGS XMLRPC Disable Service END
+
+# BEGIN <PREFIJO> · WebP: copias .jpg.webp / .png.webp junto al original, según Accept
+<IfModule mod_mime.c>
+  AddType image/webp .webp
+</IfModule>
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTP_ACCEPT} image/webp
+  RewriteCond %{REQUEST_FILENAME}.webp -f
+  RewriteRule ^(.+\.(?:jpe?g|png))$ $1.webp [T=image/webp,E=webp:1,L]
+</IfModule>
+<IfModule mod_headers.c>
+  Header append Vary Accept env=REDIRECT_webp
+  <FilesMatch "\.(jpe?g|png)$">
+    Header append Vary Accept
+  </FilesMatch>
+</IfModule>
+# END <PREFIJO> · WebP
+
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+# END WordPress
+
+# BEGIN <PREFIJO> · caché de estáticos (WP versiona con ?ver=; el child, con filemtime)
+Options -MultiViews
+<IfModule mod_headers.c>
+  <FilesMatch "\.(css|js|woff2)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.(jpe?g|png|webp|avif|gif|svg|ico|mp4)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+</IfModule>
+# END <PREFIJO> · caché de estáticos
+## Opcional, solo si el hosting no comprime ya de forma global (compruébalo antes con
+## curl -sI -H 'Accept-Encoding: gzip' https://<DOMINIO>/ | grep -i content-encoding):
+## <IfModule mod_deflate.c>
+##   AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/javascript application/json application/xml image/svg+xml
+## </IfModule>

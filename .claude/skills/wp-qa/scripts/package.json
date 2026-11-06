@@ -1,0 +1,1 @@
+{"name":"wp-qa-headless","private":true,"description":"Dependencias de qa-medir.mjs y qa-hover-foco.mjs (npm i en la carpeta de trabajo)","dependencies":{"puppeteer-core":"^23.11.1"}}

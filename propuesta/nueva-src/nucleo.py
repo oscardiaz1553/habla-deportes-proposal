@@ -63,13 +63,16 @@ def sprite(nombres):
 
 
 # --- Imágenes -------------------------------------------------------------
-def img(clave, clase="", alt=None, prioridad=False, decorativa=False, sizes=None):
-    """<img> con width/height reales, lazy salvo la primera foto de la página."""
+def img(clave, clase="", alt=None, prioridad=False, decorativa=False, sizes=None, menu=False):
+    """<img> con width/height reales, lazy salvo la primera foto de la página.
+    menu=True: foto del megamenú o de la hoja móvil. Queda fuera de la regla «una foto,
+    una vez por página» (07: el panel se superpone y no se ve a la vez que el contenido),
+    pero sigue saliendo SOLO del catálogo."""
     if clave not in imagenes.CATALOGO:
         raise ErrorDeContenido(f"{P.slug}.html: imagen desconocida '{clave}'")
     src, out, tipo, alt_cat, pos = imagenes.CATALOGO[clave]
     P.imagenes.add(clave)
-    if tipo == "foto":
+    if tipo == "foto" and not menu:
         P.registrar_foto(clave)
     w, h = imagenes.dims(clave)
     texto_alt = "" if decorativa else (alt if alt is not None else alt_cat)

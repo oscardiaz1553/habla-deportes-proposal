@@ -1,16 +1,16 @@
 """Plantilla común (equivale a header.php / footer.php de un tema WordPress).
 
 Partes, en orden de documento:
-  <head> · enlace de salto · cabecera (nivel 1 azul + nivel 2 menú + barra
-  contextual blanca + buscador + menú móvil) · <main> (contenido de la página)
-  · Publicidad C · pie (con el muro de aliados) · barra inferior móvil.
+  <head> · enlace de salto · cabecera (nivel 1 azul + nivel 2 con megamenús +
+  buscador + hoja del menú móvil) · velo del megamenú · <main> (contenido de la
+  página) · Publicidad C · pie (con el muro de aliados) · barra inferior móvil.
 """
 import json
 
 import nucleo
-from componentes import aliados, pauta
+from componentes import aliados, hoja_menu, megamenu, pauta, punto_vivo
 from nucleo import e, icono, img
-from sitio import CONTEXTO, INFERIOR, MAS, MENU_MOVIL, PAGINAS, PIE, PRIMARIO, REDES, SITIO
+from sitio import INFERIOR, PAGINAS, PIE, PRIMARIO, REDES, SITIO, SUGERENCIAS
 
 CSS = ["tokens", "base", "components", "pages", "pages-a", "pages-b"]
 
@@ -53,64 +53,30 @@ def head(meta, jsonld):
 
 
 # --------------------------------------------------------------------------
-# Cabecera
+# Cabecera (08 §2): nivel 1 azul (logo, buscador, redes, «Menú») + nivel 2
+# azul (secciones con megamenú). Sin barra blanca contextual.
 # --------------------------------------------------------------------------
-def _panel(items, clase=""):
-    li = "".join(f'<li><a class="panel__link" href="{e(h)}">{e(t)}</a></li>' for t, h in items)
-    return f'<div class="panel{clase}"><ul class="panel__list" role="list">{li}</ul></div>'
-
-
-def _primario(cfg):
+def _primario(cfg, slug):
     out = []
-    for clave, texto, destino in PRIMARIO:
-        cur = ' aria-current="page"' if cfg["primario"] == clave else ""
+    for it in PRIMARIO:
+        clave = it["clave"]
+        actual = cfg["primario"] == clave
+        # «Más» no es una página: se marca como sección actual con aria-current="true"
+        cur = (' aria-current="true"' if clave == "mas" else ' aria-current="page"') if actual else ""
+        punto = punto_vivo(it.get("punto"), "live-dot live-dot--ring") if it.get("punto") else ""
         extra = ""
-        if clave == "en-vivo":
-            # Punto rojo solo cuando el programa está al aire (main.js, constante EN_VIVO)
-            extra = ('<span class="live-dot live-dot--nav only-aire" hidden aria-hidden="true"></span>'
-                     '<span class="visually-hidden only-aire" hidden>, al aire ahora</span>')
-        out.append(f'<li class="primary-nav__item"><a class="primary-nav__link" href="{destino}"{cur}>'
-                   f'{e(texto)}{extra}</a></li>')
-    out.append(
-        f'<li class="primary-nav__item has-panel"><a class="primary-nav__link" href="{MAS["destino"]}">'
-        f'{MAS["texto"]}{icono("caret-down", "icon icon--sm chevron")}'
-        f'<span class="visually-hidden">: más secciones en el pie de página</span></a>'
-        f'{_panel(MAS["items"], " panel--end")}</li>')
+        if clave == "mas":
+            extra = (f'{icono("caret-down", "icon icon--sm chevron")}'
+                     f'<span class="visually-hidden">: más secciones en el pie de página</span>')
+        mod = " primary-nav__item--end" if clave == "mas" else ""
+        out.append(f'<li class="primary-nav__item{mod}" data-mega-item>'
+                   f'<a class="primary-nav__link" href="{e(it["href"])}"{cur}>{punto}<span>{e(it["texto"])}</span>{extra}</a>'
+                   f'{megamenu(clave, slug)}</li>')
     return "".join(out)
 
 
-def _contexto(slug, cfg):
-    sec = CONTEXTO[cfg["seccion"]]
-    items = []
-    for it in sec["items"]:
-        texto, destino = it[0], it[1]
-        cur = ' aria-current="page"' if cfg["activo"] == texto else ""
-        punto = ""
-        if texto == "Partido en vivo":
-            punto = '<span class="live-dot" aria-hidden="true"></span>'
-        if len(it) == 3:
-            items.append(
-                f'<li class="context-nav__item has-panel"><a class="context-nav__link" href="{e(destino)}"{cur}>'
-                f'{e(texto)}{icono("caret-down", "icon icon--sm chevron")}</a>{_panel(it[2])}</li>')
-        else:
-            items.append(f'<li class="context-nav__item"><a class="context-nav__link" href="{e(destino)}"{cur}>'
-                         f'{punto}{e(texto)}</a></li>')
-    extra = ""
-    if sec.get("extra"):
-        t, u = sec["extra"]
-        extra = (f'<a class="btn btn--secondary btn--sm context-bar__extra" href="{e(u)}" target="_blank" rel="noopener">'
-                 f'{icono("youtube-logo")}{e(t)}<span class="visually-hidden"> (se abre en una pestaña nueva)</span></a>')
-    return (
-        f'<div class="context-bar">'
-        f'<div class="container context-bar__inner">'
-        f'<a class="context-bar__title" href="{sec["destino"]}">{e(sec["titulo"])}</a>'
-        f'<nav class="context-nav" aria-label="{e(sec["titulo"])}: enlaces de la sección">'
-        f'<ul class="context-nav__list" role="list">{"".join(items)}</ul></nav>{extra}</div></div>')
-
-
 def _buscador():
-    sugerencias = "".join(f'<li><a class="chip" href="buscar.html?q={q}">{t}</a></li>'
-                          for t, q in (("Junior", "junior"), ("Selección", "seleccion"), ("Mercado", "mercado"), ("Europa", "europa")))
+    sugerencias = "".join(f'<li><a class="chip" href="buscar.html?q={q}">{e(t)}</a></li>' for t, q in SUGERENCIAS)
     return (
         f'<div class="search-bar" id="buscador" hidden data-search>'
         f'<div class="container search-bar__inner">'
@@ -124,15 +90,6 @@ def _buscador():
         f'<span class="visually-hidden">Cerrar el buscador</span></button></div></div>')
 
 
-def _menu_movil():
-    grupos = "".join(
-        f'<ul class="mobile-menu__list" role="list">'
-        + "".join(f'<li><a class="mobile-menu__link" href="{e(h)}">{e(t)}</a></li>' for t, h in g)
-        + "</ul>" for g in MENU_MOVIL)
-    return (f'<nav class="mobile-menu" id="menu-movil" aria-label="Menú" hidden data-menu>'
-            f'<div class="container">{grupos}</div></nav>')
-
-
 def cabecera(slug):
     cfg = PAGINAS[slug]
     redes_cab = "".join(
@@ -140,27 +97,28 @@ def cabecera(slug):
         f'{icono(r["icono"])}<span class="visually-hidden">{r["nombre"]} (se abre en una pestaña nueva)</span></a>'
         for r in REDES[:3])
     return f"""<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<!-- CABECERA (header.php): nivel 1 + nivel 2 con megamenús + buscador + hoja móvil -->
 <header class="site-header" data-header>
   <div class="masthead">
     <div class="container masthead__inner">
       <a class="masthead__logo" href="index.html">{img("logo-blanco", clase="masthead__logo-img", alt="Habla Deportes, ir a la portada", prioridad=True)}</a>
       <div class="masthead__tools">
+        <button class="search-trigger" type="button" aria-expanded="false" aria-controls="buscador" data-search-toggle>{icono("magnifying-glass", "icon icon--md")}<span class="search-trigger__text">Buscar equipo, jugador o tema</span></button>
         {redes_cab}
-        <button class="icon-btn icon-btn--on-brand" type="button" aria-expanded="false" aria-controls="buscador" data-search-toggle>{icono("magnifying-glass")}<span class="visually-hidden">Buscar</span></button>
-        <button class="icon-btn icon-btn--on-brand masthead__menu" type="button" aria-expanded="false" aria-controls="menu-movil" data-menu-toggle>{icono("list", "icon icon-open")}{icono("x", "icon icon-close")}<span class="visually-hidden" data-menu-label>Abrir el menú</span></button>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu-movil" data-menu-toggle>{icono("list", "icon icon-open")}{icono("x", "icon icon-close")}<span class="menu-toggle__text" aria-hidden="true" data-menu-word>Menú</span><span class="visually-hidden" data-menu-label>Abrir el menú</span></button>
       </div>
     </div>
   </div>
-  <nav class="primary-nav" aria-label="Secciones">
+  <nav class="primary-nav" aria-label="Secciones" data-mega>
     <div class="container primary-nav__inner">
       <a class="primary-nav__logo" href="index.html">{img("logo-blanco", clase="primary-nav__logo-img", alt="Habla Deportes, ir a la portada", prioridad=True)}</a>
-      <ul class="primary-nav__list" role="list">{_primario(cfg)}</ul>
+      <ul class="primary-nav__list" role="list">{_primario(cfg, slug)}</ul>
     </div>
   </nav>
-  {_contexto(slug, cfg)}
   {_buscador()}
-  {_menu_movil()}
-</header>"""
+  {hoja_menu(slug)}
+</header>
+<div class="mega-scrim" data-mega-scrim></div>"""
 
 
 # --------------------------------------------------------------------------
@@ -194,17 +152,17 @@ def pie():
 
 
 def barra_inferior(slug):
+    """Barra inferior móvil de 5 pestañas (09 §4.3). Activa: icono relleno, barra de 3 px y peso 700."""
     activo = PAGINAS[slug]["inferior"]
     items = []
-    for clave, texto, destino, ic in INFERIOR:
-        on = activo == clave
-        cur = ' aria-current="page"' if on else ""
-        punto = '<span class="bottom-nav__dot only-aire" hidden aria-hidden="true"></span>' if clave == "en-vivo" else ""
-        sr = '<span class="visually-hidden only-aire" hidden>, al aire ahora</span>' if clave == "en-vivo" else ""
+    for it in INFERIOR:
+        cur = ' aria-current="page"' if activo == it["clave"] else ""
+        ic = it["icono"]
+        punto = punto_vivo(it.get("punto"), "bottom-nav__dot") if it.get("punto") else ""
         items.append(
-            f'<li><a class="bottom-nav__link" href="{destino}"{cur}>'
-            f'<span class="bottom-nav__icon">{icono(ic, "icon icon-line")}{icono(ic + "-fill", "icon icon-fill")}{punto}</span>'
-            f'<span class="bottom-nav__label">{texto}</span>{sr}</a></li>')
+            f'<li><a class="bottom-nav__link" href="{it["href"]}"{cur}>'
+            f'<span class="bottom-nav__icon">{icono(ic, "icon icon-line")}{icono(ic + "-fill", "icon icon-fill")}</span>'
+            f'<span class="bottom-nav__label">{e(it["texto"])}</span>{punto}</a></li>')
     return (f'<nav class="bottom-nav" aria-label="Accesos rápidos">'
             f'<ul class="bottom-nav__list" role="list">{"".join(items)}</ul></nav>')
 

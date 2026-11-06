@@ -2,8 +2,8 @@
    HABLA DEPORTES · components.css
    Un bloque por componente, en el orden de 01-sistema-de-diseno.md §6:
      6.0  Rótulo de sección y módulos de columna lateral (soporte del presupuesto)
-     6.1  Encabezado de dos niveles        6.9  Tabla de posiciones
-     6.2  Barra contextual y paneles       6.10 Tarjeta de partido en vivo
+     6.1  Cabecera de dos capas azules     6.9  Tabla de posiciones
+     6.2  Megamenú                         6.10 Tarjeta de partido en vivo
      6.3  Noticia principal horizontal     6.11 Radio («La escaleta»)
      6.4  Noticia pequeña / video          6.12 Tarjetas de redes
      6.5  Carril de Shorts                 6.13 Pauta y sello de patrocinio
@@ -11,7 +11,7 @@
      6.7  Banner de partidos               6.15 Barra inferior móvil
      6.8  Franja de partidos por día       6.16 Botones y estados
    Después: componentes de soporte (listas, formularios, artículo, buscador,
-   menú móvil, reproductor acoplado, migas…).
+   hoja del menú móvil, migas…).
    Reglas: solo valores de tokens.css; medidas propias de un componente se
    declaran como variable local al inicio del bloque, citando 01 §.
    Hover solo con puntero fino. Sin !important.
@@ -68,9 +68,12 @@
 
 
 /* --------------------------------------------------------------------------
-   6.1 · Encabezado de dos niveles (azul)
-   Escritorio: nivel 1 (64) se va con el scroll; nivel 2 + barra blanca quedan
-   pegados (top negativo). Móvil: nivel 1 (56) + barra blanca pegados.
+   6.1 · Cabecera de dos capas azules (08 §2)
+   Escritorio: nivel 1 (64, logo, buscador, redes) + nivel 2 (48, secciones)
+   = 112 px. Al bajar, el nivel 1 se va con la página y queda pegado solo el
+   nivel 2 (48) con el logo de 24 px. Móvil: nivel 1 de 56 px pegado.
+   Sin barra blanca contextual (08 §2.1): la reemplazan el megamenú, el ítem
+   activo y las fichas locales de cada página.
    -------------------------------------------------------------------------- */
 .site-header {
   --logo-h: 28px;          /* 01 §6.1: 28 px en móvil */
@@ -103,7 +106,7 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-2);
-  height: var(--header-l1-h-mobile);
+  height: var(--header-total-mobile);
 }
 
 .masthead__logo {
@@ -127,12 +130,83 @@
   display: none;
 }
 
-.masthead__menu .icon-close,
-.masthead__menu[aria-expanded="true"] .icon-open {
+/* Buscador: lupa de 44 × 44 en móvil; campo-botón de 280 × 40 desde lg (08 §2.3).
+   Un campo dice qué se puede buscar; una lupa sola, no. */
+.search-trigger {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  width: var(--touch-min);
+  height: var(--touch-min);
+  padding: 0;
+  border: var(--border-hair) solid transparent;
+  border-radius: var(--radius-round);
+  background: transparent;
+  color: var(--color-on-brand);
+  font-size: var(--fs-ui);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-snug);
+  text-align: left;
+  transition: background-color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+}
+
+.search-trigger:focus-visible {
+  outline-color: var(--color-focus-on-dark);
+}
+
+@media (max-width: 1023.98px) {
+  .search-trigger__text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .search-trigger:hover {
+    background: var(--nav-hover-bg);
+  }
+}
+
+/* Botón «Menú»: icono + palabra (la hamburguesa sola no se descubre, 08 §6.1).
+   Visible en móvil y en pantallas grandes sin hover (tabletas): abre la hoja. */
+.menu-toggle {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: var(--touch-min);
+  min-height: var(--touch-min);
+  padding: 0 var(--space-1);
+  border: 0;
+  border-radius: var(--radius-ctrl);
+  background: transparent;
+  color: var(--color-on-brand);
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-snug);
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+.menu-toggle:focus-visible {
+  outline-color: var(--color-focus-on-dark);
+}
+
+.menu-toggle:active {
+  background: var(--nav-hover-bg);
+}
+
+.menu-toggle .icon-close,
+.menu-toggle[aria-expanded="true"] .icon-open {
   display: none;
 }
 
-.masthead__menu[aria-expanded="true"] .icon-close {
+.menu-toggle[aria-expanded="true"] .icon-close {
   display: block;
 }
 
@@ -149,13 +223,28 @@
     display: inline-grid;
   }
 
-  .masthead__tools > .masthead__menu {
+  .search-trigger {
+    justify-content: flex-start;
+    width: var(--search-trigger-w);
+    height: var(--search-trigger-h);
+    margin-right: var(--space-2);
+    padding: 0 var(--space-2) 0 var(--space-1);
+    border-color: var(--search-trigger-border);
+    border-radius: var(--radius-ctrl);
+    background: var(--search-trigger-bg);
+    color: var(--search-trigger-text);
+  }
+}
+
+@media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+  .menu-toggle {
     display: none;
   }
 }
 
-/* Nivel 2: menú azul (solo desde lg; en móvil lo sustituye la barra inferior) */
+/* Nivel 2: secciones (desde lg; en móvil, la hoja del menú y la barra inferior) */
 .primary-nav {
+  position: relative; /* el megamenú cuelga de su borde inferior, a todo el ancho */
   display: none;
   background: var(--color-surface-brand-2);
   color: var(--color-on-brand);
@@ -181,6 +270,7 @@
 
 .is-stuck .primary-nav__logo {
   display: flex;
+  animation: fade-in var(--dur-fast) var(--ease-out);
 }
 
 .primary-nav__logo-img {
@@ -194,15 +284,19 @@
 }
 
 .primary-nav__item {
-  position: relative;
   display: flex;
+}
+
+/* «Más»: su panel estrecho se alinea con el borde derecho del ítem */
+.primary-nav__item--end {
+  position: relative;
 }
 
 .primary-nav__link {
   position: relative;
   display: flex;
   align-items: center;
-  gap: var(--space-1);
+  gap: var(--space-half);
   padding-inline: var(--space-2);
   color: var(--color-on-brand);
   font-size: var(--fs-ui);
@@ -210,7 +304,12 @@
   line-height: var(--lh-snug);
   text-decoration: none;
   white-space: nowrap;
-  transition: background-color var(--dur-fast) var(--ease-out);
+  transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+
+/* Punto en vivo antes del texto, a 8 px (con el gap de 4 + 4 de margen) */
+.primary-nav__link .live-dot {
+  margin-right: calc(var(--live-dot-gap) - var(--space-half));
 }
 
 .primary-nav__link:focus-visible {
@@ -218,12 +317,12 @@
   outline-offset: calc(-1 * var(--space-half));
 }
 
-/* Activo: barra blanca de 3 px + peso 700 (01 §3.3: no se distingue por tono) */
-.primary-nav__link[aria-current="page"] {
+/* Activo: barra blanca de 3 px + peso 700. Única marca de «estás aquí» (08 §2.1) */
+.primary-nav__link[aria-current] {
   font-weight: var(--fw-bold);
 }
 
-.primary-nav__link[aria-current="page"]::after {
+.primary-nav__link[aria-current]::after {
   content: "";
   position: absolute;
   right: var(--space-2);
@@ -235,237 +334,713 @@
 
 @media (hover: hover) and (pointer: fine) {
   .primary-nav__link:hover {
-    background: color-mix(in srgb, var(--white) 8%, transparent);
+    background: var(--nav-hover-bg);
     color: var(--color-on-brand);
-    text-decoration: underline;
-    text-decoration-thickness: var(--border-hair);
+    text-decoration: none;
   }
+}
+
+/* Panel abierto: el ítem se vuelve una pestaña blanca que se funde con el panel */
+.primary-nav__item.is-open > .primary-nav__link {
+  background: var(--nav-tab-open-bg);
+  color: var(--nav-tab-open-text);
+}
+
+.primary-nav__item.is-open > .primary-nav__link[aria-current]::after {
+  background: var(--color-border-selected);
 }
 
 .chevron {
   transition: transform var(--dur-base) var(--ease-out);
 }
 
+.primary-nav__item.is-open .chevron {
+  transform: rotate(180deg);
+}
+
 
 /* --------------------------------------------------------------------------
-   6.2 · Barra blanca contextual y paneles (solo hover, decisión del dueño)
+   6.2 · Megamenú (08 §3–§5): solo hover en escritorio con puntero fino.
+   Cada panel: Z0 título-enlace al hub · Z1 enlaces · Z2 una sola imagen o
+   dato · Z3 «lo que pasa ahora». Ancho de ventana, alto fijo de 416, una
+   sola elevación (sombra, sin borde), radio 0. main.js pone .is-open con
+   intención de hover (250 / 0 / 400 ms y zona diagonal). Cerrado =
+   visibility: hidden: sus enlaces no reciben foco ni se leen.
    -------------------------------------------------------------------------- */
-.context-bar {
-  background: var(--color-surface);
-  border-bottom: var(--border-hair) solid var(--color-border);
-}
-
-.context-bar__inner {
-  display: flex;
-  align-items: stretch;
-  gap: var(--space-2);
-  height: var(--context-bar-h);
-}
-
-.context-bar__title {
-  position: relative;
-  display: flex;
-  flex: none;
-  align-items: center;
-  padding-right: var(--space-2);
-  color: var(--color-text);
-  font-family: var(--font-display);
-  font-size: var(--fs-title-sm);
-  font-style: italic;
-  font-weight: var(--fw-bold);
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-/* Divisor vertical de 1 × 24 px */
-.context-bar__title::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  right: 0;
-  width: var(--border-hair);
-  height: var(--space-3);
-  background: var(--color-border);
-  transform: translateY(-50%);
-}
-
-.context-nav {
-  flex: 1;
-  min-width: 0;
-  /* Móvil: se desliza de lado, con máscara de 24 px que avisa que hay más */
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scroll-snap-type: x proximity;
-  scrollbar-width: none;
-  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - var(--space-3)), transparent);
-  mask-image: linear-gradient(to right, #000 calc(100% - var(--space-3)), transparent);
-}
-
-.context-nav::-webkit-scrollbar {
-  display: none;
-}
-
-.context-nav__list {
-  display: flex;
-  height: 100%;
-  gap: var(--space-1); /* + 8 px de relleno a cada lado = 24 px entre textos */
-  padding-right: var(--space-3);
-}
-
-.context-nav__item {
-  position: relative;
-  display: flex;
-  flex: none;
-  scroll-snap-align: start;
-}
-
-.context-nav__link {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: var(--space-half);
-  min-width: var(--touch-min);
-  min-height: var(--touch-min);
-  padding-inline: var(--space-1);
-  justify-content: center;
-  color: var(--color-text-secondary);
-  font-size: var(--fs-ui);
-  font-weight: var(--fw-medium);
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-.context-nav__link[aria-current="page"] {
-  color: var(--color-text);
-  font-weight: var(--fw-semibold);
-}
-
-/* Barra activa de 3 px montada sobre el filete inferior */
-.context-nav__link[aria-current="page"]::after {
-  content: "";
-  position: absolute;
-  right: var(--space-1);
-  bottom: calc(-1 * var(--border-hair));
-  left: var(--space-1);
-  height: var(--border-active);
-  background: var(--color-border-selected);
-}
-
-.context-nav__link .live-dot {
-  margin-right: var(--space-half);
-}
-
-.context-nav__link .chevron,
-.context-bar__extra {
-  display: none;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .context-nav__link:hover {
-    color: var(--color-text);
-    text-decoration: underline;
-  }
-}
-
-@media (min-width: 1024px) {
-  .context-nav {
-    overflow: visible;
-    -webkit-mask-image: none;
-    mask-image: none;
-  }
-
-  .context-nav__list {
-    padding-right: 0;
-  }
-
-  .context-nav__link .chevron {
-    display: block;
-  }
-
-  .context-bar__extra {
-    display: inline-flex;
-    align-self: center;
-  }
-}
-
-/* Panel: blanco, sombra, radio 0, pegado a la barra. Se abre SOLO con hover
-   (decisión del dueño): 120 ms de intención, 280 ms de gracia, puente de 8 px.
-   Cada padre es un enlace real a una página con los mismos destinos. */
-.panel {
+.mega {
   display: none;
 }
 
 @media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
-  .panel {
-    --panel-min: 320px;    /* 01 §6.2: entre 320 y 640 px */
-    --panel-max: 640px;
+  .mega {
     position: absolute;
     top: 100%;
-    left: calc(-1 * var(--space-3));
-    z-index: var(--z-panel);
+    right: 0;
+    left: 0;
+    z-index: var(--z-mega);
     display: block;
-    min-width: var(--panel-min);
-    max-width: var(--panel-max);
-    padding: var(--space-2) var(--space-3);
+    height: var(--mega-h);
+    max-height: var(--mega-max-h);
+    padding-block: var(--mega-pad-block);
+    overflow-y: auto;
+    overscroll-behavior: contain;
     background: var(--color-surface);
-    border: var(--border-hair) solid var(--color-border);
-    box-shadow: var(--shadow-panel);
+    box-shadow: var(--mega-shadow);
+    color: var(--color-text);
     opacity: 0;
     visibility: hidden;
-    transform: translateY(calc(-1 * var(--space-half)));
+    transform: translateY(var(--mega-shift));
+    /* Salida: solo opacidad; el desplazamiento vuelve cuando ya no se ve */
     transition:
-      opacity var(--dur-base) var(--ease-out) var(--hover-close-delay),
-      transform var(--dur-base) var(--ease-out) var(--hover-close-delay),
-      visibility 0s linear calc(var(--hover-close-delay) + var(--dur-base));
+      opacity var(--mega-dur-out) var(--ease-out),
+      visibility 0s linear var(--mega-dur-out),
+      transform 0s linear var(--mega-dur-out);
   }
 
-  /* Puente invisible para no perder el hover entre el padre y el panel */
-  .panel::before {
-    content: "";
-    position: absolute;
-    right: 0;
-    bottom: 100%;
-    left: 0;
-    height: var(--space-1);
-  }
-
-  .panel--end {
-    right: 0;
-    left: auto;
-  }
-
-  .has-panel:hover > .panel {
+  .is-open > .mega {
     opacity: 1;
     visibility: visible;
     transform: none;
-    transition-delay: var(--hover-open-delay), var(--hover-open-delay), var(--hover-open-delay);
+    transition:
+      opacity var(--mega-dur-in) var(--ease-out),
+      transform var(--mega-dur-in) var(--ease-out);
   }
 
-  .has-panel:hover .chevron {
-    transform: rotate(180deg);
+  /* Cambio entre ítems con un panel abierto: el panel no se anima, solo se funde el contenido */
+  .primary-nav.is-switching .mega {
+    transition: none;
+  }
+
+  .is-swapped > .mega .mega__inner {
+    animation: fade-in var(--mega-dur-swap) var(--ease-out);
+  }
+
+  /* «Más»: panel estrecho, alto según el contenido */
+  .mega--compact {
+    left: auto;
+    width: var(--mega-compact-w);
+    height: auto;
+    padding-inline: var(--mega-pad-block);
   }
 }
 
-.panel__list {
+.mega__inner {
+  --btn-sm-h: var(--mega-row-h); /* botones del panel: 40 px (08 §3.4) */
   display: grid;
+  grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+  column-gap: var(--mega-gap);
+  min-height: var(--mega-content-h);
 }
 
-.panel__link {
+.mega__z1 {
+  display: flex;
+  grid-column: 1 / span 5;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.mega__z2 {
+  position: relative;
+  grid-column: 6 / span 4;
+  min-width: 0;
+}
+
+/* Único filete vertical: centrado en el hueco entre Z1 y Z2 */
+.mega__z2::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--mega-gap) / -2);
+  border-left: var(--mega-divider);
+}
+
+.mega__z3 {
+  grid-column: 10 / span 3;
+  min-width: 0;
+  container-type: inline-size;
+}
+
+.mega__inner--compact {
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  min-height: 0;
+}
+
+.mega__inner--compact > .mega__z1,
+.mega__inner--compact > .mega__z2 {
+  grid-column: auto;
+}
+
+/* Z0 · Título del panel = enlace al hub (Archivo 800 cursiva + flecha) */
+.mega__title {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-bottom: var(--mega-title-gap);
+  padding-bottom: var(--space-half); /* holgura para descendentes en cursiva */
+  color: var(--color-text);
+  font-family: var(--font-display);
+  font-size: var(--mega-title-fs);
+  font-style: italic;
+  font-weight: var(--fw-black);
+  line-height: var(--mega-title-lh);
+  letter-spacing: var(--ls-title);
+  text-decoration: none;
+}
+
+.mega__arrow {
+  width: var(--icon-md);
+  height: var(--icon-md);
+  color: var(--color-link);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+/* Z1 · Enlaces en dos subcolumnas */
+.mega__cols {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  column-gap: var(--mega-gap);
+  width: 100%;
+}
+
+.mega__col {
+  display: grid;
+  gap: var(--mega-group-gap);
+}
+
+.mega__label {
+  margin-bottom: var(--mega-label-gap);
+  color: var(--color-text-muted);
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-ui);
+}
+
+.mega__link {
   display: flex;
   align-items: center;
-  min-height: var(--touch-min);
+  gap: var(--space-1);
+  min-height: var(--mega-row-h);
   color: var(--color-text);
-  font-size: var(--fs-ui);
+  font-size: var(--fs-body);
   font-weight: var(--fw-medium);
+  line-height: var(--lh-snug);
   text-decoration: none;
+}
+
+/* Página actual: peso 600 + cuadrado de 8 px (el signo de «estás aquí» del sistema) */
+.mega__link[aria-current="page"] {
+  font-weight: var(--fw-semibold);
+}
+
+.mega__link[aria-current="page"]::before,
+.sheet-sub__link[aria-current="page"]::before,
+.sheet-section__link[aria-current="page"] .sheet-section__name::before {
+  content: "";
+  flex: none;
+  width: var(--mega-current-mark);
+  height: var(--mega-current-mark);
+  background: var(--color-border-selected);
+}
+
+.mega__cta {
+  margin-top: auto;
+}
+
+.mega__social {
+  display: flex;
+  gap: var(--space-1);
+  margin-top: var(--space-2);
+}
+
+/* Z2 · Destacado: la única imagen del panel, titular siempre debajo */
+.mega-feature {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.mega-feature__media {
+  width: 100%;
+  margin-bottom: var(--space-2);
+}
+
+.mega-feature__badge {
+  position: absolute;
+  top: var(--space-1);
+  left: var(--space-1);
+  z-index: var(--z-raised);
+}
+
+.mega-feature__label {
+  margin-bottom: var(--space-half);
+  color: var(--color-link);
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-ui);
+}
+
+.mega-feature__title {
+  display: -webkit-box;
+  overflow: hidden;
+  font-family: var(--font-display);
+  font-size: var(--fs-title-md);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-title);
+  letter-spacing: var(--ls-title);
+  text-wrap: balance;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.mega-feature__meta {
+  margin-top: var(--space-1);
+  color: var(--color-text-muted);
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-ui);
+}
+
+/* En vivo: botón y horario en una fila bajo el titular */
+.mega-feature__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.mega-feature__btn {
+  flex: none;
+}
+
+.mega-feature__when {
+  color: var(--color-text-muted);
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-ui);
+}
+
+/* Z2 y Z3 · Título del módulo (nombre del bloque, no etiqueta superior) */
+.mega__module {
+  color: var(--color-text);
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-ui);
+}
+
+.mega__z2 > .mega__module,
+.mega__z3 > .mega__module,
+.mega__module-head {
+  margin-bottom: var(--space-2);
+}
+
+.mega__module-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-1);
+}
+
+/* Enlace «Ver todos» del módulo: compacto, porque el panel solo existe con puntero fino */
+.mega__more {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-half);
+  color: var(--color-link);
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-semibold);
+  text-decoration: none;
+}
+
+.mega__source {
+  margin-top: var(--space-1);
+  color: var(--color-text-muted);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-ui);
+}
+
+/* Z3 de Videos · dos Shorts 9:16, título debajo */
+.mega-shorts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.mega-short {
+  display: flex;
+  flex-direction: column;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.mega-short__media {
+  margin-bottom: var(--space-1);
+}
+
+.mega-short__title {
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-snug);
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+/* Z3 de Noticias · tres titulares de texto separados por filetes */
+.mega-headlines > li + li {
+  border-top: var(--border-hair) solid var(--color-border);
+}
+
+.mega-headline {
+  display: grid;
+  gap: var(--space-half);
+  padding-block: var(--space-2);
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.mega-headlines > li:first-child > .mega-headline {
+  padding-top: 0;
+}
+
+.mega-headline__topic {
+  color: var(--color-link);
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-ui);
+}
+
+.mega-headline__title {
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: var(--fs-body);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-snug);
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+/* Z3 de Junior y Selección · tarjeta de partido oscura (mini Centro de Partidos).
+   Reutiliza las piezas del banner (6.7) con escudos de 48 y marcador de 32-40. */
+.mega-match {
+  --score-fs: var(--fs-score-lg);
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--mega-match-pad);
+  background: var(--mega-match-bg);
+  color: var(--color-on-brand);
+  text-decoration: none;
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+/* Z3 estrecho (pantallas de 1024 a 1279): misma tarjeta con relleno de 16 y nombres de 14 */
+@container (max-width: 260px) {
+  .mega-match {
+    --score-fs: var(--fs-score-md);
+    padding: var(--space-2);
+  }
+}
+
+.mega-match__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-1);
+  color: var(--color-on-brand-muted);
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-ui);
+}
+
+.mega-match__chip {
+  padding: 0 var(--space-1);
+  border: var(--border-hair) solid var(--color-border-on-dark);
+  border-radius: var(--radius-ctrl);
+  color: var(--color-on-brand);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-ui);
   white-space: nowrap;
 }
 
+/* Escudos de 48 a los lados del marcador; los nombres, en la fila de abajo */
+.mega-match__teams {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-1);
+  padding-top: var(--space-1);
+}
+
+.mega-match__names {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-2);
+  font-family: var(--font-display);
+  font-size: var(--fs-title-sm);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-snug);
+}
+
+.mega-match__line {
+  color: var(--mega-match-text-muted);
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-ui);
+}
+
+.mega-match__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-half);
+  color: var(--color-on-dark-accent);
+  font-size: var(--fs-ui);
+  font-weight: var(--fw-semibold);
+}
+
+.mega-match__after {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-top: var(--space-1);
+}
+
+.mega-match__note {
+  color: var(--color-text-secondary);
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-ui);
+}
+
+/* Z2 de Datos · tabla mini (la imagen es el dato) */
+.mega-table__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0 var(--space-2);
+  margin-top: var(--space-1);
+  color: var(--color-text-muted);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-ui);
+}
+
+/* Z3 de Datos · hoy y mañana */
+.mega-fixtures > li + li {
+  border-top: var(--border-hair) solid var(--color-border);
+}
+
+.mega-fixture {
+  display: grid;
+  grid-template-columns: var(--space-6) minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: calc(var(--space-6) + var(--space-1));
+  color: var(--color-text);
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-snug);
+  text-decoration: none;
+}
+
+.mega-fixture__day {
+  color: var(--color-text-muted);
+  font-family: var(--font-display);
+  font-stretch: calc(var(--wdth-condensed) * 1%);
+  font-weight: var(--fw-bold);
+  text-transform: uppercase;
+}
+
+.mega-fixture.is-today .mega-fixture__day {
+  color: var(--color-text);
+}
+
+.mega-fixture__time {
+  color: var(--color-text-secondary);
+  font-variant-numeric: var(--numeric);
+  white-space: nowrap;
+}
+
+/* Z3 de En vivo · ahora y después */
+.mega-slots > li + li {
+  border-top: var(--border-hair) solid var(--color-border);
+}
+
+.mega-slot {
+  display: grid;
+  grid-template-columns: var(--space-6) minmax(0, 1fr);
+  align-items: start;
+  gap: var(--space-1);
+  min-height: var(--space-8);
+  padding: var(--space-1);
+}
+
+.mega-slot--now {
+  background: var(--color-surface-selected);
+}
+
+.mega-slot__time {
+  color: var(--color-link);
+  font-family: var(--font-display);
+  font-size: var(--fs-score-sm);
+  font-stretch: calc(var(--wdth-condensed) * 1%);
+  font-weight: var(--fw-bold);
+  font-variant-numeric: var(--numeric);
+  line-height: var(--lh-snug);
+}
+
+.mega-slot__time--live {
+  color: var(--color-live);
+}
+
+.mega-slot__body {
+  display: grid;
+  min-width: 0;
+}
+
+.mega-slot__state {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--color-text-secondary);
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-ui);
+}
+
+.mega-slot--now .mega-slot__state,
+.mega-slot--match .mega-slot__state {
+  color: var(--color-live);
+}
+
+.mega-slot__title {
+  color: var(--color-text);
+  font-size: var(--fs-ui);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-snug);
+  text-decoration: none;
+}
+
+/* «Más» · retrato del presentador (1:1, radio 0) */
+.mega-profile {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-half);
+  margin-bottom: var(--space-1);
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.mega-profile__media {
+  width: var(--mega-avatar);
+  height: var(--mega-avatar);
+  margin-bottom: var(--space-1);
+  overflow: hidden;
+  background: var(--color-surface-subtle);
+}
+
+.mega-profile__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--focus, 50% 50%);
+  filter: saturate(0.95) contrast(1.03);
+  transition: filter var(--dur-fast) var(--ease-out);
+}
+
+.mega-profile__name {
+  font-family: var(--font-display);
+  font-size: var(--fs-title-md);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-title);
+}
+
+.mega-profile__role {
+  color: var(--color-text-muted);
+  font-size: var(--fs-meta);
+  line-height: var(--lh-ui);
+}
+
+/* Hover (solo puntero fino) */
 @media (hover: hover) and (pointer: fine) {
-  .panel__link:hover {
+  .mega__title:hover {
+    color: var(--color-text);
+    text-decoration: underline;
+    text-decoration-thickness: var(--border-rule);
+  }
+
+  .mega__title:hover .mega__arrow {
+    transform: translateX(2px);
+  }
+
+  .mega__link:hover,
+  .mega__more:hover {
     color: var(--color-link);
     text-decoration: underline;
+    text-decoration-thickness: var(--border-hair);
   }
+
+  .mega-feature:hover,
+  .mega-short:hover,
+  .mega-headline:hover,
+  .mega-fixture:hover,
+  .mega-profile:hover {
+    color: var(--color-text);
+  }
+
+  .mega-feature:hover .mega-feature__title,
+  .mega-short:hover .mega-short__title,
+  .mega-headline:hover .mega-headline__title,
+  .mega-fixture:hover .mega-fixture__teams,
+  .mega-slot__title:hover,
+  .mega-profile:hover .mega-profile__name {
+    text-decoration: underline;
+    text-decoration-thickness: var(--border-hair);
+  }
+
+  .mega-feature:hover .media__img,
+  .mega-short:hover .media__img,
+  .mega-profile:hover .mega-profile__img {
+    filter: saturate(0.95) contrast(1.03) brightness(0.94);
+  }
+
+  .mega-match:hover {
+    background: var(--mega-match-bg-hover);
+    color: var(--color-on-brand);
+  }
+
+  .mega-match:hover .mega-match__cta {
+    text-decoration: underline;
+  }
+}
+
+/* Velo sobre la página mientras hay un panel abierto (no es un modal) */
+.mega-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-mega-scrim);
+  background: var(--mega-scrim);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--mega-dur-out) var(--ease-out), visibility 0s linear var(--mega-dur-out);
+}
+
+.mega-scrim.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity var(--mega-dur-in) var(--ease-out);
 }
 
 
@@ -1111,7 +1686,7 @@
 .match-slide__score,
 .match-slide__time {
   font-family: var(--font-display);
-  font-size: var(--fs-score-xl);
+  font-size: var(--score-fs, var(--fs-score-xl)); /* la tarjeta del megamenú pasa --score-fs */
   font-stretch: calc(var(--wdth-condensed) * 1%);
   font-weight: var(--fw-black);
   font-variant-numeric: var(--numeric);
@@ -1510,6 +2085,7 @@
 .crest--xs { height: var(--icon-md); }
 .crest--sm { height: var(--icon-lg); }
 .crest--md { height: var(--space-4); }
+.crest--lg { height: var(--mega-match-crest); } /* tarjeta de partido del megamenú */
 .crest--xl { height: var(--crest-xl); }
 
 .crest--mono {
@@ -1574,6 +2150,20 @@
 
 .standings .pts {
   font-weight: var(--fw-bold);
+}
+
+/* Mini (megamenú de Datos, 08 §4.5): filas de 36, columna # de 24 */
+.standings--mini th,
+.standings--mini td {
+  height: calc(var(--space-4) + var(--space-half));
+}
+
+.standings--mini thead th {
+  height: var(--space-4);
+}
+
+.standings--mini .pos {
+  width: var(--space-3);
 }
 
 .standings tr.is-selected {
@@ -1793,9 +2383,9 @@
   background: currentColor;
 }
 
-.live-dot--nav {
-  margin-left: var(--space-half);
-  box-shadow: 0 0 0 var(--border-rule) var(--color-surface-brand-2);
+/* Sobre azul: anillo blanco de 2 px (rojo/brand-700 = 2.14:1 no llega a 3:1; 08 §5.1) */
+.live-dot--ring {
+  box-shadow: 0 0 0 var(--live-dot-ring) var(--live-dot-ring-color);
 }
 
 .live-dot {
@@ -2300,7 +2890,7 @@
 
 
 /* --------------------------------------------------------------------------
-   6.15 · Barra inferior móvil (< 1024): Noticias · Videos · Datos · Radio
+   6.15 · Barra inferior móvil (< 1024): Inicio · Videos · Noticias · Datos · En vivo
    -------------------------------------------------------------------------- */
 .bottom-nav {
   position: fixed;
@@ -2322,7 +2912,7 @@
 
 .bottom-nav__list {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   height: var(--bottom-nav-h);
 }
 
@@ -2381,10 +2971,11 @@
   background: var(--color-action);
 }
 
+/* Sobre blanco no necesita anillo (5.18:1). Arriba a la derecha del icono. */
 .bottom-nav__dot {
   position: absolute;
-  top: calc(-1 * var(--space-half));
-  right: calc(-1 * var(--space-half));
+  top: var(--space-1);
+  left: calc(50% + var(--space-1));
   width: var(--space-1);
   height: var(--space-1);
   border-radius: var(--radius-round);
@@ -2456,7 +3047,7 @@
 }
 
 .btn--sm {
-  min-height: var(--touch-min);
+  min-height: var(--btn-sm-h, var(--touch-min)); /* el megamenú (solo puntero fino) pasa 40 px */
   padding: 0 var(--space-2);
   font-size: var(--fs-ui);
 }
@@ -3182,50 +3773,315 @@
   align-self: end;
 }
 
-/* Menú móvil (hamburguesa): enlaces simples en dos grupos, sin acordeones ---- */
-.mobile-menu {
-  max-height: calc(100dvh - var(--header-l1-h-mobile) - var(--context-bar-h));
+/* Hoja del menú móvil (< 1024 y pantallas grandes sin hover) · 08 §6 -------
+   Pantalla completa entre la cabecera y la barra inferior, que siguen
+   visibles. Buscador, «Ahora», seis filas-tarjeta con miniatura y acordeón,
+   «Más» y redes. main.js: foco atrapado, Esc cierra, página bloqueada. */
+html.is-menu-open {
+  overflow: hidden;
+}
+
+.menu-sheet {
+  position: fixed;
+  top: var(--sheet-top); /* main.js la ajusta al borde inferior real de la cabecera */
+  right: 0;
+  bottom: var(--sheet-bottom);
+  left: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
   background: var(--color-surface);
-  border-bottom: var(--border-hair) solid var(--color-border);
-}
-
-.mobile-menu__list {
-  padding-block: var(--space-1);
-}
-
-.mobile-menu__list + .mobile-menu__list {
-  border-top: var(--border-rule) solid var(--color-border-strong);
-}
-
-.mobile-menu__link {
-  display: flex;
-  align-items: center;
-  min-height: var(--space-6);
-  border-bottom: var(--border-hair) solid var(--color-border);
   color: var(--color-text);
-  font-family: var(--font-display);
-  font-size: var(--fs-title-sm);
-  font-weight: var(--fw-semibold);
-  text-decoration: none;
+  animation: sheet-in var(--sheet-dur) var(--ease-out);
 }
 
-.mobile-menu__list + .mobile-menu__list .mobile-menu__link {
-  font-family: var(--font-text);
-  font-size: var(--fs-ui);
-  font-weight: var(--fw-medium);
+.menu-sheet:focus-visible {
+  outline: none; /* recibe el foco al abrirse solo para entrar en la trampa; el anillo va en sus controles */
 }
 
-.mobile-menu__list li:last-child .mobile-menu__link {
-  border-bottom: 0;
+.menu-sheet.is-closing {
+  animation: sheet-out var(--dur-fast) var(--ease-out) forwards;
+}
+
+@keyframes sheet-in {
+  from { opacity: 0; transform: translateY(var(--mega-shift)); }
+}
+
+@keyframes sheet-out {
+  to { opacity: 0; }
 }
 
 @media (min-width: 1024px) {
-  .mobile-menu {
-    display: none;
+  .menu-sheet {
+    bottom: 0; /* sin barra inferior desde lg */
   }
 }
+
+.menu-sheet__inner {
+  max-width: calc(var(--sheet-max-content) + 2 * var(--sheet-pad-inline));
+  margin-inline: auto;
+  padding: var(--space-3) var(--sheet-pad-inline) var(--space-5);
+}
+
+.menu-sheet__search {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.menu-sheet__search .field__input {
+  min-height: var(--sheet-search-h);
+}
+
+.menu-sheet__suggest {
+  margin-top: var(--space-2);
+}
+
+.menu-sheet__heading {
+  margin: var(--space-4) 0 var(--space-1);
+  font-family: var(--font-display);
+  font-size: var(--fs-title-md);
+  font-style: italic;
+  font-weight: var(--fw-black);
+  line-height: var(--lh-title);
+}
+
+/* «Ahora»: filas de 88 sin foto (programa y, si lo hay, el partido) */
+.sheet-now-list > li + li {
+  border-top: var(--border-hair) solid var(--color-border);
+}
+
+.sheet-now {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--sheet-now-h);
+  color: var(--color-text);
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sheet-now__chip {
+  display: inline-block;
+  padding: 0 var(--space-1);
+  border: var(--border-hair) solid var(--color-border-field);
+  border-radius: var(--radius-ctrl);
+  color: var(--color-text-secondary);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-ui);
+  white-space: nowrap;
+}
+
+.sheet-now__body {
+  display: grid;
+  gap: var(--space-half);
+  min-width: 0;
+}
+
+.sheet-now__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-title-md);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-title);
+}
+
+.sheet-now__score {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-family: var(--font-display);
+  font-size: var(--fs-score-sm);
+  font-stretch: calc(var(--wdth-condensed) * 1%);
+  font-weight: var(--fw-black);
+  font-variant-numeric: var(--numeric);
+  line-height: var(--lh-tight);
+}
+
+.sheet-now__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-half);
+  color: var(--color-link);
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-ui);
+}
+
+/* Seis filas-tarjeta: miniatura 16:9 + nombre + descripción | acordeón de 48 */
+.sheet-sections {
+  margin-top: var(--space-3);
+  border-top: var(--border-rule) solid var(--color-border-strong);
+}
+
+.sheet-section {
+  border-bottom: var(--border-hair) solid var(--color-border);
+}
+
+.sheet-section__row {
+  display: flex;
+  align-items: center;
+  min-height: var(--sheet-section-h);
+}
+
+.sheet-section__link {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  align-self: stretch;
+  gap: var(--space-2);
+  min-width: 0;
+  color: var(--color-text);
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sheet-section__thumb {
+  flex: none;
+  width: var(--sheet-thumb-w);
+  height: var(--sheet-thumb-h);
+}
+
+.sheet-section__text {
+  display: grid;
+  min-width: 0;
+}
+
+.sheet-section__name {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-family: var(--font-display);
+  font-size: var(--fs-title-md);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-snug);
+}
+
+.sheet-section__desc {
+  overflow: hidden;
+  color: var(--color-text-muted);
+  font-size: var(--fs-meta);
+  line-height: var(--lh-ui);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sheet-section__toggle {
+  position: relative;
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: var(--sheet-toggle);
+  height: var(--sheet-toggle);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-text);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Filete de 1 × 32 que separa las dos zonas táctiles */
+.sheet-section__toggle::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: var(--space-4);
+  border-left: var(--border-hair) solid var(--color-border);
+  transform: translateY(-50%);
+}
+
+.sheet-section__toggle .chevron {
+  width: var(--icon-md);
+  height: var(--icon-md);
+}
+
+.sheet-section__toggle[aria-expanded="true"] .chevron {
+  transform: rotate(180deg);
+}
+
+/* Acordeón: los enlaces de Z1, alineados con el texto (96 + 16 = 112 px) */
+.sheet-section__panel {
+  padding: 0 0 var(--space-2) calc(var(--sheet-thumb-w) + var(--space-2));
+}
+
+.sheet-sub__group + .sheet-sub__group {
+  margin-top: var(--space-1);
+}
+
+.sheet-sub__label {
+  padding-top: var(--space-1);
+  color: var(--color-text-muted);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-ui);
+}
+
+.sheet-sub__links > li + li {
+  border-top: var(--border-hair) solid var(--color-border);
+}
+
+.sheet-sub__link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: var(--sheet-subrow-h);
+  color: var(--color-text);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-snug);
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sheet-sub__link[aria-current="page"] {
+  font-weight: var(--fw-semibold);
+}
+
+/* «Más» y redes */
+.sheet-more > li {
+  border-bottom: var(--border-hair) solid var(--color-border);
+}
+
+.sheet-more__link {
+  display: flex;
+  align-items: center;
+  min-height: var(--sheet-subrow-h);
+  color: var(--color-text);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-medium);
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sheet-social {
+  display: flex;
+  gap: var(--space-1);
+  margin-top: var(--space-3);
+}
+
+/* Pulsado: gris 100, sin destello del navegador (08 §6.3) */
+.sheet-now:active,
+.sheet-section__link:active,
+.sheet-section__toggle:active,
+.sheet-sub__link:active,
+.sheet-more__link:active {
+  background: var(--color-surface-hover);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .sheet-now:hover .sheet-now__title,
+  .sheet-section__link:hover .sheet-section__name,
+  .sheet-sub__link:hover,
+  .sheet-more__link:hover {
+    color: var(--color-link);
+    text-decoration: underline;
+  }
+
+  .sheet-section__toggle:hover {
+    background: var(--color-surface-hover);
+  }
+}
+
 
 /* Enlace «Saltar al contenido» ------------------------------------------------ */
 .skip-link {

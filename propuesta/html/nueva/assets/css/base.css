@@ -17,13 +17,13 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
-  scroll-padding-top: calc(var(--header-l1-h-mobile) + var(--context-bar-h) + var(--space-2));
+  scroll-padding-top: calc(var(--header-total-mobile) + var(--space-2));
   accent-color: var(--brand-600);
 }
 
 @media (min-width: 1024px) {
   html {
-    scroll-padding-top: calc(var(--header-l2-h) + var(--context-bar-h) + var(--space-3));
+    scroll-padding-top: calc(var(--header-sticky-lg) + var(--space-3));
   }
 }
 

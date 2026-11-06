@@ -9,6 +9,8 @@
 
    Este archivo SOLO declara variables. No contiene reglas de componentes.
    Orden de carga: tokens.css -> base.css -> components.css -> pages.css
+   Incluye los tokens del menú y los megamenús (08-menu-diseno.md,
+   08-menu-tokens.css fusionado aquí: un único archivo de tokens).
 
    Reglas que estos tokens hacen cumplir:
    - Un único color de marca: el azul del logo (#294D6E).
@@ -211,7 +213,10 @@
   --header-l1-h:        64px;  /* barra azul del logo (escritorio) */
   --header-l1-h-mobile: 56px;
   --header-l2-h:        48px;  /* barra azul del menú (solo >= lg) */
-  --context-bar-h:      48px;  /* barra blanca contextual */
+  /* La barra blanca contextual se eliminó (08 §2.1): cabecera de 2 capas */
+  --header-total-lg:    112px; /* nivel 1 (64) + nivel 2 (48) */
+  --header-sticky-lg:   48px;  /* lo que queda pegado al bajar: solo el nivel 2 */
+  --header-total-mobile:56px;  /* solo el nivel 1, pegado */
   --bottom-nav-h:       64px;  /* + env(safe-area-inset-bottom) */
   --radio-dock-h:       64px;  /* reproductor acoplado (escritorio) */
   --radio-dock-h-mobile:56px;  /* se apoya sobre la barra inferior */
@@ -241,7 +246,6 @@
   /* ======================================================================
      6. ELEVACIÓN (solo capas que flotan; las tarjetas NO llevan sombra)
      ====================================================================== */
-  --shadow-panel:  0 8px 24px rgba(15, 33, 51, 0.14), 0 1px 2px rgba(15, 33, 51, 0.08); /* panel de la barra contextual */
   --shadow-dock:   0 -4px 16px rgba(15, 33, 51, 0.10);  /* reproductor y barra inferior */
   --shadow-sticky: 0 2px 8px rgba(15, 33, 51, 0.12);    /* menú azul pegado al hacer scroll */
   --shadow-sheet:  0 -8px 32px rgba(15, 33, 51, 0.18);  /* hoja inferior móvil */
@@ -252,7 +256,7 @@
   --z-base:       0;
   --z-raised:     1;    /* play sobre miniatura, chips sobre imagen */
   --z-sticky:     100;  /* menú azul / cabecera móvil pegada */
-  --z-panel:      200;  /* paneles de la barra contextual */
+  --z-panel:      200;  /* paneles flotantes dentro de la cabecera */
   --z-bottom-nav: 300;  /* barra inferior móvil */
   --z-dock:       310;  /* reproductor de radio (encima de la barra inferior) */
   --z-scrim:      400;
@@ -266,10 +270,93 @@
   --dur-fast:      120ms;  /* hover, color, subrayado, press */
   --dur-base:      200ms;  /* paneles, dock, hoja, pestañas */
   --dur-slow:      320ms;  /* fundido del banner de partidos */
-  --hover-open-delay:  120ms; /* intención antes de abrir panel */
-  --hover-close-delay: 280ms; /* gracia antes de cerrar panel */
   --rotate-interval:   8s;    /* rotación del banner de partidos (pausa en hover/foco) */
   --live-pulse:        1.6s;  /* único movimiento en bucle: punto "en vivo" */
+
+  /* ======================================================================
+     9. MENÚ Y MEGAMENÚS (08-menu-diseno.md; contrastes en su §5.4)
+     ====================================================================== */
+  /* Barra azul: hover del ítem (blanco sobre brand-700 + 8 % blanco = 8.73:1) */
+  --nav-hover-bg:        rgba(255, 255, 255, 0.08);
+  /* Pestaña abierta: el ítem cuyo panel está abierto se vuelve blanco y se funde
+     con el panel. brand-600 sobre blanco = 8.82:1; blanco frente a brand-700 = 11.06:1 */
+  --nav-tab-open-bg:     var(--white);
+  --nav-tab-open-text:   var(--brand-600);
+
+  /* Buscador con forma de campo en el nivel 1 (botón que abre el buscador).
+     Texto blanco 88 % sobre blanco 12 % / brand-600 = 5.36:1; borde 48 % = 3.37:1 */
+  --search-trigger-w:    280px;
+  --search-trigger-h:    40px;
+  --search-trigger-bg:   rgba(255, 255, 255, 0.12);
+  --search-trigger-border: rgba(255, 255, 255, 0.48);
+  --search-trigger-text: rgba(255, 255, 255, 0.88);
+
+  /* Punto «en vivo» sobre azul: rojo/brand-700 = 2.14:1 (no llega a 3:1), por eso
+     lleva anillo blanco de 2 px (blanco/brand-700 = 11.06:1; rojo/blanco = 5.18:1) */
+  --live-dot-size:       8px;
+  --live-dot-ring:       2px;
+  --live-dot-ring-color: var(--white);
+  --live-dot-gap:        8px;
+
+  /* Megamenú (escritorio >= 1024 con hover: hover y pointer: fine). Retícula de
+     12 columnas del sitio: Z1 enlaces 5/12 · Z2 destacado 4/12 · Z3 ahora 3/12.
+     A 1440: 492 · 389 · 286. A 1024: 386 · 304 · 222. */
+  --mega-pad-block:      32px;
+  --mega-content-h:      352px;  /* alto FIJO del contenido: todos los paneles iguales */
+  --mega-h:              416px;  /* 32 + 352 + 32 */
+  --mega-max-h:          calc(100dvh - var(--header-sticky-lg) - 32px);
+  --mega-gap:            var(--grid-gap-lg);
+  --mega-divider:        var(--border-hair) solid var(--color-border);
+  --mega-compact-w:      596px;  /* panel «Más»: borde derecho alineado con el ítem */
+  --mega-avatar:         120px;  /* retrato 1:1 del presentador, radio 0 */
+  --mega-title-fs:       1.5rem; /* 24 px · Archivo 800 cursiva */
+  --mega-title-lh:       1.15;
+  --mega-title-gap:      24px;
+  --mega-row-h:          40px;   /* fila de enlace (solo puntero fino; WCAG 2.5.8 pide 24) */
+  --mega-group-gap:      16px;
+  --mega-label-gap:      8px;
+  --mega-current-mark:   8px;    /* cuadrado brand-600 = «estás aquí» */
+  --mega-lead-ratio:     16 / 9;
+  --mega-short-ratio:    9 / 16;
+  --mega-thumb-w:        128px;
+  --mega-thumb-h:        72px;
+  /* Tarjeta de partido (mini Centro de Partidos, el único bloque oscuro del panel)
+     blanco 16.33:1 · blanco 80 % 10.81:1 · blanco 72 % 8.99:1 · brand-300 8.12:1 */
+  --mega-match-bg:       var(--color-surface-dark);
+  --mega-match-bg-hover: var(--brand-800);
+  --mega-match-pad:      24px;
+  --mega-match-crest:    48px;
+  --mega-match-text-muted: rgba(255, 255, 255, 0.72);
+  /* Una sola elevación: sombra hacia abajo, sin borde */
+  --mega-shadow:         0 16px 32px -8px rgba(15, 33, 51, 0.20), 0 2px 4px rgba(15, 33, 51, 0.06);
+  --mega-scrim:          rgba(15, 33, 51, 0.16); /* velo sobre la página, pointer-events: none */
+
+  /* Tiempos de la intención de hover (09 §2.5). No se anulan con movimiento
+     reducido: miden la intención, no son movimiento. main.js los lee de aquí. */
+  --mega-open-delay:     250ms;  /* reposo antes de abrir el primer panel */
+  --mega-switch-delay:   0ms;    /* con un panel abierto, cambio horizontal a otro ítem */
+  --mega-aim-rest:       80ms;   /* bajando en diagonal hacia el panel: cambia solo tras 80 ms quieto */
+  --mega-close-delay:    400ms;  /* gracia al salir de ítem + panel (región única) */
+  --mega-shift:          -4px;   /* entrada: translateY(-4px -> 0) */
+  --mega-dur-in:         var(--dur-base);
+  --mega-dur-out:        var(--dur-fast);
+  --mega-dur-swap:       var(--dur-fast);
+  --z-mega:              var(--z-panel);
+  --z-mega-scrim:        99;     /* justo debajo de la cabecera pegada (--z-sticky: 100) */
+
+  /* Hoja del menú móvil (< 1024 y tabletas sin hover) */
+  --sheet-top:           var(--header-l1-h-mobile);
+  --sheet-bottom:        calc(var(--bottom-nav-h) + env(safe-area-inset-bottom, 0px));
+  --sheet-pad-inline:    var(--page-margin);
+  --sheet-max-content:   640px;
+  --sheet-search-h:      48px;
+  --sheet-section-h:     80px;
+  --sheet-thumb-w:       96px;   /* miniatura 16:9: 96 x 54 */
+  --sheet-thumb-h:       54px;
+  --sheet-toggle:        48px;
+  --sheet-subrow-h:      48px;
+  --sheet-now-h:         88px;
+  --sheet-dur:           var(--dur-base);
 }
 
 /* Movimiento reducido: los componentes leen estas variables; aquí se anulan. */

@@ -1,10 +1,12 @@
 /* ==========================================================================
    HABLA DEPORTES · main.js (vanilla, sin dependencias)
    Solo interacciones: el contenido base se lee completo sin JavaScript.
-   Módulos: cabecera pegada · menú móvil · buscador · pestañas · banner de
-   partidos · carril · estado «en vivo» · filtros por tema · cuenta regresiva
-   · encuesta · formularios · copiar enlace · chips de torneo.
-   Respeta prefers-reduced-motion. Los paneles del menú son solo CSS (hover).
+   Módulos: cabecera pegada · megamenú (intención de hover) · buscador · hoja
+   del menú móvil · pestañas · banner de partidos · carril · estado «en vivo»
+   · filtros por tema · cuenta regresiva · encuesta · formularios · copiar
+   enlace · filtros pendientes · chips de torneo.
+   Respeta prefers-reduced-motion (los temporizadores del hover se mantienen:
+   miden intención, no son movimiento).
    ========================================================================== */
 (function () {
   'use strict';
@@ -19,7 +21,9 @@
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
   var desktop = window.matchMedia('(min-width: 1024px)');
 
-  /* 1. Cabecera: sombra y logo pequeño cuando el menú azul queda pegado ------ */
+  /* 1. Cabecera: se compacta al bajar. Escritorio: el nivel 1 (64) se va con la
+        página y queda pegado el nivel 2 (48) con el logo de 24 px. No se esconde
+        al bajar ni reaparece al subir (08 §2.5). */
   var header = $('[data-header]');
   if (header) {
     var ticking = false;
@@ -34,33 +38,221 @@
     update();
   }
 
-  /* 2 y 3. Menú móvil y buscador (franja bajo la cabecera, no modal) --------- */
-  function disclosure(btn, panel, onOpen, labels) {
-    if (!btn || !panel) return null;
-    var label = $('[data-menu-label]', btn);
-    function set(open) {
-      btn.setAttribute('aria-expanded', String(open));
-      panel.hidden = !open;
-      if (label && labels) label.textContent = open ? labels[1] : labels[0];
-      if (open && onOpen) onOpen();
-    }
-    btn.addEventListener('click', function () { set(btn.getAttribute('aria-expanded') !== 'true'); });
-    panel.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') { set(false); btn.focus(); }
+  /* 2. Megamenú: SOLO hover en escritorio con puntero fino (decisión del dueño).
+        No abre con clic ni con teclado; cada ítem es un enlace real a su hub.
+        Intención: abre tras 250 ms quieto; con un panel abierto cambia al
+        instante en horizontal; si el puntero BAJA en diagonal hacia el panel
+        cruzando otro ítem, no cambia salvo que se quede 80 ms quieto (zona
+        segura). Ítem + panel son una sola región: cierra 400 ms después de
+        salir. El panel cuelga de la barra sin hueco: ese es el puente invisible.
+        Esc, Tab, scroll > 8 px, clic, perder el foco de la ventana o dejar de
+        ser escritorio: cierre inmediato. Tiempos: tokens --mega-* (tokens.css). */
+  var megaMQ = window.matchMedia('(min-width: 1024px) and (hover: hover) and (pointer: fine)');
+  var megaNav = $('[data-mega]');
+  var closeMega = function () {};
+  if (megaNav) {
+    var rootStyle = getComputedStyle(document.documentElement);
+    var ms = function (name, fallback) {
+      var v = rootStyle.getPropertyValue(name).trim();
+      var n = parseFloat(v);
+      if (isNaN(n)) return fallback;
+      return /ms$/.test(v) ? n : n * 1000;
+    };
+    var T = {
+      open: ms('--mega-open-delay', 250), swap: ms('--mega-switch-delay', 0),
+      aim: ms('--mega-aim-rest', 80), close: ms('--mega-close-delay', 400)
+    };
+    var scrim = $('[data-mega-scrim]');
+    var items = $$('[data-mega-item]', megaNav);
+    var current = null, openT = 0, closeT = 0, aimT = 0, moved = false, eagerDone = false, scrollAt = 0;
+    var pts = [];
+    var clearTimers = function () {
+      window.clearTimeout(openT); window.clearTimeout(closeT); window.clearTimeout(aimT);
+      openT = closeT = aimT = 0;
+    };
+    var openMega = function (item) {
+      clearTimers();
+      if (current === item) return;
+      if (current) {
+        // Cambio de panel: sin animar el panel, solo se funde el contenido
+        megaNav.classList.add('is-switching');
+        current.classList.remove('is-open', 'is-swapped');
+        item.classList.add('is-open', 'is-swapped');
+        void megaNav.offsetWidth;
+        megaNav.classList.remove('is-switching');
+      } else {
+        item.classList.add('is-open');
+        scrollAt = window.scrollY;
+      }
+      current = item;
+      if (scrim) scrim.classList.add('is-visible');
+    };
+    closeMega = function () {
+      clearTimers();
+      if (!current) return;
+      current.classList.remove('is-open', 'is-swapped');
+      current = null;
+      if (scrim) scrim.classList.remove('is-visible');
+    };
+    // El puntero baja hacia el panel: dy > 0 y |dy| >= |dx| en los 3 últimos movimientos
+    var aimingDown = function () {
+      if (pts.length < 2) return false;
+      var a = pts[0], b = pts[pts.length - 1];
+      var dx = b.x - a.x, dy = b.y - a.y;
+      return dy > 0 && Math.abs(dy) >= Math.abs(dx);
+    };
+    // Imágenes del panel: pasan a carga inmediata con el primer hover de la barra
+    var eager = function () {
+      if (eagerDone) return;
+      eagerDone = true;
+      $$('.mega img[loading="lazy"]', megaNav).forEach(function (im) { im.loading = 'eager'; });
+    };
+    document.addEventListener('pointermove', function (e) {
+      if (e.pointerType !== 'mouse') return;
+      moved = true; // si la página carga con el puntero encima, nada abre hasta moverlo
+      pts.push({ x: e.clientX, y: e.clientY });
+      if (pts.length > 3) pts.shift();
+    }, { passive: true });
+    items.forEach(function (item) {
+      item.addEventListener('pointerenter', function (e) {
+        if (e.pointerType !== 'mouse' || !megaMQ.matches || !moved) return;
+        eager();
+        window.clearTimeout(closeT); closeT = 0;
+        if (current === item) { window.clearTimeout(aimT); aimT = 0; return; }
+        window.clearTimeout(openT); window.clearTimeout(aimT);
+        if (!current) {
+          openT = window.setTimeout(function () { openMega(item); }, T.open);
+        } else if (aimingDown()) {
+          aimT = window.setTimeout(function () { openMega(item); }, T.aim);
+        } else if (T.swap > 0) {
+          openT = window.setTimeout(function () { openMega(item); }, T.swap);
+        } else {
+          openMega(item);
+        }
+      });
+      item.addEventListener('pointermove', function (e) {
+        // Zona segura: solo cambia si el puntero se queda quieto 80 ms sobre el otro ítem
+        if (e.pointerType !== 'mouse' || !aimT || current === item) return;
+        window.clearTimeout(aimT);
+        aimT = window.setTimeout(function () { openMega(item); }, T.aim);
+      });
+      item.addEventListener('pointerleave', function (e) {
+        if (e.pointerType !== 'mouse') return;
+        window.clearTimeout(openT); window.clearTimeout(aimT); openT = aimT = 0;
+        if (current) {
+          window.clearTimeout(closeT);
+          closeT = window.setTimeout(closeMega, T.close);
+        }
+      });
     });
-    return set;
+    megaNav.addEventListener('click', function (e) { if (e.target.closest('a')) closeMega(); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' || e.key === 'Tab') closeMega(); // el teclado nunca deja un panel abierto
+    });
+    window.addEventListener('scroll', function () {
+      if (current && Math.abs(window.scrollY - scrollAt) > 8) closeMega();
+    }, { passive: true });
+    window.addEventListener('blur', function () { closeMega(); });
+    if (megaMQ.addEventListener) megaMQ.addEventListener('change', function () { closeMega(); });
   }
-  var setMenu = disclosure($('[data-menu-toggle]'), $('[data-menu]'), function () {
-    if (setSearch) setSearch(false);
-  }, ['Abrir el menú', 'Cerrar el menú']);
+
+  /* 3. Buscador (franja bajo la cabecera, no modal) y hoja del menú móvil ---- */
+  var setMenu = null;
   var searchBtn = $('[data-search-toggle]');
-  var setSearch = disclosure(searchBtn, $('[data-search]'), function () {
-    if (setMenu) setMenu(false);
-    var q = $('#q'); if (q) q.focus();
-  });
-  var closeSearch = $('[data-search-close]');
-  if (closeSearch && setSearch) {
-    closeSearch.addEventListener('click', function () { setSearch(false); searchBtn.focus(); });
+  var searchPanel = $('[data-search]');
+  var setSearch = null;
+  if (searchBtn && searchPanel) {
+    setSearch = function (open) {
+      searchBtn.setAttribute('aria-expanded', String(open));
+      searchPanel.hidden = !open;
+      if (open) {
+        if (setMenu) setMenu(false);
+        closeMega();
+        var q = $('#q'); if (q) q.focus();
+      }
+    };
+    searchBtn.addEventListener('click', function () { setSearch(searchBtn.getAttribute('aria-expanded') !== 'true'); });
+    searchPanel.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { setSearch(false); searchBtn.focus(); }
+    });
+    var closeSearch = $('[data-search-close]');
+    if (closeSearch) closeSearch.addEventListener('click', function () { setSearch(false); searchBtn.focus(); });
+  }
+
+  /* Hoja del menú (< 1024 y pantallas sin hover): pantalla completa entre la
+     cabecera y la barra inferior. Foco atrapado (botón «Cerrar» + hoja), Esc
+     cierra y devuelve el foco al botón, la página de fondo no se desplaza. */
+  var menuBtn = $('[data-menu-toggle]');
+  var sheet = $('[data-menu]');
+  if (menuBtn && sheet) {
+    var word = $('[data-menu-word]', menuBtn);
+    var label = $('[data-menu-label]', menuBtn);
+    var closingT = 0;
+    sheet.setAttribute('tabindex', '-1');
+    var isOpen = function () { return menuBtn.getAttribute('aria-expanded') === 'true'; };
+    var focusables = function () {
+      return [menuBtn].concat($$('a[href], button:not([disabled]), input, select, textarea', sheet).filter(function (el) {
+        return el.getClientRects().length > 0;
+      }));
+    };
+    setMenu = function (open, restoreFocus) {
+      window.clearTimeout(closingT);
+      menuBtn.setAttribute('aria-expanded', String(open));
+      if (word) word.textContent = open ? 'Cerrar' : 'Menú';
+      if (label) label.textContent = open ? 'Cerrar el menú' : 'Abrir el menú';
+      document.documentElement.classList.toggle('is-menu-open', open);
+      if (open) {
+        if (setSearch) setSearch(false);
+        closeMega();
+        sheet.style.setProperty('--sheet-top', Math.max(0, Math.round(header.getBoundingClientRect().bottom)) + 'px');
+        sheet.classList.remove('is-closing');
+        sheet.hidden = false;
+        sheet.scrollTop = 0;
+        sheet.focus({ preventScroll: true });
+      } else if (!sheet.hidden) {
+        sheet.classList.add('is-closing');
+        var d = parseFloat(getComputedStyle(sheet).animationDuration) * 1000 || 0;
+        closingT = window.setTimeout(function () { sheet.hidden = true; sheet.classList.remove('is-closing'); }, d);
+        if (restoreFocus) menuBtn.focus();
+      }
+    };
+    menuBtn.addEventListener('click', function () { setMenu(!isOpen(), false); });
+    document.addEventListener('keydown', function (e) {
+      if (!isOpen()) return;
+      if (e.key === 'Escape') { e.preventDefault(); setMenu(false, true); return; }
+      if (e.key !== 'Tab') return;
+      var list = focusables();
+      var i = list.indexOf(document.activeElement);
+      if (e.shiftKey && i <= 0) { e.preventDefault(); list[list.length - 1].focus(); }
+      else if (!e.shiftKey && (i === -1 || i === list.length - 1)) { e.preventDefault(); list[0].focus(); }
+    });
+    sheet.addEventListener('click', function (e) {
+      var a = e.target.closest('a[href]');
+      if (a && a.getAttribute('href').charAt(0) === '#') setMenu(false, false); // ancla en la misma página
+    });
+    if (megaMQ.addEventListener) megaMQ.addEventListener('change', function (m) { if (m.matches && isOpen()) setMenu(false, false); });
+
+    // Acordeón: uno abierto a la vez; por defecto, el de la sección actual (lo marca el HTML)
+    var toggles = $$('[data-accordion]', sheet);
+    toggles.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var willOpen = btn.getAttribute('aria-expanded') !== 'true';
+        toggles.forEach(function (b) {
+          var on = b === btn && willOpen;
+          b.setAttribute('aria-expanded', String(on));
+          document.getElementById(b.getAttribute('aria-controls')).hidden = !on;
+        });
+      });
+    });
+  }
+
+  /* Barra inferior: «Inicio» estando en la portada sube al principio */
+  var homeTab = $('.bottom-nav__link[href="index.html"][aria-current="page"]');
+  if (homeTab) {
+    homeTab.addEventListener('click', function (e) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: reduce.matches ? 'auto' : 'smooth' });
+    });
   }
 
   /* 4. Pestañas accesibles (flechas, Inicio, Fin; el hash abre la pestaña) ---- */
@@ -191,6 +383,21 @@
       el.textContent = 'Ahora: ' + topics[slot] + (slot < 3 ? ' · Después: ' + topics[slot + 1] : '');
     });
   }
+  // Megamenú de En vivo: «Ahora» y «Después» siguen la parrilla real
+  if (slot >= 0) {
+    $$('[data-slots]').forEach(function (list) {
+      var topics = list.getAttribute('data-slots').split('|');
+      var hours = list.getAttribute('data-slot-hours').split('|');
+      var fill = function (row, i) {
+        if (!row) return;
+        if (i >= topics.length) { row.hidden = true; return; }
+        $('[data-slot-time]', row).textContent = hours[i];
+        $('[data-slot-topic]', row).textContent = topics[i];
+      };
+      fill($('[data-slot="ahora"]', list), slot);
+      fill($('[data-slot="despues"]', list), slot + 1);
+    });
+  }
   var grid = $('[data-week-grid]');
   if (grid && weekday) {
     $$('td[data-day="' + day + '"]', grid).forEach(function (td, i) {
@@ -224,11 +431,6 @@
       status.textContent = 'Tema: ' + label + '. ' + shown + (shown === 1 ? ' resultado.' : ' resultados.');
       if (useUrl) {
         if (title) title.textContent = tema === 'todas' ? title.getAttribute('data-filter-title') : 'Noticias: ' + label;
-        $$('.context-nav__link').forEach(function (a) {
-          var href = a.getAttribute('href');
-          var match = tema === 'todas' ? href === 'noticias.html' : href === 'noticias.html?tema=' + tema;
-          if (match) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
-        });
         if (push) history.replaceState(null, '', tema === 'todas' ? 'noticias.html' : 'noticias.html?tema=' + tema);
       }
     }
@@ -312,6 +514,12 @@
       if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(location.href).then(done, done);
       else done();
     });
+  });
+
+  /* 11b. Filtros que aún no existen (videos ?tema=, mercado ?equipo=): la página
+         carga completa y lo dice, en lugar de fingir que filtró */
+  $$('[data-filter-pending]').forEach(function (el) {
+    el.hidden = !new URLSearchParams(location.search).get(el.getAttribute('data-filter-pending'));
   });
 
   /* 12. Chips de torneo (?t=): marca el activo y avisa que solo hay datos de Liga */

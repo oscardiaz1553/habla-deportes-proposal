@@ -9,7 +9,7 @@ import datetime as dt
 
 import imagenes
 import nucleo
-from datos import (D, FUENTE, HOY, dia_corto, dia_largo, equipo, fila_tabla, forma_texto, hora,
+from datos import (D, DIAS, FUENTE, HOY, dia_corto, dia_largo, equipo, fecha, fila_tabla, forma_texto, hora,
                    hora_iso, id_partido, miles, partido_por_id, signo, todos_los_proximos)
 from nucleo import e, enlace_externo, escudo, icono, img
 
@@ -198,6 +198,19 @@ def _equipo_banner(clave):
             f'<p class="match-slide__name">{e(eq["corto"])}</p></div>')
 
 
+def _marcador(s, tag="p"):
+    """Centro del banner: marcador (en juego o final) u hora (próximo). Lo comparten el
+    banner de partidos y la tarjeta de partido del megamenú."""
+    loc, vis = equipo(s["local"]), equipo(s["visitante"])
+    if s["estado"] in ("vivo", "final"):
+        return (f'<{tag} class="match-slide__score"><span aria-hidden="true">{s["gl"]}'
+                f'<span class="match-slide__dash">-</span>{s["gv"]}</span>'
+                f'<span class="visually-hidden">{e(loc["corto"])} {s["gl"]}, {e(vis["corto"])} {s["gv"]}</span></{tag}>')
+    hh, ampm = hora(s["hora"]).split(" ", 1)
+    return (f'<{tag} class="match-slide__time"><span class="visually-hidden">{e(loc["corto"])} contra '
+            f'{e(vis["corto"])}, a las </span>{e(hh)}<span class="match-slide__ampm">{e(ampm)}</span></{tag}>')
+
+
 def centro_partidos():
     slides = _diapositivas()
     n = len(slides)
@@ -210,15 +223,8 @@ def centro_partidos():
             estado = '<span class="status-text">Final</span>'
         else:
             estado = '<span class="status-text">Próximo</span>'
-        if s["estado"] in ("vivo", "final"):
-            centro = (f'<p class="match-slide__score"><span aria-hidden="true">{s["gl"]}'
-                      f'<span class="match-slide__dash">-</span>{s["gv"]}</span>'
-                      f'<span class="visually-hidden">{e(loc["corto"])} {s["gl"]}, {e(vis["corto"])} {s["gv"]}</span></p>')
-        else:
-            hh, ampm = hora(s["hora"]).split(" ", 1)
-            centro = (f'<p class="match-slide__time"><span class="visually-hidden">{e(loc["corto"])} contra '
-                      f'{e(vis["corto"])}, a las </span>{e(hh)}<span class="match-slide__ampm">{e(ampm)}</span></p>')
-        info = [f'{icono("calendar-blank", "icon icon--sm")}<span>{e(dia_corto(s["dia"]))}'
+        centro = _marcador(s)
+        info =[f'{icono("calendar-blank", "icon icon--sm")}<span>{e(dia_corto(s["dia"]))}'
                 + (f', {e(hora(s["hora"]))}' if s.get("hora") else "") + "</span>"]
         if s.get("estadio"):
             info.append(f'{icono("map-pin", "icon icon--sm")}<span>{e(s["estadio"])}</span>')
@@ -411,10 +417,11 @@ def _forma(forma):
 def tabla_posiciones(variante="compacta", filas=5, sello=False):
     tp = D["tabla_posiciones"]
     hasta = tp["leyenda"]["cuadrangulares"][1]
-    lista = tp["filas"][:filas] if variante == "compacta" else tp["filas"]
+    lista = tp["filas"][:filas] if variante in ("compacta", "mini") else tp["filas"]
     if variante == "compacta" and not any(f["equipo"] == "junior" for f in lista):
         lista = lista + [fila_tabla("junior")]
     completa = variante == "completa"
+    mini = variante == "mini"  # megamenú de Datos (08 §4.5): #, equipo, PJ y Pts; sin zonas ni leyenda
     cab = ['<th scope="col" class="num">#</th>', '<th scope="col" class="team-col">Equipo</th>',
            '<th scope="col" class="num"><abbr title="Partidos jugados">PJ</abbr></th>']
     if completa:
@@ -423,15 +430,16 @@ def tabla_posiciones(variante="compacta", filas=5, sello=False):
                 '<th scope="col" class="num"><abbr title="Perdidos">P</abbr></th>',
                 '<th scope="col" class="num"><abbr title="Goles a favor">GF</abbr></th>',
                 '<th scope="col" class="num"><abbr title="Goles en contra">GC</abbr></th>']
-    cab += ['<th scope="col" class="num"><abbr title="Diferencia de goles">DG</abbr></th>',
-            '<th scope="col" class="num"><abbr title="Puntos">Pts</abbr></th>']
+    if not mini:
+        cab.append('<th scope="col" class="num"><abbr title="Diferencia de goles">DG</abbr></th>')
+    cab.append('<th scope="col" class="num"><abbr title="Puntos">Pts</abbr></th>')
     if completa:
         cab.append('<th scope="col" class="form-col">Racha</th>')
     cuerpo = []
     for f in lista:
         eq = equipo(f["equipo"])
-        zona = f["pos"] <= hasta
-        marca = (f'<span class="zone-mark" aria-hidden="true"></span>'
+        zona = f["pos"] <= hasta and not mini
+        marca = "" if mini else (f'<span class="zone-mark" aria-hidden="true"></span>'
                  f'<span class="visually-hidden">, zona de cuadrangulares</span>') if zona else '<span class="zone-mark zone-mark--none" aria-hidden="true"></span>'
         celdas = [f'<td class="num pos">{marca}{f["pos"]}</td>',
                   f'<th scope="row" class="team-col"><span class="team-cell">{escudo(f["equipo"], "crest crest--xs")}'
@@ -439,7 +447,9 @@ def tabla_posiciones(variante="compacta", filas=5, sello=False):
                   f'<td class="num">{f["pj"]}</td>']
         if completa:
             celdas += [f'<td class="num">{f[k]}</td>' for k in ("g", "e", "p", "gf", "gc")]
-        celdas += [f'<td class="num">{signo(f["dg"])}</td>', f'<td class="num pts">{f["pts"]}</td>']
+        if not mini:
+            celdas.append(f'<td class="num">{signo(f["dg"])}</td>')
+        celdas.append(f'<td class="num pts">{f["pts"]}</td>')
         if completa:
             celdas.append(f'<td class="form-col">{_forma(f["forma"])}</td>')
         sel = ' class="is-selected"' if f["equipo"] == "junior" else ""
@@ -451,6 +461,8 @@ def tabla_posiciones(variante="compacta", filas=5, sello=False):
     if completa:
         tabla = (f'<div class="table-scroll" role="region" aria-label="Tabla de posiciones, se desplaza de lado" tabindex="0">'
                  f'{tabla}</div>')
+    if mini:
+        return tabla
     leyenda = (f'<p class="standings-legend"><span class="zone-mark" aria-hidden="true"></span>'
                f'Cuadrangulares (1.º a {hasta}.º)</p>')
     return tabla + leyenda
@@ -832,9 +844,346 @@ def chips_torneos():
 
 
 # ==========================================================================
+# Menú: megamenús (escritorio) y hoja del menú móvil · 08-menu-diseno, 09 §3–§4
+# Contenido en sitio.PANELES; cifras SIEMPRE de data-ejemplo.json. Las fotos se
+# piden con menu=True: exentas de la regla de foto única, pero solo del catálogo.
+# Sin h2 dentro del menú (el h1 de la página es único): rótulos en <p>.
+# ==========================================================================
+EQUIPOS_FOCO = ("junior", "colombia")
+_PV = D["partido_en_vivo"]
+# Punto rojo de «Datos»: solo con un partido de Junior o de la Selección en juego (09 §6.1)
+PARTIDO_EN_JUEGO = _PV["estado"] == "en_vivo" and (_PV["local"] in EQUIPOS_FOCO or _PV["visitante"] in EQUIPOS_FOCO)
+
+
+def punto_vivo(tipo, clase="live-dot live-dot--ring"):
+    """Punto rojo de la barra azul, la hoja y la barra inferior.
+    tipo 'aire': lo muestra main.js (constante EN_VIVO). tipo 'partido': lo decide el JSON."""
+    if tipo == "aire":
+        return (f'<span class="{clase} only-aire" hidden aria-hidden="true"></span>'
+                f'<span class="visually-hidden only-aire" hidden>, al aire ahora</span>')
+    if tipo == "partido" and PARTIDO_EN_JUEGO:
+        return f'<span class="{clase}" aria-hidden="true"></span><span class="visually-hidden">, partido en vivo</span>'
+    return ""
+
+
+def _nota_base(tema):
+    return next(n for n in NOTAS_BASE if n["tema"] == tema)
+
+
+def _menu_enlace(texto, href, slug, clase="mega__link"):
+    cur = ' aria-current="page"' if href == f"{slug}.html" else ""
+    punto = ""
+    if href == "partido.html" and texto == "Partido en vivo":
+        if PARTIDO_EN_JUEGO:
+            punto = punto_vivo("partido", "live-dot")
+        else:
+            texto = "Último partido"  # 09 §3.5: sin partido en juego
+    return f'<li><a class="{clase}" href="{e(href)}"{cur}>{punto}<span>{e(texto)}</span></a></li>'
+
+
+def _grupo(rotulo, enlaces, slug, base="mega"):
+    gid = nucleo.P.nuevo_id(f"{base}-g-" + _slug(rotulo))
+    lis = "".join(_menu_enlace(t, h, slug, f"{base}__link") for t, h in enlaces)
+    return (f'<div class="{base}__group"><p class="{base}__label" id="{gid}">{e(rotulo)}</p>'
+            f'<ul class="{base}__links" role="list" aria-labelledby="{gid}">{lis}</ul></div>')
+
+
+def _boton_youtube(texto, url):
+    return (f'<a class="btn btn--secondary btn--sm mega__cta" href="{e(url)}" target="_blank" rel="noopener">'
+            f'{icono("youtube-logo")}{e(texto)}{icono("arrow-up-right", "icon icon--sm")}'
+            f'<span class="visually-hidden"> (se abre en una pestaña nueva)</span></a>')
+
+
+def _z1(clave, panel, slug):
+    visible, sr, href = panel["z0"]
+    grupos = panel["z1"]
+    corte = len(grupos) - 1 if len(grupos) > 2 else 1   # 3 grupos: 2 + 1 (Noticias); 2 grupos: 1 + 1
+    cols = (f'<div class="mega__col">{"".join(_grupo(r, l, slug) for r, l in grupos[:corte])}</div>'
+            f'<div class="mega__col">{"".join(_grupo(r, l, slug) for r, l in grupos[corte:])}</div>')
+    boton = _boton_youtube(*panel["boton"]) if panel.get("boton") else ""
+    return (f'<div class="mega__z1">'
+            f'<a class="mega__title" href="{e(href)}"><span class="visually-hidden">{e(sr)}</span>{e(visible)}'
+            f'{icono("arrow-right", "icon mega__arrow")}</a>'
+            f'<div class="mega__cols">{cols}</div>{boton}</div>')
+
+
+def _media_menu(clave, play=None, chip=None, duracion=None, chip_vivo=False, clase="mega-feature__media"):
+    partes = [img(clave, clase="media__img", alt="", menu=True)]
+    if play:
+        partes.append(f'<span class="play play--{play}" aria-hidden="true">{icono("play-fill")}</span>')
+    if chip_vivo:
+        partes.append(f'<span class="mega-feature__badge only-aire" hidden>{live_pill("Al aire")}</span>'
+                      f'<span class="chip-media chip-media--tl only-fuera">Próximo programa</span>')
+    if chip:
+        partes.append(f'<span class="chip-media chip-media--tl">{e(chip)}</span>')
+    if duracion:
+        partes.append(f'<span class="chip-media chip-media--br"><span class="visually-hidden">Duración: </span>{e(duracion)}</span>')
+    return f'<span class="{clase} media">{"".join(partes)}</span>'
+
+
+def _z2(panel):
+    z = panel["z2"]
+    if z["tipo"] == "tabla":
+        tit, href = z["enlace"]
+        return (f'<div class="mega__z2 mega-table">'
+                f'<p class="mega__module">{e(z["titulo"])}</p>'
+                f'{tabla_posiciones("mini", filas=z["filas"])}'
+                f'<p class="mega-table__foot"><span>Hasta la Fecha 19 · {e(FUENTE.rstrip("."))}</span>'
+                f'<a class="mega__more" href="{e(href)}">{e(tit)}{icono("caret-right", "icon icon--sm")}</a></p></div>')
+    if z["tipo"] == "programa":
+        pr = D["programa"]
+        return (f'<div class="mega__z2"><a class="mega-feature" href="{e(z["href"])}">'
+                f'{_media_menu(z["imagen"], play="lg", chip_vivo=True)}'
+                f'<span class="mega-feature__title">{e(z["titular"])}</span>'
+                f'<span class="mega-feature__actions"><span class="btn btn--primary btn--sm mega-feature__btn">{icono("play-fill")}'
+                f'<span class="only-aire" hidden>Ver en vivo</span><span class="only-fuera">Ver el último programa</span></span>'
+                f'<span class="mega-feature__when"><span class="only-aire" hidden>Al aire hasta las 12:00 m.</span>'
+                f'<span class="only-fuera">Lunes a viernes, 10:00 a. m.</span></span></span>'
+                f'</a></div>')
+    if z["tipo"] == "video":
+        meta = f'{z["duracion"]} · {dia_corto(z["fecha"]).lower()}'
+        etiqueta, titular = z["etiqueta"], z["titular"]
+        media = _media_menu(z["imagen"], play="sm", duracion=z["duracion"])
+        tipo = '<span class="visually-hidden">Video: </span>'
+    else:  # nota
+        n = _nota_base(z["nota"]) if z.get("nota") else None
+        titular = n["titular"] if n else z["titular"]
+        meta = f'{n["lectura_min"]} min de lectura' if n else z.get("meta", "")
+        etiqueta = z["etiqueta"]
+        media = _media_menu(z["imagen"])
+        tipo = ""
+    return (f'<div class="mega__z2"><a class="mega-feature" href="{e(z["href"])}">{media}'
+            f'<span class="mega-feature__label">{e(etiqueta)}</span>'
+            f'<span class="mega-feature__title">{tipo}{e(titular)}</span>'
+            f'<span class="mega-feature__meta">{e(meta)}</span></a></div>')
+
+
+def _ficha_partido(equipo_foco):
+    """Datos de la tarjeta de partido del panel (mismo formato que el banner de partidos)."""
+    if equipo_foco == "junior":
+        if _PV["estado"] == "en_vivo":
+            return {"torneo": _PV["torneo"], "estado": "vivo", "minuto": _PV["minuto"], "local": _PV["local"],
+                    "visitante": _PV["visitante"], "gl": _PV["marcador"]["local"], "gv": _PV["marcador"]["visitante"],
+                    "linea": f'{_PV["estadio"].replace("Estadio ", "", 1)} · {_PV["canal"]}', "href": "partido.html",
+                    "cta": "Seguir el partido"}
+        p = D["calendario_junior"]["proximos"][1]
+        return {"torneo": f"Liga BetPlay · Fecha {p['fecha']}", "estado": "proximo", **_pick(p),
+                "linea": f'{dia_corto(p["dia"])} · {p["canal"]}', "href": "junior.html#partidos", "cta": "Ver el partido"}
+    p = D["calendario_seleccion"]["proximos"][0]
+    return {"torneo": p["torneo"], "estado": "proximo", **_pick(p),
+            "linea": f'{dia_corto(p["dia"])} · {p["canal"]}', "href": "seleccion.html#partidos",
+            "cta": "Ver los partidos"}
+
+
+def tarjeta_partido_menu(equipo_foco):
+    """Tarjeta oscura de partido (Z3 de Junior y Selección). Reutiliza las piezas del banner
+    de partidos (píldora en vivo, marcador u hora con su texto para lector de pantalla y
+    escudos) en tamaño compacto: escudos de 48 a los lados del marcador, nombres debajo."""
+    s = _ficha_partido(equipo_foco)
+    if s["estado"] == "vivo":
+        estado = live_pill("En vivo", s["minuto"])
+    elif s["estado"] == "final":
+        estado = '<span class="status-text">Final</span>'
+    else:
+        estado = '<span class="mega-match__chip">Próximo partido</span>'
+    return (f'<a class="mega-match" href="{e(s["href"])}">'
+            f'<span class="mega-match__top"><span>{e(s["torneo"])}</span>{estado}</span>'
+            f'<span class="mega-match__teams">{escudo(s["local"], "crest crest--lg")}'
+            f'{_marcador(s, "span")}{escudo(s["visitante"], "crest crest--lg")}</span>'
+            f'<span class="mega-match__names" aria-hidden="true"><span>{e(equipo(s["local"])["corto"])}</span>'
+            f'<span>{e(equipo(s["visitante"])["corto"])}</span></span>'
+            f'<span class="mega-match__line">{e(s["linea"])}</span>'
+            f'<span class="mega-match__cta">{e(s["cta"])}{icono("caret-right", "icon icon--sm")}</span></a>')
+
+
+def _z3(panel):
+    z = panel["z3"]
+    tipo = z["tipo"]
+    if tipo == "shorts":
+        piezas = "".join(
+            f'<li><a class="mega-short" href="{e(z["href"])}">'
+            f'{_media_menu(foto, chip="Short", duracion=d, clase="mega-short__media media--9x16")}'
+            f'<span class="mega-short__title"><span class="visually-hidden">Short: </span>{e(t)}</span></a></li>'
+            for t, d, foto in z["piezas"])
+        return (f'<div class="mega__z3"><div class="mega__module-head"><p class="mega__module">{e(z["titulo"])}</p>'
+                f'<a class="mega__more" href="{e(z["href"])}">{e(z["enlace"])}<span class="visually-hidden"> los Shorts</span>{icono("caret-right", "icon icon--sm")}</a></div>'
+                f'<ul class="mega-shorts" role="list">{piezas}</ul></div>')
+    if tipo == "titulares":
+        notas = {n["id"]: n for n in D["noticias_por_tema"]["notas"]}
+        temas = {t["tema"]: t["etiqueta"] for t in D["noticias_por_tema"]["temas"]}
+        filas = "".join(
+            f'<li><a class="mega-headline" href="{e(h)}"><span class="mega-headline__topic">{e(temas[notas[i]["tema"]])}</span>'
+            f'<span class="mega-headline__title">{e(notas[i]["titular"])}</span></a></li>' for i, h in z["filas"])
+        return (f'<div class="mega__z3"><p class="mega__module">{e(z["titulo"])}</p>'
+                f'<ul class="mega-headlines" role="list">{filas}</ul></div>')
+    if tipo == "partido":
+        extra = ""
+        if z["equipo"] == "junior":
+            f = fila_tabla("junior")
+            extra = (f'<div class="mega-match__after">{_forma(f["forma"])}'
+                     f'<span class="mega-match__note">{"Líder" if f["pos"] == 1 else str(f["pos"]) + ".º"} · {f["pts"]} pts</span></div>')
+        else:
+            p = D["calendario_seleccion"]["proximos"][1]
+            extra = (f'<p class="mega-match__after mega-match__note">Después: {e(equipo(p["local"])["corto"])} vs '
+                     f'{e(equipo(p["visitante"])["corto"])} · {e(dia_corto(p["dia"]).lower())} · {e(hora(p["hora"]))}</p>')
+        return (f'<div class="mega__z3"><p class="mega__module">{e(z["titulo"])}</p>'
+                f'{tarjeta_partido_menu(z["equipo"])}{extra}</div>')
+    if tipo == "agenda":
+        fd = D["resultados"]["filtro_dias"]
+        filas = []
+        for cuando in ("hoy", "manana"):
+            for pid in fd[cuando]["partidos"]:
+                p = partido_por_id(pid)
+                vivo = p.get("estado") == "en_vivo"
+                d = fecha(p["dia"])
+                dia = "Hoy" if cuando == "hoy" else DIAS[d.weekday()].capitalize()
+                loc, vis = equipo(p["local"])["corto"], equipo(p["visitante"])["corto"]
+                if vivo:
+                    partido = f'{e(loc)} {p["gl"]}-{p["gv"]} {e(vis)}'
+                    estado = live_pill("En vivo", p["minuto"])
+                else:
+                    partido = f'{e(loc)} - {e(vis)}'
+                    estado = f'<span class="mega-fixture__time">{e(hora(p["hora"]))}</span>'
+                filas.append(
+                    f'<li><a class="mega-fixture{" is-today" if cuando == "hoy" else ""}" href="{"partido.html" if vivo else "datos.html#hoy"}">'
+                    f'<span class="mega-fixture__day"><time datetime="{p["dia"]}">{e(dia)}</time></span>'
+                    f'<span class="mega-fixture__teams">{partido}</span>{estado}</a></li>')
+            if cuando == "hoy" and not fd["hoy"]["partidos"]:
+                filas.append('<li class="mega-fixture mega-fixture--empty">Sin partidos de Liga hoy</li>')
+        return (f'<div class="mega__z3"><p class="mega__module">{e(z["titulo"])}</p>'
+                f'<ul class="mega-fixtures" role="list">{"".join(filas)}</ul>'
+                f'<p class="mega__source">{e(FUENTE.rstrip("."))}</p></div>')
+    # tipo == "parrilla": Ahora y después (programa.parrilla) + partido en juego
+    pr = D["programa"]["parrilla"]
+    temas = e("|".join(p["bloque"] for p in pr))
+    horas = e("|".join(p["hora"] for p in pr))
+    filas = (
+        f'<li class="mega-slot mega-slot--now only-aire" hidden data-slot="ahora">'
+        f'<span class="mega-slot__time" data-slot-time>{e(pr[0]["hora"])}</span>'
+        f'<span class="mega-slot__body"><span class="mega-slot__state"><span class="live-dot" aria-hidden="true"></span>Ahora</span>'
+        f'<a class="mega-slot__title" href="en-vivo.html#parrilla" data-slot-topic>{e(pr[0]["bloque"])}</a></span></li>'
+        f'<li class="mega-slot only-fuera"><span class="mega-slot__time">10:00</span>'
+        f'<span class="mega-slot__body"><span class="mega-slot__state">Próximo programa</span>'
+        f'<a class="mega-slot__title" href="en-vivo.html#parrilla">Lunes a viernes, 10:00 a. m.</a></span></li>'
+        f'<li class="mega-slot only-aire" hidden data-slot="despues">'
+        f'<span class="mega-slot__time" data-slot-time>{e(pr[1]["hora"])}</span>'
+        f'<span class="mega-slot__body"><span class="mega-slot__state">Después</span>'
+        f'<a class="mega-slot__title" href="en-vivo.html#parrilla" data-slot-topic>{e(pr[1]["bloque"])}</a></span></li>')
+    if PARTIDO_EN_JUEGO:
+        loc, vis = equipo(_PV["local"])["corto"], equipo(_PV["visitante"])["corto"]
+        filas += (f'<li class="mega-slot mega-slot--match"><span class="mega-slot__time mega-slot__time--live">{_PV["minuto"]}\'</span>'
+                  f'<span class="mega-slot__body"><span class="mega-slot__state"><span class="live-dot" aria-hidden="true"></span>Partido en juego</span>'
+                  f'<a class="mega-slot__title" href="partido.html">{e(loc)} {_PV["marcador"]["local"]}-{_PV["marcador"]["visitante"]} {e(vis)}'
+                  f'<span class="visually-hidden">, minuto {_PV["minuto"]}</span></a></span></li>')
+    return (f'<div class="mega__z3"><p class="mega__module">{e(panel["z3"]["titulo"])}</p>'
+            f'<ul class="mega-slots" role="list" data-slots="{temas}" data-slot-hours="{horas}">{filas}</ul></div>')
+
+
+def _panel_mas(panel, slug):
+    from sitio import REDES
+    (rotulo, enlaces), = panel["z1"]
+    redes = "".join(
+        f'<li><a class="icon-btn" href="{r["url"]}" target="_blank" rel="noopener">{icono(r["icono"])}'
+        f'<span class="visually-hidden">{r["nombre"]} (se abre en una pestaña nueva)</span></a></li>' for r in REDES)
+    pf = panel["perfil"]
+    links = "".join(_menu_enlace(t, h, slug) for t, h in pf["enlaces"])
+    return (f'<div class="mega__inner mega__inner--compact">'
+            f'<div class="mega__z1">{_grupo(rotulo, enlaces, slug)}'
+            f'<ul class="mega__social" role="list" aria-label="Habla Deportes en redes">{redes}</ul></div>'
+            f'<div class="mega__z2"><p class="mega__label">{e(pf["etiqueta"])}</p>'
+            f'<a class="mega-profile" href="{e(pf["href"])}">'
+            f'<span class="mega-profile__media">{img(pf["imagen"], clase="mega-profile__img", alt="", menu=True)}</span>'
+            f'<span class="mega-profile__name">{e(pf["nombre"])}</span>'
+            f'<span class="mega-profile__role">{e(pf["cargo"])}</span></a>'
+            f'<ul class="mega__links" role="list">{links}</ul></div></div>')
+
+
+def megamenu(clave, slug):
+    """Panel de un ítem de la barra azul. Hermano del enlace (no hijo): el enlace conserva
+    un solo nombre accesible. Cerrado = visibility: hidden (sin foco ni lectura)."""
+    from sitio import PANELES
+    panel = PANELES[clave]
+    if clave == "mas":
+        cuerpo = _panel_mas(panel, slug)
+    else:
+        cuerpo = f'<div class="container mega__inner">{_z1(clave, panel, slug)}{_z2(panel)}{_z3(panel)}</div>'
+    variante = " mega--compact" if clave == "mas" else ""
+    return f'<div class="mega{variante}" id="mega-{clave}" data-mega-panel>{cuerpo}</div>'
+
+
+def hoja_menu(slug):
+    """Hoja del menú móvil (< 1024 y pantallas táctiles): buscador, «Ahora», seis filas con
+    miniatura y acordeón, «Más» y redes (08 §6, 09 §4)."""
+    from sitio import MAS_MOVIL, PAGINAS, PANELES, PRIMARIO, REDES, SUGERENCIAS
+    actual = PAGINAS[slug]["primario"]
+    chips = "".join(f'<li><a class="chip" href="buscar.html?q={q}">{e(t)}</a></li>' for t, q in SUGERENCIAS)
+    # Ahora: programa (al aire / próximo) y partido de Junior o la Selección en juego. Sin foto (08 §6.3).
+    ahora = (f'<li><a class="sheet-now" href="en-vivo.html">'
+             f'<span class="sheet-now__state"><span class="only-aire" hidden>{live_pill("Al aire")}</span>'
+             f'<span class="sheet-now__chip only-fuera">Próximo programa</span></span>'
+             f'<span class="sheet-now__body"><span class="sheet-now__title">El show de las mañanas</span>'
+             f'<span class="sheet-now__cta"><span class="only-aire" hidden>Ver en vivo</span>'
+             f'<span class="only-fuera">Lunes a viernes, 10:00 a. m.</span>{icono("caret-right", "icon icon--sm")}</span></span></a></li>')
+    if PARTIDO_EN_JUEGO:
+        loc, vis = equipo(_PV["local"]), equipo(_PV["visitante"])
+        ahora += (f'<li><a class="sheet-now" href="partido.html">'
+                  f'<span class="sheet-now__state">{live_pill("En vivo", _PV["minuto"])}</span>'
+                  f'<span class="sheet-now__body"><span class="sheet-now__score">{escudo(_PV["local"], "crest crest--sm")}'
+                  f'<span aria-hidden="true">{e(loc["corto"])} {_PV["marcador"]["local"]}-{_PV["marcador"]["visitante"]} {e(vis["corto"])}</span>'
+                  f'<span class="visually-hidden">{e(loc["corto"])} {_PV["marcador"]["local"]}, {e(vis["corto"])} {_PV["marcador"]["visitante"]}</span>'
+                  f'{escudo(_PV["visitante"], "crest crest--sm")}</span>'
+                  f'<span class="sheet-now__cta">Seguir el partido{icono("caret-right", "icon icon--sm")}</span></span></a></li>')
+    filas = []
+    for it in PRIMARIO:
+        clave = it["clave"]
+        if clave == "mas":
+            continue
+        panel = PANELES[clave]
+        desc, foto = panel["movil"]
+        abierto = clave == actual
+        cur = ' aria-current="page"' if it["href"] == f"{slug}.html" else ""
+        pid = f"hoja-{clave}"
+        grupos = "".join(_grupo(r, l, slug, "sheet-sub") for r, l in panel["z1"])
+        filas.append(
+            f'<li class="sheet-section">'
+            f'<div class="sheet-section__row">'
+            f'<a class="sheet-section__link" href="{e(it["href"])}"{cur}>'
+            f'<span class="sheet-section__thumb media">{img(foto, clase="media__img", alt="", menu=True)}</span>'
+            f'<span class="sheet-section__text"><span class="sheet-section__name">{punto_vivo(it.get("punto"), "live-dot")}'
+            f'<span>{e(it["texto"])}</span></span>'
+            f'<span class="sheet-section__desc">{e(desc)}</span></span></a>'
+            f'<button class="sheet-section__toggle" type="button" aria-expanded="{"true" if abierto else "false"}" '
+            f'aria-controls="{pid}" data-accordion>{icono("caret-down", "icon chevron")}'
+            f'<span class="visually-hidden">Enlaces de {e(it["texto"])}</span></button></div>'
+            f'<div class="sheet-section__panel" id="{pid}"{"" if abierto else " hidden"}>{grupos}</div></li>')
+    mas = "".join(f'<li><a class="sheet-more__link" href="{e(h)}">{e(t)}</a></li>' for t, h in MAS_MOVIL)
+    redes = "".join(
+        f'<li><a class="icon-btn" href="{r["url"]}" target="_blank" rel="noopener">{icono(r["icono"])}'
+        f'<span class="visually-hidden">{r["nombre"]} (se abre en una pestaña nueva)</span></a></li>' for r in REDES)
+    return (
+        f'<div class="menu-sheet" id="menu-movil" hidden data-menu>'
+        f'<div class="menu-sheet__inner">'
+        f'<form class="menu-sheet__search" action="buscar.html" method="get" role="search" aria-label="Buscar desde el menú">'
+        f'<label class="field__label" for="q-menu">Buscar en Habla Deportes</label>'
+        f'<div class="search-bar__row"><input class="field__input" id="q-menu" name="q" type="search" '
+        f'placeholder="Equipo, jugador o tema" autocomplete="off" enterkeyhint="search">'
+        f'<button class="btn btn--primary" type="submit">Buscar</button></div></form>'
+        f'<ul class="chip-list menu-sheet__suggest" role="list" aria-label="Búsquedas sugeridas">{chips}</ul>'
+        f'<p class="menu-sheet__heading" id="hoja-ahora">Ahora</p>'
+        f'<ul class="sheet-now-list" role="list" aria-labelledby="hoja-ahora">{ahora}</ul>'
+        f'<nav class="sheet-sections" aria-label="Menú: secciones"><ul role="list">{"".join(filas)}</ul></nav>'
+        f'<p class="menu-sheet__heading" id="hoja-mas">Más</p>'
+        f'<ul class="sheet-more" role="list" aria-labelledby="hoja-mas">{mas}</ul>'
+        f'<ul class="sheet-social" role="list" aria-label="Habla Deportes en redes">{redes}</ul>'
+        f'</div></div>')
+
+
+# ==========================================================================
 # Página provisional («En construcción»)
 # ==========================================================================
-def en_construccion(titulo, texto, anclas=(), enlaces=()):
+def en_construccion(titulo, texto, anclas=(), enlaces=(), filtro_pendiente=None):
+    """filtro_pendiente=(parámetro, aviso): el menú ya enlaza ese filtro (p. ej. ?tema=) pero la
+    página aún no filtra. main.js muestra el aviso solo si la URL lo trae: degrada a la lista completa."""
     secciones = "".join(
         f'<section class="stub__section" id="{e(i)}" aria-labelledby="{e(i)}-t"><h2 class="stub__h2" id="{e(i)}-t">{e(t)}</h2>'
         f'<p>Este bloque se construye en la siguiente etapa.</p></section>' for i, t in anclas)
@@ -842,8 +1191,12 @@ def en_construccion(titulo, texto, anclas=(), enlaces=()):
                     for t, h in enlaces)
     nav = (f'<nav class="stub__links" aria-label="Mientras tanto"><h2 class="stub__h2">Mientras tanto</h2>'
            f'<ul role="list">{links}</ul></nav>') if links else ""
+    aviso = ""
+    if filtro_pendiente:
+        param, msg = filtro_pendiente
+        aviso = f'<p class="note" data-filter-pending="{e(param)}" role="status" hidden>{e(msg)}</p>'
     return (f'<div class="container stub"><p class="stub__badge">Página en construcción</p>'
-            f'<h1 class="page-title">{e(titulo)}</h1><p class="standfirst">{e(texto)}</p>{nav}{secciones}</div>')
+            f'<h1 class="page-title">{e(titulo)}</h1><p class="standfirst">{e(texto)}</p>{aviso}{nav}{secciones}</div>')
 
 
 def buscador_404():

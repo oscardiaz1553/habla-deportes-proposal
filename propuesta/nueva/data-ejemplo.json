@@ -1,5 +1,5 @@
 {
-  "_aviso": "TODOS LOS DATOS DE ESTE ARCHIVO SON DE EJEMPLO para la propuesta de rediseño de Habla Deportes. Resultados, tablas, jugadores, árbitros, estadísticas, fichajes y cifras son ficticios y no deben presentarse como hechos reales. Solo los nombres de equipos, torneos, estadios y escudos son reales. En producción vendrán del feed de Data Factory. Cualquier parecido de un jugador ficticio con una persona real es casual. Fecha de referencia del prototipo: viernes 6 de noviembre de 2026, 8:40 p.m. (minuto 67 del partido en vivo).",
+  "_aviso": "TODOS LOS DATOS DE ESTE ARCHIVO SON DE EJEMPLO para la propuesta de rediseño de Habla Deportes. Resultados, tablas, jugadores, árbitros, estadísticas, fichajes y cifras son ficticios y no deben presentarse como hechos reales. Solo los nombres de equipos, torneos, estadios y escudos son reales. Fuente de datos por definir (el cliente no tiene proveedor: elegir uno o cargar a mano).Cualquier parecido de un jugador ficticio con una persona real es casual. Fecha de referencia del prototipo: viernes 6 de noviembre de 2026, 8:40 p.m. (minuto 67 del partido en vivo).",
   "_fecha_hoy": "2026-11-06",
   "_notas_de_coherencia": [
     "La tabla está calculada con 19 partidos jugados por equipo (hasta la Fecha 19) y NO incluye el partido en vivo. Si Junior gana 2-1 quedaría con 42 puntos y 20 PJ; Nacional con 38 y 20 PJ.",
@@ -156,7 +156,7 @@
     "hora_inicio": "7:30 p.m.",
     "estadio": "Estadio Metropolitano Roberto Meléndez",
     "canal": "Win Sports",
-    "transmision_habla": "Narración y comentarios en Habla Deportes (radio y YouTube)",
+    "transmision_habla": "Narración y comentarios en Habla Deportes (en vivo en YouTube, dentro de la web)",
     "arbitro": "Árbitro central por confirmar (ejemplo)",
     "asistencia": "41.250 (ejemplo)",
     "clima": "Despejado, 29 °C (ejemplo)",

@@ -94,11 +94,14 @@
       current = null;
       if (scrim) scrim.classList.remove('is-visible');
     };
-    // El puntero baja hacia el panel: dy > 0 y |dy| >= |dx| en los 3 últimos movimientos
-    var aimingDown = function () {
-      if (pts.length < 2) return false;
-      var a = pts[0], b = pts[pts.length - 1];
-      var dx = b.x - a.x, dy = b.y - a.y;
+    // El puntero baja hacia el panel: dy > 0 y |dy| >= |dx| entre el más antiguo de los 3
+    // últimos movimientos recientes (150 ms; si no hay, el último) y la posición actual
+    var aimingDown = function (e) {
+      var now = e.timeStamp;
+      var recent = pts.filter(function (p) { return now - p.t <= 150; });
+      var a = recent[0] || pts[pts.length - 1];
+      if (!a) return false;
+      var dx = e.clientX - a.x, dy = e.clientY - a.y;
       return dy > 0 && Math.abs(dy) >= Math.abs(dx);
     };
     // Imágenes del panel: pasan a carga inmediata con el primer hover de la barra
@@ -110,7 +113,7 @@
     document.addEventListener('pointermove', function (e) {
       if (e.pointerType !== 'mouse') return;
       moved = true; // si la página carga con el puntero encima, nada abre hasta moverlo
-      pts.push({ x: e.clientX, y: e.clientY });
+      pts.push({ x: e.clientX, y: e.clientY, t: e.timeStamp });
       if (pts.length > 3) pts.shift();
     }, { passive: true });
     items.forEach(function (item) {
@@ -122,7 +125,7 @@
         window.clearTimeout(openT); window.clearTimeout(aimT);
         if (!current) {
           openT = window.setTimeout(function () { openMega(item); }, T.open);
-        } else if (aimingDown()) {
+        } else if (aimingDown(e)) {
           aimT = window.setTimeout(function () { openMega(item); }, T.aim);
         } else if (T.swap > 0) {
           openT = window.setTimeout(function () { openMega(item); }, T.swap);

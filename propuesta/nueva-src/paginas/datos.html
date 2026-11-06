@@ -1,0 +1,80 @@
+---
+titulo: Centro de datos: posiciones, resultados y goleadores · Habla Deportes
+descripcion: Tabla de la Liga BetPlay, resultados por fecha, goleadores y estadísticas del fútbol colombiano.
+tipo: pagina
+url_wp: datos/
+---
+<!-- ======================================================================
+     CENTRO DE DATOS (T8) · 02-arquitectura §5
+     Sello de patrocinio · #hoy franja por día · #torneos ·
+     [#posiciones · #resultados · #goleadores · #estadisticas | lateral: en vivo, racha, próximos, B] · C
+     Todo se renderiza desde data-ejemplo.json.
+     ====================================================================== -->
+<div class="container data-page">
+
+  <header class="page-head">
+    {{ sello("Sección de datos presentada por") }}
+    <h1 class="page-title">Liga BetPlay, fecha a fecha</h1>
+    <p class="standfirst">Posiciones, resultados, goleadores y estadísticas. Los marcadores se actualizan solos mientras se juega.</p>
+    {{ fuente(actualizado="Actualizado hace 1 min.") }}
+  </header>
+
+  <section class="section section--tight" id="hoy" aria-labelledby="t-hoy">
+    {{ rotulo("Partidos por día", id="t-hoy") }}
+    {{ franja_dias() }}
+  </section>
+
+  <section class="section section--tight" id="torneos" aria-labelledby="t-torneos">
+    <h2 class="label-title" id="t-torneos">Torneos</h2>
+    {{ chips_torneos() }}
+  </section>
+
+  <div class="layout-split">
+    <div class="layout-split__main">
+      <section class="section" id="posiciones" aria-labelledby="t-pos">
+        {{ rotulo("Posiciones", id="t-pos") }}
+        <p class="section-intro">Finalización 2026 (ejemplo). Los 8 primeros pasan a los cuadrangulares.</p>
+        {{ tabla_posiciones("completa") }}
+        <p class="note">Tabla hasta la Fecha 19. No incluye el partido en vivo: si Junior gana, sube a 42 puntos.</p>
+        {{ fuente() }}
+      </section>
+
+      <section class="section" id="resultados" aria-labelledby="t-res">
+        {{ rotulo("Resultados y calendario", id="t-res") }}
+        {{ resultados() }}
+        {{ fuente() }}
+      </section>
+
+      <section class="section" id="goleadores" aria-labelledby="t-gol">
+        {{ rotulo("Goleadores y asistencias", id="t-gol") }}
+        {{ goleadores() }}
+        <p class="note">Hasta la Fecha 19, sin el partido en vivo. Nombres de jugadores ficticios.</p>
+        {{ fuente() }}
+      </section>
+
+      <section class="section" id="estadisticas" aria-labelledby="t-est">
+        {{ rotulo("Estadísticas", id="t-est") }}
+        {{ estadisticas() }}
+        {{ fuente() }}
+      </section>
+    </div>
+
+    <div class="layout-split__rail">
+      <section class="rail-module" aria-labelledby="r-vivo">
+        <div class="rail-module__head"><h2 class="rail-module__title" id="r-vivo">Junior, ahora</h2></div>
+        {{ tarjeta_en_vivo() }}
+      </section>
+      <section class="rail-module" aria-labelledby="r-racha">
+        <div class="rail-module__head"><h2 class="rail-module__title" id="r-racha">Racha de Junior</h2></div>
+        {{ racha() }}
+      </section>
+      <section class="rail-module" aria-labelledby="r-prox">
+        <div class="rail-module__head"><h2 class="rail-module__title" id="r-prox">Próximos de Junior</h2></div>
+        {{ proximos_partidos("junior") }}
+        <p class="source-note">La Liga se detiene del 9 al 19 de noviembre por la fecha FIFA (ejemplo).</p>
+      </section>
+      {{ pauta("lateral") }}
+    </div>
+  </div>
+
+</div>

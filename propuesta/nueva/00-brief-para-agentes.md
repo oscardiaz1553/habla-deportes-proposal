@@ -79,9 +79,9 @@ Fuente: https://claude.ai/artifact/VmbTuTUijvBmceBksq3tCA (capturas del 2-nov-20
 
 Archivos locales de apoyo: `diagnostico/*.md`, `propuesta/secciones-benchmark.md`, `propuesta/megamenu-ux.md`, `propuesta/megamenu-contenido.md`, `propuesta/centro-partidos-spec.md`, `propuesta/sistema-de-diseno.md`.
 
-## 6. El cliente no ha respondido todavía
+## 6. El cliente YA respondió el cuestionario (6-nov-2026)
 
-Se preparó un cuestionario corto (17 preguntas) sobre qué debe predominar (videos, Shorts, YouTube, noticias), qué hacer en la web, patrocinadores, estilo y referentes. **No hay respuestas.** Por tanto, qué predomina entre video, noticias y datos sigue siendo una **hipótesis**. Se parte de que es video-first, con Junior y la Selección como foco. Cualquier suposición debe quedar marcada como tal.
+**Lee `propuesta/nueva/05-respuestas-cliente.md`: es la fuente más reciente y tiene prioridad sobre las hipótesis de este brief.** Resumen: video-first confirmado (1° videos del programa, 2° Shorts, 3° resultados y datos); la transmisión de YouTube se ve dentro de la web; NO tienen proveedor de datos; quieren noticias también de la Selección, equipos grandes del FPC, Europa y colombianos destacados (Junior sigue siendo el centro); 10 patrocinadores (sin Transelca en su lista) con GIFs que cambian cada mes; venden patrocinios y publicidad; redes: YouTube, Instagram, X y Facebook; sentir moderno y cercano; ya tienen colores y tipografías definidos; referencias ESPN, Diario Olé y Futbolred (no AS).
 
 ## 7. Qué se pide a los agentes de diseño
 

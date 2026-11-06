@@ -1,0 +1,176 @@
+---
+titulo: Habla Deportes: fútbol colombiano, Junior y Selección
+descripcion: Noticias, datos en vivo, videos, Shorts y radio desde Barranquilla. Junior y la Selección Colombia, todos los días.
+tipo: portada
+url_wp:
+og_imagen: assets/img/js-2.webp
+---
+<!-- ======================================================================
+     PORTADA (T1) · 02-arquitectura §4.2
+     M1 principal · M2 tres noticias · M3 banner de partidos · A ·
+     [M4 programa · M5 Junior | L1 clasificación · L2 próximos · B] ·
+     M6 Shorts · [M7 Selección | L4 mercado] · M8 radio · M9 opinión | M10 comunidad · C
+     Inventario de fotos: el build falla si una foto se repite en la página.
+     ====================================================================== -->
+<h1 class="visually-hidden">Portada de Habla Deportes</h1>
+
+<div class="container home">
+
+  <!-- M1 · Noticia principal horizontal (estilo Sky Sports) -->
+  <article class="lead-story lead-story--video" data-module="M1">
+    <a class="lead-story__media media" href="video.html" tabindex="-1" aria-hidden="true">
+      {{ foto("js-2", clase="media__img", prioridad=True) }}
+      <span class="play play--lg">{{ ico("play-fill") }}</span>
+      <span class="chip-media chip-media--br">24:10</span>
+    </a>
+    <div class="lead-story__body">
+      <p class="topic">Junior</p>
+      <h2 class="lead-story__title"><a href="video.html"><span class="visually-hidden">Video: </span>El medio campo decide Junior vs. Nacional: lo que hay que mirar esta noche</a></h2>
+      <p class="lead-story__standfirst">Rivas, Castro y la salida de Nacional por dentro: el análisis del programa con pizarra, datos de la Fecha 19 y las dos bajas que cambian el once.</p>
+      <p class="meta">Redacción Habla Deportes · <time datetime="2026-11-06T17:30-05:00">Hace 3 horas</time> · Video de 24 min</p>
+      <ul class="route-list" role="list" aria-label="Más sobre esta historia">
+        <li><a class="route-link" href="articulo.html">Leer la nota del análisis{{ ico("arrow-right", "icon icon--sm") }}</a></li>
+        <li><a class="route-link" href="partido.html">Seguir el partido en vivo{{ ico("arrow-right", "icon icon--sm") }}</a></li>
+        <li><a class="route-link" href="radio.html">Escuchar el programa en la radio{{ ico("arrow-right", "icon icon--sm") }}</a></li>
+      </ul>
+    </div>
+  </article>
+
+  <!-- M2 · Tres noticias pequeñas (exactamente 3) -->
+  <section class="story-trio" aria-label="Más noticias del día" data-module="M2">
+    {{ tarjeta("articulo.html", "seleccion-once", "Selección", "La lista para Perú y Chile: cinco novedades y una ausencia que se discute", "<time datetime='2026-11-06T15:10-05:00'>Hace 5 horas</time> · 6 min de lectura") }}
+    {{ tarjeta("mercado.html", "junior-plantel-trofeo", "Fichajes", "Junior negocia un extremo con pasado europeo: qué está firmado y qué no", "<time datetime='2026-11-06T12:00-05:00'>Hace 8 horas</time> · 4 min de lectura") }}
+    {{ tarjeta("datos.html#posiciones", "junior-escudo-bandera", "Datos", "Cinco partidos sin perder: la racha de Junior en cuatro cifras", "<time datetime='2026-11-06T09:30-05:00'>Hace 11 horas</time> · 3 min de lectura") }}
+  </section>
+
+  <!-- M3 · Banner de partidos (Centro de Partidos) con patrocinio a la derecha -->
+  <div class="home__band" data-module="M3">
+    {{ centro_partidos() }}
+  </div>
+
+  <!-- Publicidad A · superior (970×90 / 320×100) -->
+  {{ pauta("superior") }}
+
+  <!-- Cuerpo con columna lateral de datos -->
+  <div class="layout-split">
+    <div class="layout-split__main">
+
+      <!-- M4 · El programa (solo programas completos) -->
+      <section class="section" aria-labelledby="m4" data-module="M4">
+        {{ rotulo("El show de las mañanas", "videos.html#programas", "Todos los videos", id="m4") }}
+        <div class="program-block">
+          {{ programa("video.html", "js-1", ("2026-11-06", "Vie 6 nov"), "Programa completo: la previa de Junior vs. Nacional y la lista de la Selección", "1:51:20", destacado=True, descripcion="El show del viernes, con la previa de la noche, la convocatoria para Perú y Chile y el mercado.") }}
+          <div class="program-block__list">
+            {{ programa("video.html", "seleccion-gol", ("2026-11-04", "Mié 4 nov"), "Lista de la Selección: cinco novedades y una ausencia", "18:32") }}
+            {{ programa("video.html", "junior-bicampeon", ("2026-11-03", "Mar 3 nov"), "Mercado de Junior: quién llega, quién se va y qué es humo", "22:51") }}
+            {{ programa("video.html", "nacional-celebracion", ("2026-10-31", "Sáb 31 oct"), "Análisis táctico de Nacional: cómo se le juega", "31:44") }}
+          </div>
+        </div>
+        <p class="program-block__foot"><span>Más de 265 videos en el canal.</span> <a class="btn btn--secondary btn--sm" href="https://www.youtube.com/" target="_blank" rel="noopener">{{ ico("youtube-logo") }}Suscribirse en YouTube<span class="visually-hidden"> (se abre en una pestaña nueva)</span></a></p>
+      </section>
+
+      <!-- M5 · Junior (1 destacada + 4 titulares de solo texto) -->
+      <section class="section" aria-labelledby="m5" data-module="M5">
+        {{ rotulo("Junior FC", "junior.html", "Ir a Junior FC", id="m5") }}
+        <div class="topic-block">
+          {{ tarjeta("articulo.html", "junior-trofeo-bandera", "Crónica", "El día que Junior se coronó bicampeón: la noche en tres escenas", "<time datetime='2026-11-05'>5 nov 2026</time> · Dato de ejemplo", variante="wide") }}
+          {{ titulares([("articulo.html", "Barranquilla rojiblanca: el barrio que llega al estadio desde las 3:00 p. m.", "Hinchada · Hace 6 horas", False), ("articulo.html", "Los once que más minutos suman en la Liga y por qué importa", "Plantel · Hace 9 horas", False), ("video.html", "El Metropolitano antes del clásico, en primera persona", "Hinchada · 15 min", True), ("articulo.html", "Tras la fecha FIFA, Junior visita Bucaramanga el 21 de noviembre", "Calendario · Ayer", False)]) }}
+        </div>
+      </section>
+    </div>
+
+    <div class="layout-split__rail">
+      <!-- L1 · Clasificación -->
+      <section class="rail-module" aria-labelledby="l1" data-module="L1">
+        <div class="rail-module__head"><h2 class="rail-module__title" id="l1">Liga BetPlay</h2><a class="link-action" href="datos.html#posiciones">Tabla{{ ico("caret-right", "icon icon--sm") }}</a></div>
+        {{ tabla_posiciones("compacta", filas=5) }}
+        {{ fuente() }}
+      </section>
+      <!-- L2 · Próximos partidos -->
+      <section class="rail-module" aria-labelledby="l2" data-module="L2">
+        <div class="rail-module__head"><h2 class="rail-module__title" id="l2">Próximos partidos</h2><a class="link-action" href="datos.html#resultados">Calendario{{ ico("caret-right", "icon icon--sm") }}</a></div>
+        {{ proximos_partidos("portada") }}
+      </section>
+      <!-- L3 · Publicidad B · lateral (300×250) -->
+      {{ pauta("lateral") }}
+    </div>
+  </div>
+
+  <!-- M6 · Shorts (un solo carril, separado de los programas) -->
+  <section class="section" aria-labelledby="m6" data-module="M6">
+    {{ rotulo("Shorts", "shorts.html", "Ver todos", id="m6") }}
+    {{ carril_shorts("carril-shorts", "Shorts recientes", [("banderas-junior-nacional", "Lo que dice la tabla: Junior primero, Nacional a un punto", "0:41"), ("seleccion-tecnico-zona", "Qué significa «oxigenar» una lista", "0:44"), ("banderas-junior-millonarios", "Tres datos de la Fecha 19 en menos de un minuto", "0:48"), ("banderas-colombia-peru", "Así se prepara la hinchada para Colombia vs. Perú", "0:33"), ("seleccion-derrota", "Pregunta del día: ¿qué lateral izquierdo quieres ver?", "0:19"), ("invitado-estudio", "¿Titular o suplente? El debate del extremo", "0:36")]) }}
+  </section>
+
+  <div class="layout-split">
+    <div class="layout-split__main">
+      <!-- M7 · Selección Colombia (1 + 3, menos peso que Junior) -->
+      <section class="section" aria-labelledby="m7" data-module="M7">
+        {{ rotulo("Selección Colombia", "seleccion.html", "Ir a la Selección", id="m7") }}
+        <div class="topic-block">
+          {{ tarjeta("articulo.html", "seleccion-tecnico-retrato", "Convocatoria", "Qué pide el técnico al medio campo para el amistoso con Perú", "<time datetime='2026-11-06T11:00-05:00'>Hace 9 horas</time> · 5 min de lectura", variante="wide") }}
+          {{ titulares([("articulo.html", "Perú, en cinco claves: cómo juega y dónde duele", "Rival · Hace 10 horas", False), ("video.html", "Debate: ¿es Perú el rival ideal para esta fecha FIFA?", "Debate · 19 min", True), ("articulo.html", "Colombia vs. Perú: lo que cuenta el historial reciente (cifras de ejemplo)", "Historia · Ayer", False)]) }}
+        </div>
+      </section>
+    </div>
+    <div class="layout-split__rail">
+      <!-- L4 · Mercado de fichajes -->
+      <section class="rail-module" aria-labelledby="l4" data-module="L4">
+        <div class="rail-module__head"><h2 class="rail-module__title" id="l4">Mercado de fichajes</h2><a class="link-action" href="mercado.html">Ver el mercado{{ ico("caret-right", "icon icon--sm") }}</a></div>
+        {{ mercado() }}
+      </section>
+    </div>
+  </div>
+
+  <!-- M8 · Radio («La escaleta»): estado, botón, parrilla de hoy y 3 episodios -->
+  <section class="section radio-module" aria-labelledby="m8" data-module="M8">
+    {{ rotulo("Radio", "radio.html#parrilla", "Parrilla completa", id="m8") }}
+    <div class="radio-module__grid">
+      <div class="radio-module__live">
+        <h3 class="radio-module__name">El show de las mañanas</h3>
+        <p class="radio-module__hours">Lunes a viernes, 10:00 a. m. a 12:00 m. Con Juan Salvador Bárcena.</p>
+        {{ estado_radio() }}
+        <div class="radio-module__actions">{{ boton_radio() }}</div>
+      </div>
+      <div class="radio-module__schedule">
+        <h3 class="radio-module__sub">La escaleta del programa</h3>
+        {{ escaleta() }}
+      </div>
+      <div class="radio-module__episodes">
+        <h3 class="radio-module__sub">Episodios anteriores</h3>
+        {{ episodios(3) }}
+        <a class="link-action" href="radio.html#episodios">Todos los episodios{{ ico("caret-right", "icon icon--sm") }}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- M9 · Opinión | M10 · Comunidad -->
+  <div class="duo">
+    <section class="section opinion" aria-labelledby="m9" data-module="M9">
+      {{ rotulo("Opinión", "juan-salvador.html#columnas", "Todas las columnas", id="m9") }}
+      <ul class="opinion-list" role="list">
+        <li class="opinion-item"><p class="opinion-item__author">Juan Salvador Bárcena <span>La voz del programa</span></p><h3 class="opinion-item__title"><a href="juan-salvador.html#columnas">Lo que se espera de una final de barrio</a></h3><p class="opinion-item__dek">Cómo se vive un partido grande en Barranquilla, antes y después del pitazo.</p><p class="meta">Columna de ejemplo · 4 min</p></li>
+        <li class="opinion-item"><p class="opinion-item__author">Juan Salvador Bárcena <span>La voz del programa</span></p><h3 class="opinion-item__title"><a href="juan-salvador.html#columnas">La Selección y el once ideal</a></h3><p class="opinion-item__dek">Por qué todos tenemos una alineación en la cabeza.</p><p class="meta">Columna de ejemplo · 5 min</p></li>
+        <li class="opinion-item"><p class="opinion-item__author">Mauricio Reyes <span>Análisis táctico</span></p><h3 class="opinion-item__title"><a href="articulo.html">Equilibrio o creatividad: el dilema del medio campo</a></h3><p class="opinion-item__dek">Dos formas de armar el centro de la cancha y lo que cada una le cuesta al equipo.</p><p class="meta">Columna de ejemplo · 5 min</p></li>
+      </ul>
+    </section>
+
+    <section class="section community" aria-labelledby="m10" data-module="M10">
+      {{ rotulo("Comunidad", id="m10") }}
+      <div class="community__block">
+        <h3 class="community__title">Encuesta del hincha</h3>
+        {{ encuesta() }}
+      </div>
+      <div class="community__block">
+        {{ boletin() }}
+        <p class="community__whatsapp">{{ ico("whatsapp-logo") }}<span>Las alertas, directo a tu chat: goles, fichajes confirmados y aviso de que arrancamos al aire.</span> <a class="link-action" href="redes.html#whatsapp">Unirme al canal{{ ico("caret-right", "icon icon--sm") }}</a></p>
+      </div>
+      <div class="community__block community__block--ephemeris">
+        <h3 class="community__title">Un día como hoy</h3>
+        {{ efemeride() }}
+        <a class="link-action" href="noticias.html#efemerides">Ver el archivo{{ ico("caret-right", "icon icon--sm") }}</a>
+      </div>
+    </section>
+  </div>
+
+</div>

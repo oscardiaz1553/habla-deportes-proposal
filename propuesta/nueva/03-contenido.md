@@ -11,31 +11,32 @@
 - Vocabulario fijo: "Selección" (no "la Tricolor" en etiquetas), "nota", "video", "Short", "programa", "al aire", "en vivo" (rojo solo para esto), "Publicidad".
 - Rumor, negociando y cerrado son tres estados distintos y siempre se rotulan.
 - Fechas: "6 de noviembre de 2026" en cuerpo; "6 nov" en tarjetas; horas "7:30 p. m." (con "m." para mediodía: "12:00 m.").
-- Etiqueta global de ejemplo (para pie de módulos de datos): **«Datos de ejemplo. En producción: Data Factory.»**
+- Etiqueta global de ejemplo (para pie de módulos de datos): **«Datos de ejemplo · fuente por definir.»**
 
 ## 1. Elementos globales
 
 ### 1.1 Menú principal (barra azul) — propuesta de agrupación
-Primarios (6): **Noticias · Junior · Selección · Videos · Datos · Radio** · desplegable **Más ▾**: Fichajes, Opinión, Juan Salvador, Redes, Contacto y publicidad.
-Móvil (barra inferior): Noticias · Videos · Datos · Radio.
+Primarios: **Noticias · Junior FC · Selección · Videos · Datos · En vivo** · desplegable **Más ▾**: Fichajes, Opinión, Juan Salvador, Redes, Contacto y publicidad. «En vivo» lleva punto rojo solo cuando el programa está al aire.
+Móvil (barra inferior): Noticias · Videos · Datos · En vivo.
 
 Barra blanca contextual por sección (nombre de sección + enlaces):
-- **Noticias:** Últimas · Junior · Selección · Liga BetPlay · Internacional · Opinión
+- **Noticias:** Todas · Junior · Selección · Fútbol colombiano · Europa · Colombianos en el exterior · Mercado · Opinión
 - **Junior:** Resumen · Calendario · Plantilla · Tabla · Fichajes ▾ (panel: Rumores, Negociando, Cerrados)
 - **Selección:** Resumen · Convocatoria · Calendario · Análisis · Historia
 - **Videos:** Programas · Shorts · Redes · Canal de YouTube
 - **Datos:** Partidos · Posiciones · Goleadores · Estadísticas · Torneos ▾ (panel: Liga BetPlay, Copa Colombia, Eliminatorias)
-- **Radio:** En vivo · Parrilla · Episodios · Cómo escucharnos · Participa
+- **En vivo:** Transmisión · Parrilla · Episodios anteriores · Participa
 
 ### 1.2 Cabecera y pie
 - Enlace de salto: «Saltar al contenido».
 - Buscador: etiqueta «Buscar en Habla Deportes», placeholder «Equipo, jugador o tema».
 - Pie, columna 1: «Habla Deportes. Fútbol colombiano desde Barranquilla, con Junior y la Selección en el centro.»
-- Pie, columna 2 (Secciones): Noticias, Junior, Selección, Videos, Datos, Radio.
-- Pie, columna 3: «El show de las mañanas · Lunes a viernes, 10:00 a. m. a 12:00 m.» + botón «Escuchar en vivo».
+- Pie, columna 2 (Secciones): Noticias, Junior FC, Selección, Videos, Datos, En vivo.
+- Pie, columna 3: «El show de las mañanas · Lunes a viernes, 10:00 a. m. a 12:00 m.» + botón «Ver en vivo». Redes: YouTube · Instagram · X · Facebook.
+- Pie, franja «Nuestros aliados» (muro de logos; ver 1.9c en P1).
 - Pie, columna 4: Contacto y publicidad · Política de privacidad · Términos y condiciones.
 - Pie, base: «© 2026 Habla Deportes · Barranquilla, Colombia · Sitio de ejemplo para la propuesta de rediseño». Sello: «Programa presentado por ISA Transelca».
-- Reproductor de radio discreto (sustituye al botón blanco): etiqueta «Radio en vivo», estados «Al aire · hasta las 12:00 m.» / «Fuera del aire · vuelve lunes a las 10:00 a. m.» (sin interpretar la fecha: usar la regla horaria).
+- Sin mini-reproductor de audio. «En vivo» del menú lleva a `en-vivo.html`; estado junto al ítem: «Al aire · hasta las 12:00 m.» / «Próximo programa · lunes a viernes, 10:00 a. m.» (regla horaria).
 
 ### 1.3 Microcopy transversal
 | Situación | Texto |
@@ -55,15 +56,21 @@ Barra blanca contextual por sección (nombre de sección + enlaces):
 | 404, texto | Vuelve a la portada o busca por equipo, jugador o tema. |
 | 404, botones | Ir a la portada · Buscar |
 | Enlace copiado | Enlace copiado |
-| Compartir | WhatsApp · X · Copiar enlace |
+| Compartir | X · Facebook · Copiar enlace |
 | Publicidad (rótulo) | Publicidad |
 | Contenido de marca (rótulo) | Contenido de marca · Presentado por {marca} |
+| Hueco de pauta, rótulo | Publicidad |
+| Hueco de pauta, enlace de la pieza | Anuncio de {marca}: ir al sitio del anunciante (abre en una pestaña nueva) |
+| Hueco de pauta vacío | Espacio disponible · Anuncia con nosotros |
+| Pieza animada, pausa | Pausar animación del anuncio |
+| Pieza animada, regla | Máx. 250 KB, 3 repeticiones u 8 s, sin sonido; con movimiento reducido se muestra la imagen fija |
+| Pauta en revisión | Anuncio en revisión: se muestra una imagen fija de respaldo |
 
 ---
 
 ## P1. Portada
 
-**Meta:** título «Habla Deportes: fútbol colombiano, Junior y Selección» · descripción «Noticias, datos en vivo, videos, Shorts y radio desde Barranquilla. Junior y la Selección Colombia, todos los días.» · h1 oculto: «Portada de Habla Deportes».
+**Meta:** título «Habla Deportes: fútbol colombiano, Junior y Selección» · descripción «Videos del programa, Shorts, resultados y noticias desde Barranquilla. Junior y la Selección Colombia, todos los días.» · h1 oculto: «Portada de Habla Deportes».
 
 ### 1.1 Noticia principal (horizontal: imagen izquierda, texto derecha)
 - **Etiqueta:** Video · Junior
@@ -110,12 +117,25 @@ Encabezado: **Shorts** · 5 tarjetas (S1, S2, S3, S5, S8 del banco). Botón «Ve
 ### 1.8 Bloque «Mercado de fichajes» (5 movimientos del JSON: m1, m2, m4, m5, m6)
 Cada fila: fecha · escudo → escudo · descripción · estado. Estados: **Negociando**, **Cerrado**, **Rumor**. Enlace: «Ver todo el mercado». Pie: «Estados de ejemplo, definidos por la redacción.»
 
-### 1.9 Bloque «Radio» (franja)
-- Etiqueta: **Al aire** · Lunes a viernes, 10:00 a. m. a 12:00 m.
-- Título: «El show de las mañanas, en la radio y en tu bolsillo»
-- Texto: «Escucha en vivo o ponte al día con los episodios de la semana cuando quieras.»
-- Botones: «Escuchar en vivo» · «Episodios anteriores»
-- Mini parrilla: 10:00 Apertura y titulares · 10:30 Junior en primer plano · 11:00 Selección y mercado · 11:30 El debate de los oyentes.
+### 1.9 Bloque «En vivo ahora» (antes «La escaleta»)
+- Estado: **Al aire** (punto rojo) · «Lunes a viernes, 10:00 a. m. a 12:00 m.» / fuera de horario: «Próximo programa · lunes a las 10:00 a. m.».
+- Título: «El show de las mañanas, en vivo desde Barranquilla»
+- Portada del video de YouTube con botón de play. **Alt:** «Portada de la transmisión en vivo de El show de las mañanas: Juan Salvador Bárcena ante el micrófono azul de Habla Deportes». Imagen `juansalvador1.png` (recorte distinto del de la noticia principal).
+- Texto: «Míralo aquí, sin salir de la web, o ponte al día con los programas anteriores.»
+- Línea «Ahora»: «{bloque de la parrilla}» · «Después: {siguiente bloque}».
+- Botones: «Ver en vivo» · «Ver parrilla».
+- Sin mini-reproductor de audio.
+
+### 1.9b Carril «Noticias por tema» (Junior sigue siendo el centro)
+Encabezado: **Noticias por tema** · enlace «Ver todas». Pestañas/enlaces: Fútbol colombiano · Europa · Colombianos en el exterior. Una nota por tema (la primera de cada grupo, ver «Noticias» más abajo).
+
+### 1.9c Módulo «Nuestros aliados» (cerca del final y en el pie)
+- Título: **Nuestros aliados**
+- Intro (1 línea): «Marcas e instituciones que acompañan a Habla Deportes desde Barranquilla.»
+- Muro de logos monocromo, mismo alto, con enlace «{aliado}: ir al sitio». Orden: Transelca (principal) primero, luego los 10 del cliente. Datos: `aliados.json`. Los aliados sin logo se muestran con el nombre en texto.
+- No lleva rótulo «Publicidad»: es un sello institucional.
+- Leyenda al pie del muro (por incluir una marca de apuestas): **«Juega con responsabilidad. Solo mayores de 18 años.»**
+- Nota interna: el rol de Transelca como aliado principal es un supuesto del dueño, **por confirmar con el cliente**. La leyenda de apuestas debe revisarse contra la normativa colombiana antes de publicar.
 
 ### 1.10 Bloque «Opinión» (3 columnas: C1, C2, C3; las otras 3 viven en la página de Juan Salvador y en Noticias)
 Encabezado: **Opinión** · «Todas las columnas».
@@ -123,7 +143,7 @@ Encabezado: **Opinión** · «Todas las columnas».
 ### 1.11 Interacción
 - **Encuesta:** «¿Quién debe ganar el duelo del medio campo esta noche?» → Junior, por el ritmo de Rivas · Nacional, por la salida con balón · Quien cometa menos errores. Botón «Votar». Pie: «12.844 votos (ejemplo)». Tras votar: «Gracias por votar. Estos son los resultados hasta ahora.»
 - **Un día como hoy:** «6 de noviembre» · «Aquí va la efeméride del día, escrita y verificada por la redacción.» (de ejemplo) · botón «Ver el archivo».
-- **Canal de WhatsApp:** «Las alertas, directo a tu chat» · «Goles, fichajes confirmados y aviso de que arrancamos al aire. Sin grupos y sin ruido.» · botón «Unirme al canal».
+- **Síguenos:** «Síguenos donde prefieras» · YouTube · Instagram · X · Facebook.
 
 ### 1.12 Tres huecos «Publicidad» fijos
 A: bajo la tira de partidos (la de Transelca de P1.3 cuenta como este hueco); B: columna lateral (300×250) en Datos y notas; C: cierre antes del pie (970×90). Todos con rótulo «Publicidad» y marco propio.
@@ -133,8 +153,8 @@ A: bajo la tira de partidos (la de Transelca de P1.3 cuenta como este hueco); B:
 ## P2. Centro de datos
 
 - **Meta:** «Centro de datos: posiciones, resultados y goleadores · Habla Deportes» · «Tabla de la Liga BetPlay, resultados por fecha, goleadores y estadísticas del fútbol colombiano.»
-- **Eyebrow:** Datos · **H1:** Liga BetPlay, fecha a fecha · **Bajada:** Posiciones, resultados, goleadores y estadísticas. Los marcadores se actualizan solos mientras se juega.
-- **Sello de patrocinio:** «Sección de datos presentada por ISA Transelca».
+- **Eyebrow:** Datos · **H1:** Liga BetPlay, fecha a fecha · **Bajada:** Posiciones, resultados, goleadores y estadísticas. Los marcadores de ejemplo muestran cómo se verá un partido en juego.
+- **Sello de la sección:** «Datos de ejemplo · fuente por definir». Sello de patrocinio: «Sección de datos presentada por ISA Transelca» (aliado principal; rol por confirmar con el cliente).
 - **Franja de partidos por día:** botones **Ayer · Hoy · Mañana**. Ayer (jueves 5): estado vacío «Ayer no hubo partidos de Liga BetPlay. Mira los resultados de la Fecha 19.» · enlace «Ver resultados de la Fecha 19». Hoy: 1 partido (Junior–Nacional, en vivo 67'). Mañana: Pasto–Pereira 2:00 p. m., Tolima–América 4:00 p. m., Águilas D.–Alianza 6:00 p. m.
 - **Filtros:** Torneo: Liga BetPlay · Copa Colombia · Eliminatorias. Temporada: Finalización 2026.
 - **Pestañas:** Posiciones · Resultados · Goleadores · Estadísticas.
@@ -143,7 +163,7 @@ A: bajo la tira de partidos (la de Transelca de P1.3 cuenta como este hueco); B:
 - **Goleadores:** «Goleadores» y «Asistencias», cada uno con barra; pie «Sin el partido en vivo».
 - **Estadísticas:** «2,34 goles por partido» · «Más goles a favor» · «Menos goles en contra» · «Más tiros de esquina».
 - **Lateral:** panel «Racha de Junior»: «Cinco partidos sin perder» (G, G, E, G, G) · enlace «Ver Junior». Panel «Próximos partidos».
-- **Fuente:** «Datos de ejemplo. En producción: Data Factory. Actualizado hace 1 min.»
+- **Fuente:** «Datos de ejemplo · fuente por definir.»
 - **Alts:** escudos decorativos con `alt=""` y nombre del equipo en texto. Equipos sin escudo: siglas en círculo (CAL, PAS…) con `aria-hidden`.
 
 ## P3. Partido en vivo
@@ -154,7 +174,7 @@ A: bajo la tira de partidos (la de Transelca de P1.3 cuenta como este hueco); B:
 - **Pestañas:** Resumen · Cronología · Alineaciones · Estadísticas · Cara a cara.
 - **Resumen (minuto a minuto):** 67' «Junior retrocede unos metros y Nacional busca por las bandas.» · 65' «Gran atajada de Ibáñez a remate de Salas desde el borde del área.» · 64' «Amarilla para Londoño: frena un contragolpe con falta táctica.» · 61' «Cambio en Junior: sale Arrieta, entra Díaz para refrescar la banda.» · 58' «Gol de Junior. Pertuz define de zurda tras la jugada de Rivas por el centro. 2–1.» · 46' «Arranca el segundo tiempo con cambio en Nacional.» · 45' «Final del primer tiempo: 1–1.» · 34' «Gol de Nacional: cabezazo de Mosquera al segundo palo.» · 12' «Gol de Junior: Pertuz, tras pared con Rivas.»
 - **Cronología, Alineaciones, Estadísticas, H2H:** exactamente los datos de `partido_en_vivo` en el JSON. Pie: «Datos de ejemplo, incluidos jugadores y árbitro.»
-- **Caja lateral «Míralo y escúchalo con Habla Deportes»:** «Narración y comentarios en directo, con tus mensajes al aire.» Botones «Ver en YouTube» · «Ir a la radio».
+- **Caja lateral «Míralo con Habla Deportes»:** «Narración y comentarios en directo, con tus mensajes en el programa.» Botones «Ver en YouTube» · «Ir a En vivo».
 - **Datos del partido:** Asistencia 41.250 (ejemplo) · Clima despejado, 29 °C (ejemplo) · Torneo Liga BetPlay.
 - **Microcopy de estado:** antes «El partido empieza a las 7:30 p. m.» · descanso «Descanso» · final «Final del partido» · error «No pudimos actualizar el marcador. Reintentando…».
 
@@ -165,7 +185,7 @@ A: bajo la tira de partidos (la de Transelca de P1.3 cuenta como este hueco); B:
 - **Escudo alt:** «Escudo de Junior de Barranquilla».
 - **Ficha:** Fundación: 7 de agosto de 1924 · Estadio: Metropolitano Roberto Meléndez · Apodo: El Tiburón · Colores: rojo y blanco.
 - **Partidos:** tarjeta «En vivo» (Junior 2–1 Nacional, 67') con botón «Seguir el partido» · «Últimos 5 resultados» (F15 a F19, ver JSON) · «Próximos partidos» (F21 a F24 y fecha de reanudación tras la fecha FIFA).
-- **Plantilla:** título «Plantilla» · grupos Porteros, Defensas, Mediocampistas, Delanteros. Nota: «Nombres y dorsales de ejemplo. En producción: plantilla oficial vía Data Factory.»
+- **Plantilla:** título «Plantilla» · grupos Porteros, Defensas, Mediocampistas, Delanteros. Nota: «Nombres y dorsales de ejemplo. En producción: fuente por definir.»
 - **Tabla:** «Así va en la Liga BetPlay» (primeros 6 + Junior resaltado) · «Ver tabla completa».
 - **Fichajes de Junior (JSON m1, m2, m4, m7):** título «Mercado de Junior».
 - **Noticias (4–6):** «El medio campo de Junior, por qué Rivas y Castro sostienen el liderato» (A1) · «Barranquilla rojiblanca…» · «Crónica del bicampeonato» · «Bicampeón: los números de un equipo que no se rinde» (dato de ejemplo) · «Cómo se le juega a Nacional» · «El Metropolitano antes del clásico».
@@ -189,7 +209,7 @@ A: bajo la tira de partidos (la de Transelca de P1.3 cuenta como este hueco); B:
 Ver cuerpo completo en el Banco 2 (A1 Junior y A2 Selección). Elementos de plantilla:
 - Migas: Inicio › Junior › {titular corto}.
 - Eyebrow: sección · tema. Metadatos: autor · fecha · «{n} min de lectura». Etiqueta de ejemplo: «Contenido de ejemplo para la propuesta».
-- Compartir: WhatsApp · X · Copiar enlace.
+- Compartir: X · Facebook · Copiar enlace.
 - Pie de foto: «{descripción}. Foto: Habla Deportes.» (o «Foto de archivo»).
 - Bloque «Temas relacionados» (chips): Junior · Liga BetPlay · Selección · Fichajes · Análisis.
 - «Sigue leyendo»: 3 notas. Comentarios: «Comentarios ({n})» · campo «Tu comentario» · «Tu nombre» · botón «Publicar comentario» · éxito «Gracias. Tu comentario se publica después de la revisión.» · error «Escribe un comentario antes de publicarlo.»
@@ -200,24 +220,23 @@ Ver cuerpo completo en el Banco 2 (A1 Junior y A2 Selección). Elementos de plan
 - **Meta:** «Programa completo: la previa de Junior–Nacional y la lista de la Selección · Habla Deportes».
 - **Eyebrow:** El show de las mañanas · **H1:** Programa completo: la previa de Junior–Nacional y la lista de la Selección
 - **Metadatos:** 6 de noviembre de 2026 · 1 h 51 min · «Grabado en directo».
-- **Descripción:** «En el programa de hoy: el duelo del medio campo entre Junior y Nacional, la lista de la Selección para Perú y Chile y el mercado de fichajes. Sale al aire de lunes a viernes, de 10:00 a. m. a 12:00 m., por YouTube y la radio.» + «Mostrar más: Incluye el debate de los oyentes y la encuesta del día. Los datos son de ejemplo.»
+- **Descripción:** «En el programa de hoy: el duelo del medio campo entre Junior y Nacional, la lista de la Selección para Perú y Chile y el mercado de fichajes. Sale al aire de lunes a viernes, de 10:00 a. m. a 12:00 m., en YouTube, en vivo.» + «Mostrar más: Incluye el debate de los oyentes y la encuesta del día. Los datos son de ejemplo.»
 - **Capítulos:** 00:00 Apertura y titulares · 14:10 Junior–Nacional: el medio campo · 41:30 La lista de la Selección · 1:07:20 Mercado: qué es rumor y qué es firma · 1:30:00 El debate de los oyentes.
-- **Botones:** «Suscribirse al canal» · «Compartir» · «Enviar por WhatsApp».
+- **Botones:** «Suscribirse al canal» · «Compartir» · «Compartir en Facebook».
 - **Siguientes videos:** V2–V7 (sin repetir el actual). **Más de este tema (Shorts):** S1, S4, S6, S9.
 - **Transcripción resumida (ejemplo):** «00:00 Arrancamos con la noche de Junior y Nacional. / 14:10 La clave está entre el círculo central y el área rival. / 1:07:20 Separamos lo firmado de lo que es rumor.»
 - **Alt del reproductor:** `juansalvador1.png`: «Juan Salvador Bárcena se cubre la boca con ambas manos frente al micrófono azul, en el estudio con repisas de recuerdos de fútbol y el escudo de Junior».
 
 ## P8. Videos y redes
 
-- **Meta:** «Videos y redes · Habla Deportes» · «Programas, Shorts, Instagram, X, TikTok y el canal de WhatsApp en un solo lugar.»
-- **H1:** Videos y redes · **Bajada:** El programa sigue cuando se apaga el micrófono: en YouTube, en corto, en Instagram, en X y en tu WhatsApp.
-- **Navegación interna:** YouTube · Shorts · Instagram · X · TikTok · WhatsApp.
+- **Meta:** «Videos y redes · Habla Deportes» · «Programas, Shorts, Instagram, X y Facebook en un solo lugar.»
+- **H1:** Videos y redes · **Bajada:** El programa sigue cuando se apaga el micrófono: en YouTube, en corto, en Instagram, en X y en Facebook.
+- **Navegación interna:** YouTube · Shorts · Instagram · X · Facebook.
 - **YouTube:** «El show de las mañanas, en video» · botón «Suscribirse» · «Más de 265 videos» (real) · listas: Programa completo, Junior, Selección, Reacciones, Análisis táctico (los conteos por lista se omiten: «cifra por definir»). Filtros: Todos · Programa · Junior · Selección · Reacciones · Análisis.
 - **Shorts:** carril vertical separado. Nota: «Los Shorts se cargan solos desde el canal: la redacción sube el vertical y aparece aquí.»
 - **Instagram:** «@habladeportes · Reels, historias y fotos del programa». Historias destacadas: Final · Selección · Detrás de cámaras · Hinchada · Mercado · Programa · Datos.
 - **X:** dos perfiles: «Habla Deportes (@habladeportes)» y «Juan Salvador Bárcena (@juansalvador)» con enlace «Ver su perfil». Publicaciones de ejemplo, claramente rotuladas «Publicación de ejemplo» y sin atribuir frases a personas reales (textos en Banco 7).
-- **TikTok:** «Fútbol en 30 segundos».
-- **WhatsApp:** «Las noticias, directo a tu chat» · «Los titulares del día, el aviso de que arrancamos al aire y el resultado al final de cada partido de Junior. Un canal de difusión: nadie ve tu número.» · lista: «Máximo cinco mensajes al día · Tu número queda oculto · Te sales cuando quieras» · botón «Unirme al canal». Vista previa de chat (ejemplo): «Estamos al aire: la previa de Junior–Nacional. Míranos aquí» · «Final del partido: Junior 2–1 Nacional (ejemplo)».
+- **Facebook (nuevo):** «Habla Deportes en Facebook» · «Videos del programa, resultados y las conversaciones de la hinchada, en tu muro.» · botón «Seguir en Facebook» · «Comunidad: comenta, comparte y sigue las transmisiones en vivo.» Publicaciones de ejemplo rotuladas: «Estamos al aire hasta las 12:00 m. con la previa de Junior–Nacional.» · «Sube el volumen: ya está el programa completo del lunes.» · «¿Cuál es tu once para el amistoso con Perú? Cuéntanos en los comentarios.»
 - **Totales:** «Dónde seguirnos» con cifras de ejemplo (ver JSON `redes`).
 
 ## P9. Juan Salvador Bárcena
@@ -232,30 +251,30 @@ Ver cuerpo completo en el Banco 2 (A1 Junior y A2 Selección). Elementos de plan
 - **Equipo (ficticio):** Mauricio Reyes · Análisis táctico; Andrea Caballero · Hinchada y cultura; Luis Pérez · Datos; Natalia Ospino · Mercado y negocios; Rafael Mendoza · Historia. Una línea cada uno (Banco 6).
 - Sin cifras de seguidores ni citas atribuidas.
 
-## P10. Radio
+## P10. En vivo (`en-vivo.html`, antes «Radio»)
 
-- **Meta:** «Radio en vivo y episodios · Habla Deportes» · «Escucha El show de las mañanas de lunes a viernes, de 10:00 a. m. a 12:00 m., y ponte al día con los episodios anteriores.»
-- **Estado:** «Al aire · L–V 10:00 a. m. a 12:00 m.» / fuera de horario «Fuera del aire. El programa vuelve el lunes a las 10:00 a. m.».
-- **H1:** El show de las mañanas · **Bajada:** Escucha en vivo o ponte al día con los episodios de la semana. Donde estés, cuando quieras.
-- **Reproductor:** botón «Escuchar en vivo» / «Pausar radio en vivo» · etiqueta «Habla Deportes · En directo» · «Ahora: {bloque}».
+- **Meta:** «En vivo: El show de las mañanas · Habla Deportes» · «Mira el programa en vivo de lunes a viernes, de 10:00 a. m. a 12:00 m., y ponte al día con los programas anteriores.»
+- **Estado:** «Al aire · L–V 10:00 a. m. a 12:00 m.» (punto rojo) / fuera de horario «Próximo programa · lunes a las 10:00 a. m.».
+- **H1:** En vivo · **Bajada:** El show de las mañanas, en video y sin salir de la web. Programas anteriores y tu voz, abajo.
+- **Reproductor (YouTube incrustado):** portada con botón de play, botón «Ver en vivo» / «Ver de nuevo», título «El show de las mañanas · En directo», línea «Ahora: {bloque}». Comentario de código: `<!-- iframe youtube-nocookie.com/embed/... irá aquí -->`. **Alt de la portada:** «Portada de la transmisión del programa: Juan Salvador Bárcena sentado frente al micrófono azul de Habla Deportes». Enlace visible: «Abrir en YouTube» → https://youtube.com/@habladeportesradio.
+- **Enlace secundario:** «Escuchar solo el audio (por confirmar)» · nota «Aún no confirmamos que exista una transmisión solo en audio.»
 - **Ahora y a continuación:** según parrilla (Banco 5).
 - **Parrilla semanal:** tabla L a V de 10:00 a 12:00 (Banco 5). Nota: «El bloque resaltado es el que está al aire ahora.»
-- **Episodios anteriores:** 8 (Banco 4) con filtros Todos · Junior · Selección · Mercado · Debate. Vacío: «No hay episodios de este tema esta semana. Prueba con otro filtro.»
-- **Cómo escucharnos:** YouTube («Míranos en directo y en repetición») · Radio en la web · Spotify («Los episodios como podcast») · Apple Podcasts · WhatsApp («Te avisamos cuando arrancamos»).
-- **Participa:** «Tu voz, al aire». Texto: «Escríbenos o envía una nota de voz por WhatsApp al +57 300 000 0000 (número de ejemplo), o usa el formulario.» Campos: Tu nombre y ciudad · Tipo de mensaje (Pregunta · Opinión · Saludo) · Tu mensaje. Botón «Enviar al programa». Éxito: «Recibimos tu mensaje. Gracias por escribir.» (demo)
-- **Encuesta del programa:** «¿Qué tema quieres escuchar mañana?» → La Fecha 20 · La lista de la Selección · El mercado de fichajes.
+- **Episodios anteriores** (son videos del canal): 8 (Banco 5, E1 a E8) con filtros Todos · Junior · Selección · Mercado · Debate. Botón por fila: «Ver: {título}». Vacío: «No hay programas de este tema esta semana. Prueba con otro filtro.»
+- **Participa:** «Tu voz, en el programa». Texto: «Escríbenos y leemos tu mensaje al aire, o comenta en la transmisión de YouTube.» Campos: Tu nombre y ciudad · Tipo de mensaje (Pregunta · Opinión · Saludo) · Tu mensaje. Botón «Enviar al programa». Éxito: «Recibimos tu mensaje. Gracias por escribir.» (demo)
+- **Encuesta del programa:** «¿Qué tema quieres ver mañana?» → La Fecha 20 · La lista de la Selección · El mercado de fichajes.
 - **Sello:** «Programa presentado por ISA Transelca».
 
 ## P11. Contacto y publicidad
 
-- **Meta:** «Contacto y publicidad · Habla Deportes» · «Escríbenos o conoce cómo tu marca puede estar en el programa, en video, en radio y en la web.»
+- **Meta:** «Contacto y publicidad · Habla Deportes» · «Escríbenos o conoce cómo tu marca puede estar en el programa, en video y en la web.»
 - **Eyebrow:** Habla Deportes · **H1:** Contacto y publicidad · **Bajada:** Escríbenos para cualquier consulta o conversemos sobre cómo tu marca puede acompañar al programa.
 - **Formulario «Escríbenos»:** Nombre · Correo electrónico · Asunto (Consulta general · Publicidad y patrocinios · Prensa · Sugerencia para el programa) · Mensaje · botón «Enviar mensaje». Éxito: «Gracias por escribirnos. Respondemos en un máximo de dos días hábiles.» (Demostración: este formulario no envía nada.) Errores: «Escribe tu nombre.» · «Revisa el correo: falta el @.» · «Cuéntanos en qué podemos ayudarte.»
-- **Datos:** Correo: info@habladeportes.co · Ciudad: Barranquilla, Colombia · Programa: lunes a viernes, 10:00 a. m. a 12:00 m. · Escuchar la radio.
-- **Anuncia con nosotros** (texto): «Una audiencia de fútbol colombiano que nos sigue en video, en radio y en redes. Las cifras de alcance se entregan con el media kit; aquí van como “por definir”.»
+- **Datos:** Correo: info@habladeportes.co · Ciudad: Barranquilla, Colombia · Programa: lunes a viernes, 10:00 a. m. a 12:00 m. · Ver el programa en vivo.
+- **Anuncia con nosotros** (texto): «Una audiencia de fútbol colombiano que nos sigue en video y en redes. Vendemos patrocinios fijos y publicidad (banners). Las cifras de alcance se entregan con el media kit; aquí van como “por definir”.»
   - **Huecos fijos de publicidad (3):** «Bajo la tira de partidos» (formato vertical del anunciante, portada) · «Columna lateral 300×250» (Datos y notas) · «Cierre 970×90» (antes del pie). Descripción de cada uno: «Posición fija, rotulada “Publicidad”, nunca flotante.»
   - **Sello de datos:** «Sección de datos presentada por {marca}.» · exclusivo.
-  - **Patrocinio de programa:** «Tu marca junto al show de la mañana: mención al aire, cortinilla y presencia en YouTube y radio.»
+  - **Patrocinio de programa:** «Tu marca junto al show de la mañana: mención al aire, cortinilla y presencia en la transmisión de YouTube.»
   - **Contenido de marca:** «Piezas en video y texto hechas con la redacción, siempre rotuladas.»
   - Botón: «Pedir el media kit» (demo).
 - **Política de pauta:** «Todo anuncio lleva el rótulo “Publicidad” y su marco propio. Las posiciones son fijas y predecibles. No publicamos anuncios flotantes sobre el contenido.»
@@ -365,7 +384,7 @@ El 17 de noviembre llega el segundo amistoso, contra Chile. Con cuatro días de 
 
 **Lo que viene**
 
-La convocatoria se completa con los jugadores que lleguen de la Liga el lunes 9 de noviembre, después de la Fecha 20. El programa seguirá la lista minuto a minuto en la radio y en YouTube, de 10:00 a. m. a 12:00 m.
+La convocatoria se completa con los jugadores que lleguen de la Liga el lunes 9 de noviembre, después de la Fecha 20. El programa seguirá la lista minuto a minuto en vivo en YouTube, de 10:00 a. m. a 12:00 m.
 
 - **Temas relacionados:** Selección Colombia · Convocatoria · Perú · Chile · Fecha FIFA
 - **Sigue leyendo:** «Perú, en cinco claves» · «Balance de la gira de octubre» · «Quién juega de lateral izquierdo».
@@ -404,9 +423,9 @@ Alt de miniaturas: «Miniatura del video: {título}. {descripción de la foto re
 
 Etiqueta: «Short · {duración}». Cifra de vistas: se omite en el prototipo («cifra por definir»).
 
-## Banco 5. Radio
+## Banco 5. En vivo (parrilla y programas anteriores)
 
-### Episodios anteriores (8)
+### Programas anteriores (8, videos del canal; antes «episodios de radio»)
 | # | Título | Duración | Fecha | Tema |
 |---|---|---|---|---|
 | E1 | Viernes: la previa de Junior–Nacional | 1:51:20 | vie 6 nov | Junior |
@@ -418,7 +437,7 @@ Etiqueta: «Short · {duración}». Cifra de vistas: se omite en el prototipo (�
 | E7 | Jueves: el clásico costeño, sin filtros | 1:53:11 | jue 29 oct | Junior |
 | E8 | Miércoles: cierre de la ventana y salidas | 1:40:02 | mié 28 oct | Mercado |
 
-Cada fila: botón «Reproducir: {título}» (aria-label), duración, fecha, etiqueta de tema, una línea de descripción.
+Cada fila: botón «Ver: {título}» (aria-label), duración, fecha, etiqueta de tema, una línea de descripción.
 
 ### Parrilla de lunes a viernes, de 10:00 a 12:00
 | Hora | Lunes | Martes | Miércoles | Jueves | Viernes |
@@ -446,7 +465,7 @@ Etiqueta común: «Columna de ejemplo». Autores ficticios salvo Juan Salvador, 
 Perfiles de una línea (alt del avatar con iniciales: «Iniciales de {nombre}», decorativo):
 - Mauricio Reyes: «Desmenuza cada partido: pizarra, datos y decisiones de los técnicos.»
 - Andrea Caballero: «La voz de las tribunas: la afición, el estadio y las historias de barrio.»
-- Luis Pérez: «Convierte los números de Data Factory en historias que se entienden.»
+- Luis Pérez: «Convierte los números de los partidos en historias que se entienden.»
 - Natalia Ospino: «Sigue el mercado de fichajes: quién negocia, quién firma y qué no se confirma.»
 - Rafael Mendoza: «Archivo y memoria: la historia de Junior y la Selección, fecha a fecha.»
 
@@ -466,6 +485,40 @@ Para el perfil de Juan Salvador, en X, solo se muestran publicaciones neutras y 
 Ver `mercado_fichajes.movimientos` en el JSON. Etiquetas: **Rumor** (sin confirmación), **Negociando** (hay conversaciones), **Cerrado** (firmado y comunicado). Ninguna fila nombra a un jugador real.
 
 ---
+
+## Banco 10. Hub de Noticias (`noticias.html?tema=…`)
+
+- **Meta:** «Noticias · Habla Deportes» · «Junior, la Selección, el fútbol colombiano, Europa y los colombianos en el exterior, con mercado y opinión.»
+- **Eyebrow:** Noticias · **H1:** Noticias · **Bajada:** Junior primero, y todo lo que mueve al fútbol colombiano y a los colombianos que juegan fuera.
+- **Filtros (enlaces reales, se comportan como pestañas):** Todas · Junior · Selección · Fútbol colombiano · Europa · Colombianos en el exterior · Mercado · Opinión. Etiqueta accesible: «Filtrar noticias por tema». Estado activo: «Tema: {tema}».
+- **Vacío por filtro:** «Todavía no hay notas de {tema}. Mira las últimas de otros temas.»
+- **Tarjeta:** etiqueta de tema · titular · bajada · «{n} min de lectura» · fecha.
+- **Notas de ejemplo (ficticias; sin nombres reales de jugadores; ver `noticias_por_tema` en el JSON):**
+
+**Fútbol colombiano**
+1. «Tolima y América se miran en la zona media: la Fecha 20 los empareja» · Los dos llegan con rachas opuestas al sábado en Ibagué; lo que se juegan en la lucha por los cuadrangulares. · 4 min
+2. «Millonarios y Medellín cierran la fecha con un duelo de contrastes» · Uno defiende de más, el otro ataca de más. El domingo en el Atanasio Girardot se mide cuál idea rinde mejor. · 5 min
+3. «Abajo de la tabla: cuatro equipos y un descenso que ya se calcula» · Con 15 puntos el último y 18 el 19.º, la tabla del promedio empieza a pesar más que la de la Liga. · 4 min
+
+**Europa**
+1. «Un grande de Inglaterra pierde el liderato: tres razones del tropiezo» · Cuatro partidos sin ganar y un problema de salida que el rival supo explotar. · 5 min
+2. «El clásico de España que se decide por las bandas» · Dos laterales ofensivos y un extremo recorriendo el campo: el duelo táctico de la semana. · 6 min
+3. «Qué se espera de la Champions esta semana: cinco partidos para no perderse» · Guía rápida con horarios en Colombia (ejemplo, sin fechas oficiales). · 4 min
+
+**Colombianos en el exterior**
+1. «El extremo colombiano que gana minutos en un club de Portugal» · Pasó de suplente a titular en tres semanas: qué cambió en su rol. · 4 min
+2. «Un delantero colombiano en la liga de Brasil llega al décimo gol» · Su club sube a puestos de clasificación continental (cifras de ejemplo). · 4 min
+3. «Colombianos en Europa: quién juega, quién espera y quién vuelve» · Un repaso por posiciones, con roles y clubes, sin nombres. · 6 min
+
+## Cambios de la segunda pasada
+
+Base: `06-decisiones-segunda-pasada.md` y `05-respuestas-cliente.md`.
+1. **En vivo:** la página «Radio» pasa a `en-vivo.html` («En vivo»): reproductor de YouTube incrustado (portada con play), estado «Al aire / Próximo programa», parrilla L–V 10:00 a 12:00, programas anteriores como videos del canal https://youtube.com/@habladeportesradio, participación y enlace secundario «Escuchar solo el audio (por confirmar)». En la portada «La escaleta» pasó a «En vivo ahora». Se quitaron el mini-reproductor de audio, «Radio» del menú, de la barra inferior y del pie, y las apps de podcast.
+2. **Noticias por tema:** nuevo hub con filtros (Todas · Junior · Selección · Fútbol colombiano · Europa · Colombianos en el exterior · Mercado · Opinión) y 9 notas de ejemplo (Banco 10). Carril «Noticias por tema» en la portada. JSON: `noticias_por_tema`.
+3. **Aliados:** módulo «Nuestros aliados» (título, intro, leyenda «Juega con responsabilidad. Solo mayores de 18 años.»), microcopy de huecos de pauta y reglas de piezas animadas (250 KB, 3 repeticiones u 8 s). JSON: `aliados` apunta a `aliados.json`.
+4. **Datos:** se eliminó toda mención a Data Factory y a «datos en tiempo real por…». Ahora: «Datos de ejemplo · fuente por definir». Pendiente comercial: elegir proveedor o carga manual.
+5. **Redes:** solo YouTube, Instagram, X y Facebook. Se quitaron TikTok y el canal de WhatsApp (menú, pie, redes, módulos, compartir). Copy de Facebook añadido en P8; JSON `redes` actualizado.
+6. **Transelca:** sigue como aliado principal con el sello «Presentado por» en datos y el anuncio de portada, pero su rol está **por confirmar con el cliente** (no figura en su lista).
 
 ## Qué queda fuera (decidido)
 - Cifras de seguidores, visualizaciones y alcance: solo marcadas como ejemplo o «por definir».

@@ -369,17 +369,52 @@
   ],
   "redes": {
     "_nota": "Cifras de ejemplo; en producción se leen de cada plataforma.",
-    "youtube": {"videos": "más de 265", "suscriptores_ejemplo": "148 mil"},
+    "_redes_vigentes": "Solo YouTube, Instagram, X y Facebook (respuesta del cliente). TikTok y WhatsApp se eliminaron.",
+    "youtube": {"videos": "más de 265", "suscriptores_ejemplo": "148 mil", "canal": "https://youtube.com/@habladeportesradio"},
     "instagram": {"usuario": "@habladeportes", "seguidores_ejemplo": "212 mil"},
     "x": {"habla": "@habladeportes", "juan_salvador": "@juansalvador", "seguidores_ejemplo": "96 mil / 184 mil"},
-    "tiktok": {"seguidores_ejemplo": "74 mil"},
-    "whatsapp": {"canal_ejemplo": "38 mil"}
+    "facebook": {"pagina": "Habla Deportes", "seguidores_ejemplo": "por definir"}
+  },
+  "aliados": {
+    "_nota": "Los 11 aliados (Transelca como principal, por confirmar con el cliente, más los 10 del cliente) viven en propuesta/nueva/aliados.json. No se copian aquí.",
+    "ref": "propuesta/nueva/aliados.json"
+  },
+  "en_vivo": {
+    "_nota": "En vivo = transmisión del programa en YouTube dentro de la web. El prototipo usa portada con play, sin iframe real.",
+    "canal_youtube": "https://youtube.com/@habladeportesradio",
+    "estado_al_aire": "Al aire · hasta las 12:00 m.",
+    "estado_fuera": "Próximo programa · lunes a viernes, 10:00 a. m.",
+    "audio_solo": {"texto": "Escuchar solo el audio (por confirmar)", "confirmado": false}
+  },
+  "noticias_por_tema": {
+    "_nota": "Hub de noticias con filtros. 'tema' coincide con ?tema= en noticias.html. Las notas de Fútbol colombiano, Europa y Colombianos en el exterior son ficticias y sin nombres reales de jugadores (roles o clubes).",
+    "temas": [
+      {"tema": "todas", "etiqueta": "Todas"},
+      {"tema": "junior", "etiqueta": "Junior"},
+      {"tema": "seleccion", "etiqueta": "Selección"},
+      {"tema": "futbol-colombiano", "etiqueta": "Fútbol colombiano"},
+      {"tema": "europa", "etiqueta": "Europa"},
+      {"tema": "colombianos-exterior", "etiqueta": "Colombianos en el exterior"},
+      {"tema": "mercado", "etiqueta": "Mercado"},
+      {"tema": "opinion", "etiqueta": "Opinión"}
+    ],
+    "notas": [
+      {"id": "n-fc1", "tema": "futbol-colombiano", "titular": "Tolima y América se miran en la zona media: la Fecha 20 los empareja", "bajada": "Los dos llegan con rachas opuestas al sábado en Ibagué; lo que se juegan en la lucha por los cuadrangulares.", "etiqueta": "Fútbol colombiano", "lectura_min": 4, "fecha": "2026-11-06"},
+      {"id": "n-fc2", "tema": "futbol-colombiano", "titular": "Millonarios y Medellín cierran la fecha con un duelo de contrastes", "bajada": "Uno defiende de más, el otro ataca de más. El domingo en el Atanasio Girardot se mide cuál idea rinde mejor.", "etiqueta": "Fútbol colombiano", "lectura_min": 5, "fecha": "2026-11-05"},
+      {"id": "n-fc3", "tema": "futbol-colombiano", "titular": "Abajo de la tabla: cuatro equipos y un descenso que ya se calcula", "bajada": "Con 15 puntos el último y 18 el 19.º, la tabla del promedio empieza a pesar más que la de la Liga.", "etiqueta": "Fútbol colombiano", "lectura_min": 4, "fecha": "2026-11-04"},
+      {"id": "n-eu1", "tema": "europa", "titular": "Un grande de Inglaterra pierde el liderato: tres razones del tropiezo", "bajada": "Una racha de cuatro partidos sin ganar y un problema de salida que el rival supo explotar. Análisis de ejemplo.", "etiqueta": "Europa", "lectura_min": 5, "fecha": "2026-11-05"},
+      {"id": "n-eu2", "tema": "europa", "titular": "El clásico de España que se decide por las bandas", "bajada": "Dos laterales ofensivos y un extremo recorriendo el campo: el duelo táctico que más se comenta esta semana.", "etiqueta": "Europa", "lectura_min": 6, "fecha": "2026-11-03"},
+      {"id": "n-eu3", "tema": "europa", "titular": "Qué se espera de la Champions esta semana: cinco partidos para no perderse", "bajada": "Una guía rápida con horarios en Colombia y el detalle táctico de cada cruce (ejemplo, sin fechas oficiales).", "etiqueta": "Europa", "lectura_min": 4, "fecha": "2026-11-02"},
+      {"id": "n-ex1", "tema": "colombianos-exterior", "titular": "El extremo colombiano que gana minutos en un club de Portugal", "bajada": "Pasó de suplente a titular en tres semanas. Lo que cambió en su rol y lo que le pide el entrenador.", "etiqueta": "Colombianos en el exterior", "lectura_min": 4, "fecha": "2026-11-05"},
+      {"id": "n-ex2", "tema": "colombianos-exterior", "titular": "Un delantero colombiano en la liga de Brasil llega al décimo gol", "bajada": "Su club sube a puestos de clasificación continental. Los números de la racha, en ejemplo.", "etiqueta": "Colombianos en el exterior", "lectura_min": 4, "fecha": "2026-11-04"},
+      {"id": "n-ex3", "tema": "colombianos-exterior", "titular": "Colombianos en Europa: quién juega, quién espera y quién vuelve", "bajada": "Un repaso por posiciones del grupo que mira la Selección, sin nombres reales: roles, clubes y minutos (ejemplo).", "etiqueta": "Colombianos en el exterior", "lectura_min": 6, "fecha": "2026-11-02"}
+    ]
   },
   "programa": {
     "nombre": "El show de las mañanas",
     "horario": "Lunes a viernes, 10:00 a.m. a 12:00 m.",
     "presentador": "Juan Salvador Bárcena",
-    "patrocinador": "ISA Transelca",
+    "patrocinador": "ISA Transelca (aliado principal; rol por confirmar con el cliente)",
     "parrilla": [
       {"hora": "10:00", "bloque": "Apertura y titulares", "detalle": "Lo que pasó anoche y lo que se juega hoy"},
       {"hora": "10:30", "bloque": "Junior en primer plano", "detalle": "Análisis, plantel y la previa del próximo partido"},

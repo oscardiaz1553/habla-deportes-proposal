@@ -38,7 +38,7 @@ CATALOGO = {
              "Escudo de Junior sobre una bandera rojiblanca, en tonos oscuros", "30% 50%"),
     "invitado-estudio": ("img-06.png", "invitado-estudio.webp", "foto",
              "Hombre mayor con gafas de pasta y camisa rosada, sonriente, con micrófono de solapa, "
-             "sobre fondo negro", "50% 30%"),
+             "sobre fondo oscuro", "50% 30%"),
     "seleccion-tecnico-zona": ("img-09.jpg", "seleccion-tecnico-zona.webp", "foto",
              "El técnico de la Selección en la zona técnica, de traje oscuro y camisa de cuadros, ante "
              "un cartel de la Copa América 2024", "62% 40%"),
@@ -82,6 +82,7 @@ CATALOGO = {
 }
 
 _dims = {}
+FONDO_OSCURO = {"invitado-estudio"}
 
 
 def dims(clave):
@@ -106,6 +107,11 @@ def convertir(claves, destino):
         if o.exists() and o.stat().st_mtime >= s.stat().st_mtime:
             continue
         with Image.open(s) as im:
+            if clave in FONDO_OSCURO and "A" in im.getbands():
+                # Recorte con transparencia: se asienta sobre la tinta del sistema (gray-900)
+                base = Image.new("RGB", im.size, (17, 28, 39))
+                base.paste(im, mask=im.convert("RGBA").split()[-1])
+                im = base
             if im.mode == "P":
                 im = im.convert("RGBA")
             if im.mode not in ("RGB", "RGBA"):

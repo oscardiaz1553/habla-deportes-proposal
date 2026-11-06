@@ -1,0 +1,326 @@
+/* ==========================================================================
+   HABLA DEPORTES · pages.css
+   Solo lo propio de cada plantilla (equivale a la hoja de cada template WP).
+   Los componentes no se redefinen aquí: solo se colocan.
+   ========================================================================== */
+
+/* T1 · Portada --------------------------------------------------------------- */
+.home > .lead-story {
+  margin-top: 0;
+}
+
+.home .story-trio {
+  margin-top: var(--space-4);
+}
+
+.home__band {
+  margin-top: var(--section-gap);
+}
+
+@media (min-width: 768px) {
+  .home > .lead-story {
+    margin-top: var(--space-4);
+  }
+}
+
+@media (min-width: 1024px) {
+  .home > .lead-story {
+    margin-top: var(--space-5);
+  }
+
+  .home .story-trio {
+    margin-top: var(--space-6);
+  }
+
+  .home__band {
+    margin-top: var(--section-gap-lg);
+  }
+}
+
+/* M9 Opinión | M10 Comunidad */
+.duo {
+  display: grid;
+}
+
+@media (min-width: 1024px) {
+  .duo {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-6);
+  }
+}
+
+/* Móvil: la efeméride y la opinión no aparecen en la portada (02 §4.4) */
+@media (max-width: 767px) {
+  .home .opinion,
+  .home .community__block--ephemeris {
+    display: none;
+  }
+}
+
+/* T8 · Centro de datos ------------------------------------------------------- */
+.page-head {
+  padding-top: var(--space-2);
+}
+
+.page-head .sponsor-seal {
+  margin-bottom: var(--space-1);
+}
+
+.data-page .label-title {
+  margin-bottom: var(--space-1);
+}
+
+.ranking-pair {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.ranking__title {
+  margin-bottom: var(--space-1);
+  font-size: var(--fs-title-md);
+}
+
+.stat-lead {
+  max-width: var(--measure);
+  font-size: var(--fs-standfirst);
+}
+
+.stat-lead__value {
+  margin-right: var(--space-half);
+  font-family: var(--font-display);
+  font-size: var(--fs-score-lg);
+  font-stretch: calc(var(--wdth-condensed) * 1%);
+  font-weight: var(--fw-black);
+  font-variant-numeric: var(--numeric);
+  line-height: var(--lh-tight);
+}
+
+.stat-grid {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-3);
+}
+
+.stat-block__title {
+  margin-bottom: var(--space-1);
+  font-size: var(--fs-title-sm);
+}
+
+.stat-list__row {
+  display: grid;
+  grid-template-columns: var(--space-3) minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: var(--space-5);
+  border-bottom: var(--border-hair) solid var(--color-border);
+  font-size: var(--fs-meta);
+}
+
+.stat-list__row.is-selected {
+  background: var(--color-surface-selected);
+  font-weight: var(--fw-semibold);
+}
+
+.stat-list__pos {
+  color: var(--color-text-muted);
+  font-variant-numeric: var(--numeric);
+  text-align: right;
+}
+
+.stat-list__team {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.stat-list__value {
+  padding-right: var(--space-1);
+  font-family: var(--font-display);
+  font-size: var(--fs-score-sm);
+  font-stretch: calc(var(--wdth-condensed) * 1%);
+  font-weight: var(--fw-bold);
+  font-variant-numeric: var(--numeric);
+}
+
+@media (min-width: 768px) {
+  .ranking-pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+
+  .stat-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+}
+
+/* T4 · Artículo -------------------------------------------------------------- */
+.article__head {
+  padding-top: var(--space-2);
+}
+
+.article__head .topic {
+  margin-bottom: var(--space-1);
+}
+
+.article__title {
+  font-size: var(--fs-h1);
+  font-weight: var(--fw-black);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-display);
+}
+
+.article__standfirst {
+  margin-top: var(--space-2);
+  color: var(--color-text-secondary);
+  font-size: var(--fs-standfirst);
+  line-height: var(--lh-body);
+}
+
+.article__byline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-1) var(--space-3);
+  margin-top: var(--space-3);
+  padding-block: var(--space-1);
+  border-block: var(--border-hair) solid var(--color-border);
+}
+
+.article__author {
+  color: var(--color-text);
+  font-weight: var(--fw-semibold);
+}
+
+.article__figure {
+  margin-top: var(--space-3);
+}
+
+.article__figure .media {
+  margin-inline: calc(-1 * var(--page-margin));
+}
+
+.article__caption {
+  margin-top: var(--space-1);
+  color: var(--color-text-muted);
+  font-size: var(--fs-meta);
+}
+
+@media (min-width: 600px) {
+  .article__figure .media {
+    margin-inline: 0;
+  }
+}
+
+.layout-split--article {
+  margin-top: var(--space-1);
+}
+
+.layout-split--article .layout-split__rail {
+  padding-top: var(--space-2);
+}
+
+/* Columna de lectura de 720 px: medida 68ch, cuerpo 17 → 18 px */
+.article {
+  max-width: var(--container-text);
+}
+
+.prose {
+  margin-top: var(--space-4);
+  font-size: var(--fs-standfirst);
+  line-height: var(--lh-body);
+}
+
+.prose > p + p {
+  margin-top: var(--space-3);
+}
+
+.prose > h2 {
+  margin-top: var(--space-5);
+  margin-bottom: var(--space-1);
+  font-size: var(--fs-title-lg);
+}
+
+.prose > h2 + p {
+  margin-top: 0;
+}
+
+.prose > p {
+  max-width: var(--measure);
+}
+
+.related-video {
+  margin-block: var(--space-4);
+  padding-block: var(--space-2);
+  border-block: var(--border-hair) solid var(--color-border);
+}
+
+.related-video .story-card__title {
+  font-size: var(--fs-title-md);
+}
+
+.pull-quote {
+  margin-block: var(--space-5);
+  padding-left: var(--space-3);
+  border-left: var(--border-hair) solid var(--color-border-strong);
+}
+
+.pull-quote p {
+  font-family: var(--font-display);
+  font-size: var(--fs-title-lg);
+  font-style: italic;
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-title);
+}
+
+.pull-quote footer {
+  margin-top: var(--space-1);
+  color: var(--color-text-muted);
+  font-size: var(--fs-meta);
+}
+
+.article__foot {
+  margin-top: var(--space-5);
+  padding-top: var(--space-3);
+  border-top: var(--border-hair) solid var(--color-border);
+}
+
+/* T15 y páginas provisionales ------------------------------------------------- */
+.stub {
+  padding-top: var(--space-5);
+}
+
+.stub__badge {
+  display: inline-block;
+  margin-bottom: var(--space-2);
+  padding: var(--space-half) var(--space-1);
+  border: var(--border-hair) dashed var(--color-border-field);
+  border-radius: var(--radius-ctrl);
+  color: var(--color-text-secondary);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-semibold);
+}
+
+.stub__links {
+  margin-top: var(--space-5);
+}
+
+.stub__h2 {
+  margin-bottom: var(--space-1);
+  font-size: var(--fs-title-md);
+}
+
+.stub__section {
+  margin-top: var(--space-5);
+  padding-top: var(--space-2);
+  border-top: var(--border-rule) solid var(--color-border-strong);
+  color: var(--color-text-secondary);
+}
+
+.search-inline {
+  display: grid;
+  gap: var(--space-1);
+  max-width: var(--container-text);
+  margin-top: var(--space-4);
+}

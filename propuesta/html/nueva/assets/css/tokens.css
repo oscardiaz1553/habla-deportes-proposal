@@ -3,7 +3,7 @@
    Documento rector: propuesta/nueva/01-sistema-de-diseno.md
 
    Este archivo SOLO declara variables. No contiene reglas de componentes.
-   Orden de carga: tokens.css -> base.css -> componentes.css -> paginas.css
+   Orden de carga: tokens.css -> base.css -> components.css -> pages.css
 
    Reglas que estos tokens hacen cumplir:
    - Un único color de marca: el azul del logo (#294D6E).

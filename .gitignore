@@ -25,3 +25,6 @@ propuesta/html/assets/img/image002.webp
 # para restaurarlas con un comando.
 wordpress/hello-elementor-child/assets/proto/img/
 wordpress/habla-deportes-core/assets/img/partido-*.png
+
+__pycache__/
+*.pyc

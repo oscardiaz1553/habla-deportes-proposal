@@ -107,17 +107,23 @@ def short(foto, titulo, duracion):
         f'</li>')
 
 
-def carril_shorts(id, etiqueta, items):
-    """Carril de Shorts con flechas (01 §6.5). items: [(foto, titulo, duracion)]."""
+def carril_shorts(id, titulo, enlace, texto_enlace, items):
+    """Rótulo + carril de Shorts con flechas a la derecha del rótulo (01 §6.5).
+    items: [(foto, titulo, duracion)]."""
     contenido = "".join(short(*x) for x in items)
+    hid = nucleo.P.nuevo_id("s-" + _slug(titulo))
     return (
         f'<div class="rail" data-rail>'
+        f'<div class="section-head"><h2 class="section-head__title" id="{hid}">{e(titulo)}</h2>'
+        f'<div class="section-head__tools">'
         f'<div class="rail__controls">'
         f'<button class="icon-btn" type="button" data-rail-prev aria-controls="{id}">'
         f'{icono("caret-left")}<span class="visually-hidden">Shorts anteriores</span></button>'
         f'<button class="icon-btn" type="button" data-rail-next aria-controls="{id}">'
         f'{icono("caret-right")}<span class="visually-hidden">Shorts siguientes</span></button></div>'
-        f'<ul class="rail__track" id="{id}" role="list" aria-label="{e(etiqueta)}">{contenido}</ul></div>')
+        f'<a class="link-action" href="{e(enlace)}">{e(texto_enlace)}{icono("caret-right", "icon icon--sm")}</a>'
+        f'</div></div>'
+        f'<ul class="rail__track" id="{id}" role="list" aria-labelledby="{hid}">{contenido}</ul></div>')
 
 
 # ==========================================================================
@@ -230,10 +236,10 @@ def centro_partidos():
             f'<p class="match-slide__top"><span>{e(s["torneo"])}</span>{estado}</p>'
             f'<div class="match-slide__teams">{_equipo_banner(s["local"])}'
             f'<div class="match-slide__center">{centro}{cuenta}</div>{_equipo_banner(s["visitante"])}</div>'
-            f'<ul class="match-slide__info" role="list">{info_html}</ul>'
-            f'<a class="match-slide__cta" href="partido.html">{e(s["cta"])}'
+            f'<ul class="match-slide__info" role="list">{info_html}'
+            f'<li><a class="match-slide__cta" href="partido.html">{e(s["cta"])}'
             f'<span class="visually-hidden">: {e(loc["corto"])} contra {e(vis["corto"])}</span>'
-            f'{icono("caret-right", "icon icon--sm")}</a>'
+            f'{icono("caret-right", "icon icon--sm")}</a></li></ul>'
             f'</div>')
     dots = "".join(
         f'<li><button class="dots__btn" type="button" data-goto="{i}" aria-label="Ir al partido {i + 1} de {n}"'
@@ -257,7 +263,7 @@ def centro_partidos():
         f'<p class="match-center__note">Datos de ejemplo</p>'
         f'<a class="match-center__all" href="datos.html#hoy">Todos los partidos{icono("caret-right", "icon icon--sm")}</a>'
         f'</div></div>'
-        f'<aside class="match-center__sponsor" aria-label="Publicidad del Centro de Partidos">'
+        f'<aside class="match-center__sponsor" aria-label="Patrocinio del Centro de Partidos">'
         f'<!-- Pieza del patrocinador (322×424). Fija: no rota con las diapositivas (04 §4). -->'
         f'{img("anuncio-transelca", clase="match-center__ad")}'
         f'<p class="sponsor-seal sponsor-seal--inline"><span class="sponsor-seal__text">Centro de Partidos presentado por</span> '
@@ -559,7 +565,7 @@ def escaleta():
     filas = "".join(
         f'<li class="schedule-row" data-slot-start="{p["hora"]}"><span class="schedule-row__time">{e(p["hora"])}</span>'
         f'<span class="schedule-row__topic">{e(p["bloque"])}'
-        f'<span class="schedule-row__now only-aire" hidden> · Ahora</span></span></li>'
+        f'<span class="schedule-row__now" hidden> · Ahora</span></span></li>'
         for p in pr["parrilla"])
     return f'<ol class="schedule-list" role="list" data-schedule>{filas}</ol>'
 

@@ -123,7 +123,7 @@
   gap: var(--space-half);
 }
 
-.masthead__social {
+.masthead__tools > .masthead__social {
   display: none;
 }
 
@@ -145,11 +145,11 @@
     height: var(--logo-h-lg);
   }
 
-  .masthead__social {
+  .masthead__tools > .masthead__social {
     display: inline-grid;
   }
 
-  .masthead__menu {
+  .masthead__tools > .masthead__menu {
     display: none;
   }
 }
@@ -1272,7 +1272,7 @@
 
 @media (min-width: 1024px) {
   .match-center {
-    --crest-xl: 160px;
+    --crest-xl: 144px;
     grid-template-columns: minmax(0, 1fr) var(--sponsor-w);
     gap: var(--space-3);
   }
@@ -1300,7 +1300,7 @@
 
 @media (min-width: 1280px) {
   .match-center {
-    --crest-xl: 180px;
+    --crest-xl: 160px; /* 01 pide 180: con 424 px de alto y controles de 44 px, 160 es el máximo sin recortar */
   }
 }
 

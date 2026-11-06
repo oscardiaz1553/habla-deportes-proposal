@@ -2,12 +2,17 @@
    HABLA DEPORTES · main.js (vanilla, sin dependencias)
    Solo interacciones: el contenido base se lee completo sin JavaScript.
    Módulos: cabecera pegada · menú móvil · buscador · pestañas · banner de
-   partidos · carril · estado de la radio y reproductor acoplado · cuenta
-   regresiva · encuesta · boletín · copiar enlace · chips de torneo.
+   partidos · carril · estado «en vivo» · filtros por tema · cuenta regresiva
+   · encuesta · formularios · copiar enlace · chips de torneo.
    Respeta prefers-reduced-motion. Los paneles del menú son solo CSS (hover).
    ========================================================================== */
 (function () {
   'use strict';
+
+  /* INDICADOR «EN VIVO» (un solo sitio para cambiarlo):
+     'horario' = al aire de lunes a viernes, 10:00 a 12:00 (hora de Bogotá);
+     'si' / 'no' = forzado para demostraciones. También ?envivo=si|no en la URL. */
+  var EN_VIVO = 'horario';
 
   var $ = function (s, c) { return (c || document).querySelector(s); };
   var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
@@ -150,106 +155,89 @@
     sync();
   });
 
-  /* 7. Radio: estado por horario de Bogotá (L-V 10:00-12:00) [H] y reproductor
-        simulado. Sin autoplay: el acoplado aparece solo tras pulsar reproducir.
-        Demostración: ?radio=aire o ?radio=fuera fuerzan el estado. */
+  /* 7. Estado «en vivo» del programa (transmisión de YouTube, 06 D1).
+        Sin reproductor de audio acoplado: el play lleva a En vivo / YouTube. */
   var html = document.documentElement;
   var bogota = new Date(Date.now() - 5 * 3600 * 1000); // UTC-5, sin horario de verano
   var day = bogota.getUTCDay();
   var minutes = bogota.getUTCHours() * 60 + bogota.getUTCMinutes();
   var weekday = day >= 1 && day <= 5;
-  var onAir = weekday && minutes >= 600 && minutes < 720;
-  var forced = new URLSearchParams(location.search).get('radio');
-  if (forced === 'aire' || forced === 'fuera') onAir = forced === 'aire';
-  html.setAttribute('data-radio', onAir ? 'aire' : 'fuera');
+  var mode = new URLSearchParams(location.search).get('envivo') || EN_VIVO;
+  var onAir = mode === 'si' ? true : mode === 'no' ? false : weekday && minutes >= 600 && minutes < 720;
+  html.setAttribute('data-aire', onAir ? 'si' : 'no');
   $$('.only-aire').forEach(function (el) { el.hidden = !onAir; });
   $$('.only-fuera').forEach(function (el) { el.hidden = onAir; });
 
-  var nextShow = $('[data-radio-next]');
-  if (nextShow && !onAir) {
+  if (!onAir) {
     var when = 'el lunes';
     if (weekday && minutes < 600) when = 'hoy';
     else if (day >= 0 && day <= 4) when = 'mañana';
-    nextShow.textContent = 'Fuera del aire. El programa vuelve ' + when + ' a las 10:00 a. m.';
-  }
-  var slotIndex = Math.floor((minutes - 600) / 30);
-  var rows = $$('[data-schedule] .schedule-row');
-  var currentBlock = '';
-  if (onAir && rows[slotIndex]) {
-    rows[slotIndex].classList.add('is-now');
-    $('.schedule-row__now', rows[slotIndex]).hidden = false;
-    currentBlock = $('.schedule-row__topic', rows[slotIndex]).firstChild.textContent;
-  }
-
-  var dock = $('[data-radio-dock]');
-  var KEY = 'hd-radio';
-  var store = {
-    get: function () { try { return JSON.parse(sessionStorage.getItem(KEY)); } catch (e) { return null; } },
-    set: function (v) { try { sessionStorage.setItem(KEY, JSON.stringify(v)); } catch (e) { /* sin almacenamiento */ } },
-    clear: function () { try { sessionStorage.removeItem(KEY); } catch (e) { /* sin almacenamiento */ } }
-  };
-  var player = { kind: null, title: '', state: 'paused' };
-  var connectTimer = null;
-
-  function renderDock() {
-    if (!dock) return;
-    var isLive = player.kind === 'vivo';
-    $('[data-dock-live]', dock).hidden = !isLive;
-    $('[data-dock-title]', dock).textContent = isLive ? 'El show de las mañanas' : player.title;
-    var status = {
-      connecting: 'Conectando…',
-      playing: isLive ? 'Al aire' + (currentBlock ? ': ' + currentBlock : '') + ' (demostración, sin audio)'
-                      : 'Episodio anterior (demostración, sin audio)',
-      paused: 'En pausa',
-      restored: 'Continuar donde ibas'
-    }[player.state];
-    $('[data-dock-status]', dock).textContent = status;
-    dock.setAttribute('data-state', player.state === 'playing' || player.state === 'connecting' ? 'playing' : 'paused');
-    $('[data-dock-action]', dock).textContent = player.state === 'playing' || player.state === 'connecting' ? 'Pausar' : 'Reanudar';
-  }
-  function openDock() {
-    if (!dock || html.getAttribute('data-page') === 'radio') return;
-    dock.hidden = false;
-    document.body.classList.add('has-dock');
-  }
-  function play(kind, title) {
-    player.kind = kind; player.title = title || ''; player.state = 'connecting';
-    openDock(); renderDock();
-    window.clearTimeout(connectTimer);
-    connectTimer = window.setTimeout(function () { player.state = 'playing'; renderDock(); }, 700);
-    store.set({ kind: kind, title: player.title });
-  }
-  $$('[data-radio-play]').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var kind = btn.getAttribute('data-radio-play');
-      play(kind === 'vivo' && onAir ? 'vivo' : 'episodio', btn.getAttribute('data-title'));
+    $$('[data-next-show]').forEach(function (el) {
+      el.textContent = 'Próximo programa · ' + when + ' a las 10:00 a. m.';
     });
-  });
-  if (dock) {
-    $('[data-radio-toggle]', dock).addEventListener('click', function () {
-      if (player.state === 'playing' || player.state === 'connecting') {
-        window.clearTimeout(connectTimer);
-        player.state = 'paused';
-        renderDock();
-      } else {
-        play(player.kind, player.title);
-      }
-    });
-    $('[data-radio-close]', dock).addEventListener('click', function () {
-      window.clearTimeout(connectTimer);
-      dock.hidden = true;
-      document.body.classList.remove('has-dock');
-      store.clear();
-      var main = $('#contenido'); if (main) main.focus({ preventScroll: true });
-    });
-    var saved = store.get();
-    if (saved) {
-      player.kind = saved.kind === 'vivo' && onAir ? 'vivo' : 'episodio';
-      player.title = saved.title || 'El show de las mañanas';
-      player.state = 'restored';
-      openDock(); renderDock();
+  }
+  var slot = -1;
+  if (onAir) slot = Math.max(0, Math.min(3, Math.floor((minutes - 600) / 30)));
+  $$('[data-schedule]').forEach(function (list) {
+    var rows = $$('.schedule-row', list);
+    if (slot >= 0 && rows[slot]) {
+      rows[slot].classList.add('is-now');
+      $('.schedule-row__now', rows[slot]).hidden = false;
     }
+  });
+  if (slot >= 0) {
+    $$('[data-now-line]').forEach(function (el) {
+      var topics = el.getAttribute('data-now-line').split('|');
+      el.textContent = 'Ahora: ' + topics[slot] + (slot < 3 ? ' · Después: ' + topics[slot + 1] : '');
+    });
   }
+  var grid = $('[data-week-grid]');
+  if (grid && weekday) {
+    $$('td[data-day="' + day + '"]', grid).forEach(function (td, i) {
+      td.classList.add('is-today');
+      if (i === slot) td.classList.add('is-now');
+    });
+  }
+
+  /* 7b. Filtros por tema: los enlaces funcionan sin JS (?tema=); con JS filtran en el sitio */
+  $$('[data-filterable]').forEach(function (root) {
+    var links = $$('[data-filter]', root);
+    var items = $$('[data-filter-items] > li', root);
+    var empty = $('[data-filter-empty]', root);
+    var status = $('[data-filter-status]', root);
+    var title = $('[data-filter-title]');
+    var useUrl = root.hasAttribute('data-filter-url');
+    function apply(tema, push) {
+      var shown = 0;
+      items.forEach(function (li) {
+        var card = li.querySelector('[data-tema]') || li;
+        var ok = tema === 'todas' || card.getAttribute('data-tema') === tema;
+        li.hidden = !ok;
+        if (ok) shown++;
+      });
+      var label = 'Todas';
+      links.forEach(function (a) {
+        var on = a.getAttribute('data-filter') === tema;
+        if (on) { a.setAttribute('aria-current', 'true'); label = a.textContent; } else { a.removeAttribute('aria-current'); }
+      });
+      empty.hidden = shown > 0;
+      status.textContent = 'Tema: ' + label + '. ' + shown + (shown === 1 ? ' resultado.' : ' resultados.');
+      if (useUrl) {
+        if (title) title.textContent = tema === 'todas' ? title.getAttribute('data-filter-title') : 'Noticias: ' + label;
+        $$('.context-nav__link').forEach(function (a) {
+          var href = a.getAttribute('href');
+          var match = tema === 'todas' ? href === 'noticias.html' : href === 'noticias.html?tema=' + tema;
+          if (match) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+        });
+        if (push) history.replaceState(null, '', tema === 'todas' ? 'noticias.html' : 'noticias.html?tema=' + tema);
+      }
+    }
+    links.forEach(function (a) {
+      a.addEventListener('click', function (e) { e.preventDefault(); apply(a.getAttribute('data-filter'), true); });
+    });
+    var initial = useUrl ? new URLSearchParams(location.search).get('tema') : null;
+    if (initial && links.some(function (a) { return a.getAttribute('data-filter') === initial; })) apply(initial, false);
+  });
 
   /* 8. Cuenta regresiva ------------------------------------------------------- */
   var countdowns = $$('[data-countdown]');
@@ -296,6 +284,23 @@
       ok.hidden = !valid;
       if (!valid) { input.focus(); return; }
       form.reset();
+    });
+  });
+
+  /* 10b. Formularios de demostración (participa): errores en tinta, sin rojo */
+  $$('[data-validate]').forEach(function (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var first = null;
+      $$('[required]', form).forEach(function (input) {
+        var ok = input.value.trim() !== '';
+        input.setAttribute('aria-invalid', String(!ok));
+        var err = document.getElementById(input.getAttribute('aria-describedby'));
+        if (err) err.hidden = ok;
+        if (!ok && !first) first = input;
+      });
+      $('[data-success]', form).hidden = !!first;
+      if (first) first.focus(); else form.reset();
     });
   });
 

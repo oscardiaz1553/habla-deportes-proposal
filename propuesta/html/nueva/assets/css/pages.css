@@ -324,3 +324,12 @@
   max-width: var(--container-text);
   margin-top: var(--space-4);
 }
+
+/* T10 · En vivo ------------------------------------------------------------- */
+.live-page .page-head .air-status {
+  margin-bottom: var(--space-1);
+}
+
+.layout-split--live {
+  margin-top: var(--space-3);
+}

@@ -1793,8 +1793,9 @@
   background: currentColor;
 }
 
-.live-pill--nav {
+.live-dot--nav {
   margin-left: var(--space-half);
+  box-shadow: 0 0 0 var(--border-rule) var(--color-surface-brand-2);
 }
 
 .live-dot {
@@ -1809,62 +1810,136 @@
 
 
 /* --------------------------------------------------------------------------
-   6.11 · Radio («La escaleta»): blanco, entre filetes, sin fondo azul
+   6.11 · En vivo (transmisión de YouTube en la web, 06 D1): blanco, sin fondo azul
    -------------------------------------------------------------------------- */
-.radio-module__grid {
-  display: grid;
-  gap: var(--space-4);
-}
-
-.radio-module__name {
-  font-size: var(--fs-title-lg);
-}
-
-.radio-module__hours {
-  margin-top: var(--space-1);
-  color: var(--color-text-secondary);
-}
-
-.radio-status {
+.air-status {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-1);
-  margin-top: var(--space-2);
+  color: var(--color-text-secondary);
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-semibold);
+}
+
+/* Portada del video con play: el iframe de YouTube la sustituye en producción */
+.video-cover {
+  color: var(--color-on-brand);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .video-cover:hover .media__img {
+    filter: saturate(0.95) contrast(1.03) brightness(0.94);
+  }
+}
+
+.live-now {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.live-now__body {
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: var(--space-2);
+}
+
+.live-now__title {
+  font-size: var(--fs-title-lg);
+}
+
+.live-now__text {
+  max-width: var(--measure);
+  color: var(--color-text-secondary);
+}
+
+.live-now__line {
+  padding-block: var(--space-1);
+  border-block: var(--border-hair) solid var(--color-border);
+  font-size: var(--fs-meta);
   font-weight: var(--fw-medium);
 }
 
-.radio-module__actions {
+.live-now__actions {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-1);
-  margin-top: var(--space-3);
 }
 
-.radio-module__sub {
-  margin-bottom: var(--space-1);
-  font-family: var(--font-text);
+@media (min-width: 768px) {
+  .live-now {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--space-4);
+    align-items: start;
+  }
+}
+
+.player__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding-block: var(--space-2);
+  border-bottom: var(--border-hair) solid var(--color-border);
+}
+
+.player__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-title-md);
+  font-weight: var(--fw-bold);
+}
+
+.player__audio {
+  margin-top: var(--space-1);
+  color: var(--color-text-muted);
   font-size: var(--fs-meta);
+}
+
+.player__audio-label {
+  color: var(--color-text-secondary);
   font-weight: var(--fw-semibold);
-  letter-spacing: var(--ls-normal);
 }
 
-/* Móvil: estado + botón + enlace a la parrilla; la escaleta y los episodios viven en /radio (02 §4.4) */
-.radio-module__schedule,
-.radio-module__episodes {
-  display: none;
+/* Parrilla semanal (L-V, 10:00 a 12:00) */
+.week-grid {
+  min-width: calc(var(--container-text) + var(--space-8));
+  font-size: var(--fs-meta);
 }
 
-@media (min-width: 1024px) {
-  .radio-module__grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--space-6);
-  }
+.week-grid th,
+.week-grid td {
+  padding: var(--space-1);
+  border-bottom: var(--border-hair) solid var(--color-border);
+  text-align: left;
+  vertical-align: top;
+}
 
-  .radio-module__schedule,
-  .radio-module__episodes {
-    display: block;
-  }
+.week-grid thead th {
+  color: var(--color-text-muted);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+}
+
+.week-grid__time {
+  color: var(--color-link);
+  font-family: var(--font-display);
+  font-size: var(--fs-score-sm);
+  font-stretch: calc(var(--wdth-condensed) * 1%);
+  font-weight: var(--fw-bold);
+  font-variant-numeric: var(--numeric);
+}
+
+.week-grid .is-today {
+  background: var(--color-surface-selected);
+}
+
+.week-grid .is-now {
+  font-weight: var(--fw-bold);
+  box-shadow: inset 0 calc(-1 * var(--border-active)) 0 var(--color-live);
 }
 
 .schedule-row {
@@ -1914,6 +1989,9 @@
 }
 
 .episode-row__title {
+  display: flex;
+  align-items: center;
+  min-height: var(--touch-min);
   color: var(--color-text);
   font-family: var(--font-display);
   font-weight: var(--fw-semibold);
@@ -1928,9 +2006,10 @@
   }
 }
 
-/* Play de audio: azul sólido (distinto del play de video sobre foto) */
+/* Play de la lista de programas: azul sólido (distinto del play sobre foto) */
 .audio-play {
   display: grid;
+  flex: none;
   place-items: center;
   width: var(--touch-min);
   height: var(--touch-min);
@@ -2089,6 +2168,11 @@
   font-size: var(--fs-title-sm);
   font-weight: var(--fw-bold);
   line-height: 1;
+}
+
+.sponsor-seal__note {
+  color: var(--color-text-muted);
+  font-size: var(--fs-label);
 }
 
 .sponsor-seal--on-dark {
@@ -3163,161 +3247,255 @@
   color: var(--color-on-action);
 }
 
-/* Reproductor de radio acoplado (aparece SOLO tras pulsar reproducir) -------- */
-.radio-dock {
-  --dock-w: 400px; /* 02 §6.2: 360 px; se amplía a 400 para que quepan volumen y «Abrir» */
-  position: fixed;
-  right: 0;
-  bottom: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom, 0px));
-  left: 0;
-  z-index: var(--z-dock);
-  height: var(--radio-dock-h-mobile);
-  background: var(--color-surface);
-  border-top: var(--border-hair) solid var(--color-border);
-  box-shadow: var(--shadow-dock);
-  animation: dock-in var(--dur-base) var(--ease-out);
+
+/* Filtros por tema (Noticias, programas anteriores). Enlaces reales; JS filtra. */
+.filter-bar {
+  margin-bottom: var(--space-2);
+  padding-bottom: var(--space-2);
+  border-bottom: var(--border-hair) solid var(--color-border);
 }
 
-@keyframes dock-in {
-  from { transform: translateY(100%); }
-  to { transform: none; }
+@media (max-width: 767px) {
+  .filter-bar {
+    margin-inline: calc(-1 * var(--page-margin));
+    padding-inline: var(--page-margin);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .filter-bar .chip-list {
+    flex-wrap: nowrap;
+  }
 }
 
-.radio-dock__inner {
-  display: flex;
-  align-items: center;
-  gap: var(--space-1);
-  height: 100%;
-  padding-inline: var(--space-1);
-}
-
-.radio-dock__play {
+/* Nota de solo texto (hub de Noticias, carril por tema) */
+.text-card {
+  position: relative;
   display: grid;
-  flex: none;
-  place-items: center;
-  width: var(--touch-min);
-  height: var(--touch-min);
-  padding: 0;
-  border: 0;
-  border-radius: var(--radius-round);
-  background: var(--color-action);
-  color: var(--color-on-action);
-}
-
-.radio-dock__play .icon {
-  width: var(--icon-md);
-  height: var(--icon-md);
-}
-
-.radio-dock .icon-play,
-.radio-dock[data-state="paused"] .icon-pause {
-  display: none;
-}
-
-.radio-dock[data-state="paused"] .icon-play {
-  display: block;
-}
-
-.radio-dock__info {
-  flex: 1;
-  min-width: 0;
-}
-
-.radio-dock__title,
-.radio-dock__status {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.radio-dock__title {
-  display: flex;
-  align-items: center;
   gap: var(--space-1);
-  font-size: var(--fs-ui);
-  font-weight: var(--fw-semibold);
-  line-height: var(--lh-snug);
 }
 
-.radio-dock__title [data-dock-title] {
-  overflow: hidden;
-  text-overflow: ellipsis;
+.text-card__title {
+  font-size: var(--fs-title-md);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-title);
 }
 
-.radio-dock__status {
-  color: var(--color-text-muted);
-  font-size: var(--fs-meta);
-  line-height: var(--lh-ui);
+.text-card__title a {
+  color: var(--color-text);
+  text-decoration: none;
 }
 
-.radio-dock__open {
+.text-card__dek {
+  color: var(--color-text-secondary);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .text-card:hover .text-card__title a {
+    text-decoration: underline;
+  }
+}
+
+.news-list > li {
+  padding-block: var(--space-3);
+  border-bottom: var(--border-hair) solid var(--color-border);
+}
+
+.news-list > li:first-child {
+  padding-top: var(--space-1);
+}
+
+.topic-cols {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.topic-col {
+  display: grid;
+  align-content: start;
+  gap: var(--space-1);
+  padding-top: var(--space-2);
+  border-top: var(--border-hair) solid var(--color-border);
+}
+
+.topic-col__label {
   display: inline-flex;
   align-items: center;
-  min-height: var(--touch-min);
-  padding-inline: var(--space-1);
-  color: var(--color-link);
-  font-size: var(--fs-ui);
-  font-weight: var(--fw-semibold);
-}
-
-.radio-dock__volume {
-  display: none;
-  align-items: center;
   gap: var(--space-half);
+  min-height: var(--touch-min);
+  justify-self: start;
+  color: var(--color-link);
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-semibold);
+  text-decoration: none;
+}
+
+@media (min-width: 768px) {
+  .topic-cols {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Nuestros aliados: muro monocromo, mismo alto visual. No es publicidad.
+   color  -> gris; recupera el color al pasar el mouse
+   blanco -> se tiñe de gris uniforme (brightness(0) + opacidad)
+   texto  -> nombre en Archivo, marcador provisional de logo */
+.allies {
+  --ally-h: 32px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: var(--border-hair) solid var(--color-border);
+  border-left: var(--border-hair) solid var(--color-border);
+}
+
+.ally {
+  position: relative;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: var(--space-half);
+  min-height: var(--space-12);
+  padding: var(--space-2);
+  border-right: var(--border-hair) solid var(--color-border);
+  border-bottom: var(--border-hair) solid var(--color-border);
+  text-align: center;
+}
+
+.ally__link {
+  display: grid;
+  place-items: center;
+  min-width: var(--touch-min);
+  min-height: var(--touch-min);
+  color: inherit;
+  text-decoration: none;
+}
+
+.ally__logo {
+  max-height: var(--ally-h);
+  width: auto;
+  object-fit: contain;
+  transition: filter var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
+}
+
+.ally--color .ally__logo {
+  filter: grayscale(1) contrast(1.1);
+  opacity: 0.75;
+}
+
+.ally--blanco .ally__logo {
+  filter: brightness(0);
+  opacity: 0.55;
+}
+
+.ally__wordmark {
   color: var(--color-text-muted);
+  font-family: var(--font-display);
+  font-size: var(--fs-title-sm);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-title);
+  letter-spacing: var(--ls-title);
+  text-wrap: balance;
 }
 
-.radio-dock__volume input {
-  width: var(--space-8);
+/* El aliado principal ocupa dos celdas: 1 + 10 aliados = 12 celdas exactas */
+.ally--principal {
+  grid-column: span 2;
 }
 
-/* Ecualizador: solo se mueve mientras suena; estático con movimiento reducido */
-.eq {
-  display: flex;
-  flex: none;
-  align-items: flex-end;
-  gap: 2px;
-  width: var(--icon-sm);
-  height: var(--icon-sm);
+.ally--principal .ally__wordmark {
+  font-size: var(--fs-title-md);
 }
 
-.eq i {
-  flex: 1;
-  height: 100%;
-  background: var(--color-action);
-  transform: scaleY(0.4);
-  transform-origin: bottom;
-}
-
-.radio-dock[data-state="playing"] .eq i {
-  animation: eq var(--live-pulse) ease-in-out infinite;
-}
-
-.radio-dock[data-state="playing"] .eq i:nth-child(2) { animation-delay: -0.4s; }
-.radio-dock[data-state="playing"] .eq i:nth-child(3) { animation-delay: -0.8s; }
-
-@keyframes eq {
-  0%, 100% { transform: scaleY(0.4); }
-  50% { transform: scaleY(1); }
+@media (min-width: 768px) {
+  .allies {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
 
 @media (min-width: 1024px) {
-  .radio-dock {
-    right: auto;
-    bottom: var(--space-2);
-    left: var(--space-2);
-    width: var(--dock-w);
-    border: var(--border-hair) solid var(--color-border);
+  .allies {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 }
 
-@media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
-  .radio-dock__volume {
-    display: flex;
+.ally__role {
+  color: var(--color-text-muted);
+  font-size: var(--fs-label);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ally--color .ally__link:hover .ally__logo {
+    filter: none;
+    opacity: 1;
+  }
+
+  .ally__link:hover .ally__wordmark {
+    color: var(--color-text);
   }
 }
 
-/* En /radio el reproductor grande es la fuente: el acoplado no aparece (02 §6.4) */
-[data-page="radio"] .radio-dock {
-  display: none;
+.allies__legal {
+  margin-top: var(--space-1);
+  color: var(--color-text-muted);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-medium);
+}
+
+/* Variante del pie (fondo oscuro): logos y nombres en blanco translúcido */
+.allies--pie {
+  --ally-h: 24px;
+  border-color: var(--color-border-on-dark);
+}
+
+.allies--pie .ally {
+  min-height: var(--space-8);
+  border-color: var(--color-border-on-dark);
+}
+
+.allies--pie .ally__logo,
+.allies--pie .ally--color .ally__logo,
+.allies--pie .ally--blanco .ally__logo {
+  filter: brightness(0) invert(1);
+  opacity: 0.8;
+}
+
+.allies--pie .ally__wordmark {
+  color: var(--color-on-brand-muted);
+  font-size: var(--fs-title-sm);
+}
+
+.allies--pie .ally__role,
+.site-footer .allies__legal {
+  color: var(--color-on-brand-muted);
+}
+
+.site-footer__allies {
+  padding-block: var(--space-4);
+  border-top: var(--border-hair) solid var(--color-border-on-dark);
+}
+
+/* Formulario de participación */
+.contact-form {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-2);
+  max-width: var(--container-text);
+}
+
+.choice-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-3);
+}
+
+.field__input--area {
+  min-height: calc(var(--space-12) + var(--space-4));
+  padding-block: var(--space-1);
+  resize: vertical;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .allies--pie .ally__link:hover .ally__logo {
+    opacity: 1;
+  }
 }

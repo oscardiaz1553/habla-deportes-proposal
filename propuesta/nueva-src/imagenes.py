@@ -92,6 +92,12 @@ def dims(clave):
     return _dims[clave]
 
 
+def dims_salida(ruta_rel):
+    """Dimensiones de un archivo ya presente en html/nueva (logos de aliados)."""
+    with Image.open(ORIGEN.parent.parent / "nueva" / ruta_rel) as im:
+        return im.size
+
+
 def ruta(clave):
     return "assets/img/" + CATALOGO[clave][1]
 

@@ -104,6 +104,13 @@ def comprobar(slug, html, existentes):
             errores.append(f"{slug}.html: enlace a un archivo que no existe: {href}")
     if 'href="#"' in html:
         errores.append(f"{slug}.html: hay un href=\"#\"")
+    visible = re.sub(r"<script.*?</script>|<!--.*?-->", "", html, flags=re.S)
+    for prohibido in ("Data Factory", "TikTok", "WhatsApp", "radio.html"):
+        if prohibido in visible:
+            errores.append(f"{slug}.html: contiene «{prohibido}» (retirado en la segunda pasada, 06)")
+    for src in re.findall(r'src="(assets/img/aliados/[^"]+)"', html):
+        if not (SALIDA / src).exists():
+            errores.append(f"{slug}.html: imagen inexistente {src}")
     if re.search(r"[—–]", re.sub(r"<script.*?</script>|<!--.*?-->", "", html, flags=re.S)):
         errores.append(f"{slug}.html: contiene raya (— o –); usar guion o reescribir")
     return errores
@@ -133,6 +140,10 @@ def main():
         (SALIDA / f"{slug}.html").write_text(html, encoding="utf-8")
         fotos = ", ".join(nucleo.P.fotos) or "sin fotos"
         print(f"  {slug + '.html':20} {meta.get('estado', 'completa'):12} fotos: {fotos}")
+    for viejo in SALIDA.glob("*.html"):  # páginas retiradas o renombradas (p. ej. radio.html)
+        if viejo.stem not in slugs:
+            viejo.unlink()
+            print(f"  (eliminada la salida obsoleta {viejo.name})")
     nuevas = imagenes.convertir(usadas, SALIDA / "assets" / "img")
     print(f"Imágenes: {len(usadas)} usadas, {len(nuevas)} convertidas en esta pasada.")
     if errores:

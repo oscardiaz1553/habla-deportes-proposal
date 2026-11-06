@@ -32,4 +32,6 @@ CSS y JS se editan directamente en `propuesta/html/nueva/assets/`: `tokens.css` 
 - Datos solo desde el JSON; todo módulo de datos lleva «Datos de ejemplo».
 - Rojo solo para «en vivo»; errores de formulario en tinta (borde 2 px + icono + texto).
 - Paneles del menú solo con hover (CSS); cada padre es un enlace real a una página con los mismos destinos.
-- Reproductor de radio simulado, sin autoplay; aparece solo tras pulsar reproducir. `?radio=aire` fuerza el estado «al aire» para demostrar.
+- «En vivo» = transmisión de YouTube (portada con play + comentario del iframe). El indicador «al aire» se cambia en un solo sitio: constante `EN_VIVO` al inicio de `main.js` (`'horario'|'si'|'no'`), o `?envivo=si|no` en la URL.
+- Aliados: se leen de `propuesta/nueva/aliados.json` (logos en `html/nueva/assets/img/aliados/`). Transelca primero; el build falla si Stake queda primero.
+- El build falla si reaparece «Data Factory», «TikTok», «WhatsApp» o `radio.html`, y elimina las salidas de páginas retiradas.

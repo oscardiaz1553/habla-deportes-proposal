@@ -1,0 +1,60 @@
+---
+titulo: En vivo: El show de las mañanas · Habla Deportes
+descripcion: Mira el programa en vivo de lunes a viernes, de 10:00 a. m. a 12:00 m., y ponte al día con los programas anteriores.
+tipo: pagina
+url_wp: en-vivo/
+og_imagen: assets/img/js-1.webp
+---
+<!-- ======================================================================
+     EN VIVO (T10, antes «Radio») · 06 D1 · 03 P10
+     Estado · reproductor de YouTube (portada + play; el iframe va donde indica
+     el comentario) · [programas anteriores · participa | ahora y escaleta] ·
+     parrilla semanal · C. Sin reproductor de audio acoplado.
+     ====================================================================== -->
+<div class="container live-page">
+
+  <header class="page-head">
+    {{ estado_aire() }}
+    <h1 class="page-title">En vivo</h1>
+    <p class="standfirst">El show de las mañanas, en video y sin salir de la web. Programas anteriores y tu voz, abajo.</p>
+    {{ sello("Programa presentado por") }}
+  </header>
+
+  <div class="layout-split layout-split--live">
+    <div class="layout-split__main">
+      <section aria-label="Transmisión">
+        {{ reproductor_youtube() }}
+      </section>
+
+      <section class="section" id="episodios" aria-labelledby="t-episodios">
+        {{ rotulo("Programas anteriores", id="t-episodios") }}
+        <p class="section-intro">Son los programas completos del canal de YouTube, del más reciente al más antiguo.</p>
+        {{ programas_anteriores(8) }}
+      </section>
+
+      <section class="section" id="participa" aria-labelledby="t-participa">
+        {{ rotulo("Tu voz, en el programa", id="t-participa") }}
+        <p class="section-intro">Escríbenos y leemos tu mensaje al aire, o comenta en la transmisión de YouTube.</p>
+        {{ participa() }}
+      </section>
+    </div>
+
+    <div class="layout-split__rail">
+      <section class="rail-module" aria-labelledby="r-hoy">
+        <div class="rail-module__head"><h2 class="rail-module__title" id="r-hoy">La escaleta de hoy</h2></div>
+        {{ escaleta() }}
+        <p class="source-note">Lunes a viernes, de 10:00 a. m. a 12:00 m.</p>
+      </section>
+      <section class="rail-module" aria-labelledby="r-redes">
+        <div class="rail-module__head"><h2 class="rail-module__title" id="r-redes">Síguenos</h2></div>
+        {{ siguenos() }}
+      </section>
+    </div>
+  </div>
+
+  <section class="section" id="parrilla" aria-labelledby="t-parrilla">
+    {{ rotulo("Parrilla de la semana", id="t-parrilla") }}
+    {{ parrilla_semanal() }}
+  </section>
+
+</div>

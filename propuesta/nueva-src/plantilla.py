@@ -3,12 +3,12 @@
 Partes, en orden de documento:
   <head> · enlace de salto · cabecera (nivel 1 azul + nivel 2 menú + barra
   contextual blanca + buscador + menú móvil) · <main> (contenido de la página)
-  · Publicidad C · pie · barra inferior móvil · reproductor de radio acoplado.
+  · Publicidad C · pie (con el muro de aliados) · barra inferior móvil.
 """
 import json
 
 import nucleo
-from componentes import pauta
+from componentes import aliados, pauta
 from nucleo import e, icono, img
 from sitio import CONTEXTO, INFERIOR, MAS, MENU_MOVIL, PAGINAS, PIE, PRIMARIO, REDES, SITIO
 
@@ -65,8 +65,10 @@ def _primario(cfg):
     for clave, texto, destino in PRIMARIO:
         cur = ' aria-current="page"' if cfg["primario"] == clave else ""
         extra = ""
-        if clave == "radio":
-            extra = '<span class="live-pill live-pill--nav only-aire" hidden><span class="live-dot" aria-hidden="true"></span>En vivo</span>'
+        if clave == "en-vivo":
+            # Punto rojo solo cuando el programa está al aire (main.js, constante EN_VIVO)
+            extra = ('<span class="live-dot live-dot--nav only-aire" hidden aria-hidden="true"></span>'
+                     '<span class="visually-hidden only-aire" hidden>, al aire ahora</span>')
         out.append(f'<li class="primary-nav__item"><a class="primary-nav__link" href="{destino}"{cur}>'
                    f'{e(texto)}{extra}</a></li>')
     out.append(
@@ -108,7 +110,7 @@ def _contexto(slug, cfg):
 
 def _buscador():
     sugerencias = "".join(f'<li><a class="chip" href="buscar.html?q={q}">{t}</a></li>'
-                          for t, q in (("Junior", "junior"), ("Selección", "seleccion"), ("Mercado", "mercado"), ("Radio", "radio")))
+                          for t, q in (("Junior", "junior"), ("Selección", "seleccion"), ("Mercado", "mercado"), ("Europa", "europa")))
     return (
         f'<div class="search-bar" id="buscador" hidden data-search>'
         f'<div class="container search-bar__inner">'
@@ -180,8 +182,11 @@ def pie():
       <ul class="site-footer__social" role="list" aria-label="Habla Deportes en redes">{redes}</ul>
     </div>
     <nav class="site-footer__nav" id="pie-enlaces" aria-label="Pie de página">{cols}</nav>
+    <div class="site-footer__allies">
+      <h2 class="site-footer__heading" id="pie-aliados">Nuestros aliados</h2>
+      {aliados("pie")}
+    </div>
     <div class="site-footer__base">
-      <p class="sponsor-seal sponsor-seal--on-dark"><span class="sponsor-seal__text">Con el respaldo de</span> <!-- logo oficial de Transelca (SVG, blanco): pendiente del cliente --><span class="sponsor-seal__logo" data-logo-pendiente="transelca">Transelca</span></p>
       <p class="site-footer__legal">© 2026 Habla Deportes · Barranquilla, Colombia. Sitio de ejemplo para la propuesta de rediseño: datos, nombres y cifras son ilustrativos.</p>
     </div>
   </div>
@@ -194,8 +199,8 @@ def barra_inferior(slug):
     for clave, texto, destino, ic in INFERIOR:
         on = activo == clave
         cur = ' aria-current="page"' if on else ""
-        punto = '<span class="bottom-nav__dot only-aire" hidden aria-hidden="true"></span>' if clave == "radio" else ""
-        sr = '<span class="visually-hidden only-aire" hidden>, en vivo</span>' if clave == "radio" else ""
+        punto = '<span class="bottom-nav__dot only-aire" hidden aria-hidden="true"></span>' if clave == "en-vivo" else ""
+        sr = '<span class="visually-hidden only-aire" hidden>, al aire ahora</span>' if clave == "en-vivo" else ""
         items.append(
             f'<li><a class="bottom-nav__link" href="{destino}"{cur}>'
             f'<span class="bottom-nav__icon">{icono(ic, "icon icon-line")}{icono(ic + "-fill", "icon icon-fill")}{punto}</span>'
@@ -204,36 +209,19 @@ def barra_inferior(slug):
             f'<ul class="bottom-nav__list" role="list">{"".join(items)}</ul></nav>')
 
 
-def reproductor():
-    return f"""<section class="radio-dock" aria-label="Radio en vivo" hidden data-radio-dock>
-  <div class="radio-dock__inner">
-    <button class="radio-dock__play" type="button" data-radio-toggle>{icono("pause-fill", "icon icon-pause")}{icono("play-fill", "icon icon-play")}<span class="visually-hidden" data-dock-action>Pausar</span></button>
-    <div class="radio-dock__info">
-      <p class="radio-dock__title"><span class="live-pill live-pill--sm" data-dock-live hidden><span class="live-dot" aria-hidden="true"></span>En vivo</span><span data-dock-title>El show de las mañanas</span></p>
-      <p class="radio-dock__status" data-dock-status aria-live="polite">Conectando…</p>
-    </div>
-    <span class="eq" aria-hidden="true"><i></i><i></i><i></i></span>
-    <label class="radio-dock__volume"><span class="visually-hidden">Volumen</span>{icono("speaker-high", "icon icon--sm")}<input type="range" min="0" max="100" value="80" data-volume></label>
-    <a class="radio-dock__open" href="radio.html">Abrir</a>
-    <button class="icon-btn radio-dock__close" type="button" data-radio-close>{icono("x")}<span class="visually-hidden">Cerrar el reproductor</span></button>
-  </div>
-</section>"""
-
-
 def documento(slug, meta, cuerpo, jsonld):
     cierre = meta.get("pauta_cierre", "si") == "si"
     c = f'\n{pauta("cierre")}' if cierre else ""
     partes = [
         "<!doctype html>",
-        f'<html lang="{SITIO["idioma"]}" data-radio="fuera" data-page="{slug}">',
+        f'<html lang="{SITIO["idioma"]}" data-aire="no" data-page="{slug}">',
         head(meta, jsonld),
         "<body>",
         cabecera(slug),
         f'<main id="contenido" class="site-main" tabindex="-1">\n{cuerpo}\n</main>{c}',
         pie(),
         barra_inferior(slug),
-        reproductor(),
-        nucleo.sprite(nucleo.P.iconos | {"play-fill", "pause-fill", "x"}),
+        nucleo.sprite(nucleo.P.iconos),
         "</body>",
         "</html>",
     ]

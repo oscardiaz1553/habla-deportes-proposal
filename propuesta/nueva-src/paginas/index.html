@@ -1,6 +1,6 @@
 ---
 titulo: Habla Deportes: fútbol colombiano, Junior y Selección
-descripcion: Noticias, datos en vivo, videos, Shorts y radio desde Barranquilla. Junior y la Selección Colombia, todos los días.
+descripcion: Videos del programa, Shorts, resultados y noticias desde Barranquilla. Junior y la Selección Colombia, todos los días.
 tipo: portada
 url_wp:
 og_imagen: assets/img/js-2.webp
@@ -9,7 +9,8 @@ og_imagen: assets/img/js-2.webp
      PORTADA (T1) · 02-arquitectura §4.2
      M1 principal · M2 tres noticias · M3 banner de partidos · A ·
      [M4 programa · M5 Junior | L1 clasificación · L2 próximos · B] ·
-     M6 Shorts · [M7 Selección | L4 mercado] · M8 radio · M9 opinión | M10 comunidad · C
+     M6 Shorts · [M7 Selección | L4 mercado] · M8 En vivo ahora · M8b Noticias por tema ·
+     M9 opinión | M10 comunidad · M11 Nuestros aliados · C   (segunda pasada: 06-decisiones)
      Inventario de fotos: el build falla si una foto se repite en la página.
      ====================================================================== -->
 <h1 class="visually-hidden">Portada de Habla Deportes</h1>
@@ -31,7 +32,7 @@ og_imagen: assets/img/js-2.webp
       <ul class="route-list" role="list" aria-label="Más sobre esta historia">
         <li><a class="route-link" href="articulo.html">Leer la nota del análisis{{ ico("arrow-right", "icon icon--sm") }}</a></li>
         <li><a class="route-link" href="partido.html">Seguir el partido en vivo{{ ico("arrow-right", "icon icon--sm") }}</a></li>
-        <li><a class="route-link" href="radio.html">Escuchar el programa en la radio{{ ico("arrow-right", "icon icon--sm") }}</a></li>
+        <li><a class="route-link" href="en-vivo.html">Ver el programa en vivo{{ ico("arrow-right", "icon icon--sm") }}</a></li>
       </ul>
     </div>
   </article>
@@ -59,9 +60,9 @@ og_imagen: assets/img/js-2.webp
       <section class="section" aria-labelledby="m4" data-module="M4">
         {{ rotulo("El show de las mañanas", "videos.html#programas", "Todos los videos", id="m4") }}
         <div class="program-block">
-          {{ programa("video.html", "js-1", ("2026-11-06", "Vie 6 nov"), "Programa completo: la previa de Junior vs. Nacional y la lista de la Selección", "1:51:20", destacado=True, descripcion="El show del viernes, con la previa de la noche, la convocatoria para Perú y Chile y el mercado.") }}
+          {{ programa("video.html", "banderas-junior-nacional", ("2026-11-06", "Vie 6 nov"), "Programa completo: la previa de Junior vs. Nacional y la lista de la Selección", "1:51:20", destacado=True, descripcion="El show del viernes, con la previa de la noche, la convocatoria para Perú y Chile y el mercado.") }}
           <div class="program-block__list">
-            {{ programa("video.html", "seleccion-gol", ("2026-11-04", "Mié 4 nov"), "Lista de la Selección: cinco novedades y una ausencia", "18:32") }}
+            {{ programa("video.html", "seleccion-tecnico-retrato", ("2026-11-04", "Mié 4 nov"), "Lista de la Selección: cinco novedades y una ausencia", "18:32") }}
             {{ programa("video.html", "junior-bicampeon", ("2026-11-03", "Mar 3 nov"), "Mercado de Junior: quién llega, quién se va y qué es humo", "22:51") }}
             {{ programa("video.html", "nacional-celebracion", ("2026-10-31", "Sáb 31 oct"), "Análisis táctico de Nacional: cómo se le juega", "31:44") }}
           </div>
@@ -98,7 +99,7 @@ og_imagen: assets/img/js-2.webp
 
   <!-- M6 · Shorts (un solo carril, separado de los programas) -->
   <section class="section" aria-labelledby="s-shorts" data-module="M6">
-    {{ carril_shorts("carril-shorts", "Shorts", "shorts.html", "Ver todos", [("banderas-junior-nacional", "Lo que dice la tabla: Junior primero, Nacional a un punto", "0:41"), ("banderas-junior-millonarios", "Tres datos de la Fecha 19 en menos de un minuto", "0:48"), ("banderas-colombia-peru", "Así se prepara la hinchada para Colombia vs. Perú", "0:33"), ("seleccion-derrota", "Pregunta del día: ¿qué lateral izquierdo quieres ver?", "0:19"), ("invitado-estudio", "¿Titular o suplente? El debate del extremo", "0:36")]) }}
+    {{ carril_shorts("carril-shorts", "Shorts", "shorts.html", "Ver todos", [("seleccion-tecnico-zona", "Qué significa «oxigenar» una lista", "0:44"), ("banderas-junior-millonarios", "Tres datos de la Fecha 19 en menos de un minuto", "0:48"), ("banderas-colombia-peru", "Así se prepara la hinchada para Colombia vs. Perú", "0:33"), ("seleccion-derrota", "Pregunta del día: ¿qué lateral izquierdo quieres ver?", "0:19"), ("invitado-estudio", "¿Titular o suplente? El debate del extremo", "0:36")]) }}
   </section>
 
   <div class="layout-split">
@@ -107,7 +108,7 @@ og_imagen: assets/img/js-2.webp
       <section class="section" aria-labelledby="m7" data-module="M7">
         {{ rotulo("Selección Colombia", "seleccion.html", "Ir a la Selección", id="m7") }}
         <div class="topic-block">
-          {{ tarjeta("articulo.html", "seleccion-tecnico-retrato", "Convocatoria", "Qué pide el técnico al medio campo para el amistoso con Perú", "<time datetime='2026-11-06T11:00-05:00'>Hace 9 horas</time> · 5 min de lectura", variante="wide") }}
+          {{ tarjeta("articulo.html", "seleccion-gol", "Convocatoria", "Qué pide el técnico al medio campo para el amistoso con Perú", "<time datetime='2026-11-06T11:00-05:00'>Hace 9 horas</time> · 5 min de lectura", variante="wide") }}
           {{ titulares([("articulo.html", "Perú, en cinco claves: cómo juega y dónde duele", "Rival · Hace 10 horas", False), ("video.html", "Debate: ¿es Perú el rival ideal para esta fecha FIFA?", "Debate · 19 min", True), ("articulo.html", "Colombia vs. Perú: lo que cuenta el historial reciente (cifras de ejemplo)", "Historia · Ayer", False)]) }}
         </div>
       </section>
@@ -121,26 +122,16 @@ og_imagen: assets/img/js-2.webp
     </div>
   </div>
 
-  <!-- M8 · Radio («La escaleta»): estado, botón, parrilla de hoy y 3 episodios -->
-  <section class="section radio-module" aria-labelledby="m8" data-module="M8">
-    {{ rotulo("Radio", "radio.html#parrilla", "Parrilla completa", id="m8") }}
-    <div class="radio-module__grid">
-      <div class="radio-module__live">
-        <h3 class="radio-module__name">El show de las mañanas</h3>
-        <p class="radio-module__hours">Lunes a viernes, 10:00 a. m. a 12:00 m. Con Juan Salvador Bárcena.</p>
-        {{ estado_radio() }}
-        <div class="radio-module__actions">{{ boton_radio() }}</div>
-      </div>
-      <div class="radio-module__schedule">
-        <h3 class="radio-module__sub">La escaleta del programa</h3>
-        {{ escaleta() }}
-      </div>
-      <div class="radio-module__episodes">
-        <h3 class="radio-module__sub">Episodios anteriores</h3>
-        {{ episodios(3) }}
-        <a class="link-action" href="radio.html#episodios">Todos los episodios{{ ico("caret-right", "icon icon--sm") }}</a>
-      </div>
-    </div>
+  <!-- M8 · En vivo ahora (antes «La escaleta»): portada del video + estado + próximo programa -->
+  <section class="section" aria-labelledby="m8" data-module="M8">
+    {{ rotulo("En vivo ahora", "en-vivo.html", "Ir a En vivo", id="m8") }}
+    {{ en_vivo_ahora() }}
+  </section>
+
+  <!-- M8b · Noticias por tema (una nota por tema, sin foto: no gasta fotos de la página) -->
+  <section class="section" aria-labelledby="m8b" data-module="M8b">
+    {{ rotulo("Noticias por tema", "noticias.html", "Ver todas", id="m8b") }}
+    {{ noticias_por_tema() }}
   </section>
 
   <!-- M9 · Opinión | M10 · Comunidad -->
@@ -162,7 +153,10 @@ og_imagen: assets/img/js-2.webp
       </div>
       <div class="community__block">
         {{ boletin() }}
-        <p class="community__whatsapp">{{ ico("whatsapp-logo") }}<span>Las alertas, directo a tu chat: goles, fichajes confirmados y aviso de que arrancamos al aire.</span> <a class="link-action" href="redes.html#whatsapp">Unirme al canal{{ ico("caret-right", "icon icon--sm") }}</a></p>
+      </div>
+      <div class="community__block">
+        <h3 class="community__title">Síguenos</h3>
+        {{ siguenos() }}
       </div>
       <div class="community__block community__block--ephemeris">
         <h3 class="community__title">Un día como hoy</h3>
@@ -171,5 +165,12 @@ og_imagen: assets/img/js-2.webp
       </div>
     </section>
   </div>
+
+  <!-- M11 · Nuestros aliados (sello institucional, NO publicidad). Transelca primero; Stake nunca primero. -->
+  <section class="section allies-section" aria-labelledby="m11" data-module="M11">
+    {{ rotulo("Nuestros aliados", id="m11") }}
+    <p class="section-intro">Marcas e instituciones que acompañan a Habla Deportes desde Barranquilla.</p>
+    {{ aliados("muro") }}
+  </section>
 
 </div>

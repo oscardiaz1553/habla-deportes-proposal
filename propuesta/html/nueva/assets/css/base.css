@@ -42,17 +42,12 @@ body {
   line-height: var(--lh-body);
   font-optical-sizing: auto;
   -webkit-font-smoothing: antialiased;
-  /* Reserva para la barra inferior móvil (y el reproductor cuando suena) */
+  /* Reserva para la barra inferior móvil */
   padding-bottom: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom, 0px));
 }
 
-body.has-dock {
-  padding-bottom: calc(var(--bottom-nav-h) + var(--radio-dock-h-mobile) + env(safe-area-inset-bottom, 0px));
-}
-
 @media (min-width: 1024px) {
-  body,
-  body.has-dock {
+  body {
     padding-bottom: 0;
   }
 }

@@ -7,6 +7,7 @@ Los datos salen SIEMPRE de datos.D (data-ejemplo.json).
 """
 import datetime as dt
 
+import imagenes
 import nucleo
 from datos import (D, FUENTE, HOY, dia_corto, dia_largo, equipo, fila_tabla, forma_texto, hora,
                    hora_iso, id_partido, miles, partido_por_id, signo, todos_los_proximos)
@@ -550,14 +551,87 @@ def mercado(ids=("m1", "m2", "m4", "m5", "m6")):
 
 
 # ==========================================================================
-# 6.11 · Radio («La escaleta») y episodios
+# 6.11 · En vivo (transmisión de YouTube dentro de la web, 06 D1)
+# Sin iframe real en el prototipo: portada con play + comentario del embed.
+# El estado «al aire» lo decide main.js (constante EN_VIVO, un solo sitio).
 # ==========================================================================
-EPISODIOS = [
+CANAL = D["en_vivo"]["canal_youtube"]
+EPISODIOS = [  # 03 Banco 5: programas anteriores (videos del canal)
     ("Viernes: la previa de Junior vs. Nacional", "1:51:20", "2026-11-06", "Junior"),
     ("Jueves: la lista de la Selección y el mercado", "1:49:40", "2026-11-05", "Selección"),
     ("Miércoles: quién llega y quién se va del Tiburón", "1:42:15", "2026-11-04", "Mercado"),
     ("Martes: ¿es Junior favorito esta semana? El debate", "1:51:28", "2026-11-03", "Debate"),
+    ("Lunes: balance de la Fecha 19", "1:46:05", "2026-11-02", "Junior"),
+    ("Viernes: la gira de octubre, tres lecciones", "1:44:50", "2026-10-30", "Selección"),
+    ("Jueves: el clásico costeño, sin filtros", "1:53:11", "2026-10-29", "Junior"),
+    ("Miércoles: cierre de la ventana y salidas", "1:40:02", "2026-10-28", "Mercado"),
 ]
+PARRILLA_SEMANA = [  # 03 Banco 5
+    ("10:00", ["Apertura: balance del fin de semana", "Apertura y titulares", "Apertura y titulares",
+               "Apertura y titulares", "Apertura: lo que se juega esta noche"]),
+    ("10:30", ["Junior en primer plano: la Fecha", "Junior: análisis y plantel", "Junior: el mercado",
+               "Junior: el rival y la previa", "Junior: la previa del partido"]),
+    ("11:00", ["Selección: la semana", "Selección: rivales", "Selección y mercado",
+               "Selección: la convocatoria", "Selección: lista y cifras"]),
+    ("11:30", ["Debate de los oyentes", "Debate de los oyentes", "Debate: el tema de la semana",
+               "Debate de los oyentes", "Debate de los oyentes y encuesta"]),
+]
+
+
+TEMAS_HOY = e("|".join(p["bloque"] for p in D["programa"]["parrilla"]))
+
+
+def estado_aire():
+    """Estado «Al aire / Próximo programa». main.js muestra uno u otro."""
+    return (f'<p class="air-status"><span class="only-aire" hidden>{live_pill("Al aire")} hasta las 12:00 m.</span>'
+            f'<span class="only-fuera" data-next-show>Próximo programa · lunes a las 10:00 a. m.</span></p>')
+
+
+def _portada_video(url, externo=False, prioridad=False, nivel=None):
+    """Portada del video de YouTube con play. El iframe real va donde indica el comentario."""
+    destino = f' href="{e(url)}"' + (' target="_blank" rel="noopener"' if externo else "")
+    sr = "Ver el programa en vivo en YouTube (se abre en una pestaña nueva)" if externo else "Ver el programa en vivo"
+    return (
+        f'<!-- iframe youtube-nocookie.com/embed/live_stream?channel=ID_DEL_CANAL irá aquí '
+        f'(title="El show de las mañanas, en vivo", loading="lazy", allow="autoplay; encrypted-media; picture-in-picture") -->'
+        f'<a class="video-cover media"{destino}>'
+        f'{img("js-1", clase="media__img", alt="Portada de la transmisión en vivo de El show de las mañanas: Juan Salvador Bárcena ante el micrófono azul de Habla Deportes", prioridad=prioridad)}'
+        f'<span class="play play--lg">{icono("play-fill")}</span>'
+        f'<span class="chip-media chip-media--tl only-aire" hidden>En directo</span>'
+        f'<span class="visually-hidden">{sr}</span></a>')
+
+
+def en_vivo_ahora():
+    """Portada · «En vivo ahora» (03 §1.9): portada del video + estado + próximo programa."""
+    return (
+        f'<div class="live-now">'
+        f'<div class="live-now__media">{_portada_video("en-vivo.html")}</div>'
+        f'<div class="live-now__body">'
+        f'{estado_aire()}'
+        f'<h3 class="live-now__title">El show de las mañanas, en vivo desde Barranquilla</h3>'
+        f'<p class="live-now__text">Míralo aquí, sin salir de la web, o ponte al día con los programas anteriores. '
+        f'Lunes a viernes, 10:00 a. m. a 12:00 m.</p>'
+        f'<p class="live-now__line only-aire" hidden data-now-line="{TEMAS_HOY}">Ahora: {e(D["programa"]["parrilla"][0]["bloque"])} · '
+        f'Después: {e(D["programa"]["parrilla"][1]["bloque"])}</p>'
+        f'<div class="live-now__actions"><a class="btn btn--primary" href="en-vivo.html">{icono("play-fill")}Ver en vivo</a>'
+        f'<a class="btn btn--secondary" href="en-vivo.html#parrilla">Ver parrilla</a></div>'
+        f'</div></div>')
+
+
+def reproductor_youtube():
+    """Página En vivo: reproductor principal (portada + play) y enlaces del canal."""
+    audio = D["en_vivo"]["audio_solo"]
+    return (
+        f'<div class="player">'
+        f'{_portada_video(CANAL, externo=True, prioridad=True)}'
+        f'<div class="player__bar">'
+        f'<div><p class="player__title">El show de las mañanas · En directo</p>'
+        f'<p class="meta only-aire" hidden data-now-line="{TEMAS_HOY}">Ahora: {e(D["programa"]["parrilla"][0]["bloque"])}</p></div>'
+        f'{enlace_externo("Abrir en YouTube", CANAL, clase="btn btn--secondary btn--sm")}'
+        f'</div>'
+        f'<p class="player__audio"><span class="player__audio-label">{e(audio["texto"])}</span> '
+        f'Aún no confirmamos que exista una transmisión solo en audio.</p>'
+        f'</div>')
 
 
 def escaleta():
@@ -570,29 +644,50 @@ def escaleta():
     return f'<ol class="schedule-list" role="list" data-schedule>{filas}</ol>'
 
 
-def episodios(n=3):
+def parrilla_semanal():
+    dias = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"]
+    cab = "".join(f'<th scope="col">{d}</th>' for d in dias)
+    filas = "".join(
+        f'<tr><th scope="row" class="week-grid__time">{h}</th>' + "".join(f'<td data-day="{i + 1}">{e(t)}</td>' for i, t in enumerate(c)) + "</tr>"
+        for h, c in PARRILLA_SEMANA)
+    return (f'<div class="table-scroll" role="region" aria-label="Parrilla semanal, se desplaza de lado" tabindex="0">'
+            f'<table class="week-grid" data-week-grid><caption class="visually-hidden">Parrilla de lunes a viernes, de 10:00 a. m. a 12:00 m.</caption>'
+            f'<thead><tr><th scope="col">Hora</th>{cab}</tr></thead><tbody>{filas}</tbody></table></div>'
+            f'<p class="note">Cada bloque dura 30 minutos; el último cierra a las 12:00 m. El bloque resaltado es el que está al aire ahora.</p>')
+
+
+def programas_anteriores(n=8):
+    """Programas anteriores = videos del canal (03 Banco 5), con filtro por tema."""
+    temas = ["Todos"] + sorted({t for *_, t in EPISODIOS[:n]}, key=["Junior", "Selección", "Mercado", "Debate"].index)
     filas = []
     for titulo, dur, fecha, tema in EPISODIOS[:n]:
         filas.append(
-            f'<li class="episode-row">'
-            f'<button class="audio-play" type="button" data-radio-play="episodio" data-title="{e(titulo)}">'
-            f'{icono("play-fill")}<span class="visually-hidden">Reproducir: {e(titulo)}</span></button>'
+            f'<li class="episode-row" data-tema="{_slug(tema)}">'
+            f'<a class="audio-play" href="video.html">{icono("play-fill")}<span class="visually-hidden">Ver: {e(titulo)}</span></a>'
             f'<span class="episode-row__body"><a class="episode-row__title" href="video.html">{e(titulo)}</a>'
             f'<span class="meta"><time datetime="{fecha}">{e(dia_corto(fecha))}</time> · {e(dur)} · {e(tema)}</span></span></li>')
-    return f'<ul class="episode-list" role="list">{"".join(filas)}</ul>'
+    return _filtros("programas", "Filtrar programas por tema",
+                    [(t, _slug(t) if t != "Todos" else "todas") for t in temas],
+                    f'<ul class="episode-list" role="list" data-filter-items>{"".join(filas)}</ul>',
+                    "No hay programas de este tema esta semana. Prueba con otro filtro.")
 
 
-def estado_radio():
-    """Texto de estado; JS cambia html[data-radio] según la hora de Bogotá (L-V 10:00-12:00)."""
-    return (f'<p class="radio-status"><span class="only-aire" hidden>{live_pill("Al aire")} hasta las 12:00 m.</span>'
-            f'<span class="only-fuera" data-radio-next>Fuera del aire. El programa vuelve el lunes a las 10:00 a. m.</span></p>')
-
-
-def boton_radio():
-    return (f'<button class="btn btn--primary only-aire" type="button" data-radio-play="vivo" hidden>'
-            f'{icono("play-fill")}Escuchar en vivo</button>'
-            f'<button class="btn btn--secondary only-fuera" type="button" data-radio-play="episodio" '
-            f'data-title="{e(EPISODIOS[0][0])}">{icono("play-fill")}Escuchar el último episodio</button>')
+def participa():
+    return (
+        f'<form class="contact-form" data-validate novalidate>'
+        f'<div class="field"><label class="field__label" for="p-nombre">Tu nombre y ciudad</label>'
+        f'<input class="field__input" id="p-nombre" name="nombre" autocomplete="name" required aria-describedby="p-nombre-error">'
+        f'<p class="form-error" id="p-nombre-error" data-error hidden>{icono("warning-circle")}<span>Escribe tu nombre y tu ciudad.</span></p></div>'
+        f'<fieldset class="field"><legend class="field__label">Tipo de mensaje</legend><div class="choice-row">'
+        + "".join(f'<label class="choice"><input type="radio" name="tipo" value="{t}"{" checked" if i == 0 else ""}><span>{t}</span></label>'
+                  for i, t in enumerate(["Pregunta", "Opinión", "Saludo"])) +
+        f'</div></fieldset>'
+        f'<div class="field"><label class="field__label" for="p-mensaje">Tu mensaje</label>'
+        f'<textarea class="field__input field__input--area" id="p-mensaje" name="mensaje" rows="4" required aria-describedby="p-mensaje-error"></textarea>'
+        f'<p class="form-error" id="p-mensaje-error" data-error hidden>{icono("warning-circle")}<span>Escribe tu mensaje antes de enviarlo.</span></p></div>'
+        f'<button class="btn btn--primary" type="submit">Enviar al programa</button>'
+        f'<p class="form-success" data-success role="status" hidden>{icono("check")}<span>Recibimos tu mensaje. Gracias por escribir. (Demostración: no se envió nada.)</span></p>'
+        f'</form>')
 
 
 # ==========================================================================
@@ -648,27 +743,44 @@ PAUTA = {
 }
 
 
-def pauta(slot):
+def pauta(slot, pieza=None, fija=None, alt="", destino=None, ancho=None, alto=None):
+    """Hueco fijo de pauta (A superior · B lateral · C cierre).
+
+    USO CON PIEZA REAL (GIF/WebP animado de un patrocinador), reglas de 06 D3:
+      - peso máximo 250 KB; máximo 3 repeticiones u 8 s de animación; sin sonido;
+      - siempre con imagen FIJA de respaldo (primer cuadro): `fija`;
+      - con prefers-reduced-motion se muestra solo la imagen fija (el <source> animado
+        solo aplica con movimiento permitido);
+      - el build no valida el peso: se revisa al cargar la pieza (campo simple en WP).
+      pauta("lateral", pieza="assets/img/pauta/marca.gif", fija="assets/img/pauta/marca.webp",
+            alt="Anuncio de Marca: mensaje", destino="https://…", ancho=300, alto=250)
+    Sin pieza: marcador de posición rotulado (prototipo) que en producción se colapsa.
+    """
     nombre, esc, mov = PAUTA[slot]
-    medidas = (f'<span class="ad-slot__size ad-slot__size--lg">{esc}</span>'
-               f'<span class="ad-slot__size ad-slot__size--sm">{mov}</span>') if esc != mov else f'<span class="ad-slot__size">{esc}</span>'
-    return (f'<!-- slot pauta: {slot} -->'
-            f'<aside class="ad-slot ad-slot--{slot}" aria-label="{nombre}" data-slot="{slot}">'
-            f'<p class="ad-slot__label">Publicidad</p>'
-            f'<a class="ad-slot__frame" href="contacto.html#publicidad">'
-            f'<span class="ad-slot__placeholder">Espacio publicitario{medidas}'
-            f'<span class="ad-slot__cta">Cómo anunciar aquí</span></span></a></aside>')
+    reglas = 'data-max-kb="250" data-max-loops="3" data-max-seconds="8"'
+    if pieza:
+        cuerpo = (f'<a class="ad-slot__frame ad-slot__frame--piece" href="{e(destino)}" target="_blank" rel="sponsored noopener">'
+                  f'<picture><source srcset="{e(pieza)}" media="(prefers-reduced-motion: no-preference)">'
+                  f'<img src="{e(fija)}" alt="{e(alt)}" width="{ancho}" height="{alto}" loading="lazy" decoding="async"></picture></a>')
+    else:
+        medidas = (f'<span class="ad-slot__size ad-slot__size--lg">{esc}</span>'
+                   f'<span class="ad-slot__size ad-slot__size--sm">{mov}</span>') if esc != mov else f'<span class="ad-slot__size">{esc}</span>'
+        cuerpo = (f'<a class="ad-slot__frame" href="contacto.html#publicidad">'
+                  f'<span class="ad-slot__placeholder">Espacio publicitario{medidas}'
+                  f'<span class="ad-slot__cta">Cómo anunciar aquí</span></span></a>')
+    return (f'<!-- slot pauta: {slot}. Piezas animadas: máx. 250 KB, 3 repeticiones u 8 s, sin sonido, '
+            f'con imagen fija de respaldo; con movimiento reducido solo el primer cuadro. -->'
+            f'<aside class="ad-slot ad-slot--{slot}" aria-label="{nombre}" data-slot="{slot}" {reglas}>'
+            f'<p class="ad-slot__label">Publicidad</p>{cuerpo}</aside>')
 
 
 def sello(texto="Sección de datos presentada por"):
     return (f'<p class="sponsor-seal"><span class="sponsor-seal__text">{e(texto)}</span> '
-            f'<!-- logo oficial de Transelca (SVG): pendiente del cliente -->'
-            f'<span class="sponsor-seal__logo" data-logo-pendiente="transelca">Transelca</span></p>')
+            f'<!-- logo oficial de Transelca (SVG): pendiente del cliente; su rol de aliado principal está por confirmar -->'
+            f'<span class="sponsor-seal__logo" data-logo-pendiente="transelca">Transelca</span>'
+            f'<span class="sponsor-seal__note">(rol por confirmar)</span></p>')
 
 
-# ==========================================================================
-# Artículo: migas, compartir, caja de datos, etiquetas
-# ==========================================================================
 def migas(*niveles):
     """niveles: ("Inicio", "index.html"), ("Noticias", "noticias.html"), ... Se renderiza en build (JSON-LD)."""
     items = "".join(f'<li><a href="{e(h)}">{e(t)}</a></li>' for t, h in niveles)
@@ -677,12 +789,14 @@ def migas(*niveles):
             f'<a class="breadcrumb__back" href="{e(padre_h)}">{icono("caret-left", "icon icon--sm")}{e(padre_t)}</a></nav>')
 
 
-def compartir():
+def compartir(texto="Rivas y Castro: el eje que sostiene al líder"):
+    from urllib.parse import quote
+    q = quote(texto)
     return (f'<div class="share" data-share><p class="share__label">Compartir</p><ul class="share__list" role="list">'
-            f'<li><a class="icon-btn" href="https://wa.me/?text=Rivas%20y%20Castro%3A%20el%20eje%20que%20sostiene%20al%20l%C3%ADder" '
-            f'target="_blank" rel="noopener">{icono("whatsapp-logo")}<span class="visually-hidden">Compartir por WhatsApp (se abre en una pestaña nueva)</span></a></li>'
-            f'<li><a class="icon-btn" href="https://x.com/intent/post?text=Rivas%20y%20Castro%3A%20el%20eje%20que%20sostiene%20al%20l%C3%ADder" '
-            f'target="_blank" rel="noopener">{icono("x-logo")}<span class="visually-hidden">Compartir en X (se abre en una pestaña nueva)</span></a></li>'
+            f'<li><a class="icon-btn" href="https://x.com/intent/post?text={q}" target="_blank" rel="noopener">{icono("x-logo")}'
+            f'<span class="visually-hidden">Compartir en X (se abre en una pestaña nueva)</span></a></li>'
+            f'<li><a class="icon-btn" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fhabladeportes.co%2F" '
+            f'target="_blank" rel="noopener">{icono("facebook-logo")}<span class="visually-hidden">Compartir en Facebook (se abre en una pestaña nueva)</span></a></li>'
             f'<li><button class="icon-btn" type="button" data-copy>{icono("link")}<span class="visually-hidden">Copiar enlace</span></button></li>'
             f'</ul><p class="share__status" data-copy-status role="status"></p></div>')
 
@@ -698,7 +812,7 @@ def caja_datos_junior():
     return (f'<aside class="data-box" aria-labelledby="caja-datos"><h2 class="data-box__title" id="caja-datos">Junior en la Liga, en seis cifras</h2>'
             f'<dl class="data-box__grid">{dl}</dl>'
             f'<div class="data-box__form"><span class="meta">Racha</span>{_forma(f["forma"])}</div>'
-            f'{fuente("Datos de ejemplo hasta la Fecha 19. En producción: Data Factory.")}</aside>')
+            f'{fuente("Datos de ejemplo hasta la Fecha 19 · fuente por definir.")}</aside>')
 
 
 def etiquetas(*items):
@@ -714,7 +828,7 @@ def chips_torneos():
         for t, k in items)
     return (f'<ul class="chip-list" role="list" data-torneos>{li}</ul>'
             f'<p class="source-note" data-torneo-aviso hidden>En el prototipo solo hay datos de ejemplo de la Liga BetPlay. '
-            f'En producción, cada torneo trae su tabla y sus resultados desde Data Factory.</p>')
+            f'La fuente de los datos de cada torneo está por definir.</p>')
 
 
 # ==========================================================================
@@ -740,10 +854,121 @@ def buscador_404():
             f'<button class="btn btn--primary" type="submit">Buscar</button></div></form>')
 
 
+# ==========================================================================
+# Filtros por tema (enlaces reales ?tema=; main.js filtra en el cliente)
+# ==========================================================================
+def _filtros(id, etiqueta, opciones, contenido, vacio, pagina=None):
+    enlaces = "".join(
+        f'<li><a class="chip" href="{e(pagina + ("" if clave == "todas" else "?tema=" + clave)) if pagina else "?tema=" + clave}" '
+        f'data-filter="{clave}"{CUR if clave == "todas" else ""}>{e(t)}</a></li>'
+        for t, clave in opciones)
+    return (f'<div class="filterable" data-filterable="{id}"{" data-filter-url" if pagina else ""}>'
+            f'<nav class="filter-bar" aria-label="{e(etiqueta)}"><ul class="chip-list" role="list">{enlaces}</ul></nav>'
+            f'<p class="visually-hidden" data-filter-status role="status"></p>'
+            f'{contenido}<p class="empty-state" data-filter-empty hidden>{e(vacio)}</p></div>')
+
+
+NOTAS_BASE = [  # Notas de Junior, Selección, Mercado y Opinión ya presentes en el sitio (03 Banco 2 y 6)
+    {"tema": "junior", "etiqueta": "Junior", "titular": "Rivas y Castro: el eje que sostiene al líder",
+     "bajada": "Junior suma cinco partidos sin perder y lidera la Liga con 39 puntos antes de recibir a Nacional.",
+     "lectura_min": 5, "fecha": "2026-11-06", "url": "articulo.html"},
+    {"tema": "seleccion", "etiqueta": "Selección", "titular": "La lista para Perú y Chile: cinco novedades y una ausencia que se discute",
+     "bajada": "El técnico llamó a 26 jugadores para la fecha FIFA de noviembre. El medio campo es la línea con más cambios.",
+     "lectura_min": 6, "fecha": "2026-11-06", "url": "articulo.html"},
+    {"tema": "mercado", "etiqueta": "Mercado", "titular": "Junior negocia un extremo con pasado europeo: qué está firmado y qué no",
+     "bajada": "Conversaciones avanzadas con Medellín; falta acordar la duración del contrato (dato de ejemplo).",
+     "lectura_min": 4, "fecha": "2026-11-05", "url": "mercado.html"},
+    {"tema": "opinion", "etiqueta": "Opinión", "titular": "Equilibrio o creatividad: el dilema del medio campo",
+     "bajada": "Dos formas de armar el centro de la cancha y lo que cada una le cuesta al equipo. Columna de ejemplo.",
+     "lectura_min": 5, "fecha": "2026-11-04", "url": "juan-salvador.html#columnas"},
+]
+
+
+def _nota_texto(n, nivel=3, con_tema=True):
+    url = n.get("url", "articulo.html")
+    tema = f'<p class="topic">{e(n["etiqueta"])}</p>' if con_tema else ""
+    return (f'<article class="text-card" data-tema="{n["tema"]}">{tema}'
+            f'<h{nivel} class="text-card__title"><a class="stretched-link" href="{e(url)}">{e(n["titular"])}</a></h{nivel}>'
+            f'<p class="text-card__dek">{e(n["bajada"])}</p>'
+            f'<p class="meta"><time datetime="{n["fecha"]}">{e(dia_corto(n["fecha"]))}</time> · {n["lectura_min"]} min de lectura</p></article>')
+
+
+def noticias_hub():
+    """noticias.html: barra de filtros por tema + lista de notas (Banco 10)."""
+    npt = D["noticias_por_tema"]
+    notas = NOTAS_BASE[:2] + npt["notas"] + NOTAS_BASE[2:]
+    opciones = [(t["etiqueta"], t["tema"]) for t in npt["temas"]]
+    lista = "".join(f'<li>{_nota_texto(n)}</li>' for n in notas)
+    return _filtros("noticias", "Filtrar noticias por tema", opciones,
+                    f'<ul class="news-list" role="list" data-filter-items>{lista}</ul>',
+                    "Todavía no hay notas de este tema. Mira las últimas de otros temas.", pagina="noticias.html")
+
+
+def noticias_por_tema():
+    """Portada · carril «Noticias por tema» (03 §1.9b): una nota por tema, sin foto."""
+    npt = D["noticias_por_tema"]
+    cols = []
+    for clave in ("futbol-colombiano", "europa", "colombianos-exterior"):
+        tema = next(t for t in npt["temas"] if t["tema"] == clave)
+        nota = next(n for n in npt["notas"] if n["tema"] == clave)
+        cols.append(f'<div class="topic-col"><a class="topic-col__label" href="noticias.html?tema={clave}">{e(tema["etiqueta"])}'
+                    f'{icono("caret-right", "icon icon--sm")}</a>{_nota_texto(nota, con_tema=False)}</div>')
+    return f'<div class="topic-cols">{"".join(cols)}</div>'
+
+
+# ==========================================================================
+# Aliados (06 D3): muro monocromo, mismo alto visual. No es publicidad.
+# ==========================================================================
+ALTO_LOGO = 32  # px de alto visual común
+
+
+def _logo_aliado(a, alto):
+    if a["tono"] == "texto" or not a.get("archivo"):
+        return f'<span class="ally__wordmark" data-logo-pendiente="{a["id"]}">{e(a["nombre"])}</span>'
+    w, h = a.get("ancho"), a.get("alto")
+    if not w:
+        w, h = imagenes.dims_salida(a["archivo"])
+    ancho = round(w * alto / h)
+    tope = w // 2  # pantallas 2x: no mostrar más ancho que la mitad de los píxeles reales (evita el pixelado)
+    if ancho > tope:
+        ancho, alto = tope, round(h * tope / w)
+    return (f'<img class="ally__logo" src="{e(a["archivo"])}" alt="{e(a["nombre"])}" width="{ancho}" height="{alto}" '
+            f'loading="lazy" decoding="async">')
+
+
+def aliados(variante="muro"):
+    from datos import ALIADOS
+    orden = sorted(ALIADOS, key=lambda a: a["rol"] != "principal")  # Transelca primero; Stake nunca primero
+    if orden[0]["id"] == "stake":
+        raise nucleo.ErrorDeContenido("aliados: Stake no puede ir primero")
+    alto = ALTO_LOGO if variante == "muro" else 24
+    items = []
+    for a in orden:
+        cuerpo = _logo_aliado(a, alto)
+        rol = '<span class="ally__role">Aliado principal (por confirmar)</span>' if a["rol"] == "principal" else ""
+        if a.get("web") and a.get("sitio_confirmado"):
+            cuerpo = (f'<a class="ally__link" href="{e(a["web"])}" target="_blank" rel="noopener">{cuerpo}'
+                      f'<span class="visually-hidden">: ir al sitio (se abre en una pestaña nueva)</span></a>')
+        principal = " ally--principal" if a["rol"] == "principal" else ""
+        items.append(f'<li class="ally ally--{a["tono"]}{principal}">{cuerpo}{rol}</li>')
+    return (f'<!-- Muro de aliados: datos en propuesta/nueva/aliados.json. Logos provisionales, no oficiales. '
+            f'No es publicidad: sin rótulo «Publicidad». -->'
+            f'<ul class="allies allies--{variante}" role="list">{"".join(items)}</ul>'
+            f'<p class="allies__legal">Juega con responsabilidad. Solo mayores de 18 años.</p>')
+
+
+def siguenos():
+    from sitio import REDES
+    li = "".join(f'<li><a class="icon-btn" href="{r["url"]}" target="_blank" rel="noopener">{icono(r["icono"])}'
+                 f'<span class="visually-hidden">{r["nombre"]} (se abre en una pestaña nueva)</span></a></li>' for r in REDES)
+    return f'<p class="community__text">Síguenos donde prefieras.</p><ul class="share__list" role="list">{li}</ul>'
+
+
 REGISTRO = {f.__name__: f for f in [
     foto, ico, rotulo, fuente, ejemplo, live_pill, tarjeta, short, carril_shorts, programa, titulares,
     centro_partidos, franja_dias, resultados, proximos_partidos, tabla_posiciones, goleadores, estadisticas,
-    tarjeta_en_vivo, racha, mercado, escaleta, episodios, estado_radio, boton_radio, encuesta, boletin,
+    tarjeta_en_vivo, racha, mercado, escaleta, estado_aire, en_vivo_ahora, reproductor_youtube, parrilla_semanal,
+    programas_anteriores, participa, noticias_hub, noticias_por_tema, aliados, siguenos, encuesta, boletin,
     efemeride, pauta, sello, migas, compartir, caja_datos_junior, etiquetas, chips_torneos, en_construccion,
     buscador_404]}
 REGISTRO["escudo"] = escudo

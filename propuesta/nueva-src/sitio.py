@@ -11,18 +11,18 @@ SITIO = {
     "url": "https://habladeportes.co/",
     "idioma": "es-CO",
     "og_imagen": "assets/img/js-2.webp",
-    "descripcion": "Noticias, datos en vivo, videos, Shorts y radio desde Barranquilla. "
+    "descripcion": "Videos del programa, Shorts, resultados y noticias desde Barranquilla. "
                    "Junior y la Selección Colombia, todos los días.",
 }
 
-# Redes (enlaces externos provisionales: raíz de cada red hasta tener perfiles reales [H]).
+# Redes. YouTube es el canal real; las demás apuntan a la raíz de cada red hasta tener perfiles [H].
 REDES = [
-    {"clave": "youtube", "nombre": "YouTube", "icono": "youtube-logo", "url": "https://www.youtube.com/"},
+    {"clave": "youtube", "nombre": "YouTube", "icono": "youtube-logo", "url": "https://youtube.com/@habladeportesradio"},
     {"clave": "instagram", "nombre": "Instagram", "icono": "instagram-logo", "url": "https://www.instagram.com/"},
     {"clave": "x", "nombre": "X", "icono": "x-logo", "url": "https://x.com/"},
-    {"clave": "tiktok", "nombre": "TikTok", "icono": "tiktok-logo", "url": "https://www.tiktok.com/"},
-    {"clave": "whatsapp", "nombre": "WhatsApp", "icono": "whatsapp-logo", "url": "https://www.whatsapp.com/channel/"},
+    {"clave": "facebook", "nombre": "Facebook", "icono": "facebook-logo", "url": "https://www.facebook.com/"},
 ]
+# Solo YouTube, Instagram, X y Facebook (05-respuestas-cliente; 06 «Cambios derivados»).
 
 # --- Barra azul (02 §3.2) ---------------------------------------------------
 # (clave, texto, destino)
@@ -32,7 +32,7 @@ PRIMARIO = [
     ("seleccion", "Selección", "seleccion.html"),
     ("videos", "Videos", "videos.html"),
     ("datos", "Datos", "datos.html"),
-    ("radio", "Radio", "radio.html"),
+    ("en-vivo", "En vivo", "en-vivo.html"),
 ]
 # Panel "Más ▾": su padre enlaza al bloque de enlaces del pie, que contiene
 # los mismos destinos (mitigación de los paneles solo-hover, 02 I3).
@@ -55,13 +55,14 @@ CONTEXTO = {
     "noticias": {
         "titulo": "Noticias", "destino": "noticias.html",
         "items": [
-            ("Portada", "index.html"),
-            ("Últimas", "noticias.html"),
-            ("Junior", "junior.html"),
-            ("Selección", "seleccion.html"),
-            ("Mercado", "mercado.html"),
-            ("Análisis", "noticias.html?tema=analisis"),
-            ("Opinión", "juan-salvador.html"),
+            ("Todas", "noticias.html"),
+            ("Junior", "noticias.html?tema=junior"),
+            ("Selección", "noticias.html?tema=seleccion"),
+            ("Fútbol colombiano", "noticias.html?tema=futbol-colombiano"),
+            ("Europa", "noticias.html?tema=europa"),
+            ("Colombianos en el exterior", "noticias.html?tema=colombianos-exterior"),
+            ("Mercado", "noticias.html?tema=mercado"),
+            ("Opinión", "noticias.html?tema=opinion"),
         ],
     },
     "junior": {
@@ -101,7 +102,7 @@ CONTEXTO = {
             ("Junior", "videos.html?tema=junior"),
             ("Selección", "videos.html?tema=seleccion"),
         ],
-        "extra": ("Suscríbete en YouTube", "https://www.youtube.com/"),
+        "extra": ("Suscríbete en YouTube", "https://youtube.com/@habladeportesradio"),
     },
     "datos": {
         "titulo": "Datos", "destino": "datos.html",
@@ -121,14 +122,13 @@ CONTEXTO = {
             ]),
         ],
     },
-    "radio": {
-        "titulo": "Radio", "destino": "radio.html",
+    "en-vivo": {
+        "titulo": "En vivo", "destino": "en-vivo.html",
         "items": [
-            ("En vivo", "radio.html"),
-            ("Parrilla", "radio.html#parrilla"),
-            ("Episodios", "radio.html#episodios"),
-            ("Cómo escucharnos", "radio.html#escuchar"),
-            ("Participa", "radio.html#participa"),
+            ("Programa en vivo", "en-vivo.html"),
+            ("Parrilla", "en-vivo.html#parrilla"),
+            ("Episodios", "en-vivo.html#episodios"),
+            ("Participa", "en-vivo.html#participa"),
         ],
     },
     "habla": {
@@ -148,7 +148,7 @@ INFERIOR = [
     ("noticias", "Noticias", "index.html", "newspaper"),
     ("videos", "Videos", "videos.html", "monitor-play"),
     ("datos", "Datos", "datos.html", "chart-bar"),
-    ("radio", "Radio", "radio.html", "radio"),
+    ("en-vivo", "En vivo", "en-vivo.html", "broadcast"),
 ]
 
 # --- Menú móvil (hamburguesa): dos grupos de enlaces simples ---------------
@@ -161,11 +161,12 @@ MENU_MOVIL = [
 
 # --- Pie (02 §3.6) -----------------------------------------------------------
 PIE = [
-    ("Noticias", [("Últimas", "noticias.html"), ("Junior", "junior.html"), ("Selección", "seleccion.html"),
-                  ("Mercado", "mercado.html"), ("Análisis", "noticias.html?tema=analisis"),
-                  ("Opinión", "juan-salvador.html")]),
-    ("Videos y radio", [("Videos", "videos.html"), ("Shorts", "shorts.html"), ("Radio en vivo", "radio.html"),
-                        ("Parrilla", "radio.html#parrilla"), ("Episodios", "radio.html#episodios")]),
+    ("Noticias", [("Todas las noticias", "noticias.html"), ("Junior FC", "junior.html"), ("Selección", "seleccion.html"),
+                  ("Fútbol colombiano", "noticias.html?tema=futbol-colombiano"), ("Europa", "noticias.html?tema=europa"),
+                  ("Colombianos en el exterior", "noticias.html?tema=colombianos-exterior"),
+                  ("Mercado de fichajes", "mercado.html"), ("Opinión", "juan-salvador.html")]),
+    ("Videos y en vivo", [("Videos", "videos.html"), ("Shorts", "shorts.html"), ("En vivo", "en-vivo.html"),
+                          ("Parrilla", "en-vivo.html#parrilla"), ("Episodios", "en-vivo.html#episodios")]),
     ("Datos", [("Posiciones", "datos.html#posiciones"), ("Resultados", "datos.html#resultados"),
                ("Goleadores", "datos.html#goleadores"), ("Partido en vivo", "partido.html")]),
     ("Habla Deportes", [("Quiénes somos", "contacto.html#nosotros"), ("Redes", "redes.html"),
@@ -179,11 +180,11 @@ PIE = [
 # inferior  -> ítem activo de la barra inferior móvil
 # activo    -> texto del ítem activo en la barra contextual (None = ninguno)
 PAGINAS = {
-    "index":         {"seccion": "noticias",  "primario": None,        "inferior": "noticias", "activo": "Portada"},
-    "noticias":      {"seccion": "noticias",  "primario": "noticias",  "inferior": "noticias", "activo": "Últimas"},
+    "index":         {"seccion": "noticias",  "primario": None,        "inferior": "noticias", "activo": None},
+    "noticias":      {"seccion": "noticias",  "primario": "noticias",  "inferior": "noticias", "activo": "Todas"},
     "articulo":      {"seccion": "noticias",  "primario": "noticias",  "inferior": "noticias", "activo": None},
-    "mercado":       {"seccion": "noticias",  "primario": "noticias",  "inferior": "noticias", "activo": "Mercado"},
-    "juan-salvador": {"seccion": "noticias",  "primario": "noticias",  "inferior": "noticias", "activo": "Opinión"},
+    "mercado":       {"seccion": "noticias",  "primario": "noticias",  "inferior": "noticias", "activo": None},
+    "juan-salvador": {"seccion": "noticias",  "primario": "noticias",  "inferior": "noticias", "activo": None},
     "junior":        {"seccion": "junior",    "primario": "junior",    "inferior": "noticias", "activo": "Resumen"},
     "seleccion":     {"seccion": "seleccion", "primario": "seleccion", "inferior": "noticias", "activo": "Resumen"},
     "videos":        {"seccion": "videos",    "primario": "videos",    "inferior": "videos",   "activo": "Todos"},
@@ -191,7 +192,7 @@ PAGINAS = {
     "video":         {"seccion": "videos",    "primario": "videos",    "inferior": "videos",   "activo": None},
     "datos":         {"seccion": "datos",     "primario": "datos",     "inferior": "datos",    "activo": None},
     "partido":       {"seccion": "datos",     "primario": "datos",     "inferior": "datos",    "activo": "Partido en vivo"},
-    "radio":         {"seccion": "radio",     "primario": "radio",     "inferior": "radio",    "activo": "En vivo"},
+    "en-vivo":       {"seccion": "en-vivo",   "primario": "en-vivo",   "inferior": "en-vivo",  "activo": "Programa en vivo"},
     "redes":         {"seccion": "habla",     "primario": None,        "inferior": None,       "activo": "Redes"},
     "contacto":      {"seccion": "habla",     "primario": None,        "inferior": None,       "activo": None},
     "legales":       {"seccion": "habla",     "primario": None,        "inferior": None,       "activo": "Legales"},

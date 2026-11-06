@@ -1,11 +1,45 @@
 ---
-titulo: Últimas noticias · Habla Deportes
-descripcion: Las últimas notas y videos de Junior, la Selección, la Liga BetPlay y el mercado de fichajes.
+titulo: Noticias · Habla Deportes
+descripcion: Junior, la Selección, el fútbol colombiano, Europa y los colombianos en el exterior, con mercado y opinión.
 tipo: pagina
 url_wp: noticias/
-estado: provisional
-pauta_cierre: no
 ---
-<!-- PÁGINA PROVISIONAL. Sustituir el contenido por la plantilla de 02-arquitectura §5.
-     Las anclas ya existen para que ningún enlace del sitio quede roto. -->
-{{ en_construccion('Noticias', "Esta página se construye en la siguiente etapa de la propuesta. La cabecera, el menú y el pie ya son los definitivos.", anclas=[('efemerides', 'Un día como hoy')], enlaces=[('Junior FC', 'junior.html'), ('Selección Colombia', 'seleccion.html'), ('Mercado de fichajes', 'mercado.html'), ('Centro de datos', 'datos.html')]) }}
+<!-- ======================================================================
+     NOTICIAS (T3, hub por tema) · 06 D2 · 03 Banco 10
+     Filtros = enlaces reales noticias.html?tema=… ; main.js filtra en el cliente
+     (sin JS se ve la lista completa). [lista | lateral: tabla, B] · C.
+     ====================================================================== -->
+<div class="container news-page">
+
+  <header class="page-head">
+    <h1 class="page-title" data-filter-title="Noticias">Noticias</h1>
+    <p class="standfirst">Junior primero, y todo lo que mueve al fútbol colombiano y a los colombianos que juegan fuera.</p>
+  </header>
+
+  <div class="layout-split">
+    <div class="layout-split__main">
+      <h2 class="visually-hidden" id="t-lista">Notas por tema</h2>
+      {{ noticias_hub() }}
+      {{ ejemplo("Notas de ejemplo: titulares y datos ficticios, sin nombres reales de jugadores.") }}
+    </div>
+
+    <div class="layout-split__rail">
+      <section class="rail-module" aria-labelledby="n-tabla">
+        <div class="rail-module__head"><h2 class="rail-module__title" id="n-tabla">Liga BetPlay</h2><a class="link-action" href="datos.html#posiciones">Tabla{{ ico("caret-right", "icon icon--sm") }}</a></div>
+        {{ tabla_posiciones("compacta", filas=5) }}
+        {{ fuente() }}
+      </section>
+      <section class="rail-module" aria-labelledby="n-prox">
+        <div class="rail-module__head"><h2 class="rail-module__title" id="n-prox">Próximos partidos</h2><a class="link-action" href="datos.html#resultados">Calendario{{ ico("caret-right", "icon icon--sm") }}</a></div>
+        {{ proximos_partidos("articulo") }}
+      </section>
+      {{ pauta("lateral") }}
+    </div>
+  </div>
+
+  <section class="section" id="efemerides" aria-labelledby="t-efem">
+    {{ rotulo("Un día como hoy", id="t-efem") }}
+    {{ efemeride() }}
+  </section>
+
+</div>

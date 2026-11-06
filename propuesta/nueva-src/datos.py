@@ -10,6 +10,7 @@ RAIZ = pathlib.Path(__file__).resolve().parent.parent  # propuesta/
 JSON = RAIZ / "nueva" / "data-ejemplo.json"
 
 D = json.loads(JSON.read_text(encoding="utf-8"))
+ALIADOS = json.loads((RAIZ / "nueva" / "aliados.json").read_text(encoding="utf-8"))["aliados"]
 EQUIPOS = {e["clave"]: e for e in D["equipos"]}
 HOY = dt.date.fromisoformat(D["_fecha_hoy"])
 
@@ -19,8 +20,8 @@ MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "
 MESES_LARGO = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto",
                "septiembre", "octubre", "noviembre", "diciembre"]
 
-# Etiqueta global para pies de módulos de datos (03-contenido §0)
-FUENTE = "Datos de ejemplo. En producción: Data Factory."
+# Etiqueta global de los módulos de datos. Sin proveedor contratado (06 D4).
+FUENTE = "Datos de ejemplo · fuente por definir."
 
 
 def equipo(clave):

@@ -1,0 +1,11 @@
+# nombre|/ruta/  — una URL representativa por plantilla (7 en el caso de referencia).
+# Cópialo como paginas.txt y ajústalo. Lo leen lh-run.sh, snap.mjs, console.mjs, sizes-sim.mjs y checks-html.sh.
+# Incluye al menos: portada, un listado, una página con formulario, una de contenido largo,
+# un single de CPT (Theme Builder) y la portada del segundo idioma.
+home|/
+listado|/<ruta-listado>/
+contacto|/<ruta-contacto>/
+historia|/<ruta-contenido>/
+single|/<ruta-cpt>/<slug>/
+en-home|/en/
+en-listado|/en/<ruta-listado>/

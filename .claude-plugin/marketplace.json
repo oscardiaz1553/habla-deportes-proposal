@@ -1,0 +1,11 @@
+{
+  "name": "out-studio",
+  "owner": { "name": "Out studio" },
+  "plugins": [
+    {
+      "name": "kit-web-out",
+      "source": "./kit-web-out",
+      "description": "De la maqueta a WordPress + Elementor 4: skills y agentes de construcción, QA, SEO y migración."
+    }
+  ]
+}

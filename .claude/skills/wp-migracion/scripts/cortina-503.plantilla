@@ -1,0 +1,51 @@
+## cortina-503.plantilla · Cortina estática 503 con llave de revisión por cookie (bloque de .htaccess).
+##
+## Para qué: ocultar el dominio real mientras dura la obra sin desindexarlo (503 = «no disponible
+##   temporalmente»; un 200 indexaría la cortina y un 404 borraría el sitio de los resultados), y dejar
+##   que el cliente revise el sitio sin iniciar sesión con ?<PARAM_LLAVE>=<LLAVE> (cookie de 12 h;
+##   ?<PARAM_LLAVE>=salir la borra). Va la segunda en el .htaccess, después del bloque canónico.
+## Uso: componer-htaccess.sh con CORTINA=plantilla. Genera la llave en el servidor (openssl rand -hex 8),
+##   la escribe con sed y no la imprime. El usuario la lee él en su terminal cuando la necesite:
+##   grep -oE '<PARAM_LLAVE>=[a-z0-9]{8,}' <WP_PATH>/.htaccess
+## Antes de usarla, sustituye las líneas <RECURSO_…> por cada archivo que la página de la cortina
+##   necesite para dibujarse (logo, póster, vídeo, fuentes), con las mismas rutas que en la obra.
+## Se retira con: sed -i '/^# BEGIN <PREFIJO>-CORTINA/,/^# END <PREFIJO>-CORTINA/d' .htaccess
+## Estado: estructura probada en HomeMaker (la cortina del prototipo, más el paso a wp-cron.php);
+##   la generación de la llave y los marcadores son generalización, no probada fuera de HomeMaker.
+## Nunca: cortina 200 («Próximamente» de Elementor) en un dominio con historial. Días, no semanas:
+##   robots.txt también responde 503 y un 5xx prolongado ahí es «no rastrear» para Google.
+# BEGIN <PREFIJO>-CORTINA  (se retira con: sed -i '/^# BEGIN <PREFIJO>-CORTINA/,/^# END <PREFIJO>-CORTINA/d' .htaccess)
+#  Cortina 503: el sitio está completo detrás; solo deja de ser público.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # 1 · La llave: deja la cookie y limpia la URL para que no circule el token
+  RewriteCond %{QUERY_STRING} (^|&)<PARAM_LLAVE>=<LLAVE>(&|$)
+  RewriteRule ^(.*)$ /$1? [CO=<COOKIE_LLAVE>:<LLAVE>:%{HTTP_HOST}:720:/,R=302,L]
+
+  # 2 · Salida (borra la cookie)
+  RewriteCond %{QUERY_STRING} (^|&)<PARAM_LLAVE>=salir(&|$)
+  RewriteRule ^(.*)$ /$1? [CO=<COOKIE_LLAVE>:x:%{HTTP_HOST}:-1:/,R=302,L]
+
+  # 3 · Todo lo demás ve la cortina. Quedan fuera la propia cortina, lo que necesita para
+  #     dibujarse, .well-known (renovación del SSL) y wp-cron.php (tareas y loopbacks de WP).
+  RewriteCond %{HTTP_COOKIE}  !<COOKIE_LLAVE>=<LLAVE>
+  RewriteCond %{REQUEST_URI}  !^/<PAGINA_CORTINA>\.html$
+  RewriteCond %{REQUEST_URI}  !^/<RECURSO_1>
+  RewriteCond %{REQUEST_URI}  !^/<RECURSO_2>
+  RewriteCond %{REQUEST_URI}  !^/favicon\.ico$
+  RewriteCond %{REQUEST_URI}  !^/\.well-known/
+  RewriteCond %{REQUEST_URI}  !^/wp-cron\.php$
+  RewriteRule ^ - [R=503,L]
+</IfModule>
+
+ErrorDocument 503 /<PAGINA_CORTINA>.html
+
+<IfModule mod_headers.c>
+  # Una hora. Ni la cortina ni el 503 deben quedarse cacheados al levantarla.
+  Header always set Retry-After "3600" "expr=%{REQUEST_STATUS} == 503"
+  Header always set Cache-Control "no-store" "expr=%{REQUEST_STATUS} == 503"
+</IfModule>
+# ═══════════════ FIN DE LA CORTINA ═══════════════
+# END <PREFIJO>-CORTINA

@@ -1,0 +1,133 @@
+/* ==========================================================================
+   HABLA DEPORTES · Tokens NUEVOS del menú y los megamenús (nov-2026)
+
+   Documento rector: propuesta/nueva/08-menu-diseno.md
+   Complementa a assets/css/tokens.css SIN modificarlo. Cargar justo después:
+     tokens.css -> 08-menu-tokens.css -> base.css -> components.css -> pages.css
+   (Cuando se apruebe, el desarrollador puede fusionarlo en tokens.css,
+   sección 4 «alturas» y 8 «movimiento».)
+
+   Solo declara variables. Reutiliza las primitivas de tokens.css: ningún
+   color nuevo, solo mezclas con transparencia del blanco y del brand-900.
+   Contrastes calculados con la fórmula WCAG 2.1 (tabla en 08 §5.4).
+   ========================================================================== */
+
+:root {
+  /* ----------------------------------------------------------------------
+     1. CABECERA (sustituye a las 3 capas: 64 + 48 + 48 = 160 px)
+     ---------------------------------------------------------------------- */
+  --header-total-lg:     112px;  /* nivel 1 (64) + nivel 2 (48). Sin barra blanca */
+  --header-sticky-lg:     48px;  /* lo que queda pegado al bajar: solo el nivel 2 */
+  --header-total-mobile:  56px;  /* solo el nivel 1, pegado. Sin barra blanca */
+  /* --context-bar-h (tokens.css) queda SIN USO: la barra blanca se elimina (08 §2). */
+
+  /* Hover de ítem en la barra azul (antes era un color-mix suelto en components.css).
+     Texto blanco sobre brand-700 + 8 % blanco = 8.73:1 */
+  --nav-hover-bg:        rgba(255, 255, 255, 0.08);
+
+  /* Pestaña abierta: el ítem cuyo panel está abierto se vuelve blanco y se
+     funde con el panel. Texto brand-600 sobre blanco = 8.82:1;
+     blanco frente a la barra brand-700 = 11.06:1 (se ve el «recorte»). */
+  --nav-tab-open-bg:     var(--white);
+  --nav-tab-open-text:   var(--brand-600);
+
+  /* Buscador con forma de campo en el nivel 1 (botón que abre el buscador).
+     Fondo: blanco 12 % sobre brand-600. Texto blanco 88 % encima = 5.36:1.
+     Borde blanco 48 % frente a brand-600 = 3.37:1 (límite del control >= 3:1). */
+  --search-trigger-w:    280px;
+  --search-trigger-h:    40px;
+  --search-trigger-bg:   rgba(255, 255, 255, 0.12);
+  --search-trigger-border: rgba(255, 255, 255, 0.48);
+  --search-trigger-text: rgba(255, 255, 255, 0.88);
+
+  /* ----------------------------------------------------------------------
+     2. PUNTO «EN VIVO» SOBRE AZUL
+     Rojo directo sobre brand-700 = 2.14:1 (no llega a 3:1, WCAG 1.4.11).
+     Solución: anillo blanco de 2 px (blanco/brand-700 = 11.06:1; rojo/blanco = 5.18:1).
+     ---------------------------------------------------------------------- */
+  --live-dot-size:       8px;
+  --live-dot-ring:       2px;            /* box-shadow: 0 0 0 2px var(--live-dot-ring-color) */
+  --live-dot-ring-color: var(--white);
+  --live-dot-gap:        8px;            /* separación punto -> texto «En vivo» */
+
+  /* ----------------------------------------------------------------------
+     3. MEGAMENÚ: ANATOMÍA (escritorio >= 1024 con hover: hover y pointer: fine)
+     Retícula: la misma de 12 columnas del sitio (--container, --grid-gap-lg).
+     A 1440: contenido 1216 px -> columna 79.33 px.
+       c1-c3 = 286 px (índice) · c4-c8 = 492 px (destacado) · c9-c12 = 389 px (ahora)
+     ---------------------------------------------------------------------- */
+  --mega-pad-block:      32px;           /* arriba y abajo */
+  --mega-content-h:      400px;          /* alto FIJO del contenido: todos los paneles iguales */
+  --mega-h:              464px;          /* 32 + 400 + 32. Igual en los 6 paneles grandes */
+  --mega-max-h:          calc(100dvh - var(--header-sticky-lg) - 32px); /* nunca más que la ventana */
+  --mega-footer-h:       48px;           /* fila inferior opcional (Torneos en Resultados), dentro de los 400 */
+  --mega-gap:            var(--grid-gap-lg);  /* 24 */
+  --mega-divider:        var(--border-hair) solid var(--color-border); /* filete vertical tras el índice */
+
+  /* Panel compacto «Más» (no ocupa todo el ancho) */
+  --mega-compact-w:      596px;          /* 6 columnas a 1440 */
+
+  /* Índice de la sección (c1-c3) */
+  --mega-title-fs:       1.5rem;         /* 24 px · Archivo 800 cursiva: el gesto del rótulo de sección */
+  --mega-title-lh:       1.15;
+  --mega-row-h:          var(--touch-min); /* 44 px por subpágina */
+  --mega-current-mark:   8px;            /* cuadrado brand-600 de 8x8 = «estás aquí» (como las zonas de la tabla) */
+
+  /* Imágenes del panel (radio 0, sin texto encima salvo chips y píldora) */
+  --mega-lead-ratio:     16 / 9;         /* 492 x 277 a 1440 · 386 x 217 a 1024 */
+  --mega-short-ratio:    9 / 16;         /* 119 x 212 a 1440 (3 visibles) · 144 x 256 a 1024 (2) */
+  --mega-thumb-w:        128px;          /* miniatura 16:9 de lista (128 x 72) */
+  --mega-thumb-h:        72px;
+
+  /* Tarjeta de partido dentro del panel (mini Centro de Partidos, fondo oscuro)
+     Blanco/brand-900 16.33:1 · blanco 80 %/brand-900 10.81:1 · blanco 72 % 8.99:1
+     brand-300/brand-900 8.12:1 · píldora roja frente a brand-900 3.15:1 */
+  --mega-match-bg:       var(--color-surface-dark);
+  --mega-match-bg-hover: var(--brand-800);
+  --mega-match-pad:      24px;
+  --mega-match-crest:    56px;           /* escudo, object-fit: contain */
+  --mega-match-text-muted: rgba(255, 255, 255, 0.72);
+
+  /* Elevación: SOLO sombra, sin borde (evita la «tarjeta fantasma» borde + sombra).
+     La sombra cae hacia abajo: el panel cuelga de la barra azul. */
+  --mega-shadow:         0 16px 32px -8px rgba(15, 33, 51, 0.20), 0 2px 4px rgba(15, 33, 51, 0.06);
+
+  /* Velo sobre la página mientras hay panel abierto. pointer-events: none.
+     Página blanca bajo el velo = #D9DBDE (panel blanco destaca 1.38:1 + sombra). */
+  --mega-scrim:          rgba(15, 33, 51, 0.16);
+
+  /* ----------------------------------------------------------------------
+     4. MEGAMENÚ: TIEMPOS (intención de hover)
+     Sustituyen a --hover-open-delay (120) y --hover-close-delay (280) de
+     tokens.css, que quedan sin uso al desaparecer los paneles de la barra blanca.
+     Los temporizadores NO se anulan con prefers-reduced-motion (no son movimiento).
+     ---------------------------------------------------------------------- */
+  --mega-open-delay:     200ms;  /* reposo del puntero antes de abrir el primer panel */
+  --mega-switch-delay:   100ms;  /* con un panel ya abierto, cambiar a otro ítem */
+  --mega-close-delay:    300ms;  /* gracia al salir de ítem + panel (región única) */
+  --mega-shift:          -8px;   /* entrada: translateY(-8px -> 0) */
+  --mega-dur-in:         var(--dur-base);  /* 200 ms, opacidad + transform */
+  --mega-dur-out:        var(--dur-fast);  /* 120 ms, solo opacidad */
+  --mega-dur-swap:       var(--dur-fast);  /* 120 ms, fundido del contenido al cambiar de panel */
+
+  /* ----------------------------------------------------------------------
+     5. CAPAS
+     ---------------------------------------------------------------------- */
+  --z-mega:              var(--z-panel);   /* 200, el panel vive dentro de la cabecera */
+  --z-mega-scrim:        99;               /* justo debajo de la cabecera pegada (--z-sticky: 100) */
+
+  /* ----------------------------------------------------------------------
+     6. MENÚ MÓVIL: HOJA DE PANTALLA COMPLETA (< 1024, y tabletas con hover: none)
+     ---------------------------------------------------------------------- */
+  --sheet-top:           var(--header-l1-h-mobile);  /* arranca bajo la cabecera de 56 px, que sigue visible */
+  --sheet-pad-inline:    var(--page-margin);         /* 16 / 24 desde 600 */
+  --sheet-max-content:   640px;          /* en tabletas el contenido se centra a este ancho */
+  --sheet-search-h:      48px;           /* campo de búsqueda; texto de 16 px (sin zoom en iOS) */
+  --sheet-section-h:     80px;           /* fila-tarjeta de sección */
+  --sheet-thumb-w:       96px;           /* miniatura 16:9 de la sección: 96 x 54 */
+  --sheet-thumb-h:       54px;
+  --sheet-toggle:        48px;           /* botón de acordeón (área táctil) */
+  --sheet-subrow-h:      48px;           /* subpágina dentro del acordeón */
+  --sheet-now-h:         120px;          /* tarjeta «Ahora» (partido) */
+  --sheet-dur:           var(--dur-base);/* 200 ms entrada; 120 ms salida */
+}

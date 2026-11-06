@@ -1,0 +1,278 @@
+/* ==========================================================================
+   HABLA DEPORTES · Tokens de diseño (propuesta nueva, nov-2026)
+   Documento rector: propuesta/nueva/01-sistema-de-diseno.md
+
+   Este archivo SOLO declara variables. No contiene reglas de componentes.
+   Orden de carga: tokens.css -> base.css -> componentes.css -> paginas.css
+
+   Reglas que estos tokens hacen cumplir:
+   - Un único color de marca: el azul del logo (#294D6E).
+   - Rojo solo para "en vivo" (y nada más).
+   - Fondo blanco. Neutros fríos (matiz 210°) para que armonicen con el azul.
+   - Imágenes, tarjetas y bloques con esquina recta (radio 0). Solo los
+     controles circulares (play, flechas, puntos, punto en vivo) son redondos.
+   - Espaciado en múltiplos de 8 (4 px solo como medio paso de microajuste).
+   - Contrastes verificados con cálculo WCAG 2.1 (ver tabla en el documento).
+   ========================================================================== */
+
+/* Fuentes: Archivo (titulares, números, rótulos) con eje de ancho para los
+   marcadores condensados + cursiva para los rótulos de sección.
+   Inter (texto e interfaz) con eje de tamaño óptico.
+   En el HTML conviene además <link rel="preconnect"> a fonts.gstatic.com. */
+@import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,75..100,500..800;1,75..100,700..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&display=swap');
+
+:root {
+  color-scheme: light;
+
+  /* ======================================================================
+     1. COLOR · PRIMITIVAS (no usar directo en componentes)
+     ====================================================================== */
+
+  /* Azul Habla (marca). brand-600 es el azul exacto del logo. */
+  --brand-50:  #EDF2F7;  /* fondo de fila/chip seleccionado */
+  --brand-100: #D8E3ED;  /* borde de elemento seleccionado sobre blanco */
+  --brand-300: #9FBAD3;  /* texto/foco sobre azul oscuro (8.1:1 sobre brand-900) */
+  --brand-600: #294D6E;  /* AZUL DEL LOGO: cabecera nivel 1, botones, enlaces */
+  --brand-700: #203E5A;  /* cabecera nivel 2 (menú), hover de botón */
+  --brand-800: #183148;  /* pressed */
+  --brand-900: #0F2133;  /* superficies oscuras: banner de partidos, pie */
+
+  /* Neutros fríos */
+  --white:     #FFFFFF;
+  --gray-50:   #F4F6F8;  /* superficie sutil: hueco de pauta, cebra de tabla, skeleton */
+  --gray-100:  #EBEFF3;  /* hover de fila / pestaña */
+  --gray-200:  #DCE2E8;  /* filete (divisor decorativo) */
+  --gray-400:  #8794A1;  /* borde de campo de formulario e iconos inactivos (3.1:1, no texto) */
+  --gray-600:  #52606D;  /* texto atenuado: meta, fechas, rótulos (6.5:1) */
+  --gray-700:  #3B4856;  /* texto secundario: bajadas (9.3:1) */
+  --gray-900:  #111C27;  /* tinta: titulares y cuerpo (17.2:1) */
+
+  /* Rojo en vivo: un solo tono. Texto blanco encima 5.2:1; como texto sobre blanco 5.2:1. */
+  --live-600:  #D42318;
+  --live-700:  #B81D14;  /* hover del enlace "en vivo" */
+
+  /* Error de formulario (boletín, contacto). Excepción documentada: no es decorativo,
+     va siempre con icono y texto. Más oscuro que el rojo en vivo para no confundirse. */
+  --error-700: #A8261C;
+
+  /* ======================================================================
+     2. COLOR · SEMÁNTICO (lo que usan los componentes)
+     ====================================================================== */
+
+  /* Superficies */
+  --color-bg:              var(--white);     /* fondo de página: SIEMPRE blanco */
+  --color-surface:         var(--white);     /* paneles, barra contextual, dock de radio */
+  --color-surface-subtle:  var(--gray-50);   /* pauta, cebra, skeleton */
+  --color-surface-hover:   var(--gray-100);
+  --color-surface-selected:var(--brand-50);  /* fila de Junior, pestaña activa en tablas */
+  --color-surface-brand:   var(--brand-600); /* cabecera nivel 1 (logo) */
+  --color-surface-brand-2: var(--brand-700); /* cabecera nivel 2 (menú) */
+  --color-surface-dark:    var(--brand-900); /* banner de partidos y pie (los únicos bloques oscuros) */
+  --color-scrim:           rgba(15, 33, 51, 0.56); /* fondo tras hoja inferior móvil */
+
+  /* Texto sobre blanco */
+  --color-text:            var(--gray-900);
+  --color-text-secondary:  var(--gray-700);
+  --color-text-muted:      var(--gray-600);
+  --color-text-disabled:   var(--gray-400);  /* solo con otra señal (no es texto informativo) */
+  --color-link:            var(--brand-600);
+  --color-link-hover:      var(--brand-800);
+
+  /* Texto sobre azul / oscuro */
+  --color-on-brand:        var(--white);
+  --color-on-brand-muted:  rgba(255, 255, 255, 0.80); /* 6.3:1 sobre brand-600; 10.8:1 sobre brand-900 */
+  --color-on-dark-accent:  var(--brand-300);           /* enlace sobre pie/banner */
+
+  /* Bordes */
+  --color-border:          var(--gray-200);  /* filetes entre ítems y secciones */
+  --color-border-strong:   var(--gray-900);  /* filete de 2 px sobre los rótulos de sección */
+  --color-border-field:    var(--gray-400);  /* inputs, casillas, forma "P" (>= 3:1) */
+  --color-border-selected: var(--brand-600);
+  --color-border-on-brand: rgba(255, 255, 255, 0.16);
+  --color-border-on-dark:  rgba(255, 255, 255, 0.24);
+
+  /* Acción (botones) */
+  --color-action:          var(--brand-600);
+  --color-action-hover:    var(--brand-700);
+  --color-action-press:    var(--brand-800);
+  --color-on-action:       var(--white);     /* 8.8:1 */
+
+  /* En vivo */
+  --color-live:            var(--live-600);  /* píldora "En vivo", punto, minuto del partido */
+  --color-live-hover:      var(--live-700);
+  --color-on-live:         var(--white);     /* 5.2:1 */
+
+  /* Estados de datos (sin verde ni rojo: forma + relleno + letra) */
+  --color-form-win-bg:     var(--brand-600); /* G: relleno azul, letra blanca */
+  --color-form-draw-bg:    var(--gray-200);  /* E: relleno gris, letra tinta */
+  --color-form-loss-bg:    var(--white);     /* P: blanco con borde de campo, letra tinta */
+
+  /* Formularios */
+  --color-error:           var(--error-700); /* 7.1:1 sobre blanco */
+  --color-success:         var(--brand-600); /* éxito = marca + icono de verificación */
+
+  /* Foco: anillo de 2 px con separación de 2 px */
+  --color-focus:           var(--brand-600);
+  --color-focus-on-dark:   var(--white);
+
+  /* Chip sobre imagen (duración, "Short"): único texto permitido sobre foto */
+  --color-chip-on-media:   rgba(17, 28, 39, 0.85); /* texto blanco >= 10:1 aun sobre foto blanca */
+
+  /* ======================================================================
+     3. TIPOGRAFÍA
+     ====================================================================== */
+  --font-display: 'Archivo', 'Arial Narrow', Arial, sans-serif;
+  --font-text:    'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  /* Anchos de Archivo (eje wdth) */
+  --wdth-normal:    100;
+  --wdth-condensed: 82;   /* marcadores, minutos, horas de la escaleta */
+
+  /* Pesos: 3 en Archivo, 3 en Inter. Nada de "todo en bold". */
+  --fw-regular:  400;  /* Inter: cuerpo */
+  --fw-medium:   500;  /* Inter: meta, menú contextual */
+  --fw-semibold: 600;  /* Inter: botones, menú azul, títulos pequeños | Archivo: titular tarjeta pequeña */
+  --fw-bold:     700;  /* Archivo: titulares */
+  --fw-black:    800;  /* Archivo: H1, rótulo de sección en cursiva, marcadores */
+
+  /* Escala. Las fluidas van de 390 px a 1440 px de viewport. */
+  --fs-h1:       clamp(2rem, 1.629rem + 1.524vw, 3rem);        /* 32 -> 48  H1 de página / nota */
+  --fs-lead:     clamp(1.75rem, 1.471rem + 1.143vw, 2.5rem);   /* 28 -> 40  titular de la noticia principal */
+  --fs-section:  clamp(1.5rem, 1.314rem + 0.762vw, 2rem);      /* 24 -> 32  rótulo de sección (cursiva) */
+  --fs-title-lg: clamp(1.25rem, 1.157rem + 0.381vw, 1.5rem);   /* 20 -> 24  tarjeta grande, H2 de nota */
+  --fs-title-md: clamp(1.125rem, 1.079rem + 0.190vw, 1.25rem); /* 18 -> 20  tarjeta pequeña */
+  --fs-title-sm: 1rem;                                          /* 16        lista, filas, Shorts */
+  --fs-standfirst: clamp(1.0625rem, 1.039rem + 0.095vw, 1.125rem); /* 17 -> 18  bajada y cuerpo de nota */
+  --fs-body:     1rem;       /* 16  cuerpo e interfaz (mínimo para texto corrido) */
+  --fs-ui:       0.9375rem;  /* 15  menú, enlaces de la barra contextual, botones secundarios */
+  --fs-meta:     0.875rem;   /* 14  meta, tablas, pie */
+  --fs-label:    0.75rem;    /* 12  rótulos funcionales ("Publicidad", cabecera de tabla, duración) */
+
+  /* Marcadores (Archivo condensado, cifras tabulares) */
+  --fs-score-xl: clamp(3rem, 2.443rem + 2.286vw, 4.5rem);      /* 48 -> 72  banner de partidos */
+  --fs-score-lg: clamp(2rem, 1.814rem + 0.762vw, 2.5rem);      /* 32 -> 40  tarjeta en vivo */
+  --fs-score-md: 1.5rem;     /* 24  franja por día */
+  --fs-score-sm: 1.125rem;   /* 18  tabla, escaleta de radio */
+
+  /* Interlineado */
+  --lh-tight:  1.05;  /* marcadores, H1 */
+  --lh-title:  1.15;  /* titulares */
+  --lh-snug:   1.3;   /* títulos pequeños, menú */
+  --lh-ui:     1.4;   /* meta, tablas */
+  --lh-body:   1.6;   /* cuerpo de lectura */
+
+  /* Tracking */
+  --ls-display: -0.02em;  /* titulares >= 28 px */
+  --ls-title:   -0.01em;  /* titulares 18-24 px */
+  --ls-normal:  0;
+  --ls-label:   0.04em;   /* rótulos de 12 px en mayúscula (cabecera de tabla) */
+
+  --measure:    68ch;     /* ancho máximo de párrafo */
+  --numeric:    tabular-nums lining-nums; /* usar en font-variant-numeric */
+
+  /* ======================================================================
+     4. RETÍCULA Y ESPACIADO
+     Breakpoints (documentales; CSS no admite variables en @media):
+       base < 600 · sm >= 600 · md >= 768 · lg >= 1024 · xl >= 1280
+     ====================================================================== */
+  --container:        1280px;  /* ancho máximo del contenido */
+  --container-text:   720px;   /* columna de lectura de la nota */
+  --page-margin:      16px;    /* base; 24 desde sm; 32 desde lg (lo aplica base.css) */
+  --page-margin-sm:   24px;
+  --page-margin-lg:   32px;
+  --grid-columns:     12;
+  --grid-gap:         16px;    /* base */
+  --grid-gap-lg:      24px;    /* desde lg */
+  --rail-width:       300px;   /* columna lateral de datos / pauta lateral */
+
+  /* Escala de espaciado (8 px). --space-half solo para microajustes de icono/etiqueta. */
+  --space-half: 4px;
+  --space-1:    8px;
+  --space-2:    16px;
+  --space-3:    24px;
+  --space-4:    32px;
+  --space-5:    40px;
+  --space-6:    48px;
+  --space-8:    64px;
+  --space-10:   80px;
+  --space-12:   96px;
+
+  /* Ritmo vertical entre secciones de portada */
+  --section-gap:    48px;  /* base */
+  --section-gap-lg: 64px;  /* desde lg */
+
+  /* Alturas fijas de componentes */
+  --header-l1-h:        64px;  /* barra azul del logo (escritorio) */
+  --header-l1-h-mobile: 56px;
+  --header-l2-h:        48px;  /* barra azul del menú (solo >= lg) */
+  --context-bar-h:      48px;  /* barra blanca contextual */
+  --bottom-nav-h:       64px;  /* + env(safe-area-inset-bottom) */
+  --radio-dock-h:       64px;  /* reproductor acoplado (escritorio) */
+  --radio-dock-h-mobile:56px;  /* se apoya sobre la barra inferior */
+  --match-banner-h:     424px; /* requisito del cliente (escritorio) */
+  --match-banner-h-md:  300px; /* < 1024 */
+  --match-banner-h-sm:  240px; /* < 480 */
+  --touch-min:          44px;  /* objetivo táctil mínimo */
+  --icon-sm:            16px;
+  --icon-md:            20px;
+  --icon-lg:            24px;
+  --play-sm:            40px;  /* play en miniatura (área táctil = toda la tarjeta) */
+  --play-lg:            64px;  /* play en noticia principal */
+
+  /* ======================================================================
+     5. FORMA: RADIOS Y BORDES
+     ====================================================================== */
+  --radius-0:     0;        /* imágenes, tarjetas, bloques, banner, pauta, avatares, escudos */
+  --radius-ctrl:  2px;      /* botones rectangulares, campos, etiquetas: canto apenas suavizado */
+  --radius-round: 999px;    /* SOLO controles circulares: play, flechas, puntos, punto en vivo, píldora "En vivo" */
+
+  --border-hair:   1px;
+  --border-rule:   2px;     /* filete sobre rótulo de sección */
+  --border-active: 3px;     /* barra de ítem activo (menú, pestañas, barra inferior) */
+  --focus-width:   2px;
+  --focus-offset:  2px;
+
+  /* ======================================================================
+     6. ELEVACIÓN (solo capas que flotan; las tarjetas NO llevan sombra)
+     ====================================================================== */
+  --shadow-panel:  0 8px 24px rgba(15, 33, 51, 0.14), 0 1px 2px rgba(15, 33, 51, 0.08); /* panel de la barra contextual */
+  --shadow-dock:   0 -4px 16px rgba(15, 33, 51, 0.10);  /* reproductor y barra inferior */
+  --shadow-sticky: 0 2px 8px rgba(15, 33, 51, 0.12);    /* menú azul pegado al hacer scroll */
+  --shadow-sheet:  0 -8px 32px rgba(15, 33, 51, 0.18);  /* hoja inferior móvil */
+
+  /* ======================================================================
+     7. CAPAS (z-index)
+     ====================================================================== */
+  --z-base:       0;
+  --z-raised:     1;    /* play sobre miniatura, chips sobre imagen */
+  --z-sticky:     100;  /* menú azul / cabecera móvil pegada */
+  --z-panel:      200;  /* paneles de la barra contextual */
+  --z-bottom-nav: 300;  /* barra inferior móvil */
+  --z-dock:       310;  /* reproductor de radio (encima de la barra inferior) */
+  --z-scrim:      400;
+  --z-sheet:      410;  /* hoja inferior móvil, buscador */
+  --z-skip:       500;  /* enlace "Saltar al contenido" */
+
+  /* ======================================================================
+     8. MOVIMIENTO: una curva, tres duraciones
+     ====================================================================== */
+  --ease-out:      cubic-bezier(0.2, 0.8, 0.2, 1);
+  --dur-fast:      120ms;  /* hover, color, subrayado, press */
+  --dur-base:      200ms;  /* paneles, dock, hoja, pestañas */
+  --dur-slow:      320ms;  /* fundido del banner de partidos */
+  --hover-open-delay:  120ms; /* intención antes de abrir panel */
+  --hover-close-delay: 280ms; /* gracia antes de cerrar panel */
+  --rotate-interval:   8s;    /* rotación del banner de partidos (pausa en hover/foco) */
+  --live-pulse:        1.6s;  /* único movimiento en bucle: punto "en vivo" */
+}
+
+/* Movimiento reducido: los componentes leen estas variables; aquí se anulan. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0ms;
+    --dur-base: 0ms;
+    --dur-slow: 0ms;
+    --live-pulse: 0s; /* base.css: si es 0s, el punto queda fijo */
+  }
+}

@@ -1,0 +1,390 @@
+{
+  "_aviso": "TODOS LOS DATOS DE ESTE ARCHIVO SON DE EJEMPLO para la propuesta de rediseño de Habla Deportes. Resultados, tablas, jugadores, árbitros, estadísticas, fichajes y cifras son ficticios y no deben presentarse como hechos reales. Solo los nombres de equipos, torneos, estadios y escudos son reales. En producción vendrán del feed de Data Factory. Cualquier parecido de un jugador ficticio con una persona real es casual. Fecha de referencia del prototipo: viernes 6 de noviembre de 2026, 8:40 p.m. (minuto 67 del partido en vivo).",
+  "_fecha_hoy": "2026-11-06",
+  "_notas_de_coherencia": [
+    "La tabla está calculada con 19 partidos jugados por equipo (hasta la Fecha 19) y NO incluye el partido en vivo. Si Junior gana 2-1 quedaría con 42 puntos y 20 PJ; Nacional con 38 y 20 PJ.",
+    "El 6 de nov de 2026 es viernes: sábado 7, domingo 8; viernes 13 de noviembre es el amistoso de la Selección. Los prototipos anteriores tenían mal los días de la semana (sábado 8, jueves 13).",
+    "Ayer (jueves 5 de nov) no hubo partidos de Liga: sirve como estado vacío del filtro Ayer/Hoy/Mañana.",
+    "El escudo de Perú es Logotipo_FPF_2016.png. Los prototipos anteriores usaban escudo-fcf.png (Federación Colombiana) como si fuera Perú: es un error.",
+    "Ningún jugador, árbitro ni columnista real aparece nombrado. Los nombres son inventados."
+  ],
+  "_ruta_escudos": "propuesta/html/assets/img/",
+  "torneo": {
+    "clave": "liga-betplay-2026-ii",
+    "nombre": "Liga BetPlay",
+    "temporada": "Finalización 2026 (ejemplo)",
+    "fecha_actual": 20,
+    "regla_clasificacion": "Los 8 primeros pasan a cuadrangulares (ejemplo)"
+  },
+  "equipos": [
+    {"clave": "junior", "nombre": "Junior de Barranquilla", "corto": "Junior", "abrev": "JUN", "escudo": "escudo-junior.png", "estadio": "Estadio Metropolitano Roberto Meléndez", "ciudad": "Barranquilla"},
+    {"clave": "nacional", "nombre": "Atlético Nacional", "corto": "Nacional", "abrev": "NAC", "escudo": "escudo-nacional.png", "estadio": "Estadio Atanasio Girardot", "ciudad": "Medellín"},
+    {"clave": "millonarios", "nombre": "Millonarios", "corto": "Millonarios", "abrev": "MIL", "escudo": "escudo-millonarios.png", "estadio": "Estadio El Campín", "ciudad": "Bogotá"},
+    {"clave": "tolima", "nombre": "Deportes Tolima", "corto": "Tolima", "abrev": "TOL", "escudo": "escudo-tolima.png", "estadio": "Estadio Manuel Murillo Toro", "ciudad": "Ibagué"},
+    {"clave": "america", "nombre": "América de Cali", "corto": "América", "abrev": "AME", "escudo": "escudo-america.png", "estadio": "Estadio Pascual Guerrero", "ciudad": "Cali"},
+    {"clave": "medellin", "nombre": "Independiente Medellín", "corto": "Medellín", "abrev": "MED", "escudo": "escudo-medellin.png", "estadio": "Estadio Atanasio Girardot", "ciudad": "Medellín"},
+    {"clave": "santa-fe", "nombre": "Independiente Santa Fe", "corto": "Santa Fe", "abrev": "SFE", "escudo": null, "estadio": "Estadio El Campín", "ciudad": "Bogotá"},
+    {"clave": "bucaramanga", "nombre": "Atlético Bucaramanga", "corto": "Bucaramanga", "abrev": "BUC", "escudo": null, "estadio": "Estadio Américo Montanini", "ciudad": "Bucaramanga"},
+    {"clave": "once-caldas", "nombre": "Once Caldas", "corto": "Once Caldas", "abrev": "OCA", "escudo": null, "estadio": "Estadio Palogrande", "ciudad": "Manizales"},
+    {"clave": "pasto", "nombre": "Deportivo Pasto", "corto": "Pasto", "abrev": "PAS", "escudo": null, "estadio": "Estadio Departamental Libertad", "ciudad": "Pasto"},
+    {"clave": "cali", "nombre": "Deportivo Cali", "corto": "Cali", "abrev": "CAL", "escudo": null, "estadio": "Estadio Deportivo Cali", "ciudad": "Palmira"},
+    {"clave": "aguilas", "nombre": "Águilas Doradas", "corto": "Águilas D.", "abrev": "AGU", "escudo": null, "estadio": "Estadio Alberto Grisales", "ciudad": "Rionegro"},
+    {"clave": "fortaleza", "nombre": "Fortaleza CEIF", "corto": "Fortaleza", "abrev": "FOR", "escudo": null, "estadio": "Estadio Metropolitano de Techo", "ciudad": "Bogotá"},
+    {"clave": "envigado", "nombre": "Envigado FC", "corto": "Envigado", "abrev": "ENV", "escudo": null, "estadio": "Estadio Polideportivo Sur", "ciudad": "Envigado"},
+    {"clave": "alianza", "nombre": "Alianza FC", "corto": "Alianza", "abrev": "ALI", "escudo": null, "estadio": "Estadio Armando Maestre Pavajeau", "ciudad": "Valledupar"},
+    {"clave": "jaguares", "nombre": "Jaguares de Córdoba", "corto": "Jaguares", "abrev": "JAG", "escudo": null, "estadio": "Estadio Jaraguay", "ciudad": "Montería"},
+    {"clave": "pereira", "nombre": "Deportivo Pereira", "corto": "Pereira", "abrev": "PER", "escudo": null, "estadio": "Estadio Hernán Ramírez Villegas", "ciudad": "Pereira"},
+    {"clave": "equidad", "nombre": "La Equidad", "corto": "La Equidad", "abrev": "EQU", "escudo": null, "estadio": "Estadio Metropolitano de Techo", "ciudad": "Bogotá"},
+    {"clave": "llaneros", "nombre": "Llaneros FC", "corto": "Llaneros", "abrev": "LLA", "escudo": null, "estadio": "Estadio Bello Horizonte", "ciudad": "Villavicencio"},
+    {"clave": "boyaca-chico", "nombre": "Boyacá Chicó", "corto": "Boyacá Chicó", "abrev": "BCH", "escudo": null, "estadio": "Estadio La Independencia", "ciudad": "Tunja"},
+    {"clave": "colombia", "nombre": "Selección Colombia", "corto": "Colombia", "abrev": "COL", "escudo": "escudo-colombia.png", "escudo_alterno": "escudo-fcf.png", "tipo": "seleccion"},
+    {"clave": "peru", "nombre": "Selección Perú", "corto": "Perú", "abrev": "PER", "escudo": "Logotipo_FPF_2016.png", "tipo": "seleccion"},
+    {"clave": "ecuador", "nombre": "Selección Ecuador", "corto": "Ecuador", "abrev": "ECU", "escudo": null, "tipo": "seleccion"},
+    {"clave": "uruguay", "nombre": "Selección Uruguay", "corto": "Uruguay", "abrev": "URU", "escudo": null, "tipo": "seleccion"},
+    {"clave": "chile", "nombre": "Selección Chile", "corto": "Chile", "abrev": "CHI", "escudo": null, "tipo": "seleccion"}
+  ],
+  "_nota_clave_peru": "En equipos, 'peru' y 'pereira' tienen abreviatura PER: usar siempre la clave, no la abreviatura, como identificador.",
+  "tabla_posiciones": {
+    "actualizada": "2026-11-02",
+    "incluye_partido_en_vivo": false,
+    "leyenda": {"lider": 1, "cuadrangulares": [2, 8], "sin_clasificar": [9, 20]},
+    "filas": [
+      {"pos": 1, "equipo": "junior", "pj": 19, "g": 12, "e": 3, "p": 4, "gf": 33, "gc": 21, "dg": 12, "pts": 39, "forma": "GGEGG"},
+      {"pos": 2, "equipo": "nacional", "pj": 19, "g": 11, "e": 5, "p": 3, "gf": 29, "gc": 20, "dg": 9, "pts": 38, "forma": "EPGGG"},
+      {"pos": 3, "equipo": "tolima", "pj": 19, "g": 11, "e": 2, "p": 6, "gf": 27, "gc": 21, "dg": 6, "pts": 35, "forma": "PGGGE"},
+      {"pos": 4, "equipo": "millonarios", "pj": 19, "g": 10, "e": 3, "p": 6, "gf": 26, "gc": 22, "dg": 4, "pts": 33, "forma": "GGPPE"},
+      {"pos": 5, "equipo": "medellin", "pj": 19, "g": 9, "e": 4, "p": 6, "gf": 25, "gc": 23, "dg": 2, "pts": 31, "forma": "PGEGG"},
+      {"pos": 6, "equipo": "america", "pj": 19, "g": 8, "e": 5, "p": 6, "gf": 24, "gc": 23, "dg": 1, "pts": 29, "forma": "GEEPP"},
+      {"pos": 7, "equipo": "santa-fe", "pj": 19, "g": 8, "e": 4, "p": 7, "gf": 23, "gc": 23, "dg": 0, "pts": 28, "forma": "GGPPE"},
+      {"pos": 8, "equipo": "bucaramanga", "pj": 19, "g": 8, "e": 3, "p": 8, "gf": 22, "gc": 23, "dg": -1, "pts": 27, "forma": "PEGGE"},
+      {"pos": 9, "equipo": "once-caldas", "pj": 19, "g": 7, "e": 5, "p": 7, "gf": 22, "gc": 23, "dg": -1, "pts": 26, "forma": "GPEPE"},
+      {"pos": 10, "equipo": "pasto", "pj": 19, "g": 7, "e": 4, "p": 8, "gf": 21, "gc": 22, "dg": -1, "pts": 25, "forma": "EPGGP"},
+      {"pos": 11, "equipo": "cali", "pj": 19, "g": 6, "e": 6, "p": 7, "gf": 21, "gc": 23, "dg": -2, "pts": 24, "forma": "GEPEP"},
+      {"pos": 12, "equipo": "aguilas", "pj": 19, "g": 5, "e": 8, "p": 6, "gf": 20, "gc": 23, "dg": -3, "pts": 23, "forma": "PPGPE"},
+      {"pos": 13, "equipo": "fortaleza", "pj": 19, "g": 6, "e": 5, "p": 8, "gf": 19, "gc": 22, "dg": -3, "pts": 23, "forma": "PEEEG"},
+      {"pos": 14, "equipo": "envigado", "pj": 19, "g": 5, "e": 7, "p": 7, "gf": 20, "gc": 23, "dg": -3, "pts": 22, "forma": "GEPEP"},
+      {"pos": 15, "equipo": "alianza", "pj": 19, "g": 6, "e": 4, "p": 9, "gf": 21, "gc": 24, "dg": -3, "pts": 22, "forma": "EGPPG"},
+      {"pos": 16, "equipo": "jaguares", "pj": 19, "g": 5, "e": 6, "p": 8, "gf": 19, "gc": 22, "dg": -3, "pts": 21, "forma": "PGEEP"},
+      {"pos": 17, "equipo": "pereira", "pj": 19, "g": 5, "e": 6, "p": 8, "gf": 19, "gc": 22, "dg": -3, "pts": 21, "forma": "PPEPG"},
+      {"pos": 18, "equipo": "equidad", "pj": 19, "g": 4, "e": 8, "p": 7, "gf": 18, "gc": 21, "dg": -3, "pts": 20, "forma": "PGEEP"},
+      {"pos": 19, "equipo": "llaneros", "pj": 19, "g": 4, "e": 6, "p": 9, "gf": 19, "gc": 22, "dg": -3, "pts": 18, "forma": "PPEGE"},
+      {"pos": 20, "equipo": "boyaca-chico", "pj": 19, "g": 3, "e": 6, "p": 10, "gf": 17, "gc": 22, "dg": -5, "pts": 15, "forma": "PPEEE"}
+    ],
+    "_forma": "Orden de más antiguo a más reciente (Fechas 15 a 19). G = ganó, E = empató, P = perdió."
+  },
+  "resultados": {
+    "jornadas": [
+      {
+        "fecha": 19, "estado": "jugada",
+        "partidos": [
+          {"dia": "2026-10-31", "hora": "4:00 p.m.", "local": "junior", "visitante": "cali", "gl": 2, "gv": 0},
+          {"dia": "2026-10-31", "hora": "6:10 p.m.", "local": "nacional", "visitante": "pasto", "gl": 3, "gv": 1},
+          {"dia": "2026-10-31", "hora": "8:20 p.m.", "local": "santa-fe", "visitante": "bucaramanga", "gl": 1, "gv": 1},
+          {"dia": "2026-11-01", "hora": "12:00 m.", "local": "once-caldas", "visitante": "aguilas", "gl": 0, "gv": 0},
+          {"dia": "2026-11-01", "hora": "2:00 p.m.", "local": "envigado", "visitante": "fortaleza", "gl": 1, "gv": 2},
+          {"dia": "2026-11-01", "hora": "2:00 p.m.", "local": "alianza", "visitante": "jaguares", "gl": 2, "gv": 1},
+          {"dia": "2026-11-01", "hora": "4:10 p.m.", "local": "pereira", "visitante": "equidad", "gl": 1, "gv": 0},
+          {"dia": "2026-11-01", "hora": "4:10 p.m.", "local": "llaneros", "visitante": "boyaca-chico", "gl": 2, "gv": 2},
+          {"dia": "2026-11-01", "hora": "6:10 p.m.", "local": "millonarios", "visitante": "tolima", "gl": 1, "gv": 1},
+          {"dia": "2026-11-01", "hora": "8:20 p.m.", "local": "america", "visitante": "medellin", "gl": 0, "gv": 2}
+        ]
+      },
+      {
+        "fecha": 18, "estado": "jugada",
+        "partidos": [
+          {"dia": "2026-10-24", "hora": "4:00 p.m.", "local": "santa-fe", "visitante": "junior", "gl": 1, "gv": 3},
+          {"dia": "2026-10-24", "hora": "6:10 p.m.", "local": "nacional", "visitante": "alianza", "gl": 2, "gv": 0},
+          {"dia": "2026-10-24", "hora": "8:20 p.m.", "local": "tolima", "visitante": "america", "gl": 2, "gv": 1},
+          {"dia": "2026-10-25", "hora": "2:00 p.m.", "local": "millonarios", "visitante": "medellin", "gl": 1, "gv": 2},
+          {"dia": "2026-10-25", "hora": "2:00 p.m.", "local": "bucaramanga", "visitante": "pereira", "gl": 2, "gv": 1},
+          {"dia": "2026-10-25", "hora": "4:10 p.m.", "local": "cali", "visitante": "envigado", "gl": 1, "gv": 1},
+          {"dia": "2026-10-25", "hora": "4:10 p.m.", "local": "pasto", "visitante": "once-caldas", "gl": 1, "gv": 0},
+          {"dia": "2026-10-25", "hora": "6:10 p.m.", "local": "aguilas", "visitante": "llaneros", "gl": 0, "gv": 1},
+          {"dia": "2026-10-25", "hora": "6:10 p.m.", "local": "fortaleza", "visitante": "equidad", "gl": 1, "gv": 1},
+          {"dia": "2026-10-25", "hora": "8:20 p.m.", "local": "jaguares", "visitante": "boyaca-chico", "gl": 1, "gv": 1}
+        ]
+      },
+      {
+        "fecha": 17, "estado": "jugada",
+        "partidos": [
+          {"dia": "2026-10-17", "hora": "4:00 p.m.", "local": "junior", "visitante": "medellin", "gl": 1, "gv": 1},
+          {"dia": "2026-10-17", "hora": "6:10 p.m.", "local": "nacional", "visitante": "santa-fe", "gl": 2, "gv": 0},
+          {"dia": "2026-10-17", "hora": "8:20 p.m.", "local": "tolima", "visitante": "envigado", "gl": 3, "gv": 1},
+          {"dia": "2026-10-18", "hora": "2:00 p.m.", "local": "millonarios", "visitante": "bucaramanga", "gl": 0, "gv": 1},
+          {"dia": "2026-10-18", "hora": "2:00 p.m.", "local": "america", "visitante": "once-caldas", "gl": 1, "gv": 1},
+          {"dia": "2026-10-18", "hora": "4:10 p.m.", "local": "pasto", "visitante": "alianza", "gl": 2, "gv": 1},
+          {"dia": "2026-10-18", "hora": "4:10 p.m.", "local": "cali", "visitante": "aguilas", "gl": 0, "gv": 1},
+          {"dia": "2026-10-18", "hora": "6:10 p.m.", "local": "fortaleza", "visitante": "jaguares", "gl": 2, "gv": 2},
+          {"dia": "2026-10-18", "hora": "6:10 p.m.", "local": "pereira", "visitante": "llaneros", "gl": 0, "gv": 0},
+          {"dia": "2026-10-18", "hora": "8:20 p.m.", "local": "equidad", "visitante": "boyaca-chico", "gl": 0, "gv": 0}
+        ]
+      }
+    ],
+    "proximos": [
+      {
+        "fecha": 20, "estado": "en curso",
+        "partidos": [
+          {"id": "junior-nacional", "dia": "2026-11-06", "hora": "7:30 p.m.", "local": "junior", "visitante": "nacional", "estadio": "Estadio Metropolitano Roberto Meléndez", "canal": "Win Sports", "estado": "en_vivo", "minuto": 67, "gl": 2, "gv": 1},
+          {"dia": "2026-11-07", "hora": "2:00 p.m.", "local": "pasto", "visitante": "pereira", "estadio": "Estadio Departamental Libertad", "canal": "Win Sports+", "estado": "programado"},
+          {"dia": "2026-11-07", "hora": "4:00 p.m.", "local": "tolima", "visitante": "america", "estadio": "Estadio Manuel Murillo Toro", "canal": "Win Sports", "estado": "programado"},
+          {"dia": "2026-11-07", "hora": "6:00 p.m.", "local": "aguilas", "visitante": "alianza", "estadio": "Estadio Alberto Grisales", "canal": "Win Sports+", "estado": "programado"},
+          {"dia": "2026-11-08", "hora": "12:00 m.", "local": "jaguares", "visitante": "equidad", "estadio": "Estadio Jaraguay", "canal": "Win Sports+", "estado": "programado"},
+          {"dia": "2026-11-08", "hora": "2:00 p.m.", "local": "cali", "visitante": "envigado", "estadio": "Estadio Deportivo Cali", "canal": "Win Sports+", "estado": "programado"},
+          {"dia": "2026-11-08", "hora": "2:00 p.m.", "local": "fortaleza", "visitante": "bucaramanga", "estadio": "Estadio Metropolitano de Techo", "canal": "Win Sports+", "estado": "programado"},
+          {"dia": "2026-11-08", "hora": "4:10 p.m.", "local": "santa-fe", "visitante": "once-caldas", "estadio": "Estadio El Campín", "canal": "Win Sports", "estado": "programado"},
+          {"dia": "2026-11-08", "hora": "4:10 p.m.", "local": "llaneros", "visitante": "boyaca-chico", "estadio": "Estadio Bello Horizonte", "canal": "Win Sports+", "estado": "programado"},
+          {"dia": "2026-11-08", "hora": "6:10 p.m.", "local": "medellin", "visitante": "millonarios", "estadio": "Estadio Atanasio Girardot", "canal": "Win Sports", "estado": "programado"}
+        ]
+      }
+    ],
+    "filtro_dias": {
+      "ayer": {"fecha": "2026-11-05", "partidos": [], "_nota": "Sin partidos de Liga: usar microcopy de estado vacío."},
+      "hoy": {"fecha": "2026-11-06", "partidos": ["junior-nacional"]},
+      "manana": {"fecha": "2026-11-07", "partidos": ["pasto-pereira", "tolima-america", "aguilas-alianza"]}
+    }
+  },
+  "partido_en_vivo": {
+    "id": "junior-nacional",
+    "torneo": "Liga BetPlay · Fecha 20",
+    "etiqueta": "Junior vs. Nacional: líder contra segundo",
+    "estado": "en_vivo",
+    "minuto": 67,
+    "marcador": {"local": 2, "visitante": 1},
+    "local": "junior",
+    "visitante": "nacional",
+    "dia": "2026-11-06",
+    "hora_inicio": "7:30 p.m.",
+    "estadio": "Estadio Metropolitano Roberto Meléndez",
+    "canal": "Win Sports",
+    "transmision_habla": "Narración y comentarios en Habla Deportes (radio y YouTube)",
+    "arbitro": "Árbitro central por confirmar (ejemplo)",
+    "asistencia": "41.250 (ejemplo)",
+    "clima": "Despejado, 29 °C (ejemplo)",
+    "cronologia": [
+      {"min": 1, "tipo": "inicio", "equipo": null, "texto": "Comienza el partido"},
+      {"min": 12, "tipo": "gol", "equipo": "junior", "jugador": "Anderson Pertuz", "asistencia": "Carlos Rivas", "marcador": "1-0", "texto": "Remate de derecha tras una pared con Carlos Rivas"},
+      {"min": 23, "tipo": "amarilla", "equipo": "nacional", "jugador": "Sebastián Gómez", "texto": "Entrada fuerte en el medio campo"},
+      {"min": 34, "tipo": "gol", "equipo": "nacional", "jugador": "Andrés Mosquera", "asistencia": "Alejandro Echeverri", "marcador": "1-1", "texto": "Cabezazo al segundo palo tras un centro desde la izquierda"},
+      {"min": 41, "tipo": "amarilla", "equipo": "junior", "jugador": "Fabián Castro", "texto": "Reclamo al árbitro"},
+      {"min": 45, "tipo": "descanso", "equipo": null, "texto": "Final del primer tiempo: 1-1"},
+      {"min": 46, "tipo": "cambio", "equipo": "nacional", "sale": "Jorge Cárdenas", "entra": "Edwin Murillo", "texto": "Cambio en el medio campo de Nacional"},
+      {"min": 58, "tipo": "gol", "equipo": "junior", "jugador": "Anderson Pertuz", "asistencia": "Carlos Rivas", "marcador": "2-1", "texto": "Define de zurda tras una jugada de Rivas por el centro"},
+      {"min": 61, "tipo": "cambio", "equipo": "junior", "sale": "Dylan Arrieta", "entra": "Brayan Díaz", "texto": "Junior refresca la banda izquierda"},
+      {"min": 64, "tipo": "amarilla", "equipo": "nacional", "jugador": "Hernán Londoño", "texto": "Falta táctica para frenar un contragolpe"},
+      {"min": 65, "tipo": "atajada", "equipo": "junior", "jugador": "Nicolás Ibáñez", "texto": "Gran atajada a remate de Brahian Salas desde el borde del área"},
+      {"min": 67, "tipo": "nota", "equipo": null, "texto": "Junior retrocede unos metros y Nacional busca por las bandas"}
+    ],
+    "alineaciones": {
+      "junior": {
+        "formacion": "4-3-3",
+        "titulares": [
+          {"n": 1, "nombre": "Nicolás Ibáñez", "pos": "POR"},
+          {"n": 2, "nombre": "Andrés Zuleta", "pos": "LD"},
+          {"n": 4, "nombre": "Mateo Caicedo", "pos": "DFC"},
+          {"n": 5, "nombre": "Santiago Parra", "pos": "DFC"},
+          {"n": 3, "nombre": "Daniel Vergara", "pos": "LI"},
+          {"n": 6, "nombre": "Fabián Castro", "pos": "MCD"},
+          {"n": 8, "nombre": "Julián Ospino", "pos": "MC"},
+          {"n": 10, "nombre": "Carlos Rivas", "pos": "MCO"},
+          {"n": 7, "nombre": "Yeison Mena", "pos": "ED"},
+          {"n": 9, "nombre": "Anderson Pertuz", "pos": "DC"},
+          {"n": 11, "nombre": "Dylan Arrieta", "pos": "EI", "sale": 61}
+        ],
+        "suplentes": [
+          {"n": 12, "nombre": "Kevin Ruiz", "pos": "POR"},
+          {"n": 13, "nombre": "Alex Peña", "pos": "DFC"},
+          {"n": 14, "nombre": "Brayan Díaz", "pos": "EI", "entra": 61},
+          {"n": 15, "nombre": "Luis Charris", "pos": "MC"},
+          {"n": 16, "nombre": "Iván Barros", "pos": "MC"},
+          {"n": 17, "nombre": "Samuel Cano", "pos": "LD"},
+          {"n": 20, "nombre": "Josué Pacheco", "pos": "DC"}
+        ],
+        "tecnico": "El técnico de Junior (nombre de ejemplo omitido)"
+      },
+      "nacional": {
+        "formacion": "4-2-3-1",
+        "titulares": [
+          {"n": 1, "nombre": "Mauricio Arévalo", "pos": "POR"},
+          {"n": 2, "nombre": "Felipe Lozano", "pos": "LD"},
+          {"n": 3, "nombre": "Óscar Mejía", "pos": "LI"},
+          {"n": 4, "nombre": "Hernán Londoño", "pos": "DFC"},
+          {"n": 5, "nombre": "Víctor Ramos", "pos": "DFC"},
+          {"n": 6, "nombre": "Sebastián Gómez", "pos": "MCD"},
+          {"n": 8, "nombre": "Jorge Cárdenas", "pos": "MCD", "sale": 46},
+          {"n": 7, "nombre": "Brahian Salas", "pos": "ED"},
+          {"n": 10, "nombre": "Alejandro Echeverri", "pos": "MCO"},
+          {"n": 11, "nombre": "Cristian Torres", "pos": "EI"},
+          {"n": 9, "nombre": "Andrés Mosquera", "pos": "DC"}
+        ],
+        "suplentes": [
+          {"n": 12, "nombre": "Pedro Osorio", "pos": "POR"},
+          {"n": 13, "nombre": "Edwin Murillo", "pos": "MC", "entra": 46},
+          {"n": 14, "nombre": "Leandro Úsuga", "pos": "DFC"},
+          {"n": 15, "nombre": "Mateo Henao", "pos": "MC"},
+          {"n": 16, "nombre": "Juan Peláez", "pos": "ED"},
+          {"n": 17, "nombre": "Kevin Cano", "pos": "DC"},
+          {"n": 20, "nombre": "Elkin Vélez", "pos": "LI"}
+        ],
+        "tecnico": "El técnico de Nacional (nombre de ejemplo omitido)"
+      }
+    },
+    "estadisticas": [
+      {"clave": "posesion", "nombre": "Posesión", "junior": 54, "nacional": 46, "unidad": "%"},
+      {"clave": "remates", "nombre": "Remates", "junior": 11, "nacional": 7},
+      {"clave": "remates_arco", "nombre": "Remates al arco", "junior": 5, "nacional": 3},
+      {"clave": "esquinas", "nombre": "Tiros de esquina", "junior": 6, "nacional": 2},
+      {"clave": "faltas", "nombre": "Faltas", "junior": 9, "nacional": 12},
+      {"clave": "pases", "nombre": "Pases", "junior": 312, "nacional": 271},
+      {"clave": "amarillas", "nombre": "Tarjetas amarillas", "junior": 1, "nacional": 2},
+      {"clave": "rojas", "nombre": "Tarjetas rojas", "junior": 0, "nacional": 0}
+    ],
+    "cara_a_cara": {
+      "_nota": "Ejemplo. Últimos 20 duelos en todos los torneos.",
+      "victorias_junior": 8, "empates": 5, "victorias_nacional": 7,
+      "ultimos": [
+        {"dia": "2026-09-13", "local": "nacional", "visitante": "junior", "gl": 1, "gv": 1, "torneo": "Liga BetPlay"},
+        {"dia": "2026-05-20", "local": "junior", "visitante": "nacional", "gl": 2, "gv": 0, "torneo": "Copa Colombia"},
+        {"dia": "2026-03-08", "local": "nacional", "visitante": "junior", "gl": 0, "gv": 1, "torneo": "Liga BetPlay"},
+        {"dia": "2025-10-12", "local": "junior", "visitante": "nacional", "gl": 3, "gv": 2, "torneo": "Liga BetPlay"},
+        {"dia": "2025-04-05", "local": "nacional", "visitante": "junior", "gl": 2, "gv": 2, "torneo": "Liga BetPlay"}
+      ]
+    }
+  },
+  "goleadores": {
+    "_nota": "Hasta la Fecha 19, sin el partido en vivo. Nombres ficticios.",
+    "goles": [
+      {"pos": 1, "jugador": "Anderson Pertuz", "equipo": "junior", "pj": 19, "goles": 13},
+      {"pos": 2, "jugador": "Brayan Cuesta", "equipo": "tolima", "pj": 19, "goles": 11},
+      {"pos": 3, "jugador": "Andrés Mosquera", "equipo": "nacional", "pj": 18, "goles": 10},
+      {"pos": 4, "jugador": "Luis Murillo", "equipo": "millonarios", "pj": 19, "goles": 9},
+      {"pos": 5, "jugador": "Jhon Rentería", "equipo": "medellin", "pj": 19, "goles": 9},
+      {"pos": 6, "jugador": "Daniel Ortiz", "equipo": "america", "pj": 19, "goles": 8},
+      {"pos": 7, "jugador": "Kevin Palacios", "equipo": "santa-fe", "pj": 19, "goles": 8},
+      {"pos": 8, "jugador": "Jair Hinestroza", "equipo": "bucaramanga", "pj": 19, "goles": 7},
+      {"pos": 9, "jugador": "Sebastián Ortega", "equipo": "once-caldas", "pj": 18, "goles": 7},
+      {"pos": 10, "jugador": "Wilfer Burbano", "equipo": "pasto", "pj": 19, "goles": 6}
+    ],
+    "asistencias": [
+      {"pos": 1, "jugador": "Carlos Rivas", "equipo": "junior", "asistencias": 9},
+      {"pos": 2, "jugador": "Yimmi Ríos", "equipo": "nacional", "asistencias": 8},
+      {"pos": 3, "jugador": "Mateo Zapata", "equipo": "tolima", "asistencias": 8},
+      {"pos": 4, "jugador": "Samuel Giraldo", "equipo": "millonarios", "asistencias": 7},
+      {"pos": 5, "jugador": "Dylan Arrieta", "equipo": "junior", "asistencias": 7},
+      {"pos": 6, "jugador": "Esteban Lozano", "equipo": "medellin", "asistencias": 6},
+      {"pos": 7, "jugador": "Fabián Mena", "equipo": "america", "asistencias": 6},
+      {"pos": 8, "jugador": "Julián Cuero", "equipo": "santa-fe", "asistencias": 5}
+    ],
+    "equipos": {
+      "mas_goles_a_favor": [["junior", 33], ["nacional", 29], ["tolima", 27], ["millonarios", 26], ["medellin", 25]],
+      "menos_goles_en_contra": [["nacional", 20], ["junior", 21], ["tolima", 21], ["fortaleza", 22], ["millonarios", 22]],
+      "mas_esquinas": [["junior", 112], ["nacional", 104], ["millonarios", 99], ["medellin", 95], ["tolima", 90]]
+    },
+    "promedio_goles_por_partido": 2.34
+  },
+  "plantilla_junior": [
+    {"n": 1, "nombre": "Nicolás Ibáñez", "pos": "Portero"},
+    {"n": 12, "nombre": "Kevin Ruiz", "pos": "Portero"},
+    {"n": 21, "nombre": "Joel Campo", "pos": "Portero"},
+    {"n": 2, "nombre": "Andrés Zuleta", "pos": "Lateral derecho"},
+    {"n": 17, "nombre": "Samuel Cano", "pos": "Lateral derecho"},
+    {"n": 3, "nombre": "Daniel Vergara", "pos": "Lateral izquierdo"},
+    {"n": 18, "nombre": "Óscar Herrera", "pos": "Lateral izquierdo"},
+    {"n": 4, "nombre": "Mateo Caicedo", "pos": "Central"},
+    {"n": 5, "nombre": "Santiago Parra", "pos": "Central"},
+    {"n": 13, "nombre": "Alex Peña", "pos": "Central"},
+    {"n": 6, "nombre": "Fabián Castro", "pos": "Volante de contención"},
+    {"n": 8, "nombre": "Julián Ospino", "pos": "Volante mixto"},
+    {"n": 10, "nombre": "Carlos Rivas", "pos": "Volante creativo"},
+    {"n": 15, "nombre": "Luis Charris", "pos": "Volante"},
+    {"n": 16, "nombre": "Iván Barros", "pos": "Volante"},
+    {"n": 7, "nombre": "Yeison Mena", "pos": "Extremo derecho"},
+    {"n": 11, "nombre": "Dylan Arrieta", "pos": "Extremo izquierdo"},
+    {"n": 14, "nombre": "Brayan Díaz", "pos": "Extremo"},
+    {"n": 9, "nombre": "Anderson Pertuz", "pos": "Centro delantero"},
+    {"n": 19, "nombre": "Emerson Polo", "pos": "Delantero"},
+    {"n": 20, "nombre": "Josué Pacheco", "pos": "Delantero"}
+  ],
+  "ficha_junior": {
+    "nombre": "Junior de Barranquilla",
+    "apodo": "El Tiburón",
+    "fundacion": "7 de agosto de 1924",
+    "estadio": "Estadio Metropolitano Roberto Meléndez",
+    "colores": "Rojo y blanco",
+    "_nota": "Fundación, estadio, apodo y colores son datos públicos. Títulos y técnico se dejan fuera a propósito para no afirmar hechos sin verificar."
+  },
+  "calendario_junior": {
+    "pasados": [
+      {"fecha": 15, "dia": "2026-10-04", "local": "junior", "visitante": "bucaramanga", "gl": 3, "gv": 0, "torneo": "Liga BetPlay"},
+      {"fecha": 16, "dia": "2026-10-10", "local": "pasto", "visitante": "junior", "gl": 0, "gv": 2, "torneo": "Liga BetPlay"},
+      {"fecha": 17, "dia": "2026-10-17", "local": "junior", "visitante": "medellin", "gl": 1, "gv": 1, "torneo": "Liga BetPlay"},
+      {"fecha": 18, "dia": "2026-10-24", "local": "santa-fe", "visitante": "junior", "gl": 1, "gv": 3, "torneo": "Liga BetPlay"},
+      {"fecha": 19, "dia": "2026-10-31", "local": "junior", "visitante": "cali", "gl": 2, "gv": 0, "torneo": "Liga BetPlay"}
+    ],
+    "proximos": [
+      {"fecha": 20, "dia": "2026-11-06", "hora": "7:30 p.m.", "local": "junior", "visitante": "nacional", "estadio": "Estadio Metropolitano Roberto Meléndez", "canal": "Win Sports", "estado": "en_vivo"},
+      {"fecha": 21, "dia": "2026-11-21", "hora": "6:10 p.m.", "local": "bucaramanga", "visitante": "junior", "estadio": "Estadio Américo Montanini", "canal": "Win Sports"},
+      {"fecha": 22, "dia": "2026-11-29", "hora": "4:00 p.m.", "local": "junior", "visitante": "santa-fe", "estadio": "Estadio Metropolitano Roberto Meléndez", "canal": "Win Sports"},
+      {"fecha": 23, "dia": "2026-12-05", "hora": "7:30 p.m.", "local": "once-caldas", "visitante": "junior", "estadio": "Estadio Palogrande", "canal": "Win Sports+"},
+      {"fecha": 24, "dia": "2026-12-09", "hora": "7:30 p.m.", "local": "junior", "visitante": "millonarios", "estadio": "Estadio Metropolitano Roberto Meléndez", "canal": "Win Sports"}
+    ],
+    "_nota": "La Liga se detiene del 9 al 19 de noviembre por la fecha FIFA (ejemplo)."
+  },
+  "calendario_seleccion": {
+    "pasados": [
+      {"dia": "2026-10-09", "local": "ecuador", "visitante": "colombia", "gl": 1, "gv": 0, "torneo": "Amistoso · Fecha FIFA de octubre"},
+      {"dia": "2026-10-13", "local": "uruguay", "visitante": "colombia", "gl": 2, "gv": 2, "torneo": "Amistoso · Fecha FIFA de octubre"}
+    ],
+    "proximos": [
+      {"dia": "2026-11-13", "hora": "7:30 p.m.", "local": "colombia", "visitante": "peru", "torneo": "Amistoso · Fecha FIFA de noviembre", "estadio": "Estadio por confirmar (ejemplo)", "canal": "Caracol TV"},
+      {"dia": "2026-11-17", "hora": "6:00 p.m.", "local": "chile", "visitante": "colombia", "torneo": "Amistoso · Fecha FIFA de noviembre", "estadio": "Estadio por confirmar (ejemplo)", "canal": "Caracol TV"}
+    ],
+    "_nota": "Rivales, sedes y resultados son de ejemplo."
+  },
+  "mercado_fichajes": {
+    "_nota": "Fichajes ficticios descritos por rol, sin nombres de jugadores reales. Estados posibles: Rumor, Negociando, Cerrado.",
+    "estados": ["Rumor", "Negociando", "Cerrado"],
+    "movimientos": [
+      {"id": "m1", "fecha": "2026-11-05", "origen": "medellin", "destino": "junior", "jugador": "Extremo derecho con pasado europeo", "tipo": "Fichaje", "estado": "Negociando", "nota": "Conversaciones avanzadas; falta acordar la duración del contrato."},
+      {"id": "m2", "fecha": "2026-11-04", "origen": "tolima", "destino": "junior", "jugador": "Volante de contención", "tipo": "Préstamo", "estado": "Cerrado", "nota": "Llega a préstamo hasta fin de temporada."},
+      {"id": "m3", "fecha": "2026-11-03", "origen": "nacional", "destino": null, "jugador": "Defensor central", "tipo": "Salida", "estado": "Rumor", "nota": "Se habla de un interés del exterior; sin oferta formal conocida."},
+      {"id": "m4", "fecha": "2026-11-02", "origen": "millonarios", "destino": "junior", "jugador": "Delantero argentino", "tipo": "Fichaje", "estado": "Rumor", "nota": "Interés exploratorio; el club no ha confirmado contacto."},
+      {"id": "m5", "fecha": "2026-10-30", "origen": "america", "destino": "medellin", "jugador": "Extremo izquierdo", "tipo": "Fichaje", "estado": "Negociando", "nota": "Medellín afina condiciones económicas."},
+      {"id": "m6", "fecha": "2026-10-28", "origen": "medellin", "destino": "millonarios", "jugador": "Lateral izquierdo", "tipo": "Fichaje", "estado": "Cerrado", "nota": "Contrato firmado por una temporada con opción de extensión."},
+      {"id": "m7", "fecha": "2026-10-27", "origen": "junior", "destino": "tolima", "jugador": "Delantero suplente", "tipo": "Préstamo", "estado": "Rumor", "nota": "Para sumar minutos; sin confirmación."},
+      {"id": "m8", "fecha": "2026-10-24", "origen": "santa-fe", "destino": "nacional", "jugador": "Volante creativo", "tipo": "Fichaje", "estado": "Negociando", "nota": "Se discute la cláusula de recompra."}
+    ]
+  },
+  "encuesta": {
+    "pregunta": "¿Quién debe ganar el duelo del medio campo esta noche?",
+    "opciones": [
+      {"texto": "Junior, por el ritmo de Rivas", "porcentaje": 52},
+      {"texto": "Nacional, por la salida con balón", "porcentaje": 31},
+      {"texto": "Quien cometa menos errores", "porcentaje": 17}
+    ],
+    "votos": 12844,
+    "_nota": "Cifras de ejemplo."
+  },
+  "efemerides": [
+    {"dia": 6, "mes": 11, "titulo": "Un 6 de noviembre en el archivo del programa", "texto": "Texto de ejemplo: espacio para la efeméride del día, validada por la redacción antes de publicarse.", "_nota": "No se afirma un hecho histórico concreto en el prototipo."}
+  ],
+  "redes": {
+    "_nota": "Cifras de ejemplo; en producción se leen de cada plataforma.",
+    "youtube": {"videos": "más de 265", "suscriptores_ejemplo": "148 mil"},
+    "instagram": {"usuario": "@habladeportes", "seguidores_ejemplo": "212 mil"},
+    "x": {"habla": "@habladeportes", "juan_salvador": "@juansalvador", "seguidores_ejemplo": "96 mil / 184 mil"},
+    "tiktok": {"seguidores_ejemplo": "74 mil"},
+    "whatsapp": {"canal_ejemplo": "38 mil"}
+  },
+  "programa": {
+    "nombre": "El show de las mañanas",
+    "horario": "Lunes a viernes, 10:00 a.m. a 12:00 m.",
+    "presentador": "Juan Salvador Bárcena",
+    "patrocinador": "ISA Transelca",
+    "parrilla": [
+      {"hora": "10:00", "bloque": "Apertura y titulares", "detalle": "Lo que pasó anoche y lo que se juega hoy"},
+      {"hora": "10:30", "bloque": "Junior en primer plano", "detalle": "Análisis, plantel y la previa del próximo partido"},
+      {"hora": "11:00", "bloque": "Selección y mercado", "detalle": "Convocatoria, rivales y movimientos de fichajes"},
+      {"hora": "11:30", "bloque": "El debate de los oyentes", "detalle": "Llamadas y mensajes al aire hasta las 12:00 m."}
+    ]
+  }
+}

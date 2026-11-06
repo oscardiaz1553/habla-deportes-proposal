@@ -53,29 +53,35 @@
   /* ----------------------------------------------------------------------
      3. MEGAMENÚ: ANATOMÍA (escritorio >= 1024 con hover: hover y pointer: fine)
      Retícula: la misma de 12 columnas del sitio (--container, --grid-gap-lg).
+     Zonas de 09-menu-arquitectura (§2.6): Z1 enlaces 5/12 · Z2 destacado 4/12 · Z3 ahora 3/12.
      A 1440: contenido 1216 px -> columna 79.33 px.
-       c1-c3 = 286 px (índice) · c4-c8 = 492 px (destacado) · c9-c12 = 389 px (ahora)
+       Z1 c1-c5 = 492 px (2 subcolumnas de 234) · Z2 c6-c9 = 389 px · Z3 c10-c12 = 286 px
+     A 1024: contenido 960 px -> columna 58 px.
+       Z1 = 386 (2 x 181) · Z2 = 304 · Z3 = 222
      ---------------------------------------------------------------------- */
   --mega-pad-block:      32px;           /* arriba y abajo */
-  --mega-content-h:      400px;          /* alto FIJO del contenido: todos los paneles iguales */
-  --mega-h:              464px;          /* 32 + 400 + 32. Igual en los 6 paneles grandes */
+  --mega-content-h:      352px;          /* alto FIJO del contenido: todos los paneles iguales */
+  --mega-h:              416px;          /* 32 + 352 + 32. Igual en los 6 paneles grandes (09: ~420, sin scroll) */
   --mega-max-h:          calc(100dvh - var(--header-sticky-lg) - 32px); /* nunca más que la ventana */
-  --mega-footer-h:       48px;           /* fila inferior opcional (Torneos en Resultados), dentro de los 400 */
   --mega-gap:            var(--grid-gap-lg);  /* 24 */
   --mega-divider:        var(--border-hair) solid var(--color-border); /* filete vertical tras el índice */
 
-  /* Panel compacto «Más» (no ocupa todo el ancho) */
+  /* Panel estrecho «Más»: su borde derecho se alinea con el borde derecho del ítem */
   --mega-compact-w:      596px;          /* 6 columnas a 1440 */
+  --mega-avatar:         120px;          /* retrato 1:1 del presentador, radio 0 */
 
-  /* Índice de la sección (c1-c3) */
+  /* Z0 + Z1: título del panel (= enlace al hub) y grupos de enlaces */
   --mega-title-fs:       1.5rem;         /* 24 px · Archivo 800 cursiva: el gesto del rótulo de sección */
   --mega-title-lh:       1.15;
-  --mega-row-h:          var(--touch-min); /* 44 px por subpágina */
+  --mega-title-gap:      24px;           /* título -> primer grupo */
+  --mega-row-h:          40px;           /* fila de enlace. Solo puntero fino (WCAG 2.5.8 pide 24) */
+  --mega-group-gap:      16px;           /* entre grupos de una misma subcolumna */
+  --mega-label-gap:      8px;            /* rótulo de grupo -> primer enlace */
   --mega-current-mark:   8px;            /* cuadrado brand-600 de 8x8 = «estás aquí» (como las zonas de la tabla) */
 
   /* Imágenes del panel (radio 0, sin texto encima salvo chips y píldora) */
-  --mega-lead-ratio:     16 / 9;         /* 492 x 277 a 1440 · 386 x 217 a 1024 */
-  --mega-short-ratio:    9 / 16;         /* 119 x 212 a 1440 (3 visibles) · 144 x 256 a 1024 (2) */
+  --mega-lead-ratio:     16 / 9;         /* Z2: 389 x 219 a 1440 · 304 x 171 a 1024 */
+  --mega-short-ratio:    9 / 16;         /* Z3 Videos, 2 Shorts: 135 x 240 a 1440 · 103 x 183 a 1024 */
   --mega-thumb-w:        128px;          /* miniatura 16:9 de lista (128 x 72) */
   --mega-thumb-h:        72px;
 
@@ -85,7 +91,7 @@
   --mega-match-bg:       var(--color-surface-dark);
   --mega-match-bg-hover: var(--brand-800);
   --mega-match-pad:      24px;
-  --mega-match-crest:    56px;           /* escudo, object-fit: contain */
+  --mega-match-crest:    48px;           /* escudo, object-fit: contain (Z3 de 286 px) */
   --mega-match-text-muted: rgba(255, 255, 255, 0.72);
 
   /* Elevación: SOLO sombra, sin borde (evita la «tarjeta fantasma» borde + sombra).
@@ -102,10 +108,12 @@
      tokens.css, que quedan sin uso al desaparecer los paneles de la barra blanca.
      Los temporizadores NO se anulan con prefers-reduced-motion (no son movimiento).
      ---------------------------------------------------------------------- */
-  --mega-open-delay:     200ms;  /* reposo del puntero antes de abrir el primer panel */
-  --mega-switch-delay:   100ms;  /* con un panel ya abierto, cambiar a otro ítem */
-  --mega-close-delay:    300ms;  /* gracia al salir de ítem + panel (región única) */
-  --mega-shift:          -8px;   /* entrada: translateY(-8px -> 0) */
+  /* Valores comunes con 09 §2.5 y §7 (hover: abrir 250, entre ítems 0, cerrar 400). */
+  --mega-open-delay:     250ms;  /* reposo del puntero antes de abrir el primer panel */
+  --mega-switch-delay:   0ms;    /* con un panel ya abierto, cambiar a otro ítem en horizontal */
+  --mega-aim-rest:       80ms;   /* si el puntero BAJA hacia el panel cruzando otro ítem: solo cambia tras 80 ms quieto */
+  --mega-close-delay:    400ms;  /* gracia al salir de ítem + panel (región única) */
+  --mega-shift:          -4px;   /* entrada: translateY(-4px -> 0), igual que los paneles de 01 §6.2 */
   --mega-dur-in:         var(--dur-base);  /* 200 ms, opacidad + transform */
   --mega-dur-out:        var(--dur-fast);  /* 120 ms, solo opacidad */
   --mega-dur-swap:       var(--dur-fast);  /* 120 ms, fundido del contenido al cambiar de panel */
@@ -120,6 +128,7 @@
      6. MENÚ MÓVIL: HOJA DE PANTALLA COMPLETA (< 1024, y tabletas con hover: none)
      ---------------------------------------------------------------------- */
   --sheet-top:           var(--header-l1-h-mobile);  /* arranca bajo la cabecera de 56 px, que sigue visible */
+  --sheet-bottom:        calc(var(--bottom-nav-h) + env(safe-area-inset-bottom, 0px)); /* termina sobre la barra inferior, que sigue visible (09 §4) */
   --sheet-pad-inline:    var(--page-margin);         /* 16 / 24 desde 600 */
   --sheet-max-content:   640px;          /* en tabletas el contenido se centra a este ancho */
   --sheet-search-h:      48px;           /* campo de búsqueda; texto de 16 px (sin zoom en iOS) */
@@ -128,6 +137,6 @@
   --sheet-thumb-h:       54px;
   --sheet-toggle:        48px;           /* botón de acordeón (área táctil) */
   --sheet-subrow-h:      48px;           /* subpágina dentro del acordeón */
-  --sheet-now-h:         120px;          /* tarjeta «Ahora» (partido) */
+  --sheet-now-h:         88px;           /* fila «Ahora» (programa o partido) */
   --sheet-dur:           var(--dur-base);/* 200 ms entrada; 120 ms salida */
 }

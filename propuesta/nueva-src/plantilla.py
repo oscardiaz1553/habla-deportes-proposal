@@ -12,7 +12,7 @@ from componentes import aliados, pauta
 from nucleo import e, icono, img
 from sitio import CONTEXTO, INFERIOR, MAS, MENU_MOVIL, PAGINAS, PIE, PRIMARIO, REDES, SITIO
 
-CSS = ["tokens", "base", "components", "pages"]
+CSS = ["tokens", "base", "components", "pages", "pages-a", "pages-b"]
 
 
 # --------------------------------------------------------------------------

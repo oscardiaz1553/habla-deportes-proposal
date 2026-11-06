@@ -972,3 +972,15 @@ REGISTRO = {f.__name__: f for f in [
     efemeride, pauta, sello, migas, compartir, caja_datos_junior, etiquetas, chips_torneos, en_construccion,
     buscador_404]}
 REGISTRO["escudo"] = escudo
+
+
+# --- Registro de los grupos de páginas (cada grupo vive en su propio módulo) ---
+def _unir_registros():
+    import importlib
+    for mod in ("componentes_a", "componentes_b"):
+        try:
+            m = importlib.import_module(mod)
+        except ImportError:
+            continue
+        REGISTRO.update(getattr(m, "REGISTRO_" + mod[-1].upper(), {}))
+_unir_registros()

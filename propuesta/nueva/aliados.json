@@ -42,13 +42,13 @@
       "id": "tecnoglass",
       "nombre": "Tecnoglass",
       "rol": "aliado",
-      "archivo": "assets/img/aliados/tecnoglass.svg",
+      "archivo": "assets/img/aliados/tecnoglass-oscuro.svg",
       "ancho": 219,
       "alto": 58,
-      "tono": "blanco",
+      "tono": "color",
       "web": "https://www.tecnoglass.com",
       "sitio_confirmado": true,
-      "nota": "El SVG disponible es la versión en blanco con detalle azul (#00A2E2)."
+      "nota": "Variante provisional: el logo disponible es blanco con símbolo azul (#00A2E2); para fondo claro se cambiaron los rellenos blancos por azul marino (#1E3A55). Original en tecnoglass.svg. Reemplazar por el logo oficial."
     },
     {
       "id": "vp-global",

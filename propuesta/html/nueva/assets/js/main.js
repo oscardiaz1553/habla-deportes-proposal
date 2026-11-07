@@ -159,27 +159,42 @@
     if (megaMQ.addEventListener) megaMQ.addEventListener('change', function () { closeMega(); });
   }
 
-  /* 3. Buscador (franja bajo la cabecera, no modal) y hoja del menú móvil ---- */
+  /* 3. Buscador (opción B: campo con línea inferior) y hoja del menú móvil ------
+     Escritorio: el campo siempre está visible. Móvil: la lupa abre el campo, que
+     reemplaza al logo; Esc o la flecha lo cierran y devuelven el foco a la lupa.
+     El atajo «/» enfoca el campo desde cualquier página (salvo escribiendo en un campo). */
   var setMenu = null;
+  var masthead = $('[data-masthead]');
   var searchBtn = $('[data-search-toggle]');
-  var searchPanel = $('[data-search]');
+  var searchForm = $('[data-search]');
+  var searchInput = $('#q');
   var setSearch = null;
-  if (searchBtn && searchPanel) {
+  if (masthead && searchBtn && searchForm && searchInput) {
     setSearch = function (open) {
+      masthead.classList.toggle('is-searching', open);
       searchBtn.setAttribute('aria-expanded', String(open));
-      searchPanel.hidden = !open;
       if (open) {
         if (setMenu) setMenu(false);
         closeMega();
-        var q = $('#q'); if (q) q.focus();
+        searchInput.focus();
       }
     };
-    searchBtn.addEventListener('click', function () { setSearch(searchBtn.getAttribute('aria-expanded') !== 'true'); });
-    searchPanel.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') { setSearch(false); searchBtn.focus(); }
-    });
+    searchBtn.addEventListener('click', function () { setSearch(!masthead.classList.contains('is-searching')); });
     var closeSearch = $('[data-search-close]');
     if (closeSearch) closeSearch.addEventListener('click', function () { setSearch(false); searchBtn.focus(); });
+    searchForm.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        setSearch(false);
+        if (getComputedStyle(searchBtn).display !== 'none') searchBtn.focus(); else searchInput.blur();
+      }
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== '/' || e.ctrlKey || e.metaKey || e.altKey) return;
+      var t = e.target, tag = t && t.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || (t && t.isContentEditable)) return;
+      e.preventDefault();
+      if (getComputedStyle(searchBtn).display !== 'none') setSearch(true); else searchInput.focus();
+    });
   }
 
   /* Hoja del menú (< 1024 y pantallas sin hover): pantalla completa entre la

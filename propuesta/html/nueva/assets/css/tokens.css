@@ -88,6 +88,7 @@
 
   /* Texto sobre azul / oscuro */
   --color-on-brand:        var(--white);
+  --color-on-brand-line:   rgba(255, 255, 255, 0.55); /* línea del buscador y bordes sobre azul: 4.4:1 sobre brand-700 (UI >= 3:1) */
   --color-on-brand-muted:  rgba(255, 255, 255, 0.80); /* 6.3:1 sobre brand-600; 10.8:1 sobre brand-900 */
   --color-on-dark-accent:  var(--brand-300);           /* enlace sobre pie/banner */
 
@@ -292,11 +293,7 @@
 
   /* Buscador con forma de campo en el nivel 1 (botón que abre el buscador).
      Texto blanco 88 % sobre blanco 12 % / brand-600 = 5.36:1; borde 48 % = 3.37:1 */
-  --search-trigger-w:    280px;
-  --search-trigger-h:    40px;
-  --search-trigger-bg:   rgba(255, 255, 255, 0.12);
-  --search-trigger-border: rgba(255, 255, 255, 0.48);
-  --search-trigger-text: rgba(255, 255, 255, 0.88);
+  --search-field-w:      260px;  /* campo de búsqueda con línea inferior (escritorio) */
 
   /* Punto «en vivo» sobre azul: rojo/brand-700 = 2.14:1 (no llega a 3:1), por eso
      lleva anillo blanco de 2 px (blanco/brand-700 = 11.06:1; rojo/blanco = 5.18:1) */

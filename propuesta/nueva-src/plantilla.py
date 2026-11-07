@@ -81,18 +81,18 @@ def _primario(cfg, slug):
 
 
 def _buscador():
-    sugerencias = "".join(f'<li><a class="chip" href="buscar.html?q={q}">{e(t)}</a></li>' for t, q in SUGERENCIAS)
+    """Opción B del dueño: campo con línea inferior, sin caja. En escritorio siempre visible;
+    en móvil se abre con la lupa y ocupa la cabecera (reemplaza al logo mientras se busca).
+    Un solo formulario para los dos tamaños. El atajo «/» enfoca el campo (main.js)."""
     return (
-        f'<div class="search-bar" id="buscador" hidden data-search>'
-        f'<div class="container search-bar__inner">'
-        f'<form class="search-bar__form" action="buscar.html" method="get" role="search" aria-label="Buscar en el sitio">'
-        f'<label class="field__label" for="q">Buscar en Habla Deportes</label>'
-        f'<div class="search-bar__row"><input class="field__input" id="q" name="q" type="search" '
-        f'placeholder="Equipo, jugador o tema" autocomplete="off" enterkeyhint="search">'
-        f'<button class="btn btn--primary" type="submit">Buscar</button></div></form>'
-        f'<ul class="chip-list search-bar__suggest" role="list" aria-label="Búsquedas sugeridas">{sugerencias}</ul>'
-        f'<button class="icon-btn search-bar__close" type="button" data-search-close>{icono("x")}'
-        f'<span class="visually-hidden">Cerrar el buscador</span></button></div></div>')
+        f'<form class="header-search" action="buscar.html" method="get" role="search" aria-label="Buscar en la cabecera" data-search>'
+        f'<button class="icon-btn icon-btn--on-brand header-search__back" type="button" data-search-close>'
+        f'{icono("arrow-left")}<span class="visually-hidden">Cerrar la búsqueda</span></button>'
+        f'<label class="visually-hidden" for="q">Buscar en Habla Deportes</label>'
+        f'<span class="header-search__field">{icono("magnifying-glass", "icon icon--md header-search__icon")}'
+        f'<input class="header-search__input" id="q" name="q" type="search" placeholder="Buscar" '
+        f'autocomplete="off" enterkeyhint="search">'
+        f'<kbd class="header-search__hint" aria-hidden="true">/</kbd></span></form>')
 
 
 def cabecera(slug):
@@ -104,11 +104,12 @@ def cabecera(slug):
     return f"""<a class="skip-link" href="#contenido">Saltar al contenido</a>
 <!-- CABECERA (header.php): nivel 1 + nivel 2 con megamenús + buscador + hoja móvil -->
 <header class="site-header" data-header>
-  <div class="masthead">
+  <div class="masthead" data-masthead>
     <div class="container masthead__inner">
       <a class="masthead__logo" href="index.html">{img("logo-blanco", clase="masthead__logo-img", alt="Habla Deportes, ir a la portada", prioridad=True)}</a>
       <div class="masthead__tools">
-        <button class="search-trigger" type="button" aria-expanded="false" aria-controls="buscador" data-search-toggle>{icono("magnifying-glass", "icon icon--md")}<span class="search-trigger__text">Buscar equipo, jugador o tema</span></button>
+        {_buscador()}
+        <button class="search-trigger" type="button" aria-expanded="false" aria-controls="q" data-search-toggle>{icono("magnifying-glass", "icon icon--md")}<span class="visually-hidden">Buscar</span></button>
         {redes_cab}
         <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu-movil" data-menu-toggle>{icono("list", "icon icon-open")}{icono("x", "icon icon-close")}<span class="menu-toggle__text" aria-hidden="true" data-menu-word>Menú</span><span class="visually-hidden" data-menu-label>Abrir el menú</span></button>
       </div>
@@ -120,7 +121,6 @@ def cabecera(slug):
       <ul class="primary-nav__list" role="list">{_primario(cfg, slug)}</ul>
     </div>
   </nav>
-  {_buscador()}
   {hoja_menu(slug)}
 </header>
 <div class="mega-scrim" data-mega-scrim></div>"""

@@ -130,46 +130,130 @@
   display: none;
 }
 
-/* Buscador: lupa de 44 × 44 en móvil; campo-botón de 280 × 40 desde lg (08 §2.3).
-   Un campo dice qué se puede buscar; una lupa sola, no. */
+/* Buscador (opción B del dueño): lupa de 44 × 44 en móvil que abre el campo; desde lg el
+   campo con línea inferior está siempre visible. Un campo dice qué se puede buscar. */
 .search-trigger {
   display: inline-flex;
   flex: none;
   align-items: center;
   justify-content: center;
-  gap: var(--space-1);
   width: var(--touch-min);
   height: var(--touch-min);
   padding: 0;
-  border: var(--border-hair) solid transparent;
+  border: 0;
   border-radius: var(--radius-round);
   background: transparent;
   color: var(--color-on-brand);
-  font-size: var(--fs-ui);
-  font-weight: var(--nav-weight);
-  line-height: var(--lh-snug);
-  text-align: left;
-  transition: background-color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
 }
 
 .search-trigger:focus-visible {
   outline-color: var(--color-focus-on-dark);
 }
 
-@media (max-width: 1023.98px) {
-  .search-trigger__text {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
-  }
-}
-
 @media (hover: hover) and (pointer: fine) {
   .search-trigger:hover {
     background: var(--nav-hover-bg);
+  }
+}
+
+.header-search {
+  display: none;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.header-search .header-search__back {
+  display: none;
+}
+
+.header-search__field {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: 0;
+  height: var(--touch-min);
+  border-bottom: 2px solid var(--color-on-brand-line);
+  color: var(--color-on-brand);
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+
+.header-search__field:focus-within {
+  border-bottom-color: var(--color-on-brand);
+}
+
+.header-search__icon {
+  flex: none;
+}
+
+.header-search__input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--color-on-brand);
+  font-size: var(--fs-ui);
+  line-height: var(--lh-snug);
+}
+
+.header-search__input::placeholder {
+  color: var(--color-on-brand-muted);
+  opacity: 1;
+}
+
+.header-search__input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.header-search__hint {
+  flex: none;
+  padding: 2px 7px;
+  border: 1px solid var(--color-on-brand-line);
+  color: var(--color-on-brand-muted);
+  font-family: inherit;
+  font-size: var(--fs-meta);
+  line-height: var(--lh-snug);
+}
+
+/* Móvil: al abrir, el campo reemplaza al logo y a los iconos (la cabecera conserva su alto) */
+@media (max-width: 1023.98px) {
+  .masthead.is-searching .masthead__logo,
+  .masthead.is-searching .masthead__tools > :not(.header-search) {
+    display: none;
+  }
+
+  .masthead.is-searching .masthead__tools {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .masthead.is-searching .header-search {
+    display: flex;
+    flex: 1;
+  }
+
+  .masthead.is-searching .header-search .header-search__back {
+    display: inline-grid;
+  }
+
+  .header-search__hint {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .header-search {
+    display: flex;
+    width: var(--search-field-w);
+    margin-right: var(--space-2);
+  }
+
+  .search-trigger {
+    display: none;
   }
 }
 
@@ -221,18 +305,6 @@
 
   .masthead__tools > .masthead__social {
     display: inline-grid;
-  }
-
-  .search-trigger {
-    justify-content: flex-start;
-    width: var(--search-trigger-w);
-    height: var(--search-trigger-h);
-    margin-right: var(--space-2);
-    padding: 0 var(--space-2) 0 var(--space-1);
-    border-color: var(--search-trigger-border);
-    border-radius: var(--radius-ctrl);
-    background: var(--search-trigger-bg);
-    color: var(--search-trigger-text);
   }
 }
 
@@ -3692,40 +3764,6 @@ button.bottom-nav__link {
 
 .streak__text {
   color: var(--color-text-secondary);
-}
-
-/* Buscador (franja bajo la cabecera, no modal) ------------------------------- */
-.search-bar {
-  background: var(--color-surface);
-  border-bottom: var(--border-hair) solid var(--color-border);
-}
-
-.search-bar__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: var(--space-2);
-  padding-block: var(--space-2);
-}
-
-.search-bar__form {
-  display: grid;
-  gap: var(--space-1);
-}
-
-.search-bar__row,
-.search-inline__row {
-  display: flex;
-  gap: var(--space-1);
-}
-
-.search-bar__suggest {
-  grid-column: 1 / -1;
-}
-
-.search-bar__close {
-  grid-column: 2;
-  grid-row: 1;
-  align-self: end;
 }
 
 /* Hoja del menú móvil (< 1024 y pantallas grandes sin hover) · 08 §6 -------

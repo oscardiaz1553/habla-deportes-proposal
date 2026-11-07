@@ -73,8 +73,8 @@
   --color-surface-subtle:  var(--gray-50);   /* pauta, cebra, skeleton */
   --color-surface-hover:   var(--gray-100);
   --color-surface-selected:var(--brand-50);  /* fila de Junior, pestaña activa en tablas */
-  --color-surface-brand:   var(--brand-600); /* cabecera nivel 1 (logo) */
-  --color-surface-brand-2: var(--brand-700); /* cabecera nivel 2 (menú) */
+  --color-surface-brand:   var(--brand-700); /* cabecera nivel 1 (logo): azul oscuro */
+  --color-surface-brand-2: var(--brand-600); /* cabecera nivel 2 (menú): azul del logo, más claro */
   --color-surface-dark:    var(--brand-900); /* banner de partidos y pie (los únicos bloques oscuros) */
   --color-scrim:           rgba(15, 33, 51, 0.56); /* fondo tras hoja inferior móvil */
 

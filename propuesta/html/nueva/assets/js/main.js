@@ -185,22 +185,24 @@
   /* Hoja del menú (< 1024 y pantallas sin hover): pantalla completa entre la
      cabecera y la barra inferior. Foco atrapado (botón «Cerrar» + hoja), Esc
      cierra y devuelve el foco al botón, la página de fondo no se desplaza. */
-  var menuBtn = $('[data-menu-toggle]');
+  var menuToggles = $$('[data-menu-toggle]');  // «Menú» de la cabecera y «Más» de la barra inferior
+  var menuBtn = $('.site-header [data-menu-toggle]');
   var sheet = $('[data-menu]');
   if (menuBtn && sheet) {
     var word = $('[data-menu-word]', menuBtn);
     var label = $('[data-menu-label]', menuBtn);
     var closingT = 0;
+    var opener = menuBtn;
     sheet.setAttribute('tabindex', '-1');
     var isOpen = function () { return menuBtn.getAttribute('aria-expanded') === 'true'; };
     var focusables = function () {
-      return [menuBtn].concat($$('a[href], button:not([disabled]), input, select, textarea', sheet).filter(function (el) {
+      return menuToggles.concat($$('a[href], button:not([disabled]), input, select, textarea', sheet)).filter(function (el) {
         return el.getClientRects().length > 0;
-      }));
+      });
     };
     setMenu = function (open, restoreFocus) {
       window.clearTimeout(closingT);
-      menuBtn.setAttribute('aria-expanded', String(open));
+      menuToggles.forEach(function (t) { t.setAttribute('aria-expanded', String(open)); });
       if (word) word.textContent = open ? 'Cerrar' : 'Menú';
       if (label) label.textContent = open ? 'Cerrar el menú' : 'Abrir el menú';
       document.documentElement.classList.toggle('is-menu-open', open);
@@ -216,10 +218,12 @@
         sheet.classList.add('is-closing');
         var d = parseFloat(getComputedStyle(sheet).animationDuration) * 1000 || 0;
         closingT = window.setTimeout(function () { sheet.hidden = true; sheet.classList.remove('is-closing'); }, d);
-        if (restoreFocus) menuBtn.focus();
+        if (restoreFocus) opener.focus();
       }
     };
-    menuBtn.addEventListener('click', function () { setMenu(!isOpen(), false); });
+    menuToggles.forEach(function (t) {
+      t.addEventListener('click', function () { opener = t; setMenu(!isOpen(), false); });
+    });
     document.addEventListener('keydown', function (e) {
       if (!isOpen()) return;
       if (e.key === 'Escape') { e.preventDefault(); setMenu(false, true); return; }
@@ -386,21 +390,6 @@
       el.textContent = 'Ahora: ' + topics[slot] + (slot < 3 ? ' · Después: ' + topics[slot + 1] : '');
     });
   }
-  // Megamenú de En vivo: «Ahora» y «Después» siguen la parrilla real
-  if (slot >= 0) {
-    $$('[data-slots]').forEach(function (list) {
-      var topics = list.getAttribute('data-slots').split('|');
-      var hours = list.getAttribute('data-slot-hours').split('|');
-      var fill = function (row, i) {
-        if (!row) return;
-        if (i >= topics.length) { row.hidden = true; return; }
-        $('[data-slot-time]', row).textContent = hours[i];
-        $('[data-slot-topic]', row).textContent = topics[i];
-      };
-      fill($('[data-slot="ahora"]', list), slot);
-      fill($('[data-slot="despues"]', list), slot + 1);
-    });
-  }
   var grid = $('[data-week-grid]');
   if (grid && weekday) {
     $$('td[data-day="' + day + '"]', grid).forEach(function (td, i) {
@@ -409,7 +398,21 @@
     });
   }
 
-  /* 7b. Filtros por tema: los enlaces funcionan sin JS (?tema=); con JS filtran en el sitio */
+  /* 7b. Filtros por tema: los enlaces funcionan sin JS (?tema=); con JS filtran en el sitio.
+        En noticias.html el ítem activo de la barra azul, la hoja y la barra inferior
+        sigue al tema: Junior, FPC o Fútbol internacional (data-temas); si no, «Más». */
+  function markSection(tema) {
+    var owner = $$('.primary-nav__item[data-temas]').filter(function (li) {
+      return li.getAttribute('data-temas').split(' ').indexOf(tema) > -1;
+    })[0];
+    var key = owner ? owner.getAttribute('data-nav') : 'mas';
+    $$('[data-nav]').forEach(function (li) {
+      var link = $('.primary-nav__link, .sheet-section__link, .bottom-nav__link', li);
+      if (!link) return;
+      if (li.getAttribute('data-nav') === key) link.setAttribute('aria-current', 'true');
+      else link.removeAttribute('aria-current');
+    });
+  }
   $$('[data-filterable]').forEach(function (root) {
     var links = $$('[data-filter]', root);
     var items = $$('[data-filter-items] > li', root);
@@ -433,6 +436,7 @@
       empty.hidden = shown > 0;
       status.textContent = 'Tema: ' + label + '. ' + shown + (shown === 1 ? ' resultado.' : ' resultados.');
       if (useUrl) {
+        markSection(tema);
         if (title) title.textContent = tema === 'todas' ? title.getAttribute('data-filter-title') : 'Noticias: ' + label;
         if (push) history.replaceState(null, '', tema === 'todas' ? 'noticias.html' : 'noticias.html?tema=' + tema);
       }

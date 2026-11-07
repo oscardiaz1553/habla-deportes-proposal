@@ -8,9 +8,10 @@ Partes, en orden de documento:
 import json
 
 import nucleo
-from componentes import aliados, hoja_menu, megamenu, pauta, punto_vivo
+from componentes import (aliados, barra_inferior, etiqueta_nav, hoja_menu, megamenu, nav_label, pauta,
+                         punto_vivo)
 from nucleo import e, icono, img
-from sitio import INFERIOR, PAGINAS, PIE, PRIMARIO, REDES, SITIO, SUGERENCIAS
+from sitio import PAGINAS, PANELES, PIE, PRIMARIO, REDES, SITIO, SUGERENCIAS
 
 CSS = ["tokens", "base", "components", "pages", "pages-a", "pages-b"]
 
@@ -57,20 +58,24 @@ def head(meta, jsonld):
 # azul (secciones con megamenú). Sin barra blanca contextual.
 # --------------------------------------------------------------------------
 def _primario(cfg, slug):
+    """Barra azul. Activo: aria-current="page" (o "true" si el destino no es esta misma
+    página) + bold + barra de 3 px. Inicio no tiene panel ni chevron; los demás, sí."""
     out = []
     for it in PRIMARIO:
         clave = it["clave"]
-        actual = cfg["primario"] == clave
-        # «Más» no es una página: se marca como sección actual con aria-current="true"
-        cur = (' aria-current="true"' if clave == "mas" else ' aria-current="page"') if actual else ""
-        punto = punto_vivo(it.get("punto"), "live-dot live-dot--ring") if it.get("punto") else ""
-        extra = ""
-        if clave == "mas":
-            extra = (f'{icono("caret-down", "icon icon--sm chevron")}'
-                     f'<span class="visually-hidden">: más secciones en el pie de página</span>')
-        mod = " primary-nav__item--end" if clave == "mas" else ""
-        out.append(f'<li class="primary-nav__item{mod}" data-mega-item>'
-                   f'<a class="primary-nav__link" href="{e(it["href"])}"{cur}>{punto}<span>{e(it["texto"])}</span>{extra}</a>'
+        cur = ""
+        if cfg["primario"] == clave:
+            cur = ' aria-current="page"' if it["href"] == f"{slug}.html" else ' aria-current="true"'
+        punto = punto_vivo(it["punto"], "live-dot live-dot--ring") if it.get("punto") else ""
+        temas = f' data-temas="{e(it["temas"])}"' if it.get("temas") else ""
+        if clave not in PANELES:
+            out.append(f'<li class="primary-nav__item" data-nav="{clave}"{temas}><a class="primary-nav__link" href="{e(it["href"])}"{cur}>'
+                       f'{nav_label(it["texto"])}</a></li>')
+            continue
+        extra = '<span class="visually-hidden">: más secciones en el pie de página</span>' if clave == "mas" else ""
+        out.append(f'<li class="primary-nav__item" data-mega-item data-nav="{clave}"{temas}>'
+                   f'<a class="primary-nav__link" href="{e(it["href"])}"{cur}>{punto}{etiqueta_nav(it)}{extra}'
+                   f'{icono("caret-down", "icon icon--sm chevron")}</a>'
                    f'{megamenu(clave, slug)}</li>')
     return "".join(out)
 
@@ -122,7 +127,7 @@ def cabecera(slug):
 
 
 # --------------------------------------------------------------------------
-# Pie, barra inferior, reproductor
+# Pie y documento (la barra inferior se genera en componentes.barra_inferior)
 # --------------------------------------------------------------------------
 def pie():
     cols = "".join(
@@ -149,22 +154,6 @@ def pie():
     </div>
   </div>
 </footer>"""
-
-
-def barra_inferior(slug):
-    """Barra inferior móvil de 5 pestañas (09 §4.3). Activa: icono relleno, barra de 3 px y peso 700."""
-    activo = PAGINAS[slug]["inferior"]
-    items = []
-    for it in INFERIOR:
-        cur = ' aria-current="page"' if activo == it["clave"] else ""
-        ic = it["icono"]
-        punto = punto_vivo(it.get("punto"), "bottom-nav__dot") if it.get("punto") else ""
-        items.append(
-            f'<li><a class="bottom-nav__link" href="{it["href"]}"{cur}>'
-            f'<span class="bottom-nav__icon">{icono(ic, "icon icon-line")}{icono(ic + "-fill", "icon icon-fill")}</span>'
-            f'<span class="bottom-nav__label">{e(it["texto"])}</span>{punto}</a></li>')
-    return (f'<nav class="bottom-nav" aria-label="Accesos rápidos">'
-            f'<ul class="bottom-nav__list" role="list">{"".join(items)}</ul></nav>')
 
 
 def documento(slug, meta, cuerpo, jsonld):

@@ -276,6 +276,13 @@
   /* ======================================================================
      9. MENÚ Y MEGAMENÚS (08-menu-diseno.md; contrastes en su §5.4)
      ====================================================================== */
+  /* Pesos del menú (pedido del dueño, 7-nov): TODO en regular; solo lo activo
+     (ítem de la sección actual, enlace con aria-current) en bold. El hover y la
+     pestaña abierta cambian color o fondo, nunca el peso. */
+  --nav-weight:          var(--fw-regular);
+  --nav-weight-active:   var(--fw-bold);
+  --nav-group-weight:    var(--fw-medium);  /* rótulos de grupo: discretos, en gris */
+
   /* Barra azul: hover del ítem (blanco sobre brand-700 + 8 % blanco = 8.73:1) */
   --nav-hover-bg:        rgba(255, 255, 255, 0.08);
   /* Pestaña abierta: el ítem cuyo panel está abierto se vuelve blanco y se funde
@@ -307,7 +314,6 @@
   --mega-max-h:          calc(100dvh - var(--header-sticky-lg) - 32px);
   --mega-gap:            var(--grid-gap-lg);
   --mega-divider:        var(--border-hair) solid var(--color-border);
-  --mega-compact-w:      596px;  /* panel «Más»: borde derecho alineado con el ítem */
   --mega-avatar:         120px;  /* retrato 1:1 del presentador, radio 0 */
   --mega-title-fs:       1.5rem; /* 24 px · Archivo 800 cursiva */
   --mega-title-lh:       1.15;

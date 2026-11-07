@@ -146,7 +146,7 @@
   background: transparent;
   color: var(--color-on-brand);
   font-size: var(--fs-ui);
-  font-weight: var(--fw-medium);
+  font-weight: var(--nav-weight);
   line-height: var(--lh-snug);
   text-align: left;
   transition: background-color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
@@ -188,7 +188,7 @@
   background: transparent;
   color: var(--color-on-brand);
   font-size: var(--fs-meta);
-  font-weight: var(--fw-semibold);
+  font-weight: var(--nav-weight);
   line-height: var(--lh-snug);
   transition: background-color var(--dur-fast) var(--ease-out);
 }
@@ -287,11 +287,6 @@
   display: flex;
 }
 
-/* «Más»: su panel estrecho se alinea con el borde derecho del ítem */
-.primary-nav__item--end {
-  position: relative;
-}
-
 .primary-nav__link {
   position: relative;
   display: flex;
@@ -300,7 +295,7 @@
   padding-inline: var(--space-2);
   color: var(--color-on-brand);
   font-size: var(--fs-ui);
-  font-weight: var(--fw-semibold);
+  font-weight: var(--nav-weight); /* regular en reposo, en hover y con el panel abierto */
   line-height: var(--lh-snug);
   text-decoration: none;
   white-space: nowrap;
@@ -317,9 +312,15 @@
   outline-offset: calc(-1 * var(--space-half));
 }
 
-/* Activo: barra blanca de 3 px + peso 700. Única marca de «estás aquí» (08 §2.1) */
+/* Activo: barra blanca de 3 px + bold. Única marca de «estás aquí» (08 §2.1).
+   nav-label reserva el ancho en bold: la barra no salta al marcar el activo. */
 .primary-nav__link[aria-current] {
-  font-weight: var(--fw-bold);
+  font-weight: var(--nav-weight-active);
+}
+
+/* Chevron de los ítems con panel: decorativo, gira 180° con el panel abierto */
+.primary-nav__link .chevron {
+  margin-left: var(--space-half);
 }
 
 .primary-nav__link[aria-current]::after {
@@ -352,6 +353,24 @@
 
 .chevron {
   transition: transform var(--dur-base) var(--ease-out);
+}
+
+/* Etiquetas de navegación: el ancho se reserva con el texto en bold (invisible y sin
+   alto), así marcar el activo no mueve la barra, ni la hoja ni la barra inferior.
+   El contenido generado lleva texto alternativo vacío: no se lee dos veces. */
+.nav-label {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.nav-label::after {
+  content: attr(data-text) / "";
+  height: 0;
+  overflow: hidden;
+  font-weight: var(--nav-weight-active);
+  visibility: hidden;
+  pointer-events: none;
+  user-select: none;
 }
 
 .primary-nav__item.is-open .chevron {
@@ -414,14 +433,6 @@
   .is-swapped > .mega .mega__inner {
     animation: fade-in var(--mega-dur-swap) var(--ease-out);
   }
-
-  /* «Más»: panel estrecho, alto según el contenido */
-  .mega--compact {
-    left: auto;
-    width: var(--mega-compact-w);
-    height: auto;
-    padding-inline: var(--mega-pad-block);
-  }
 }
 
 .mega__inner {
@@ -462,14 +473,29 @@
   container-type: inline-size;
 }
 
-.mega__inner--compact {
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  min-height: 0;
+/* «Más»: el mismo ancho y alto que los demás. Cinco columnas de enlaces y el perfil
+   del presentador, separado por el mismo filete vertical (08 §3.2) */
+.mega-more {
+  grid-template-columns: repeat(5, minmax(0, 1fr)) minmax(0, 1.4fr);
 }
 
-.mega__inner--compact > .mega__z1,
-.mega__inner--compact > .mega__z2 {
-  grid-column: auto;
+.mega-more__col {
+  min-width: 0;
+}
+
+.mega-more__profile {
+  position: relative;
+  min-width: 0;
+  container-type: inline-size;
+}
+
+.mega-more__profile::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--mega-gap) / -2);
+  border-left: var(--mega-divider);
 }
 
 /* Z0 · Título del panel = enlace al hub (Archivo 800 cursiva + flecha) */
@@ -514,7 +540,7 @@
   margin-bottom: var(--mega-label-gap);
   color: var(--color-text-muted);
   font-size: var(--fs-meta);
-  font-weight: var(--fw-semibold);
+  font-weight: var(--nav-group-weight);
   line-height: var(--lh-ui);
 }
 
@@ -523,21 +549,24 @@
   align-items: center;
   gap: var(--space-1);
   min-height: var(--mega-row-h);
+  padding-block: var(--space-half); /* aire entre filas que se parten en dos líneas a 1024 */
   color: var(--color-text);
   font-size: var(--fs-body);
-  font-weight: var(--fw-medium);
+  font-weight: var(--nav-weight);
   line-height: var(--lh-snug);
   text-decoration: none;
 }
 
-/* Página actual: peso 600 + cuadrado de 8 px (el signo de «estás aquí» del sistema) */
-.mega__link[aria-current="page"] {
-  font-weight: var(--fw-semibold);
+/* Página actual: bold + cuadrado de 8 px (el signo de «estás aquí» del sistema) */
+.mega__link[aria-current="page"],
+.sheet-sub__link[aria-current="page"],
+.sheet-section__link[aria-current] .sheet-section__name {
+  font-weight: var(--nav-weight-active);
 }
 
 .mega__link[aria-current="page"]::before,
 .sheet-sub__link[aria-current="page"]::before,
-.sheet-section__link[aria-current="page"] .sheet-section__name::before {
+.sheet-section__link[aria-current] .sheet-section__name::before {
   content: "";
   flex: none;
   width: var(--mega-current-mark);
@@ -547,12 +576,6 @@
 
 .mega__cta {
   margin-top: auto;
-}
-
-.mega__social {
-  display: flex;
-  gap: var(--space-1);
-  margin-top: var(--space-2);
 }
 
 /* Z2 · Destacado: la única imagen del panel, titular siempre debajo */
@@ -569,18 +592,11 @@
   margin-bottom: var(--space-2);
 }
 
-.mega-feature__badge {
-  position: absolute;
-  top: var(--space-1);
-  left: var(--space-1);
-  z-index: var(--z-raised);
-}
-
 .mega-feature__label {
   margin-bottom: var(--space-half);
   color: var(--color-link);
   font-size: var(--fs-meta);
-  font-weight: var(--fw-semibold);
+  font-weight: var(--nav-group-weight);
   line-height: var(--lh-ui);
 }
 
@@ -600,25 +616,6 @@
 
 .mega-feature__meta {
   margin-top: var(--space-1);
-  color: var(--color-text-muted);
-  font-size: var(--fs-meta);
-  font-weight: var(--fw-medium);
-  line-height: var(--lh-ui);
-}
-
-/* En vivo: botón y horario en una fila bajo el titular */
-.mega-feature__actions {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  margin-top: var(--space-2);
-}
-
-.mega-feature__btn {
-  flex: none;
-}
-
-.mega-feature__when {
   color: var(--color-text-muted);
   font-size: var(--fs-meta);
   font-weight: var(--fw-medium);
@@ -653,7 +650,7 @@
   gap: var(--space-half);
   color: var(--color-link);
   font-size: var(--fs-meta);
-  font-weight: var(--fw-semibold);
+  font-weight: var(--nav-weight);
   text-decoration: none;
 }
 
@@ -687,7 +684,7 @@
   display: -webkit-box;
   overflow: hidden;
   font-size: var(--fs-meta);
-  font-weight: var(--fw-semibold);
+  font-weight: var(--nav-weight);
   line-height: var(--lh-snug);
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -711,22 +708,39 @@
   padding-top: 0;
 }
 
-.mega-headline__topic {
-  color: var(--color-link);
-  font-size: var(--fs-meta);
-  font-weight: var(--fw-semibold);
-  line-height: var(--lh-ui);
-}
-
 .mega-headline__title {
   display: -webkit-box;
   overflow: hidden;
   font-size: var(--fs-body);
-  font-weight: var(--fw-semibold);
+  font-weight: var(--nav-weight);
   line-height: var(--lh-snug);
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   line-clamp: 2;
+}
+
+/* Titular destacado sin foto (Fútbol internacional: el catálogo no tiene fotos de
+   Europa ni del exterior). Archivo 700, como los titulares del sitio. */
+.mega-headline--lead .mega-headline__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-title-md);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-title);
+  letter-spacing: var(--ls-title);
+  text-wrap: balance;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+
+.mega-headline__dek {
+  display: -webkit-box;
+  overflow: hidden;
+  color: var(--color-text-secondary);
+  font-size: var(--fs-meta);
+  line-height: var(--lh-ui);
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
 }
 
 /* Z3 de Junior y Selección · tarjeta de partido oscura (mini Centro de Partidos).
@@ -758,7 +772,7 @@
   gap: var(--space-1);
   color: var(--color-on-brand-muted);
   font-size: var(--fs-meta);
-  font-weight: var(--fw-semibold);
+  font-weight: var(--nav-weight);
   line-height: var(--lh-ui);
 }
 
@@ -805,7 +819,7 @@
   gap: var(--space-half);
   color: var(--color-on-dark-accent);
   font-size: var(--fs-ui);
-  font-weight: var(--fw-semibold);
+  font-weight: var(--nav-weight);
 }
 
 .mega-match__after {
@@ -818,21 +832,7 @@
 .mega-match__note {
   color: var(--color-text-secondary);
   font-size: var(--fs-meta);
-  font-weight: var(--fw-semibold);
-  line-height: var(--lh-ui);
-}
-
-/* Z2 de Datos · tabla mini (la imagen es el dato) */
-.mega-table__foot {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0 var(--space-2);
-  margin-top: var(--space-1);
-  color: var(--color-text-muted);
-  font-size: var(--fs-label);
-  font-weight: var(--fw-medium);
+  font-weight: var(--nav-weight);
   line-height: var(--lh-ui);
 }
 
@@ -849,7 +849,7 @@
   min-height: calc(var(--space-6) + var(--space-1));
   color: var(--color-text);
   font-size: var(--fs-meta);
-  font-weight: var(--fw-medium);
+  font-weight: var(--nav-weight);
   line-height: var(--lh-snug);
   text-decoration: none;
 }
@@ -872,80 +872,26 @@
   white-space: nowrap;
 }
 
-/* Z3 de En vivo · ahora y después */
-.mega-slots > li + li {
-  border-top: var(--border-hair) solid var(--color-border);
-}
-
-.mega-slot {
-  display: grid;
-  grid-template-columns: var(--space-6) minmax(0, 1fr);
-  align-items: start;
-  gap: var(--space-1);
-  min-height: var(--space-8);
-  padding: var(--space-1);
-}
-
-.mega-slot--now {
-  background: var(--color-surface-selected);
-}
-
-.mega-slot__time {
-  color: var(--color-link);
-  font-family: var(--font-display);
-  font-size: var(--fs-score-sm);
-  font-stretch: calc(var(--wdth-condensed) * 1%);
-  font-weight: var(--fw-bold);
-  font-variant-numeric: var(--numeric);
-  line-height: var(--lh-snug);
-}
-
-.mega-slot__time--live {
-  color: var(--color-live);
-}
-
-.mega-slot__body {
-  display: grid;
-  min-width: 0;
-}
-
-.mega-slot__state {
-  display: flex;
-  align-items: center;
-  gap: var(--space-1);
-  color: var(--color-text-secondary);
-  font-size: var(--fs-meta);
-  font-weight: var(--fw-semibold);
-  line-height: var(--lh-ui);
-}
-
-.mega-slot--now .mega-slot__state,
-.mega-slot--match .mega-slot__state {
-  color: var(--color-live);
-}
-
-.mega-slot__title {
-  color: var(--color-text);
-  font-size: var(--fs-ui);
-  font-weight: var(--fw-medium);
-  line-height: var(--lh-snug);
-  text-decoration: none;
-}
-
 /* «Más» · retrato del presentador (1:1, radio 0) */
 .mega-profile {
   display: grid;
-  justify-items: start;
-  gap: var(--space-half);
+  grid-template-columns: var(--mega-avatar) minmax(0, 1fr);
+  align-items: end;
+  gap: var(--space-2);
   margin-bottom: var(--space-1);
   color: var(--color-text);
   text-decoration: none;
+}
+
+.mega-profile__text {
+  display: grid;
+  gap: var(--space-half);
+  min-width: 0;
 }
 
 .mega-profile__media {
   width: var(--mega-avatar);
   height: var(--mega-avatar);
-  margin-bottom: var(--space-1);
   overflow: hidden;
   background: var(--color-surface-subtle);
 }
@@ -970,6 +916,19 @@
   color: var(--color-text-muted);
   font-size: var(--fs-meta);
   line-height: var(--lh-ui);
+}
+
+/* Columna del perfil estrecha (1024 a 1279): retrato de 72 encima del nombre */
+@container (max-width: 220px) {
+  .mega-profile {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-1);
+  }
+
+  .mega-profile__media {
+    width: var(--mega-thumb-h);
+    height: var(--mega-thumb-h);
+  }
 }
 
 /* Hover (solo puntero fino) */
@@ -1003,7 +962,6 @@
   .mega-short:hover .mega-short__title,
   .mega-headline:hover .mega-headline__title,
   .mega-fixture:hover .mega-fixture__teams,
-  .mega-slot__title:hover,
   .mega-profile:hover .mega-profile__name {
     text-decoration: underline;
     text-decoration-thickness: var(--border-hair);
@@ -2152,20 +2110,6 @@
   font-weight: var(--fw-bold);
 }
 
-/* Mini (megamenú de Datos, 08 §4.5): filas de 36, columna # de 24 */
-.standings--mini th,
-.standings--mini td {
-  height: calc(var(--space-4) + var(--space-half));
-}
-
-.standings--mini thead th {
-  height: var(--space-4);
-}
-
-.standings--mini .pos {
-  width: var(--space-3);
-}
-
 .standings tr.is-selected {
   background: var(--color-surface-selected);
 }
@@ -2890,7 +2834,10 @@
 
 
 /* --------------------------------------------------------------------------
-   6.15 · Barra inferior móvil (< 1024): Inicio · Videos · Noticias · Datos · En vivo
+   6.15 · Barra inferior móvil (< 1024): las mismas 6 opciones que la barra azul
+   Inicio · Videos · Junior · FPC · Mundo (Fútbol internacional) · Más.
+   A 360 px: 60 px por pestaña (objetivo táctil >= 44). «Más» es un botón que
+   abre la hoja del menú.
    -------------------------------------------------------------------------- */
 .bottom-nav {
   position: fixed;
@@ -2912,8 +2859,16 @@
 
 .bottom-nav__list {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   height: var(--bottom-nav-h);
+}
+
+button.bottom-nav__link {
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-family: inherit;
 }
 
 .bottom-nav__link {
@@ -2926,7 +2881,7 @@
   height: 100%;
   color: var(--color-text-muted);
   font-size: var(--fs-label);
-  font-weight: var(--fw-semibold);
+  font-weight: var(--nav-weight);
   text-decoration: none;
   user-select: none;
   -webkit-touch-callout: none;
@@ -2947,21 +2902,21 @@
 }
 
 .bottom-nav__icon .icon-fill,
-.bottom-nav__link[aria-current="page"] .icon-line {
+.bottom-nav__link[aria-current] .icon-line {
   display: none;
 }
 
-.bottom-nav__link[aria-current="page"] {
+.bottom-nav__link[aria-current] {
   color: var(--color-text);
-  font-weight: var(--fw-bold);
+  font-weight: var(--nav-weight-active);
 }
 
-.bottom-nav__link[aria-current="page"] .icon-fill {
+.bottom-nav__link[aria-current] .icon-fill {
   display: block;
   color: var(--color-action);
 }
 
-.bottom-nav__link[aria-current="page"]::before {
+.bottom-nav__link[aria-current]::before {
   content: "";
   position: absolute;
   top: 0;
@@ -3903,7 +3858,7 @@ html.is-menu-open {
   gap: var(--space-half);
   color: var(--color-link);
   font-size: var(--fs-meta);
-  font-weight: var(--fw-semibold);
+  font-weight: var(--nav-weight);
   line-height: var(--lh-ui);
 }
 
@@ -3952,7 +3907,7 @@ html.is-menu-open {
   gap: var(--space-1);
   font-family: var(--font-display);
   font-size: var(--fs-title-md);
-  font-weight: var(--fw-bold);
+  font-weight: var(--nav-weight);
   line-height: var(--lh-snug);
 }
 
@@ -4012,7 +3967,7 @@ html.is-menu-open {
   padding-top: var(--space-1);
   color: var(--color-text-muted);
   font-size: var(--fs-label);
-  font-weight: var(--fw-semibold);
+  font-weight: var(--nav-group-weight);
   line-height: var(--lh-ui);
 }
 
@@ -4027,32 +3982,13 @@ html.is-menu-open {
   min-height: var(--sheet-subrow-h);
   color: var(--color-text);
   font-size: var(--fs-body);
-  font-weight: var(--fw-medium);
+  font-weight: var(--nav-weight);
   line-height: var(--lh-snug);
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
 }
 
-.sheet-sub__link[aria-current="page"] {
-  font-weight: var(--fw-semibold);
-}
-
-/* «Más» y redes */
-.sheet-more > li {
-  border-bottom: var(--border-hair) solid var(--color-border);
-}
-
-.sheet-more__link {
-  display: flex;
-  align-items: center;
-  min-height: var(--sheet-subrow-h);
-  color: var(--color-text);
-  font-size: var(--fs-body);
-  font-weight: var(--fw-medium);
-  text-decoration: none;
-  -webkit-tap-highlight-color: transparent;
-}
-
+/* Redes */
 .sheet-social {
   display: flex;
   gap: var(--space-1);
@@ -4063,16 +3999,14 @@ html.is-menu-open {
 .sheet-now:active,
 .sheet-section__link:active,
 .sheet-section__toggle:active,
-.sheet-sub__link:active,
-.sheet-more__link:active {
+.sheet-sub__link:active {
   background: var(--color-surface-hover);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .sheet-now:hover .sheet-now__title,
   .sheet-section__link:hover .sheet-section__name,
-  .sheet-sub__link:hover,
-  .sheet-more__link:hover {
+  .sheet-sub__link:hover {
     color: var(--color-link);
     text-decoration: underline;
   }

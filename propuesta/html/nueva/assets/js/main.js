@@ -588,8 +588,14 @@
         if (frameEl.contentWindow) frameEl.contentWindow.postMessage(JSON.stringify({ event: 'command', func: fn, args: args || [] }), '*');
       };
       var muted = true, userPaused = false, playing = false;
+      var noCaptions = function () {
+        cmd('unloadModule', ['captions']);
+        cmd('unloadModule', ['cc']);
+        cmd('setOption', ['captions', 'track', {}]);
+      };
       frameEl.addEventListener('load', function () {
         frameEl.contentWindow.postMessage(JSON.stringify({ event: 'listening', id: 1 }), '*');
+        [1500, 3000, 6000].forEach(function (ms) { window.setTimeout(noCaptions, ms); });
       });
       window.addEventListener('message', function (ev) {
         if (ev.source !== frameEl.contentWindow) return;
@@ -597,6 +603,9 @@
         var st = d && d.info && d.info.playerState;
         if (d && (d.event === 'onStateChange' ? d.info === 1 : st === 1) && !playing) {
           playing = true;
+          /* Sin subtítulos por defecto: cc_load_policy=0 no basta si el visitante tiene
+             «mostrar siempre subtítulos» en YouTube; se descargan los módulos de subtítulos. */
+          noCaptions();
           stage.classList.add('is-playing');
           heroCtl.hidden = false;
         }

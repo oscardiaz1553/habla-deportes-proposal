@@ -595,11 +595,15 @@
       };
       frameEl.addEventListener('load', function () {
         frameEl.contentWindow.postMessage(JSON.stringify({ event: 'listening', id: 1 }), '*');
-        [1500, 3000, 6000].forEach(function (ms) { window.setTimeout(noCaptions, ms); });
+        /* YouTube puede volver a activar los subtítulos del visitante cuando cargan: se reintenta
+           cada 1,5 s mientras la página esté abierta (un mensaje ligero, sin efecto si ya están fuera). */
+        noCaptions();
+        window.setInterval(noCaptions, 1500);
       });
       window.addEventListener('message', function (ev) {
         if (ev.source !== frameEl.contentWindow) return;
         var d; try { d = JSON.parse(ev.data); } catch (x) { return; }
+        if (d && d.event === 'onStateChange') noCaptions();
         var st = d && d.info && d.info.playerState;
         if (d && (d.event === 'onStateChange' ? d.info === 1 : st === 1) && !playing) {
           playing = true;

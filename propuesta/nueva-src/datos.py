@@ -14,6 +14,15 @@ ALIADOS = json.loads((RAIZ / "nueva" / "aliados.json").read_text(encoding="utf-8
 EQUIPOS = {e["clave"]: e for e in D["equipos"]}
 HOY = dt.date.fromisoformat(D["_fecha_hoy"])
 
+# Datos reales de Datafactory (foto tomada por importar_datafactory.py). Solo los usa la portada.
+_DF = RAIZ / "nueva" / "data-datafactory.json"
+DF = json.loads(_DF.read_text(encoding="utf-8")) if _DF.exists() else None
+if DF:
+    for _k, _v in DF["equipos_nuevos"].items():
+        EQUIPOS.setdefault(_k, {"clave": _k, **_v})
+    DF_HOY = dt.date.fromisoformat(DF["capturado"][:10])
+    DF_AHORA = dt.datetime.fromisoformat(DF["capturado"])
+
 DIAS = ["lun", "mar", "mié", "jue", "vie", "sáb", "dom"]
 DIAS_LARGO = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"]
 MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"]
@@ -32,10 +41,10 @@ def fecha(iso):
     return dt.date.fromisoformat(iso)
 
 
-def dia_corto(iso, mayus=True):
-    """'Vie 13 nov' / 'Hoy' / 'Mañana' / 'Ayer'."""
+def dia_corto(iso, mayus=True, ref=None):
+    """'Vie 13 nov' / 'Hoy' / 'Mañana' / 'Ayer'. `ref`: fecha de referencia (por defecto, la de la maqueta)."""
     d = fecha(iso)
-    delta = (d - HOY).days
+    delta = (d - (ref or HOY)).days
     rel = {0: "Hoy", 1: "Mañana", -1: "Ayer"}.get(delta)
     if rel:
         return rel
@@ -99,3 +108,10 @@ def signo(n):
 
 def miles(n):
     return f"{n:,}".replace(",", ".")
+
+
+def df_fecha_texto():
+    """'7 nov 2026, 4:54 p. m.' de la foto de Datafactory."""
+    a = DF_AHORA
+    h12 = a.hour % 12 or 12
+    return f"{a.day} {MESES[a.month - 1]} {a.year}, {h12}:{a.minute:02d} {'p. m.' if a.hour >= 12 else 'a. m.'}"

@@ -555,4 +555,71 @@
     var aviso = $('[data-torneo-aviso]');
     if (aviso) aviso.hidden = t === 'liga';
   }
+
+  /* 8. Escenario de video de la portada (M1): autoplay SILENCIADO; el audio lo activa el visitante.
+        Transmisión en vivo cuando está al aire; si no, el último programa. YouTube IFrame API por
+        postMessage (enablejsapi=1). No se carga con «reducir movimiento», ahorro de datos ni en
+        file:// (YouTube no incrusta sin origen): queda la portada con play al video. */
+  var hero = $('[data-hero-player]');
+  if (hero) {
+    var stage = hero.closest('.hero-stage');
+    var heroChip = $('[data-hero-chip]', hero);
+    var heroCtl = $('[data-hero-controls]', hero);
+    var soundBtn = $('[data-hero-sound]', hero);
+    var pauseBtn = $('[data-hero-pause]', hero);
+    var heroLive = html.getAttribute('data-aire') === 'si';
+    if (heroLive && heroChip) {
+      heroChip.textContent = 'En vivo';
+      heroChip.classList.add('hero-stage__chip--live');
+    }
+    var conn = navigator.connection || {};
+    if (location.protocol !== 'file:' && !reduce.matches && !conn.saveData) {
+      var vid = hero.getAttribute('data-video');
+      var chan = hero.getAttribute('data-channel');
+      var base = 'https://www.youtube-nocookie.com/embed/';
+      var q = 'autoplay=1&mute=1&controls=0&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3&cc_load_policy=0&hl=es&disablekb=1&enablejsapi=1&origin=' + encodeURIComponent(location.origin);
+      var frameEl = document.createElement('iframe');
+      frameEl.src = heroLive ? base + 'live_stream?channel=' + chan + '&' + q : base + vid + '?' + q + '&loop=1&playlist=' + vid;
+      frameEl.title = 'Video de portada de Habla Deportes (comienza sin sonido)';
+      frameEl.allow = 'autoplay; encrypted-media; picture-in-picture';
+      frameEl.setAttribute('tabindex', '-1');
+      $('[data-hero-frame]', hero).insertBefore(frameEl, $('[data-hero-poster]', hero));
+      var cmd = function (fn, args) {
+        if (frameEl.contentWindow) frameEl.contentWindow.postMessage(JSON.stringify({ event: 'command', func: fn, args: args || [] }), '*');
+      };
+      var muted = true, userPaused = false, playing = false;
+      frameEl.addEventListener('load', function () {
+        frameEl.contentWindow.postMessage(JSON.stringify({ event: 'listening', id: 1 }), '*');
+      });
+      window.addEventListener('message', function (ev) {
+        if (ev.source !== frameEl.contentWindow) return;
+        var d; try { d = JSON.parse(ev.data); } catch (x) { return; }
+        var st = d && d.info && d.info.playerState;
+        if (d && (d.event === 'onStateChange' ? d.info === 1 : st === 1) && !playing) {
+          playing = true;
+          stage.classList.add('is-playing');
+          heroCtl.hidden = false;
+        }
+      });
+      soundBtn.addEventListener('click', function () {
+        muted = !muted;
+        if (muted) { cmd('mute'); } else { cmd('unMute'); cmd('setVolume', [100]); if (userPaused) { cmd('playVideo'); userPaused = false; pauseBtn.setAttribute('aria-pressed', 'false'); } }
+        soundBtn.setAttribute('aria-pressed', String(!muted));
+        $('[data-hero-sound-label]', hero).textContent = muted ? 'Activar sonido' : 'Silenciar';
+      });
+      pauseBtn.addEventListener('click', function () {
+        userPaused = !userPaused;
+        cmd(userPaused ? 'pauseVideo' : 'playVideo');
+        pauseBtn.setAttribute('aria-pressed', String(userPaused));
+        $('[data-hero-pause-label]', hero).textContent = userPaused ? 'Reanudar el video' : 'Pausar el video';
+      });
+      /* Fuera de pantalla se pausa (ahorra datos y evita audio de un video que no se ve) */
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (en) {
+          if (!playing || userPaused) return;
+          cmd(en[0].isIntersecting ? 'playVideo' : 'pauseVideo');
+        }, { threshold: 0.25 }).observe(hero);
+      }
+    }
+  }
 })();

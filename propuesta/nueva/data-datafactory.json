@@ -1,0 +1,188 @@
+{
+  "_aviso": "Foto tomada del HTML de Diario Deportes (fuente: Datafactory). Solo para la maqueta; en producción la sustituye la API de Datafactory con el mismo formato.",
+  "fuente": "Datafactory",
+  "capturado": "2026-11-07T16:54-05:00",
+  "torneo": {
+    "nombre": "Liga BetPlay",
+    "detalle": "Liga BetPlay 2026-II · Todos contra todos. Los 8 primeros clasifican.",
+    "fecha": 19
+  },
+  "equipos_nuevos": {
+    "cucuta": {
+      "nombre": "Cúcuta Deportivo",
+      "corto": "Cúcuta",
+      "abrev": "CUC"
+    },
+    "int-bogota": {
+      "nombre": "Internacional de Bogotá",
+      "corto": "Int. de Bogotá",
+      "abrev": "INT"
+    }
+  },
+  "tabla": [
+    {
+      "pos": 1,
+      "equipo": "nacional",
+      "nombre": "At. Nacional",
+      "pj": 17,
+      "dg": 19,
+      "pts": 36
+    },
+    {
+      "pos": 2,
+      "equipo": "america",
+      "nombre": "América de Cali",
+      "pj": 17,
+      "dg": 19,
+      "pts": 35
+    },
+    {
+      "pos": 3,
+      "equipo": "cali",
+      "nombre": "Deportivo Cali",
+      "pj": 17,
+      "dg": 16,
+      "pts": 33
+    },
+    {
+      "pos": 4,
+      "equipo": "bucaramanga",
+      "nombre": "Bucaramanga",
+      "pj": 17,
+      "dg": 9,
+      "pts": 29
+    },
+    {
+      "pos": 5,
+      "equipo": "medellin",
+      "nombre": "Independiente Medellín",
+      "pj": 18,
+      "dg": 3,
+      "pts": 29
+    },
+    {
+      "pos": 6,
+      "equipo": "santa-fe",
+      "nombre": "Santa Fe",
+      "pj": 17,
+      "dg": 5,
+      "pts": 28
+    },
+    {
+      "pos": 7,
+      "equipo": "millonarios",
+      "nombre": "Millonarios",
+      "pj": 17,
+      "dg": 10,
+      "pts": 27
+    },
+    {
+      "pos": 8,
+      "equipo": "aguilas",
+      "nombre": "Águilas Doradas Rionegro",
+      "pj": 17,
+      "dg": 2,
+      "pts": 25
+    },
+    {
+      "pos": 17,
+      "equipo": "junior",
+      "nombre": "Junior",
+      "pj": 17,
+      "dg": -4,
+      "pts": 16
+    }
+  ],
+  "partidos": [
+    {
+      "local": "pasto",
+      "visitante": "junior",
+      "dia": "2026-11-11",
+      "hora": "10:00 p.m.",
+      "estado": "proximo",
+      "gl": null,
+      "gv": null
+    },
+    {
+      "local": "nacional",
+      "visitante": "once-caldas",
+      "dia": "2026-11-11",
+      "hora": "10:00 p.m.",
+      "estado": "proximo",
+      "gl": null,
+      "gv": null
+    },
+    {
+      "local": "aguilas",
+      "visitante": "medellin",
+      "dia": "2026-11-11",
+      "hora": "10:00 p.m.",
+      "estado": "proximo",
+      "gl": null,
+      "gv": null
+    },
+    {
+      "local": "cucuta",
+      "visitante": "jaguares",
+      "dia": "2026-11-11",
+      "hora": "10:00 p.m.",
+      "estado": "proximo",
+      "gl": null,
+      "gv": null
+    },
+    {
+      "local": "bucaramanga",
+      "visitante": "fortaleza",
+      "dia": "2026-11-11",
+      "hora": "10:00 p.m.",
+      "estado": "proximo",
+      "gl": null,
+      "gv": null
+    },
+    {
+      "local": "int-bogota",
+      "visitante": "santa-fe",
+      "dia": "2026-11-11",
+      "hora": "10:00 p.m.",
+      "estado": "proximo",
+      "gl": null,
+      "gv": null
+    },
+    {
+      "local": "millonarios",
+      "visitante": "alianza",
+      "dia": "2026-11-11",
+      "hora": "10:00 p.m.",
+      "estado": "proximo",
+      "gl": null,
+      "gv": null
+    },
+    {
+      "local": "llaneros",
+      "visitante": "boyaca-chico",
+      "dia": "2026-11-11",
+      "hora": "10:00 p.m.",
+      "estado": "proximo",
+      "gl": null,
+      "gv": null
+    },
+    {
+      "local": "cali",
+      "visitante": "tolima",
+      "dia": "2026-11-11",
+      "hora": "10:00 p.m.",
+      "estado": "proximo",
+      "gl": null,
+      "gv": null
+    },
+    {
+      "local": "pereira",
+      "visitante": "america",
+      "dia": "2026-11-11",
+      "hora": "10:00 p.m.",
+      "estado": "proximo",
+      "gl": null,
+      "gv": null
+    }
+  ]
+}

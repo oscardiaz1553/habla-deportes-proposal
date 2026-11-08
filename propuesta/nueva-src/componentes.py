@@ -9,8 +9,9 @@ import datetime as dt
 
 import imagenes
 import nucleo
-from datos import (D, DIAS, FUENTE, HOY, dia_corto, dia_largo, equipo, fecha, fila_tabla, forma_texto, hora,
+from datos import (D, DF, DIAS, FUENTE, HOY, dia_corto, dia_largo, equipo, fecha, fila_tabla, forma_texto, hora,
                    hora_iso, id_partido, miles, partido_por_id, signo, todos_los_proximos)
+from datos import df_fecha_texto
 from nucleo import e, enlace_externo, escudo, icono, img
 
 CUR = ' aria-current="true"'
@@ -53,6 +54,10 @@ def _slug(t):
 def fuente(texto=FUENTE, actualizado=None):
     extra = f" {e(actualizado)}" if actualizado else ""
     return f'<p class="source-note">{e(texto)}{extra}</p>'
+
+
+def fuente_datafactory():
+    return f'<p class="source-note">Fuente: Datafactory · actualizado el {e(df_fecha_texto())}</p>'
 
 
 def ejemplo(texto="Contenido de ejemplo para la propuesta"):
@@ -125,6 +130,36 @@ def carril_shorts(id, titulo, enlace, texto_enlace, items):
         f'<a class="link-action" href="{e(enlace)}">{e(texto_enlace)}{icono("caret-right", "icon icon--sm")}</a>'
         f'</div></div>'
         f'<ul class="rail__track" id="{id}" role="list" aria-labelledby="{hid}">{contenido}</ul></div>')
+
+
+def tarjeta_escudo(url, equipo_clave, tema, titulo, meta):
+    """Noticia sin foto: el escudo del equipo sobre superficie sutil (01 §7: sin foto no hay
+    recuadro celeste ni foto repetida). Mismo cuerpo que `tarjeta`."""
+    return (
+        f'<article class="story-card story-card--crest">'
+        f'<div class="story-card__media media media--crest" aria-hidden="true">{escudo(equipo_clave, "crest crest--xl")}</div>'
+        f'<div class="story-card__body">'
+        f'<p class="topic">{e(tema)}</p>'
+        f'<h3 class="story-card__title"><a class="stretched-link" href="{e(url)}">{e(titulo)}</a></h3>'
+        f'<p class="meta">{meta}</p>'
+        f'</div></article>')
+
+
+def carrusel_noticias(id, etiqueta, con_foto, con_escudo):
+    """Carrusel de noticias: tres a la vista en escritorio, deslizable en móvil, con flechas.
+    Reutiliza el mecanismo `data-rail` de los Shorts.
+    con_foto: [(url, foto, tema, titulo, meta)] · con_escudo: [(url, equipo, tema, titulo, meta)]."""
+    tarjetas = ([tarjeta(*t, prioridad=True) for t in con_foto]
+                + [tarjeta_escudo(*t) for t in con_escudo])
+    items = "".join(f'<li class="news-rail__item">{t}</li>' for t in tarjetas)
+    return (
+        f'<section class="rail rail--news news-rail" data-rail aria-label="{e(etiqueta)}">'
+        f'<div class="rail__controls">'
+        f'<button class="icon-btn" type="button" data-rail-prev aria-controls="{id}">'
+        f'{icono("caret-left")}<span class="visually-hidden">Noticias anteriores</span></button>'
+        f'<button class="icon-btn" type="button" data-rail-next aria-controls="{id}">'
+        f'{icono("caret-right")}<span class="visually-hidden">Noticias siguientes</span></button></div>'
+        f'<ul class="rail__track" id="{id}" role="list">{items}</ul></section>')
 
 
 # ==========================================================================
@@ -211,8 +246,51 @@ def _marcador(s, tag="p"):
             f'{e(vis["corto"])}, a las </span>{e(hh)}<span class="match-slide__ampm">{e(ampm)}</span></{tag}>')
 
 
-def centro_partidos():
-    slides = _diapositivas()
+def _patrocinio_banner(modo):
+    """Columna de patrocinio del banner. «transelca»: pieza actual. «generico»: hueco de pauta
+    rotulado «Publicidad» mientras el cliente no confirme al patrocinador (05-respuestas-cliente)."""
+    if modo == "generico":
+        return ('<div class="match-center__sponsor match-center__sponsor--generico">'
+                '<aside class="ad-slot ad-slot--banner" aria-label="Publicidad del Centro de Partidos" data-slot="banner">'
+                '<p class="ad-slot__label">Publicidad</p>'
+                '<a class="ad-slot__frame" href="contacto.html#publicidad"><span class="ad-slot__placeholder">'
+                'Espacio publicitario<span class="ad-slot__size">322 × 424</span>'
+                '<span class="ad-slot__cta">Cómo anunciar aquí</span></span></a></aside></div>')
+    return ('<div class="match-center__sponsor">'
+            '<!-- Pieza del patrocinador (322×424). Fija: no rota con las diapositivas (04 §4). -->'
+            f'{img("anuncio-transelca", clase="match-center__ad")}'
+            '<p class="sponsor-seal sponsor-seal--inline"><span class="sponsor-seal__text">Centro de Partidos presentado por</span> '
+            '<span class="sponsor-seal__logo" data-logo-pendiente="transelca">Transelca</span></p>'
+            '</div>')
+
+
+def _df_ref():
+    from datos import DF_HOY
+    return DF_HOY
+
+
+def _diapositivas_df():
+    """Banner con partidos reales de Datafactory: primero el de Junior y luego cuatro de la misma fecha."""
+    ps = DF["partidos"]
+    torneo = f'{DF["torneo"]["nombre"]} · Fecha {DF["torneo"]["fecha"]}'
+    jr = [p for p in ps if "junior" in (p["local"], p["visitante"])]
+    otros = [p for p in ps if p not in jr]
+    # primero los de equipos con escudo propio (se ven mejor en grande)
+    otros.sort(key=lambda p: -sum(bool(equipo(c).get("escudo")) for c in (p["local"], p["visitante"])))
+    out = []
+    for k, p in enumerate(jr + otros[:4]):
+        base = {"torneo": torneo, "local": p["local"], "visitante": p["visitante"], "dia": p["dia"],
+                "hora": p["hora"], "estadio": None, "canal": None}
+        if p["estado"] == "final":
+            out.append({**base, "estado": "final", "gl": p["gl"], "gv": p["gv"], "cta": "Ver la crónica"})
+        else:
+            out.append({**base, "estado": "proximo", "cta": "Ver la previa", "cuenta": k == 0})
+    return out
+
+
+def centro_partidos(patrocinio="transelca", datos="ejemplo"):
+    real = datos == "datafactory"
+    slides = _diapositivas_df() if real else _diapositivas()
     n = len(slides)
     out = []
     for i, s in enumerate(slides):
@@ -224,7 +302,7 @@ def centro_partidos():
         else:
             estado = '<span class="status-text">Próximo</span>'
         centro = _marcador(s)
-        info = [f'{icono("calendar-blank", "icon icon--sm")}<span>{e(dia_corto(s["dia"]))}'
+        info = [f'{icono("calendar-blank", "icon icon--sm")}<span>{e(dia_corto(s["dia"], ref=_df_ref() if real else None))}'
                 + (f', {e(hora(s["hora"]))}' if s.get("hora") else "") + "</span>"]
         if s.get("estadio"):
             info.append(f'{icono("map-pin", "icon icon--sm")}<span>{e(s["estadio"])}</span>')
@@ -234,8 +312,9 @@ def centro_partidos():
         cuenta = ""
         if s.get("cuenta"):
             iso = hora_iso(s["dia"], s["hora"])
+            from datos import DF_AHORA
             cuenta = (f'<p class="match-slide__countdown" data-countdown="{iso}">'
-                      f'{e(_cuenta_texto(iso))}</p>')
+                      f'{e(_cuenta_texto(iso, DF_AHORA if real else AHORA))}</p>')
         out.append(
             f'<div class="match-slide" role="group" aria-roledescription="diapositiva" '
             f'aria-label="{i + 1} de {n}: {e(loc["corto"])} contra {e(vis["corto"])}"'
@@ -267,15 +346,11 @@ def centro_partidos():
         f'<button class="icon-btn icon-btn--on-dark" type="button" data-pause aria-pressed="false">'
         f'{icono("pause-fill", "icon icon-pause")}{icono("play-fill", "icon icon-play")}'
         f'<span class="visually-hidden" data-pause-label>Pausar la rotación</span></button>'
-        f'<p class="match-center__note">Datos de ejemplo</p>'
+        f'<p class="match-center__note">{"Fuente: Datafactory" if real else "Datos de ejemplo"}</p>'
         f'<a class="match-center__all" href="datos.html#hoy">Todos los partidos{icono("caret-right", "icon icon--sm")}</a>'
         f'</div></div>'
-        f'<div class="match-center__sponsor">'
-        f'<!-- Pieza del patrocinador (322×424). Fija: no rota con las diapositivas (04 §4). -->'
-        f'{img("anuncio-transelca", clase="match-center__ad")}'
-        f'<p class="sponsor-seal sponsor-seal--inline"><span class="sponsor-seal__text">Centro de Partidos presentado por</span> '
-        f'<span class="sponsor-seal__logo" data-logo-pendiente="transelca">Transelca</span></p>'
-        f'</div></section>')
+        f'{_patrocinio_banner(patrocinio)}'
+        f'</section>')
 
 
 def _cuenta_texto(iso, ahora=AHORA):
@@ -383,8 +458,29 @@ def resultados():
     return _tabs("fechas", "Elige la fecha", pestanas, f"f{jornadas[0]['fecha']}")
 
 
+def _proximos_df():
+    """Siguientes partidos reales de la fecha (los que el banner no muestra)."""
+    en_banner = {(p["local"], p["visitante"]) for p in
+                 [{"local": s["local"], "visitante": s["visitante"]} for s in _diapositivas_df()]}
+    lista = [p for p in DF["partidos"] if (p["local"], p["visitante"]) not in en_banner][:3]
+    ref = _df_ref()
+    filas = []
+    for p in lista:
+        loc, vis = equipo(p["local"]), equipo(p["visitante"])
+        filas.append(
+            f'<li><a class="fixture" href="datos.html#hoy">'
+            f'<span class="fixture__when"><time datetime="{hora_iso(p["dia"], p["hora"])}">{e(dia_corto(p["dia"], ref=ref))}</time>'
+            f'<span>{e(hora(p["hora"]))}</span></span>'
+            f'<span class="fixture__teams"><span class="fixture__team">{escudo(p["local"], "crest crest--sm")}{e(loc["corto"])}</span>'
+            f'<span class="fixture__team">{escudo(p["visitante"], "crest crest--sm")}{e(vis["corto"])}</span></span>'
+            f'<span class="fixture__meta">{e(DF["torneo"]["nombre"])}<br>Fecha {DF["torneo"]["fecha"]}</span></a></li>')
+    return f'<ul class="fixture-list" role="list">{"".join(filas)}</ul>'
+
+
 def proximos_partidos(cuales="portada"):
     """Lista de consulta (L2). Si el banner ya muestra el próximo de Junior, aquí van los siguientes (02 L2)."""
+    if cuales == "datafactory":
+        return _proximos_df()
     cj, cs = D["calendario_junior"]["proximos"], D["calendario_seleccion"]["proximos"]
     if cuales == "portada":
         lista = [cj[2], cj[3], cs[1]]
@@ -414,12 +510,16 @@ def _forma(forma):
     return f'<span class="form-list" role="img" aria-label="{e(forma_texto(forma))}">{cuadros}</span>'
 
 
-def tabla_posiciones(variante="compacta", filas=5, sello=False):
+def tabla_posiciones(variante="compacta", filas=5, sello=False, datos="ejemplo"):
+    real = datos == "datafactory"
     tp = D["tabla_posiciones"]
     hasta = tp["leyenda"]["cuadrangulares"][1]
-    lista = tp["filas"][:filas] if variante == "compacta" else tp["filas"]
-    if variante == "compacta" and not any(f["equipo"] == "junior" for f in lista):
-        lista = lista + [fila_tabla("junior")]
+    if real:
+        lista = DF["tabla"][:filas] + [f for f in DF["tabla"][filas:] if f["equipo"] == "junior"]
+    else:
+        lista = tp["filas"][:filas] if variante == "compacta" else tp["filas"]
+        if variante == "compacta" and not any(f["equipo"] == "junior" for f in lista):
+            lista = lista + [fila_tabla("junior")]
     completa = variante == "completa"
     cab = ['<th scope="col" class="num">#</th>', '<th scope="col" class="team-col">Equipo</th>',
            '<th scope="col" class="num"><abbr title="Partidos jugados">PJ</abbr></th>']
@@ -450,7 +550,7 @@ def tabla_posiciones(variante="compacta", filas=5, sello=False):
             celdas.append(f'<td class="form-col">{_forma(f["forma"])}</td>')
         sel = ' class="is-selected"' if f["equipo"] == "junior" else ""
         cuerpo.append(f'<tr{sel}>{"".join(celdas)}</tr>')
-    caption = (f'Liga BetPlay, tabla de posiciones hasta la Fecha 19'
+    caption = (f'Liga BetPlay, tabla de posiciones' + (' (Datafactory)' if real else ' hasta la Fecha 19')
                + ("" if completa else f" (primeros {filas})"))
     tabla = (f'<table class="standings standings--{variante}"><caption class="visually-hidden">{e(caption)}</caption>'
              f'<thead><tr>{"".join(cab)}</tr></thead><tbody>{"".join(cuerpo)}</tbody></table>')
@@ -699,8 +799,13 @@ def participa():
 # ==========================================================================
 # Comunidad: encuesta, boletín, efemérides
 # ==========================================================================
-def encuesta():
-    en = D["encuesta"]
+def encuesta(pregunta=None, opciones=None):
+    """`pregunta` y `opciones` [(texto, porcentaje)] reemplazan a los del JSON (solo en la portada)."""
+    en = dict(D["encuesta"])
+    if pregunta:
+        en["pregunta"] = pregunta
+    if opciones:
+        en["opciones"] = [{"texto": t, "porcentaje": p} for t, p in opciones]
     ops = "".join(
         f'<li class="poll__option"><label class="choice"><input type="radio" name="encuesta" value="{i}" required>'
         f'<span>{e(o["texto"])}</span></label>'
@@ -1256,13 +1361,16 @@ def noticias_hub():
                     "Todavía no hay notas de este tema. Mira las últimas de otros temas.", pagina="noticias.html")
 
 
-def noticias_por_tema():
-    """Portada · carril «Noticias por tema» (03 §1.9b): una nota por tema, sin foto."""
+def noticias_por_tema(futbol_colombiano=None):
+    """Portada · carril «Noticias por tema» (03 §1.9b): una nota por tema, sin foto.
+    `futbol_colombiano`: {"titular", "bajada"} para ajustar esa nota a los datos reales."""
     npt = D["noticias_por_tema"]
     cols = []
     for clave in ("futbol-colombiano", "europa", "colombianos-exterior"):
         tema = next(t for t in npt["temas"] if t["tema"] == clave)
         nota = next(n for n in npt["notas"] if n["tema"] == clave)
+        if clave == "futbol-colombiano" and futbol_colombiano:
+            nota = {**nota, **futbol_colombiano}
         cols.append(f'<div class="topic-col"><a class="topic-col__label" href="noticias.html?tema={clave}">{e(tema["etiqueta"])}'
                     f'{icono("caret-right", "icon icon--sm")}</a>{_nota_texto(nota, con_tema=False)}</div>')
     return f'<div class="topic-cols">{"".join(cols)}</div>'
@@ -1317,7 +1425,7 @@ def siguenos():
 
 
 REGISTRO = {f.__name__: f for f in [
-    foto, ico, rotulo, fuente, ejemplo, live_pill, tarjeta, short, carril_shorts, programa, titulares,
+    foto, ico, rotulo, fuente, fuente_datafactory, ejemplo, live_pill, tarjeta, tarjeta_escudo, carrusel_noticias, short, carril_shorts, programa, titulares,
     centro_partidos, franja_dias, resultados, proximos_partidos, tabla_posiciones, goleadores, estadisticas,
     tarjeta_en_vivo, racha, mercado, escaleta, estado_aire, en_vivo_ahora, reproductor_youtube, parrilla_semanal,
     programas_anteriores, participa, noticias_hub, noticias_por_tema, aliados, siguenos, encuesta, boletin,

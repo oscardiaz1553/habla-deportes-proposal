@@ -105,7 +105,7 @@ def comprobar(slug, html, existentes):
     if 'href="#"' in html:
         errores.append(f"{slug}.html: hay un href=\"#\"")
     visible = re.sub(r"<script.*?</script>|<!--.*?-->", "", html, flags=re.S)
-    for prohibido in ("Data Factory", "TikTok", "WhatsApp", "radio.html"):
+    for prohibido in ("TikTok", "WhatsApp", "radio.html"):
         if prohibido in visible:
             errores.append(f"{slug}.html: contiene «{prohibido}» (retirado en la segunda pasada, 06)")
     for src in re.findall(r'src="(assets/img/aliados/[^"]+)"', html):

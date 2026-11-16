@@ -288,6 +288,66 @@ def _diapositivas_df():
     return out
 
 
+def partido_junior(foto_clave="junior-bicampeon"):
+    """«El partido de Junior»: póster editorial (foto a color, bloque azul con titular, marcador y tres cifras
+    de la tabla) con la pieza de patrocinio al lado (322×424; 320×100 debajo en móvil). Datos: Datafactory."""
+    p = next(x for x in DF["partidos"] if "junior" in (x["local"], x["visitante"]))
+    tor = DF["torneo"]
+    tabla = {f["equipo"]: f for f in DF["tabla"]}
+    jr, octavo = tabla["junior"], next(f for f in DF["tabla"] if f["pos"] == 8)
+    loc, vis = equipo(p["local"]), equipo(p["visitante"])
+    rival_k = p["local"] if p["visitante"] == "junior" else p["visitante"]
+    rival = equipo(rival_k)
+    goles_jr, goles_rv = (p["gv"], p["gl"]) if p["visitante"] == "junior" else (p["gl"], p["gv"])
+    ref = _df_ref()
+    cuando = f'{dia_corto(p["dia"], ref=ref, mayus=False)}, {hora(p["hora"]).replace(" ", chr(160))}'
+    de_visita = p["visitante"] == "junior"
+    if goles_jr > goles_rv:
+        donde = f'en {rival["corto"]}' if de_visita else f'ante {rival["corto"]}'
+        titulo = f'Junior ganó {e(donde)} y <span class="rx-strip rx-strip--paper">se acerca</span> a los ocho'
+    elif goles_jr < goles_rv:
+        titulo = f'Junior cayó con {e(rival["corto"])} y <span class="rx-strip rx-strip--paper">se aleja</span> de los ocho'
+    else:
+        titulo = f'Junior empató con {e(rival["corto"])} y <span class="rx-strip rx-strip--paper">sigue</span> lejos de los ocho'
+    lector = f'{loc["corto"]} {p["gl"]}, {vis["corto"]} {p["gv"]}'
+
+    # orden visual local - visitante: el nombre va junto a su cifra
+    marcador = (f'<span class="pj__score__t" aria-hidden="true">{e(loc["corto"])}</span>'
+                f'<span class="pj__score__n{" is-win" if p["gl"] > p["gv"] else ""}" aria-hidden="true">{p["gl"]}</span>'
+                f'<span class="pj__score__sep" aria-hidden="true"></span>'
+                f'<span class="pj__score__n{" is-win" if p["gv"] > p["gl"] else ""}" aria-hidden="true">{p["gv"]}</span>'
+                f'<span class="pj__score__t" aria-hidden="true">{e(vis["corto"])}</span>')
+    return (
+        '<section class="pj" aria-labelledby="pj-t">'
+        '<div class="pj__poster">'
+        f'<div class="pj__photo" aria-hidden="true">{img(foto_clave, decorativa=True, repite=True)}'
+        f'<span class="pj-sticker pj__st-jr">{escudo("junior", "pj-sticker__img")}</span>'
+        f'<span class="pj-sticker pj__st-rv">{escudo(rival_k, "pj-sticker__img")}</span>'
+        '<span class="pj__tape"></span></div>'
+        '<div class="pj__panel">'
+        '<p class="pj__tag">El partido de Junior</p>'
+        f'<h2 class="pj__title" id="pj-t">{titulo}</h2>'
+        f'<p class="pj__score"><span class="visually-hidden">{e(lector)}</span>{marcador}</p>'
+        f'<p class="pj__meta">{e(tor["nombre"])} · Fecha {tor["fecha"]} · {e(cuando)}</p>'
+        '<ul class="pj__facts" role="list">'
+        f'<li><span class="pj__facts__n">{jr["pos"]}.º</span><span class="pj__facts__l">en la tabla</span></li>'
+        f'<li><span class="pj__facts__n">{jr["pts"]}</span><span class="pj__facts__l">puntos</span></li>'
+        f'<li><span class="pj__facts__n">{octavo["pts"] - jr["pts"]}</span><span class="pj__facts__l">pts del 8.º</span></li>'
+        '</ul>'
+        '<div class="pj__actions">'
+        f'<a class="pj__btn" href="partido.html">Ver la crónica{icono("caret-right", "icon icon--sm")}'
+        f'<span class="visually-hidden">: {e(lector)}</span></a>'
+        f'<a class="pj__link" href="datos.html#hoy">Todos los partidos de la fecha{icono("caret-right", "icon icon--sm")}</a>'
+        '</div></div></div>'
+        '<aside class="pj-sp" aria-label="Publicidad de la sección" data-slot="banner">'
+        '<p class="pj-sp__label">Publicidad</p>'
+        '<a class="pj-sp__frame" href="contacto.html#publicidad">'
+        '<span class="pj-sp__lead">Tu marca, al lado del partido de Junior</span>'
+        '<span class="pj-sp__size"><span class="pj-sp__lg">322 × 424</span><span class="pj-sp__sm">320 × 100</span></span>'
+        f'<span class="pj-sp__cta">Cómo anunciar aquí{icono("caret-right", "icon icon--sm")}</span></a></aside>'
+        '</section>')
+
+
 def centro_partidos(patrocinio="transelca", datos="ejemplo"):
     real = datos == "datafactory"
     slides = _diapositivas_df() if real else _diapositivas()
@@ -1463,7 +1523,7 @@ def tira_partidos(datos="datafactory"):
 
 REGISTRO = {f.__name__: f for f in [
     foto, ico, rotulo, fuente, fuente_datafactory, ejemplo, live_pill, tarjeta, tarjeta_escudo, carrusel_noticias, short, carril_shorts, programa, titulares,
-    centro_partidos, franja_dias, resultados, proximos_partidos, tabla_posiciones, goleadores, estadisticas,
+    centro_partidos, partido_junior, franja_dias, resultados, proximos_partidos, tabla_posiciones, goleadores, estadisticas,
     tarjeta_en_vivo, tira_partidos, racha, mercado, escaleta, estado_aire, en_vivo_ahora, reproductor_youtube, parrilla_semanal,
     programas_anteriores, participa, noticias_hub, noticias_por_tema, aliados, siguenos, encuesta, boletin,
     efemeride, pauta, sello, migas, compartir, caja_datos_junior, etiquetas, chips_torneos, en_construccion,

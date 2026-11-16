@@ -96,18 +96,35 @@ og_imagen: assets/img/js-2.webp
   <div class="layout-split">
     <div class="layout-split__main">
 
-      <!-- M4 · El programa (solo programas completos) -->
-      <section class="section" aria-labelledby="m4" data-module="M4">
-        {{ rotulo("El show de las mañanas", "videos.html#programas", "Todos los videos", id="m4") }}
-        <div class="program-block">
-          {{ programa("video.html", "banderas-junior-nacional", ("2026-11-06", "Vie 6 nov"), "Programa completo: la previa de Pasto vs. Junior y la lista de la Selección", "1:51:20", destacado=True, descripcion="El show del viernes, con la previa del miércoles, la convocatoria para Perú y Chile y el mercado.") }}
-          <div class="program-block__list">
-            {{ programa("video.html", "seleccion-tecnico-retrato", ("2026-11-04", "Mié 4 nov"), "Lista de la Selección: cinco novedades y una ausencia", "18:32") }}
-            {{ programa("video.html", "junior-bicampeon", ("2026-11-03", "Mar 3 nov"), "Mercado de Junior: quién llega, quién se va y qué es humo", "22:51") }}
-            {{ programa("video.html", "nacional-celebracion", ("2026-10-31", "Sáb 31 oct"), "Análisis táctico de Nacional: cómo se le juega", "31:44") }}
+      <!-- M4 · El show de las mañanas: horario, escaleta y dónde verlo (el último programa ya está en el hero) -->
+      <section class="section pgm" aria-labelledby="m4" data-module="M4">
+        <div class="pgm-head"><h2 class="pgm-h2" id="m4">El show de las mañanas</h2><a class="pgm-more" href="videos.html#programas">Todos los programas{{ ico("caret-right", "icon icon--sm") }}</a></div>
+        <div class="pgm-grid">
+          <div class="pgm-when">
+            <div class="pgm-photo">
+              {{ foto("js-1", alt="Juan Salvador Bárcena ante el micrófono azul de Habla Deportes, con las manos sobre la boca en gesto de sorpresa", repite=True) }}
+              <span class="pgm-tape pgm-tape--a" aria-hidden="true"></span>
+              <p class="pgm-tag pgm-tag--photo">Con Juan Salvador Bárcena</p>
+            </div>
+            <h3 class="pgm-lead">De lunes a viernes, de <span class="pgm-strip">10:00 a. m.</span> a 12:00 m.</h3>
+            <ul class="pgm-week" role="list" aria-label="Días con programa"><li class="pgm-dot is-on"><abbr title="lunes">L</abbr></li><li class="pgm-dot is-on"><abbr title="martes">M</abbr></li><li class="pgm-dot is-on"><abbr title="miércoles">M</abbr></li><li class="pgm-dot is-on"><abbr title="jueves">J</abbr></li><li class="pgm-dot is-on"><abbr title="viernes">V</abbr></li><li class="pgm-dot"><abbr title="sábado, sin programa">S</abbr></li><li class="pgm-dot"><abbr title="domingo, sin programa">D</abbr></li></ul>
+            <p class="pgm-next"><span class="pgm-next__l">Próximo programa</span><span class="pgm-next__v"><time datetime="2026-11-17T10:00">Martes 17 de noviembre, 10:00 a. m.</time></span><span class="pgm-next__d">Con la previa de Chile vs. Colombia, que se juega ese día a las 6:00 p. m.</span></p>
+          </div>
+          <div class="pgm-how">
+            <h3 class="pgm-sub">Así va cada mañana</h3>
+            <ol class="pgm-rundown" role="list"><li class="pgm-row"><time class="pgm-h" datetime="10:00">10:00</time><span class="pgm-rb"><span class="pgm-rt">Apertura y titulares</span><span class="pgm-rd">Lo que pasó anoche y lo que se juega hoy</span></span></li><li class="pgm-row"><time class="pgm-h" datetime="10:30">10:30</time><span class="pgm-rb"><span class="pgm-rt">Junior en primer plano</span><span class="pgm-rd">Análisis, plantel y la previa del próximo partido</span></span></li><li class="pgm-row"><time class="pgm-h" datetime="11:00">11:00</time><span class="pgm-rb"><span class="pgm-rt">Selección y mercado</span><span class="pgm-rd">Convocatoria, rivales y fichajes</span></span></li><li class="pgm-row"><time class="pgm-h" datetime="11:30">11:30</time><span class="pgm-rb"><span class="pgm-rt">El debate de los oyentes</span><span class="pgm-rd">Llamadas y mensajes al aire hasta las 12:00 m.</span></span></li></ol>
+            <h3 class="pgm-sub">Dónde verlo</h3>
+            <ul class="pgm-where" role="list">
+              <li><a class="pgm-w" href="en-vivo.html"><span class="pgm-wi">{{ ico("monitor-play-fill", "icon") }}</span><span class="pgm-wb"><span class="pgm-wt">En vivo, aquí en la web</span><span class="pgm-wd">Video y chat mientras está al aire</span></span>{{ ico("caret-right", "icon icon--sm") }}</a></li>
+              <li><a class="pgm-w" href="https://www.youtube.com/" target="_blank" rel="noopener"><span class="pgm-wi">{{ ico("youtube-logo", "icon") }}</span><span class="pgm-wb"><span class="pgm-wt">En YouTube</span><span class="pgm-wd">Suscríbase y reciba el aviso cuando empiece</span></span>{{ ico("arrow-up-right", "icon icon--sm") }}<span class="visually-hidden"> (se abre en una pestaña nueva)</span></a></li>
+            </ul>
           </div>
         </div>
-        <p class="program-block__foot"><span>Más de 265 videos en el canal.</span> <a class="btn btn--secondary btn--sm" href="https://www.youtube.com/" target="_blank" rel="noopener">{{ ico("youtube-logo") }}Suscribirse en YouTube<span class="visually-hidden"> (se abre en una pestaña nueva)</span></a></p>
+        <div class="pgm-archive">
+          <h3 class="pgm-sub">Programas anteriores</h3>
+          <ol class="pgm-alist" role="list"><li><a class="pgm-alink" href="video.html"><time class="pgm-ad" datetime="2026-11-13">Vie 13 nov</time><span class="pgm-at">Viernes de mercado: los nombres que suenan para 2027</span><span class="pgm-adur"><span class="visually-hidden">Duración: </span>1:54:02</span></a></li><li><a class="pgm-alink" href="video.html"><time class="pgm-ad" datetime="2026-11-12">Jue 12 nov</time><span class="pgm-at">Pasto 0, Junior 1: la lectura del partido</span><span class="pgm-adur"><span class="visually-hidden">Duración: </span>1:58:40</span></a></li><li><a class="pgm-alink" href="video.html"><time class="pgm-ad" datetime="2026-11-11">Mié 11 nov</time><span class="pgm-at">Día de partido: la previa de Pasto vs. Junior</span><span class="pgm-adur"><span class="visually-hidden">Duración: </span>1:49:15</span></a></li></ol>
+        </div>
+        <p class="pgm-note">Horario y escaleta según el programa; títulos, duraciones y partido del martes: dato de ejemplo.</p>
       </section>
 
       <!-- M5 · Junior (1 destacada + 4 titulares de solo texto) -->

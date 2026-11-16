@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Estilos para la portada · Habla Deportes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Barlow+Condensed:wght@600;800&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,800;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff;--ink:#101418;--mute:#5a6470;--line:#e3e7ec;--blue:#294D6E}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1318;--ink:#f1f3f5;--mute:#a4adb7;--line:#27303a}}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 Inter,system-ui,sans-serif;padding:32px 16px 64px}
+.wrap{max-width:1280px;margin:0 auto}
+h1{font:800 32px/1.1 Archivo;letter-spacing:-.02em}
+.lede{color:var(--mute);max-width:70ch;margin:8px 0 28px}
+.grid{display:grid;gap:32px;grid-template-columns:1fr}
+@media(min-width:1000px){.grid{grid-template-columns:1fr 1fr}}
+.opt h2{font:800 20px/1.2 Archivo;margin:14px 0 4px}
+.opt .tag{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);font-weight:600}
+.opt p{color:var(--mute);font-size:15px;margin-top:6px}
+.opt ul{margin:8px 0 0 18px;font-size:14px;color:var(--mute)}
+.sw{display:flex;gap:6px;margin-top:10px}.sw i{width:28px;height:28px;border:1px solid var(--line);display:block}
+.mock{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000;container-type:inline-size}
+.mock img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.chip{display:inline-block;font:600 clamp(9px,1.6cqw,12px) Inter;padding:.35em .8em;background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.28);border-radius:99px}
+/* 1 · CINE (linaje del Diario Deportes publicado) */
+.c1{background:#0c0e11}
+.c1 .strip{position:absolute;left:0;right:0;top:0;height:7.5cqw;background:#14181d;display:flex;align-items:center;gap:2.2cqw;padding:0 3cqw;color:#e9edf1;font:600 1.45cqw Inter;border-bottom:1px solid #262c33}
+.c1 .strip b{font:800 1.5cqw Archivo;color:#9FBAD3;letter-spacing:.04em}
+.c1 .strip span{white-space:nowrap}.c1 .strip i{font-style:normal;color:#7f8a96}
+.c1 img{left:auto;right:0;width:64%;top:7.5cqw;height:calc(100% - 7.5cqw)}
+.c1 .fade{position:absolute;top:7.5cqw;bottom:0;left:30%;width:36%;background:linear-gradient(90deg,#0c0e11 8%,rgba(12,14,17,0) 100%)}
+.c1 .txt{position:absolute;left:3.5cqw;top:19cqw;width:38%;color:#fff}
+.c1 .tp{display:flex;align-items:center;gap:1cqw;font:700 1.6cqw Inter;color:#cfd8e1}.c1 .tp s{width:1.1cqw;height:1.1cqw;background:#6FA8DC;display:block}
+.c1 h3{font:800 4.6cqw/1.04 Archivo;letter-spacing:-.02em;margin:1.6cqw 0}
+.c1 .meta{font-size:1.5cqw;opacity:.7}
+.c1 .bar{position:absolute;left:3.5cqw;bottom:3cqw;display:flex;gap:.8cqw;align-items:center}
+.c1 .bar em{width:3.6cqw;height:3.6cqw;border:1px solid #3b434c;display:grid;place-items:center;font-style:normal;font-size:1.3cqw;color:#fff;margin-right:1cqw}
+.c1 .bar i{width:7cqw;height:.45cqw;background:#3b434c}.c1 .bar i:nth-child(2){background:#6FA8DC}
+/* 2 · REVISTA */
+.c2{background:#FAF7F2;color:#15171a}
+.c2 .ph{position:absolute;right:0;top:0;bottom:0;width:56%}
+.c2 .ph img{position:absolute}
+.c2 .txt{position:absolute;left:4.5cqw;top:6cqw;width:40%}
+.c2 .k{font:600 1.5cqw Inter;letter-spacing:.14em;text-transform:uppercase;color:#294D6E}
+.c2 h3{font:800 4.6cqw/1.02 Fraunces,Georgia,serif;letter-spacing:-.02em;margin:1.6cqw 0}
+.c2 p{font:500 italic 1.9cqw/1.35 Fraunces,Georgia,serif;color:#444}
+.c2 .rule{height:1px;background:#15171a;margin:2cqw 0}
+.c2 .cap{position:absolute;right:2cqw;bottom:1.2cqw;font:1.3cqw Inter;color:#fff;background:rgba(0,0,0,.45);padding:.3cqw 1cqw}
+.c2 .fol{position:absolute;left:4.5cqw;bottom:3cqw;font:600 1.4cqw Inter;letter-spacing:.1em;text-transform:uppercase;color:#666}
+/* 3 · TRANSMISIÓN */
+.c3{background:#0b0c0e}
+.c3 img{opacity:.55;filter:grayscale(.3) contrast(1.1)}
+.c3 .big{position:absolute;left:3cqw;bottom:9cqw;color:#fff;font:800 11cqw/.86 'Barlow Condensed';text-transform:uppercase;letter-spacing:-.01em}
+.c3 .big span{display:block;color:transparent;-webkit-text-stroke:.25cqw #fff}
+.c3 .live{position:absolute;left:3cqw;top:3cqw;background:#D20000;color:#fff;font:700 1.6cqw Inter;padding:.5cqw 1.3cqw;border-radius:99px}
+.c3 .score{position:absolute;left:0;right:0;bottom:0;height:7cqw;background:#fff;color:#0b0c0e;display:flex;align-items:center;gap:3cqw;padding:0 3cqw;font:800 2.6cqw 'Barlow Condensed';text-transform:uppercase;clip-path:polygon(0 0,97% 0,100% 100%,0 100%)}
+.c3 .score em{font-style:normal;color:#294D6E}
+/* 4 · CARTEL */
+.c4{background:#F1E7D3}
+.c4 img{mix-blend-mode:multiply;filter:grayscale(1) contrast(1.35);width:62%;left:auto;right:0}
+.c4::after{content:"";position:absolute;inset:0;background:radial-gradient(#0003 1px,transparent 1.4px) 0 0/6px 6px;opacity:.5;pointer-events:none}
+.c4 .blk{position:absolute;right:0;top:0;bottom:0;width:62%;background:#F2B705;mix-blend-mode:multiply}
+.c4 .txt{position:absolute;left:4cqw;top:5cqw;width:46%;z-index:2}
+.c4 h3{font:900 6.2cqw/.95 Archivo;text-transform:uppercase;letter-spacing:-.03em;color:#12202e}
+.c4 h3 u{text-decoration:none;background:#E4572E;color:#fff;padding:0 1cqw;display:inline-block;transform:rotate(-2deg)}
+.c4 .st{position:absolute;left:4cqw;bottom:4cqw;z-index:2;background:#12202e;color:#F1E7D3;font:800 2cqw Archivo;padding:1.2cqw 2.2cqw;transform:rotate(-3deg)}
+.c4 p{font:500 1.8cqw/1.3 Inter;margin-top:2cqw;color:#12202e;max-width:30ch}
+.trend{margin-top:48px;border-top:1px solid var(--line);padding-top:24px}
+.trend h2{font:800 22px Archivo;margin-bottom:12px}
+.tg{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.tg div{border:1px solid var(--line);padding:14px}.tg b{display:block;font:700 15px Archivo;margin-bottom:4px}.tg span{font-size:14px;color:var(--mute)}
+</style>
+</head>
+<body><div class="wrap">
+<h1>Cuatro estilos para la portada de Habla Deportes</h1>
+<p class="lede">Referencia del dueño: el sitio publicado de Diario Deportes (diariodeportes.com.co): tira de partidos de Datafactory, hero oscuro con foto fundida, acento naranja, Archivo + Inter. Cada dirección propone un lenguaje que guiaría también al resto de la página. Las maquetas son ilustrativas (misma foto, distinto lenguaje); sin fondo azul.</p>
+<div class="grid">
+
+<article class="opt">
+<div class="mock c1"><div class="strip"><b>FECHA 19</b><span>PAS <i>vs.</i> JUN · Mié 10:00 p. m.</span><span>NAC <i>vs.</i> ONC · Mié</span><span>MIL <i>vs.</i> ALI · Mié</span><span style="margin-left:auto;opacity:.6">Datafactory</span></div>
+<img src="../assets/img/junior-trofeo-bandera.webp" alt=""><div class="fade"></div>
+<div class="txt"><div class="tp"><s></s>Junior</div><h3>Junior se corona campeón y desata la fiesta en el Caribe</h3><div class="meta">Habla Deportes · Hace 4 horas</div></div>
+<div class="bar"><em>II</em><i></i><i></i><i></i><i></i></div></div>
+<span class="tag">Opción 1</span><h2>Cine · panel oscuro y foto fundida</h2>
+<p>La línea del Diario Deportes publicado: tira de partidos arriba, panel oscuro con el titular y la foto que se funde con el panel por un degradado lateral. Carrusel con segmentos de progreso y pausa. Hereda el stack de Habla (Archivo + Inter).</p>
+<ul><li>Es la referencia directa del dueño; el texto va en el panel, no sobre la cara de la foto</li><li>Usa un grafito casi negro y azul claro de acento (no el naranja de Diario Deportes)</li><li>Mismo patrón que ya aprobó ese cliente: reutiliza el conocimiento</li></ul>
+<div class="sw"><i style="background:#0c0e11"></i><i style="background:#14181d"></i><i style="background:#6FA8DC"></i><i style="background:#fff"></i></div></article>
+
+<article class="opt">
+<div class="mock c2"><div class="ph"><img src="../assets/img/seleccion-gol.webp" alt=""></div><div class="cap">Foto: archivo</div>
+<div class="txt"><span class="k">Selección Colombia</span><h3>El gol que cambió la noche en Barranquilla</h3><div class="rule"></div><p>Crónica de un partido que se decidió en el último cuarto de hora.</p></div><div class="fol">Habla Deportes · Edición de hoy</div></div>
+<span class="tag">Opción 2</span><h2>Revista · editorial de autor</h2>
+<p>Papel crema, titular con serif de gran tamaño, foto recortada en asimetría, filetes finos y pie de foto. Se siente a The Athletic / Guardian: serio, de periodismo largo, y muy distinto a Diario Deportes.</p>
+<ul><li>Tendencia: hero tipográfico, grillas asimétricas, serifas expresivas</li><li>Mantiene «texto fuera de la foto»</li><li>Menos «video-first»; pide buenas bajadas y firma de autor</li></ul>
+<div class="sw"><i style="background:#FAF7F2"></i><i style="background:#15171a"></i><i style="background:#294D6E"></i><i style="background:#cfc8bb"></i></div></article>
+
+<article class="opt">
+<div class="mock c3"><img src="../assets/img/nacional-celebracion.webp" alt=""><span class="live">● EN VIVO</span>
+<div class="big">Pasto<span>vs Junior</span></div><div class="score"><span>Liga BetPlay · Fecha 19</span><em>Mié 11 nov · 10:00 p. m.</em><span>Junior 17.º · 16 pts</span></div></div>
+<span class="tag">Opción 3</span><h2>Transmisión · tipografía de broadcast</h2>
+<p>Letras condensadas gigantes en mayúscula, contorno y relleno, foto o video oscurecido y una barra de marcador cortada en diagonal. Parece la pantalla de un partido: energía y datos al frente.</p>
+<ul><li>Tendencia: tipografía cinética, oversize, video de fondo</li><li>Integra Datafactory como parte del diseño</li><li>Negro neutro (no azul); rojo solo «en vivo»</li></ul>
+<div class="sw"><i style="background:#0b0c0e"></i><i style="background:#fff"></i><i style="background:#D20000"></i><i style="background:#294D6E"></i></div></article>
+
+<article class="opt">
+<div class="mock c4"><div class="blk"></div><img src="../assets/img/js-2.webp" alt="">
+<div class="txt"><h3>La mesa que <u>no se calla</u></h3><p>El show de las mañanas, de lunes a viernes, desde Barranquilla.</p></div><div class="st">AL AIRE 10:00 a. m.</div></div>
+<span class="tag">Opción 4</span><h2>Cartel · afiche del Caribe</h2>
+<p>Foto en dúo-tono con trama, bloques de color cálidos (amarillo, coral), etiquetas ladeadas como pegatinas. Es la opción más propia de Barranquilla y de radio: cercana, con carácter y fácil de reconocer.</p>
+<ul><li>Tendencia: neo-brutalismo suave, texturas, anti-plantilla</li><li>Ideal para el programa y la comunidad; fuerte para marca</li><li>Más riesgo: exige disciplina para no cansar en notas largas</li></ul>
+<div class="sw"><i style="background:#F1E7D3"></i><i style="background:#F2B705"></i><i style="background:#E4572E"></i><i style="background:#12202e"></i></div></article>
+
+</div>
+<section class="trend"><h2>Tendencias de UX/UI que aplican a cualquiera de las cuatro</h2>
+<div class="tg">
+<div><b>Video con intención</b><span>Bucles cortos silenciados en el hero (el Guardian anuncia video en sus portadas) y sonido a un clic.</span></div>
+<div><b>Tipografía como imagen</b><span>Titulares enormes y fuentes variables que ajustan peso y ancho según la pantalla.</span></div>
+<div><b>Móvil primero</b><span>Cerca del 60–64 % del tráfico es móvil: pulgar, hojas inferiores, hero vertical.</span></div>
+<div><b>Barra de partido fija</b><span>Marcador en vivo pegado arriba mientras se navega; un toque lleva al minuto a minuto.</span></div>
+<div><b>Mi equipo</b><span>Personalizar lo que ve el hincha de Junior sin cuentas: preferencia guardada en el navegador.</span></div>
+<div><b>Movimiento con propósito</b><span>Transiciones de vista y animaciones ligadas al scroll, siempre con «reducir movimiento».</span></div>
+<div><b>Modo oscuro</b><span>Esquema claro/oscuro automático; ideal de noche en días de partido.</span></div>
+<div><b>Rendimiento y accesibilidad</b><span>Contraste AA, foco visible, imágenes ligeras e INP bajo: la elegancia no puede costar velocidad.</span></div>
+</div></section>
+</div></body></html>

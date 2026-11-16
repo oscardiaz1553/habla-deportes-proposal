@@ -19,13 +19,21 @@ CSS = ["tokens", "base", "components", "pages", "pages-a", "pages-b"]
 # --------------------------------------------------------------------------
 # <head>
 # --------------------------------------------------------------------------
+def _version():
+    """Marca de versión de CSS y JS (fecha del archivo más reciente): evita que el navegador
+    mezcle HTML nuevo con hojas viejas en caché."""
+    import pathlib
+    raiz = pathlib.Path(__file__).resolve().parent.parent / "html" / "nueva" / "assets"
+    return int(max((f.stat().st_mtime for f in raiz.glob("*/*") if f.suffix in (".css", ".js")), default=0))
+
+
 def head(meta, jsonld):
     titulo = meta["titulo"]
     desc = meta["descripcion"]
     og_img = meta.get("og_imagen", SITIO["og_imagen"])
     tipo = "article" if meta.get("tipo") == "articulo" else "website"
     url = SITIO["url"] + meta.get("url_wp", "")
-    hojas = "\n".join(f'  <link rel="stylesheet" href="assets/css/{c}.css">' for c in CSS)
+    hojas = "\n".join(f'  <link rel="stylesheet" href="assets/css/{c}.css?v={_version()}">' for c in CSS)
     ld = json.dumps(jsonld, ensure_ascii=False, indent=1)
     return f"""<head>
   <meta charset="utf-8">
@@ -46,7 +54,7 @@ def head(meta, jsonld):
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 {hojas}
-  <script src="assets/js/main.js" defer></script>
+  <script src="assets/js/main.js?v={_version()}" defer></script>
   <script type="application/ld+json">
 {ld}
   </script>
@@ -97,30 +105,20 @@ def _buscador():
 
 def cabecera(slug):
     cfg = PAGINAS[slug]
-    redes_cab = "".join(
-        f'<a class="icon-btn icon-btn--on-brand masthead__social" href="{r["url"]}" target="_blank" rel="noopener">'
-        f'{icono(r["icono"])}<span class="visually-hidden">{r["nombre"]} (se abre en una pestaña nueva)</span></a>'
-        for r in REDES[:3])
     return f"""<a class="skip-link" href="#contenido">Saltar al contenido</a>
-<!-- CABECERA (header.php): nivel 1 + nivel 2 con megamenús + buscador + hoja móvil -->
+<!-- CABECERA (header.php): barra única con logo, secciones con megamenús y buscador + hoja móvil. Se encoge al bajar. -->
 <header class="site-header" data-header>
   <div class="masthead" data-masthead>
     <div class="container masthead__inner">
       <a class="masthead__logo" href="index.html">{img("logo-blanco", clase="masthead__logo-img", alt="Habla Deportes, ir a la portada", prioridad=True)}</a>
+      <nav class="primary-nav" aria-label="Secciones" data-mega><ul class="primary-nav__list" role="list">{_primario(cfg, slug)}</ul></nav>
       <div class="masthead__tools">
         {_buscador()}
         <button class="search-trigger" type="button" aria-expanded="false" aria-controls="q" data-search-toggle>{icono("magnifying-glass", "icon icon--md")}<span class="visually-hidden">Buscar</span></button>
-        {redes_cab}
         <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu-movil" data-menu-toggle>{icono("list", "icon icon-open")}{icono("x", "icon icon-close")}<span class="menu-toggle__text" aria-hidden="true" data-menu-word>Menú</span><span class="visually-hidden" data-menu-label>Abrir el menú</span></button>
       </div>
     </div>
   </div>
-  <nav class="primary-nav" aria-label="Secciones" data-mega>
-    <div class="container primary-nav__inner">
-      <a class="primary-nav__logo" href="index.html">{img("logo-blanco", clase="primary-nav__logo-img", alt="Habla Deportes, ir a la portada", prioridad=True)}</a>
-      <ul class="primary-nav__list" role="list">{_primario(cfg, slug)}</ul>
-    </div>
-  </nav>
   {hoja_menu(slug)}
 </header>
 <div class="mega-scrim" data-mega-scrim></div>"""

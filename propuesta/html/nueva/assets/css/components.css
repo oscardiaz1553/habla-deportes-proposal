@@ -4327,3 +4327,51 @@ html.is-menu-open {
     opacity: 1;
   }
 }
+
+/* ==== Cabecera «Barra única que se encoge» (aprobada) ====
+   Una sola barra azul profundo (brand-700) con todo: logo blanco, secciones en Archivo 900 condensado,
+   buscador y redes. Su canto inferior es papel rasgado. Al bajar 16 px se encoge (72 a 52 en escritorio,
+   56 a 48 en móvil), el logo baja de tamaño y las redes se van. Activo = tira de papel blanco con la
+   palabra en azul: la tira del titular, invertida. */
+.site-header { position: fixed; top: 0; right: 0; left: 0; background: transparent; --bar-h: 56px; --logo-h: 28px; }
+.site-main { padding-top: 56px; }
+.site-header .masthead { position: relative; background: var(--brand-700); }
+.site-header .masthead::after { content: ""; position: absolute; top: calc(100% - 1px); right: 0; left: 0; height: 7px; background: var(--brand-700); pointer-events: none;
+  clip-path: polygon(0.00% 0px, 1.56% 0px, 3.12% 0px, 4.69% 0px, 6.25% 0px, 7.81% 0px, 9.38% 0px, 10.94% 0px, 12.50% 0px, 14.06% 0px, 15.62% 0px, 17.19% 0px, 18.75% 0px, 20.31% 0px, 21.88% 0px, 23.44% 0px, 25.00% 0px, 26.56% 0px, 28.12% 0px, 29.69% 0px, 31.25% 0px, 32.81% 0px, 34.38% 0px, 35.94% 0px, 37.50% 0px, 39.06% 0px, 40.62% 0px, 42.19% 0px, 43.75% 0px, 45.31% 0px, 46.88% 0px, 48.44% 0px, 50.00% 0px, 51.56% 0px, 53.12% 0px, 54.69% 0px, 56.25% 0px, 57.81% 0px, 59.38% 0px, 60.94% 0px, 62.50% 0px, 64.06% 0px, 65.62% 0px, 67.19% 0px, 68.75% 0px, 70.31% 0px, 71.88% 0px, 73.44% 0px, 75.00% 0px, 76.56% 0px, 78.12% 0px, 79.69% 0px, 81.25% 0px, 82.81% 0px, 84.38% 0px, 85.94% 0px, 87.50% 0px, 89.06% 0px, 90.62% 0px, 92.19% 0px, 93.75% 0px, 95.31% 0px, 96.88% 0px, 98.44% 0px, 100.00% 0px, 100.00% calc(100% - 1.4px), 98.44% calc(100% - 3.3px), 96.88% calc(100% - 2.2px), 95.31% calc(100% - 3.6px), 93.75% calc(100% - 3.8px), 92.19% calc(100% - 0.4px), 90.62% calc(100% - 0.1px), 89.06% calc(100% - 5.0px), 87.50% calc(100% - 1.6px), 85.94% calc(100% - 1.4px), 84.38% calc(100% - 6.0px), 82.81% calc(100% - 2.8px), 81.25% calc(100% - 5.0px), 79.69% calc(100% - 2.9px), 78.12% calc(100% - 3.8px), 76.56% calc(100% - 0.9px), 75.00% calc(100% - 3.8px), 73.44% calc(100% - 5.2px), 71.88% calc(100% - 3.1px), 70.31% calc(100% - 4.4px), 68.75% calc(100% - 4.0px), 67.19% calc(100% - 0.4px), 65.62% calc(100% - 4.5px), 64.06% calc(100% - 3.5px), 62.50% calc(100% - 1.8px), 60.94% calc(100% - 0.2px), 59.38% calc(100% - 5.2px), 57.81% calc(100% - 2.8px), 56.25% calc(100% - 4.3px), 54.69% calc(100% - 5.3px), 53.12% calc(100% - 4.3px), 51.56% calc(100% - 5.5px), 50.00% calc(100% - 2.4px), 48.44% calc(100% - 4.8px), 46.88% calc(100% - 2.7px), 45.31% calc(100% - 5.6px), 43.75% calc(100% - 5.3px), 42.19% calc(100% - 0.6px), 40.62% calc(100% - 0.8px), 39.06% calc(100% - 1.3px), 37.50% calc(100% - 5.8px), 35.94% calc(100% - 2.6px), 34.38% calc(100% - 3.8px), 32.81% calc(100% - 1.8px), 31.25% calc(100% - 3.0px), 29.69% calc(100% - 2.3px), 28.12% calc(100% - 2.1px), 26.56% calc(100% - 3.5px), 25.00% calc(100% - 3.5px), 23.44% calc(100% - 5.4px), 21.88% calc(100% - 4.1px), 20.31% calc(100% - 5.6px), 18.75% calc(100% - 5.1px), 17.19% calc(100% - 5.9px), 15.62% calc(100% - 4.0px), 14.06% calc(100% - 1.0px), 12.50% calc(100% - 5.2px), 10.94% calc(100% - 5.8px), 9.38% calc(100% - 5.4px), 7.81% calc(100% - 3.4px), 6.25% calc(100% - 4.3px), 4.69% calc(100% - 1.3px), 3.12% calc(100% - 5.0px), 1.56% calc(100% - 3.4px), 0.00% calc(100% - 1.7px)); }
+.site-header .masthead__inner { height: var(--bar-h); }
+.site-header.is-compact { --bar-h: 48px; --logo-h: 24px; }
+.site-header.is-stuck { box-shadow: none; }
+.site-header .primary-nav { position: static; background: transparent; }
+@media (prefers-reduced-motion: no-preference) {
+  .site-header .masthead__inner { transition: height var(--dur-base) var(--ease-out); }
+  .site-header .masthead__logo-img { transition: height var(--dur-base) var(--ease-out); }
+}
+@media (min-width: 1024px) {
+  .site-header { top: 0; --bar-h: 72px; --logo-h-lg: 34px; }
+  .site-main { padding-top: 72px; }
+  .site-header.is-compact { --bar-h: 52px; --logo-h-lg: 26px; }
+  .site-header .masthead__inner { justify-content: flex-start; gap: 0; }
+  .site-header .primary-nav { display: flex; align-self: stretch; margin-left: auto; margin-right: 20px; }
+  .site-header .primary-nav__list { margin-left: 0; }
+  .site-header .primary-nav__link { isolation: isolate; padding-inline: 13px; font-size: var(--fs-ui); font-weight: var(--nav-weight); line-height: 1; letter-spacing: 0; text-transform: none; }
+  .site-header .nav-label::after { font-weight: inherit; }
+  .site-header .primary-nav__link[aria-current] { color: var(--brand-700); font-weight: var(--nav-weight-active); }
+  .site-header .primary-nav__link[aria-current]::after { content: none; }
+  .site-header .primary-nav__link[aria-current]::before { content: ""; position: absolute; z-index: -1; top: 50%; right: 6px; left: 6px; height: 34px; translate: 0 -50%; background: var(--white); rotate: -2deg;
+    clip-path: polygon(0 6%, 18% 0, 46% 7%, 72% 1%, 100% 5%, 99% 95%, 76% 100%, 49% 94%, 22% 100%, 1% 96%); }
+  /* Hover y panel abierto: la misma tira recortada que el activo, pero translúcida (el activo es blanco sólido) */
+  .site-header .primary-nav__link:not([aria-current])::before { content: ""; position: absolute; z-index: -1; top: 50%; right: 6px; left: 6px; height: 34px; translate: 0 -50%; background: transparent; rotate: -2deg; transition: background var(--dur-fast) var(--ease-out);
+    clip-path: polygon(0 6%, 18% 0, 46% 7%, 72% 1%, 100% 5%, 99% 95%, 76% 100%, 49% 94%, 22% 100%, 1% 96%); }
+  .site-header .primary-nav__item.is-open > .primary-nav__link:not([aria-current])::before { background: rgba(255, 255, 255, .30); }
+  .site-header .primary-nav__item.is-open > .primary-nav__link, .site-header .primary-nav__link:hover { background: transparent; color: var(--white); }
+  .site-header .primary-nav__item.is-open > .primary-nav__link[aria-current] { background: transparent; color: var(--brand-700); }
+  .site-header .header-search { width: 200px; }
+  .site-header .masthead__tools { flex: none; }
+}
+@media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+  .site-header .primary-nav__link:not([aria-current]):hover::before { background: rgba(255, 255, 255, .18); }
+}
+@media (min-width: 1024px) and (max-width: 1279px) { .site-header .header-search { width: 160px; } }
+@media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+  .site-header .primary-nav__link[aria-current]:hover { background: transparent; color: var(--brand-800); }
+}

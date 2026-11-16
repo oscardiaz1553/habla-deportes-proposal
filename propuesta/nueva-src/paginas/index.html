@@ -15,43 +15,58 @@ og_imagen: assets/img/js-2.webp
      ====================================================================== -->
 <h1 class="visually-hidden">Portada de Habla Deportes</h1>
 
-<!-- M1 · Escenario de video de la portada: reproduce solo y sin sonido (autoplay silenciado);
-     el visitante activa el audio con un botón. Transmisión en vivo cuando está al aire; si no, el último programa.
-     Sin JavaScript, con «reducir movimiento» o en ahorro de datos: portada con play que lleva al video. -->
-<section class="hero-stage" data-module="M1" aria-labelledby="hero-title">
-  <div class="container hero-stage__inner">
-    <div class="hero-stage__player" data-hero-player data-video="sbECwF3dEaI" data-channel="UCm_25dALt4-r7C0wSsbaxzA">
-      <div class="hero-stage__frame media" data-hero-frame>
-        <a class="hero-stage__poster" href="video.html" data-hero-poster>
-          {{ foto("js-2", clase="media__img", prioridad=True) }}
-          <span class="play play--lg">{{ ico("play-fill") }}</span>
-          <span class="visually-hidden">Ver el video</span>
-        </a>
-        <span class="chip-media chip-media--tl hero-stage__chip" data-hero-chip>Último programa</span>
-        <div class="hero-stage__controls" data-hero-controls hidden>
-          <button class="hero-stage__sound" type="button" data-hero-sound aria-pressed="false">
-            <span class="hero-stage__ico hero-stage__ico--off">{{ ico("speaker-x-fill") }}</span>
-            <span class="hero-stage__ico hero-stage__ico--on">{{ ico("speaker-high-fill") }}</span>
-            <span data-hero-sound-label>Activar sonido</span>
-          </button>
-          <button class="icon-btn icon-btn--on-dark hero-stage__pause" type="button" data-hero-pause aria-pressed="false">
-            {{ ico("pause-fill", "icon icon-pause") }}{{ ico("play-fill", "icon icon-play") }}
-            <span class="visually-hidden" data-hero-pause-label>Pausar el video</span>
-          </button>
+<!-- M1 · Hero «Cartel B-a5»: texto (5/12) + foto pegada con el video (7/12); debajo, boleta del partido y escudos.
+     El video reproduce solo y sin sonido (autoplay silenciado); el visitante activa el audio con un botón.
+     Transmisión en vivo cuando está al aire; si no, el último programa.
+     Sin JavaScript, con «reducir movimiento» o en ahorro de datos: portada con play que lleva al video.
+     Boleta: datos de Datafactory. Pasto no tiene escudo original todavía (pendiente del cliente). -->
+<section class="cb hero-stage" data-module="M1" aria-labelledby="hero-title">
+  <div class="container cb__grid">
+    <div class="cb__text">
+      <p class="cb__label">El show de las mañanas</p>
+      <h2 class="cb__title" id="hero-title"><a href="video.html"><span class="visually-hidden">Video: </span>El refuerzo de Junior que <span class="cb__strip">nadie</span> esperaba</a></h2>
+      <p class="cb__dek">La mesa analiza la llegada que casi nadie veía venir y lo que le puede aportar al equipo en lo que resta del año.</p>
+      <div class="cb__actions">
+        <a class="btn btn--primary" href="video.html">{{ ico("play-fill") }}Ver el programa</a>
+      </div>
+    </div>
+
+    <div class="cb__collage">
+      <div class="hero-video">
+        <div class="hero-stage__player" data-hero-player data-video="sbECwF3dEaI" data-channel="UCm_25dALt4-r7C0wSsbaxzA">
+          <div class="hero-stage__frame media" data-hero-frame>
+            <a class="hero-stage__poster" href="video.html" data-hero-poster>
+              {{ foto("js-2", clase="media__img", prioridad=True) }}
+              <span class="play play--lg">{{ ico("play-fill") }}</span>
+              <span class="visually-hidden">Ver el video</span>
+            </a>
+            <span class="chip-media chip-media--tl hero-stage__chip" data-hero-chip>Último programa</span>
+            <div class="hero-stage__controls" data-hero-controls hidden>
+              <button class="hero-stage__sound" type="button" data-hero-sound aria-pressed="false">
+                <span class="hero-stage__ico hero-stage__ico--off">{{ ico("speaker-x-fill") }}</span>
+                <span class="hero-stage__ico hero-stage__ico--on">{{ ico("speaker-high-fill") }}</span>
+                <span data-hero-sound-label>Activar sonido</span>
+              </button>
+              <button class="icon-btn icon-btn--on-dark hero-stage__pause" type="button" data-hero-pause aria-pressed="false">
+                {{ ico("pause-fill", "icon icon-pause") }}{{ ico("play-fill", "icon icon-play") }}
+                <span class="visually-hidden" data-hero-pause-label>Pausar el video</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Videos anteriores: los mismos videos que muestra el módulo «El show de las mañanas» más abajo -->
+        <div class="hero-video__rail">
+          <p class="hero-video__head">Videos anteriores</p>
+          <ol class="hero-video__list" role="list">
+            <li class="hero-video__item"><a class="hero-video__link" href="video.html"><span class="hero-video__thumb">{{ foto("seleccion-tecnico-retrato", alt="", repite=True) }}<span class="hero-video__dur">18 min</span></span><span class="hero-video__t">Lista de la Selección: cinco novedades y una ausencia</span></a></li>
+            <li class="hero-video__item"><a class="hero-video__link" href="video.html"><span class="hero-video__thumb">{{ foto("junior-bicampeon", alt="", repite=True) }}<span class="hero-video__dur">22 min</span></span><span class="hero-video__t">Mercado de Junior: quién llega, quién se va y qué es humo</span></a></li>
+            <li class="hero-video__item"><a class="hero-video__link" href="video.html"><span class="hero-video__thumb">{{ foto("nacional-celebracion", alt="", repite=True) }}<span class="hero-video__dur">31 min</span></span><span class="hero-video__t">Análisis táctico de Nacional: cómo se le juega</span></a></li>
+          </ol>
         </div>
       </div>
     </div>
-    <div class="hero-stage__body">
-      <p class="topic" data-hero-kicker>Junior · Video</p>
-      <h2 class="hero-stage__title" id="hero-title"><a href="video.html"><span class="visually-hidden">Video: </span>¡Sorpresiva llegada! El refuerzo de Junior que pocos esperaban</a></h2>
-      <p class="hero-stage__standfirst">El programa analiza la llegada que casi nadie veía venir en Junior y lo que puede aportar al equipo rojiblanco.</p>
-      <p class="meta">Habla Deportes · Video del programa</p>
-      <ul class="route-list" role="list" aria-label="Más sobre Junior">
-        <li><a class="route-link" href="partido.html">Ver la previa de Pasto vs. Junior{{ ico("arrow-right", "icon icon--sm") }}</a></li>
-        <li><a class="route-link" href="articulo.html">Leer la nota del análisis{{ ico("arrow-right", "icon icon--sm") }}</a></li>
-        <li><a class="route-link" href="en-vivo.html">Ver la transmisión en vivo{{ ico("arrow-right", "icon icon--sm") }}</a></li>
-      </ul>
-    </div>
+
+    {{ tira_partidos("datafactory") }}
   </div>
 </section>
 
@@ -62,11 +77,11 @@ og_imagen: assets/img/js-2.webp
     {{ carrusel_noticias("noticias-dia", "Más noticias del día",
       [("articulo.html", "seleccion-once", "Selección", "La lista para Perú y Chile: cinco novedades y una ausencia que se discute", "<time datetime='2026-11-06T15:10-05:00'>Hace 5 horas</time> · 6 min de lectura"),
        ("mercado.html", "junior-plantel-trofeo", "Fichajes", "Junior negocia un extremo con pasado europeo: qué está firmado y qué no", "<time datetime='2026-11-06T12:00-05:00'>Hace 8 horas</time> · 4 min de lectura"),
-       ("datos.html#posiciones", "junior-escudo-bandera", "Datos", "Junior, 17.º con 16 puntos: las cuatro cifras que explican su momento", "<time datetime='2026-11-06T09:30-05:00'>Hace 11 horas</time> · 3 min de lectura")],
+       ("datos.html#posiciones", "junior-escudo-bandera", "Datos", "Junior, 14.º con 22 puntos: las cuatro cifras que explican su momento", "<time datetime='2026-11-06T09:30-05:00'>Hace 11 horas</time> · 3 min de lectura")],
       [("articulo.html", "nacional", "Rival de Junior", "Nacional lidera la Liga con 36 puntos: qué lo sostiene arriba", "Hace 12 horas · 3 min de lectura"),
        ("partido.html", "colombia", "Selección", "Colombia vs. Perú: horario, canal y dónde verlo", "Hace 14 horas · 2 min de lectura"),
        ("mercado.html", "millonarios", "Fichajes", "Millonarios y Tolima, en la carrera por un delantero con pasado europeo", "Ayer · 4 min de lectura"),
-       ("datos.html#resultados", "america", "Liga BetPlay", "Fecha 19: los diez partidos del miércoles 11 de noviembre", "Ayer · 3 min de lectura"),
+       ("datos.html#resultados", "america", "Liga BetPlay", "Fecha 19: los diez partidos del 12 al 14 de noviembre", "Hace 2 días · 3 min de lectura"),
        ("datos.html#posiciones", "medellin", "Liga BetPlay", "Medellín, quinto con 29 puntos: la pelea por quedar entre los ocho", "Ayer · 3 min de lectura")]) }}
   </div>
 
@@ -156,7 +171,7 @@ og_imagen: assets/img/js-2.webp
   <!-- M8b · Noticias por tema (una nota por tema, sin foto: no gasta fotos de la página) -->
   <section class="section" aria-labelledby="m8b" data-module="M8b">
     {{ rotulo("Noticias por tema", "noticias.html", "Ver todas", id="m8b") }}
-    {{ noticias_por_tema({"titular": "Cali y Tolima, frente a frente en la Fecha 19: lo que se juegan arriba", "bajada": "Cali llega tercero con 33 puntos y Tolima busca meterse en la zona de los ocho. Lo que está en juego el miércoles por la noche."}) }}
+    {{ noticias_por_tema({"titular": "Cali y Tolima empataron 2 a 2 en la Fecha 19: lo que deja el resultado arriba", "bajada": "Cali cierra la fase de todos contra todos tercero con 35 puntos y Tolima, noveno con 27, se queda a dos de la zona de los ocho."}) }}
   </section>
 
   <!-- M9 · Opinión | M10 · Comunidad -->
@@ -174,7 +189,7 @@ og_imagen: assets/img/js-2.webp
       {{ rotulo("Comunidad", id="m10") }}
       <div class="community__block">
         <h3 class="community__title">Encuesta del hincha</h3>
-        {{ encuesta("¿Qué necesita Junior para ganarle a Pasto el miércoles?", [("Más gol de los extremos", 44), ("Mejor salida con balón", 37), ("Más presión tras pérdida", 19)]) }}
+        {{ encuesta("¿Qué debe mejorar Junior tras ganarle 1 a 0 a Pasto?", [("Más gol de los extremos", 44), ("Mejor salida con balón", 37), ("Más presión tras pérdida", 19)]) }}
       </div>
       <div class="community__block">
         {{ boletin() }}

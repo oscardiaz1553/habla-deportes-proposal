@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="es-CO" data-aire="no" data-page="index">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Portada, cartel D: la boleta de la fecha (wireframe)</title>
+  <meta name="description" content="Wireframe de alta fidelidad del hero de la portada de Habla Deportes, dirección «Cartel», variación D: cartel de partido y entrada de estadio.">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#294D6E">
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Archivo 900 (afiche) y su eje de ancho: tokens.css solo carga hasta 800 -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,800..900;1,62..125,800..900&display=swap">
+  <link rel="stylesheet" href="../assets/css/tokens.css">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <script src="../assets/js/main.js" defer></script>
+  <style>
+    /* ==== Cartel · variación D «Cartel de partido · entrada de estadio» · solo el hero ====
+       Gesto propio: la BOLETA. El partido de la fecha impreso como una entrada de estadio
+       (troquel, talón, perforaciones, numeración, sellos), pegada sobre papel hueso con una
+       «sombra de imprenta» de puntos azules. Al lado, el programa de hoy pegado con cinta.
+       Paleta: solo la escala azul de la marca + hueso + tinta. Un único acento cálido (sol)
+       limitado a la cinta y a UNA pegatina de dato. Rojo solo si hay algo en vivo. */
+    .cartel {
+      --papel: #F5F1E8;       /* hueso cálido: fondo del hero (tinta 16.4:1 · brand-600 7.9:1 · gray-600 5.9:1) */
+      --boleta: #FFFFFF;      /* papel de la boleta */
+      --tinta: var(--gray-900);
+      --sol: #F0B429;         /* ÚNICO acento cálido: cinta + pegatina del dato (tinta encima 9.6:1) */
+      --talon-w: 176px;
+      --display: 'Archivo', 'Arial Narrow', Arial, sans-serif;
+      position: relative;
+      background: var(--papel);
+      color: var(--tinta);
+      padding-block: var(--space-2) var(--space-3);
+      overflow: clip;
+    }
+    .cartel__grid { display: grid; gap: var(--space-3); grid-template-areas: "programa" "boleta"; }
+    .programa { grid-area: programa; min-width: 0; }
+    .boleta-wrap { grid-area: boleta; min-width: 0; position: relative; }
+
+    /* Afiche: mayúsculas, Archivo 900, apretada */
+    .afiche { font-family: var(--display); font-weight: 900; text-transform: uppercase; letter-spacing: -0.03em; line-height: 0.9; }
+
+    /* ---------- EL PROGRAMA DE HOY ---------- */
+    .programa__head { display: none; }
+    .programa__rotulo { margin: 0; font: italic 900 1.75rem/1 var(--display); letter-spacing: -0.02em; text-transform: uppercase; }
+    .programa__horario { margin: 0; font: var(--fw-medium) var(--fs-meta)/1.4 var(--font-text); color: var(--color-text-muted); }
+
+    .hero-stage__player { position: relative; margin-inline: calc(-1 * var(--page-margin)); }
+    .hero-stage__frame { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: var(--brand-900); }
+    .hero-stage__poster, .hero-stage__frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .hero-stage__poster { display: block; transition: opacity var(--dur-slow) var(--ease-out); }
+    .hero-stage__poster .media__img { width: 100%; height: 100%; object-fit: cover; object-position: 60% 35%; filter: url(#duo-habla); }
+    /* trama de puntos sobre el póster en dúo-tono (no lleva texto) */
+    .hero-stage__poster::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(rgba(15, 33, 51, 0.42) 0.9px, transparent 1.25px) 0 0 / 5px 5px; mix-blend-mode: multiply; }
+    .hero-stage__poster .play { inset: 50% auto auto 50%; translate: -50% -50%; }
+    .hero-stage.is-playing .hero-stage__poster { opacity: 0; pointer-events: none; }
+
+    /* Pegatina ladeada: horario del programa. En vivo pasa a rojo (main.js: hero-stage__chip--live) */
+    .pegatina { position: absolute; z-index: 3; top: var(--space-1); left: var(--space-2); display: inline-flex; align-items: baseline; gap: 6px;
+      padding: 6px 10px 5px; background: var(--tinta); color: var(--papel); rotate: -3deg;
+      font: 900 0.9375rem/1 var(--display); text-transform: uppercase; letter-spacing: 0; white-space: nowrap; }
+    .pegatina small { font: var(--fw-semibold) 0.75rem/1 var(--font-text); text-transform: none; letter-spacing: 0; }
+    .hero-stage__chip--live { background: var(--color-live); color: var(--color-on-live); }
+
+    .cinta { display: none; position: absolute; z-index: 2; width: 104px; height: 28px; background: color-mix(in srgb, var(--sol) 78%, transparent); pointer-events: none; }
+    .cinta--a { top: -12px; right: 40px; rotate: 5deg; }
+    .cinta--b { bottom: -12px; left: 48px; rotate: -4deg; }
+
+    .hero-stage__controls { position: absolute; right: var(--space-1); bottom: var(--space-1); z-index: 3; display: flex; align-items: center; gap: var(--space-1); }
+    .hero-stage__controls[hidden] { display: none; }
+    .hero-stage__sound, .hero-stage__pause { background: color-mix(in srgb, var(--brand-900) 88%, transparent); color: var(--color-on-brand); }
+    .hero-stage__sound { display: inline-flex; align-items: center; gap: var(--space-1); min-height: var(--touch-min); padding-inline: var(--space-2);
+      border: var(--border-hair) solid var(--color-border-on-dark); border-radius: var(--radius-round); font: var(--fw-semibold) var(--fs-ui)/1 var(--font-text); cursor: pointer; }
+    .hero-stage__sound:focus-visible, .hero-stage__pause:focus-visible { outline: 2px solid var(--color-focus-on-dark); outline-offset: 2px; }
+    .hero-stage__ico { display: inline-grid; }
+    .hero-stage__sound[aria-pressed="false"] .hero-stage__ico--on, .hero-stage__sound[aria-pressed="true"] .hero-stage__ico--off { display: none; }
+    .hero-stage__pause .icon-play, .hero-stage__pause[aria-pressed="true"] .icon-pause { display: none; }
+    .hero-stage__pause[aria-pressed="true"] .icon-play { display: inline-block; }
+
+    .programa__meta { margin: var(--space-2) 0 0; font: var(--fw-medium) var(--fs-meta)/1.4 var(--font-text); color: var(--color-text-muted); }
+    .programa__meta b { color: var(--tinta); font-weight: var(--fw-semibold); }
+    .programa__titulo { margin: 4px 0 0; font-size: 1.375rem; font-variation-settings: 'wdth' 92; text-wrap: balance;
+      display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+    .programa__titulo a { color: var(--tinta); text-decoration: none; }
+    .programa__titulo a:hover { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 4px; }
+    .programa__bajada, .programa__acciones { display: none; }
+
+    /* ---------- LA BOLETA ---------- */
+    /* Sombra de imprenta: bloque de puntos azules desplazado (no es box-shadow) */
+    .boleta-wrap::before { content: ""; position: absolute; inset: 10px -6px -10px 10px; rotate: -1.4deg;
+      background: radial-gradient(var(--brand-600) 1.5px, transparent 1.8px) 0 0 / 7px 7px; opacity: 0.5; }
+    .boleta {
+      --n1x: 0; --n1y: calc(100% - 52px); --n2x: 100%; --n2y: calc(100% - 52px);
+      position: relative; display: grid; grid-template-columns: minmax(0, 1fr); background: var(--boleta);
+      -webkit-mask: radial-gradient(circle 11px at var(--n1x) var(--n1y), #0000 98%, #000), radial-gradient(circle 11px at var(--n2x) var(--n2y), #0000 98%, #000);
+      -webkit-mask-composite: source-in;
+      mask: radial-gradient(circle 11px at var(--n1x) var(--n1y), #0000 98%, #000), radial-gradient(circle 11px at var(--n2x) var(--n2y), #0000 98%, #000);
+      mask-composite: intersect;
+    }
+    .boleta__cuerpo { padding: var(--space-2); min-width: 0; }
+    .boleta__top { display: none; }
+    .sello-liga { display: inline-block; padding: 4px 8px 3px; border: 2px solid var(--tinta); font: 900 0.75rem/1 var(--display); text-transform: uppercase; letter-spacing: 0.06em; }
+    .boleta__serie { font: 700 0.8125rem/1 var(--display); font-variation-settings: 'wdth' 75; font-variant-numeric: var(--numeric); letter-spacing: 0.08em; color: var(--color-text-muted); }
+
+    /* El duelo (h2): escudos grandes en bloques de color */
+    .duelo { margin: 0; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: var(--space-1); }
+    .equipo { display: flex; align-items: center; gap: var(--space-1); min-width: 0; }
+    .equipo--visita { flex-direction: row-reverse; text-align: right; }
+    .equipo__bloque { display: grid; place-items: center; flex: none; width: 56px; aspect-ratio: 1; }
+    .equipo__bloque--mono { background: var(--brand-600); color: var(--white); }
+    .equipo__mono { font: italic 900 2.5rem/1 var(--display); letter-spacing: -0.04em; translate: -2px 2px; }
+    .equipo__bloque--escudo { background: var(--brand-100) radial-gradient(var(--brand-300) 1.2px, transparent 1.5px) 0 0 / 6px 6px; }
+    .equipo__bloque--escudo img { width: 74%; height: 84%; object-fit: contain; }
+    .equipo__txt { display: grid; min-width: 0; }
+    .equipo__rol { font: var(--fw-semibold) 0.6875rem/1.2 var(--font-text); text-transform: uppercase; letter-spacing: var(--ls-label); color: var(--color-text-muted); }
+    .equipo__nombre { font-size: 1.625rem; font-variation-settings: 'wdth' 85; }
+    .duelo__vs { font: italic 900 1.25rem/1 var(--display); color: var(--brand-600); text-transform: lowercase; }
+
+    /* Cuándo: la hora gigante */
+    .cuando { margin: var(--space-2) 0 0; padding-top: var(--space-1); border-top: var(--border-rule) solid var(--tinta); }
+    .cuando time { display: flex; align-items: flex-end; gap: var(--space-1); }
+    .cuando__dia { font-size: 0.9375rem; line-height: 1; padding-bottom: 4px; }
+    .cuando__hora { font: 900 3.5rem/0.78 var(--display); font-variation-settings: 'wdth' 72; font-variant-numeric: var(--numeric); letter-spacing: -0.03em; color: var(--brand-600); }
+    .cuando__ampm { font-size: 1.125rem; color: var(--brand-600); padding-bottom: 2px; }
+    .cuando__dia small { display: block; margin-top: 4px; font: var(--fw-medium) 0.6875rem/1.2 var(--font-text); text-transform: none; letter-spacing: 0; color: var(--color-text-muted); }
+    .cuando__ampm { white-space: nowrap; }
+
+    /* La raya: los datos de Datafactory como afiche, no como tabla */
+    .raya { margin-top: var(--space-2); position: relative; }
+    .raya__dato { margin: 0; padding-right: 116px; font: var(--fw-medium) 0.875rem/1.3 var(--font-text); color: var(--color-text-secondary); }
+    .raya__dato strong { font: 900 1rem/1 var(--display); text-transform: uppercase; letter-spacing: -0.01em; color: var(--tinta); }
+    .raya__pega { position: absolute; top: -6px; right: 0; padding: 6px 8px 5px; background: var(--sol); color: var(--tinta); rotate: 3deg;
+      font: 900 0.875rem/0.95 var(--display); text-transform: uppercase; text-align: center; }
+    .raya__fila { display: grid; grid-template-columns: repeat(20, minmax(0, 1fr)); gap: 3px; margin: var(--space-1) 0 0; padding: 0; list-style: none; align-items: end; }
+    .raya__fila li { height: 10px; background: var(--gray-200); }
+    .raya__fila li:nth-child(-n+8) { background: var(--brand-600); }
+    .raya__fila li:nth-child(8) { box-shadow: 3px 0 0 var(--papel), 5px 0 0 var(--tinta); }
+    .raya__fila li.is-junior { height: 18px; background: var(--tinta); }
+    .raya__eje { display: grid; grid-template-columns: repeat(20, minmax(0, 1fr)); gap: 3px; margin-top: 4px; font: var(--fw-semibold) 0.6875rem/1.2 var(--font-text); color: var(--color-text-muted); }
+    .raya__eje span:first-child { grid-column: 1 / 9; color: var(--brand-600); }
+    .raya__eje span:last-child { grid-column: 15 / 21; text-align: center; color: var(--tinta); }
+    .boleta__fuente { margin: var(--space-1) 0 0; font: var(--fw-regular) 0.6875rem/1.3 var(--font-text); color: var(--color-text-muted); }
+
+    /* El talón (móvil: franja inferior tras la línea de troquel) */
+    .talon { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); min-height: 52px; padding: 0 var(--space-2);
+      border-top: 2px dashed var(--gray-400); }
+    .sello-fecha { display: inline-flex; align-items: baseline; gap: 6px; padding: 3px 8px; border: 4px double var(--brand-600); color: var(--brand-600); rotate: -4deg;
+      font: 900 0.75rem/1 var(--display); text-transform: uppercase; letter-spacing: 0.04em; mix-blend-mode: multiply; }
+    .sello-fecha b { font-size: 1.375rem; letter-spacing: -0.02em; font-weight: 900; }
+    .talon__admite, .talon__barras, .talon__liga { display: none; }
+    .talon__cta { display: inline-flex; align-items: center; gap: 6px; min-height: var(--touch-min); color: var(--brand-600);
+      font: 900 0.9375rem/1 var(--display); text-transform: uppercase; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+    .talon__cta:hover { color: var(--brand-800); }
+    .talon__cta:focus-visible, .programa__titulo a:focus-visible { outline: var(--focus-width) solid var(--color-focus); outline-offset: var(--focus-offset); }
+
+    /* Móvil: el hero entra completo entre la cabecera (56) y la barra inferior (64) */
+    .solo-ancho { display: none; }
+    .cartel { padding-top: 0; }
+    .equipo__rol { display: none; }
+    .equipo__nombre { font-size: 1.25rem; font-variation-settings: 'wdth' 80; }
+    .equipo__bloque { width: 48px; }
+    .equipo__mono { font-size: 2.125rem; }
+
+    /* Asomo del siguiente módulo (<= 100 px en la primera vista) */
+    .asomo { background: var(--color-bg); padding-top: var(--space-3); }
+    .asomo__fila { display: grid; grid-template-columns: repeat(4, minmax(160px, 1fr)); gap: var(--space-3); height: 48px; overflow: hidden; }
+    .asomo__thumb { aspect-ratio: 16 / 9; background: var(--color-surface-subtle); border: 1px dashed var(--gray-400); }
+    .wf-flag { position: fixed; z-index: var(--z-skip); left: var(--space-1); bottom: var(--space-1); padding: 2px var(--space-1); background: var(--white); border: 1px solid var(--color-border); font-size: var(--fs-label); color: var(--color-text-muted); }
+    @media (max-width: 1023px) { .wf-flag { display: none; } }
+
+    @media (min-width: 600px) {
+      .cartel { padding-top: var(--space-4); }
+      .solo-ancho { display: inline; }
+      .equipo__rol { display: block; }
+      .hero-stage__player { margin-inline: 0; }
+      .cinta { display: block; }
+      .pegatina { top: -14px; left: -8px; }
+    }
+
+    /* ---------- ESCRITORIO: boleta a la izquierda (7/12), programa a la derecha (5/12) ---------- */
+    @media (min-width: 1024px) {
+      .cartel { padding-block: var(--space-4) var(--space-4); }
+      .cartel::before { /* trama de imprenta en la esquina, sin texto encima */
+        content: ""; position: absolute; right: -80px; top: -120px; width: 520px; height: 520px; pointer-events: none;
+        background: radial-gradient(var(--brand-300) 2px, transparent 2.4px) 0 0 / 12px 12px;
+        -webkit-mask: radial-gradient(closest-side, #000, #0000); mask: radial-gradient(closest-side, #000, #0000); opacity: 0.55; }
+      .cartel__grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); grid-template-areas: "boleta programa"; column-gap: var(--space-6); align-items: start; }
+      .programa { position: relative; padding-top: 4px; }
+      .programa__head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-2); margin-bottom: var(--space-3); }
+      .programa__titulo { font-size: 2rem; -webkit-line-clamp: 3; }
+      .programa__bajada { display: block; margin: var(--space-1) 0 0; font: var(--fw-regular) var(--fs-body)/1.5 var(--font-text); color: var(--color-text-secondary); }
+      .programa__acciones { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1) var(--space-3); margin-top: var(--space-3); }
+      .hero-stage__controls { right: var(--space-2); bottom: var(--space-2); }
+
+      .boleta-wrap::before { inset: 16px -16px -16px 16px; }
+      .boleta { rotate: -0.8deg; grid-template-columns: minmax(0, 1fr) var(--talon-w);
+        --n1x: calc(100% - var(--talon-w)); --n1y: 0; --n2x: calc(100% - var(--talon-w)); --n2y: 100%;
+        /* + perforaciones del borde izquierdo */
+        -webkit-mask: radial-gradient(circle 14px at var(--n1x) var(--n1y), #0000 98%, #000), radial-gradient(circle 14px at var(--n2x) var(--n2y), #0000 98%, #000),
+          radial-gradient(circle 5px at 0 50%, #0000 98%, #000) 0 0 / 100% 22px repeat-y;
+        -webkit-mask-composite: source-in, source-in;
+        mask: radial-gradient(circle 14px at var(--n1x) var(--n1y), #0000 98%, #000), radial-gradient(circle 14px at var(--n2x) var(--n2y), #0000 98%, #000),
+          radial-gradient(circle 5px at 0 50%, #0000 98%, #000) 0 0 / 100% 22px repeat-y;
+        mask-composite: intersect; }
+      .boleta__cuerpo { padding: var(--space-3) var(--space-4) var(--space-3) var(--space-5); }
+      .boleta__top { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-3); }
+      .duelo { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: start; gap: var(--space-2); }
+      .equipo, .equipo--visita { flex-direction: column; align-items: stretch; text-align: left; gap: var(--space-1); }
+      .equipo__bloque { width: 100%; aspect-ratio: 5 / 4; }
+      .equipo__mono { font-size: 9rem; translate: -6px 8px; }
+      .equipo__txt { gap: 2px; }
+      .equipo__nombre { font-size: 3rem; }
+      .duelo__vs { align-self: center; margin-top: -40px; font-size: 2.25rem; }
+      .cuando { margin-top: var(--space-3); padding-top: var(--space-2); }
+      .cuando time { gap: 12px; }
+      .cuando__dia { font-size: 1.125rem; padding-bottom: 6px; }
+      .cuando__hora { font-size: 7rem; }
+      .cuando__ampm { font-size: 1.75rem; padding-bottom: 4px; }
+      .cuando__dia small { font-size: var(--fs-label); }
+      .raya { margin-top: var(--space-3); }
+      .raya__dato { font-size: var(--fs-body); padding-right: 160px; }
+      .raya__dato strong { font-size: 1.25rem; }
+      .raya__pega { top: -14px; padding: 8px 12px 7px; font-size: 1.125rem; rotate: 4deg; }
+      .raya__fila li { height: 14px; }
+      .raya__fila li.is-junior { height: 26px; }
+      .raya__eje { font-size: var(--fs-label); }
+
+      .talon { flex-direction: column; justify-content: space-between; align-items: center; padding: var(--space-3) var(--space-2); min-height: 0;
+        border-top: 0; border-left: 2px dashed var(--gray-400); text-align: center; gap: var(--space-2); }
+      .talon__liga { display: block; font: 900 0.75rem/1.1 var(--display); text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-muted); }
+      .sello-fecha { flex-direction: column; align-items: center; gap: 0; padding: 10px 14px 8px; rotate: -8deg; font-size: 0.875rem; border-width: 6px; }
+      .sello-fecha b { font-size: 3.75rem; line-height: 0.85; }
+      .talon__admite { display: block; writing-mode: vertical-rl; rotate: 180deg; font: 800 0.8125rem/1 var(--display); text-transform: uppercase; letter-spacing: 0.24em; color: var(--color-text-muted); }
+      .talon__barras { display: block; width: 100%; height: 44px;
+        background: repeating-linear-gradient(90deg, var(--tinta) 0 2px, transparent 2px 4px, var(--tinta) 4px 7px, transparent 7px 8px, var(--tinta) 8px 9px, transparent 9px 12px); }
+      .talon__cta { flex-direction: column; text-align: center; font-size: 1rem; line-height: 1.05; }
+
+      .asomo { padding-top: var(--space-3); }
+      .asomo__fila { height: 40px; }
+    }
+    @media (min-width: 1280px) {
+      .cuando__hora { font-size: 7.5rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-stage__poster { transition: none; }
+    }
+  </style>
+</head>
+<body>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<!-- CABECERA REAL copiada de html/nueva/index.html (header.php), enlaces reapuntados a ../. Paneles de megamenú omitidos en este wireframe. -->
+<header class="site-header" data-header>
+  <div class="masthead" data-masthead>
+    <div class="container masthead__inner">
+      <a class="masthead__logo" href="../index.html"><img class="masthead__logo-img" src="../assets/img/logo-habla-blanco.webp" alt="Habla Deportes, ir a la portada" width="800" height="272" fetchpriority="high" decoding="async"></a>
+      <div class="masthead__tools">
+        <form class="header-search" action="../buscar.html" method="get" role="search" aria-label="Buscar en la cabecera" data-search><button class="icon-btn icon-btn--on-brand header-search__back" type="button" data-search-close><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-left"></use></svg><span class="visually-hidden">Cerrar la búsqueda</span></button><label class="visually-hidden" for="q">Buscar en Habla Deportes</label><span class="header-search__field"><svg class="icon icon--md header-search__icon" aria-hidden="true" focusable="false"><use href="#i-magnifying-glass"></use></svg><input class="header-search__input" id="q" name="q" type="search" placeholder="Buscar" autocomplete="off" enterkeyhint="search"><kbd class="header-search__hint" aria-hidden="true">/</kbd></span></form>
+        <button class="search-trigger" type="button" aria-expanded="false" aria-controls="q" data-search-toggle><svg class="icon icon--md" aria-hidden="true" focusable="false"><use href="#i-magnifying-glass"></use></svg><span class="visually-hidden">Buscar</span></button>
+        <a class="icon-btn icon-btn--on-brand masthead__social" href="https://youtube.com/@habladeportesradio" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-youtube-logo"></use></svg><span class="visually-hidden">YouTube (se abre en una pestaña nueva)</span></a><a class="icon-btn icon-btn--on-brand masthead__social" href="https://www.instagram.com/" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-instagram-logo"></use></svg><span class="visually-hidden">Instagram (se abre en una pestaña nueva)</span></a><a class="icon-btn icon-btn--on-brand masthead__social" href="https://x.com/" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-x-logo"></use></svg><span class="visually-hidden">X (se abre en una pestaña nueva)</span></a>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu-movil" data-menu-toggle><svg class="icon icon-open" aria-hidden="true" focusable="false"><use href="#i-list"></use></svg><svg class="icon icon-close" aria-hidden="true" focusable="false"><use href="#i-x"></use></svg><span class="menu-toggle__text" aria-hidden="true" data-menu-word>Menú</span><span class="visually-hidden" data-menu-label>Abrir el menú</span></button>
+      </div>
+    </div>
+  </div>
+  <nav class="primary-nav" aria-label="Secciones">
+    <div class="container primary-nav__inner">
+      <a class="primary-nav__logo" href="../index.html"><img class="primary-nav__logo-img" src="../assets/img/logo-habla-blanco.webp" alt="Habla Deportes, ir a la portada" width="800" height="272" fetchpriority="high" decoding="async"></a>
+      <ul class="primary-nav__list" role="list"><li class="primary-nav__item" data-nav="inicio"><a class="primary-nav__link" href="../index.html" aria-current="page"><span class="nav-label" data-text="Inicio">Inicio</span></a></li><li class="primary-nav__item" data-nav="videos"><a class="primary-nav__link" href="../videos.html"><span class="nav-label" data-text="Videos">Videos</span></a></li><li class="primary-nav__item" data-nav="junior" data-temas="junior"><a class="primary-nav__link" href="../junior.html"><span class="nav-label" data-text="Junior">Junior</span></a></li><li class="primary-nav__item" data-nav="fpc" data-temas="futbol-colombiano"><a class="primary-nav__link" href="../noticias.html?tema=futbol-colombiano"><span class="visually-hidden">Fútbol colombiano (FPC)</span><span aria-hidden="true"><span class="nav-label" data-text="FPC">FPC</span></span></a></li><li class="primary-nav__item" data-nav="internacional" data-temas="europa colombianos-exterior"><a class="primary-nav__link" href="../noticias.html?tema=europa"><span class="nav-label" data-text="Fútbol internacional">Fútbol internacional</span></a></li><li class="primary-nav__item" data-nav="mas"><a class="primary-nav__link" href="#pie-enlaces"><span class="live-dot live-dot--ring" aria-hidden="true"></span><span class="visually-hidden">, partido en vivo</span><span class="visually-hidden only-aire" hidden>, al aire ahora</span><span class="nav-label" data-text="Más">Más</span><span class="visually-hidden">: más secciones en el pie de página</span></a></li></ul>
+    </div>
+  </nav>
+  <div class="menu-sheet" id="menu-movil" hidden data-menu><div class="menu-sheet__inner"><form class="menu-sheet__search" action="../buscar.html" method="get" role="search" aria-label="Buscar desde el menú"><label class="field__label" for="q-menu">Buscar en Habla Deportes</label><div class="search-bar__row"><input class="field__input" id="q-menu" name="q" type="search" placeholder="Equipo, jugador o tema" autocomplete="off" enterkeyhint="search"><button class="btn btn--primary" type="submit">Buscar</button></div></form><ul class="chip-list menu-sheet__suggest" role="list" aria-label="Búsquedas sugeridas"><li><a class="chip" href="../buscar.html?q=junior">Junior</a></li><li><a class="chip" href="../buscar.html?q=seleccion">Selección</a></li><li><a class="chip" href="../buscar.html?q=mercado">Mercado</a></li><li><a class="chip" href="../buscar.html?q=europa">Europa</a></li></ul><p class="menu-sheet__heading" id="hoja-ahora">Ahora</p><ul class="sheet-now-list" role="list" aria-labelledby="hoja-ahora"><li><a class="sheet-now" href="../en-vivo.html"><span class="sheet-now__state"><span class="only-aire" hidden><span class="live-pill"><span class="live-dot" aria-hidden="true"></span>Al aire</span></span><span class="sheet-now__chip only-fuera">Próximo programa</span></span><span class="sheet-now__body"><span class="sheet-now__title">El show de las mañanas</span><span class="sheet-now__cta"><span class="only-aire" hidden>Ver en vivo</span><span class="only-fuera">Lunes a viernes, 10:00 a. m.</span><svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="#i-caret-right"></use></svg></span></span></a></li><li><a class="sheet-now" href="../partido.html"><span class="sheet-now__state"><span class="live-pill"><span class="live-dot" aria-hidden="true"></span>En vivo 67'</span></span><span class="sheet-now__body"><span class="sheet-now__score"><span aria-hidden="true">Junior 2-1 Nacional</span><span class="visually-hidden">Junior 2, Nacional 1</span></span><span class="sheet-now__cta">Seguir el partido<svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="#i-caret-right"></use></svg></span></span></a></li></ul><nav class="sheet-sections" aria-label="Menú: secciones"><ul role="list"><li class="sheet-section" data-nav="inicio"><div class="sheet-section__row"><a class="sheet-section__link" href="../index.html" aria-current="page"><span class="sheet-section__thumb media"></span><span class="sheet-section__text"><span class="sheet-section__name"><span class="nav-label" data-text="Inicio">Inicio</span></span><span class="sheet-section__desc">La portada de hoy</span></span></a></div></li><li class="sheet-section" data-nav="videos"><div class="sheet-section__row"><a class="sheet-section__link" href="../videos.html"><span class="sheet-section__thumb media"></span><span class="sheet-section__text"><span class="sheet-section__name"><span class="nav-label" data-text="Videos">Videos</span></span><span class="sheet-section__desc">Programas y Shorts</span></span></a><button class="sheet-section__toggle" type="button" aria-expanded="false" aria-controls="hoja-videos" data-accordion><svg class="icon chevron" aria-hidden="true" focusable="false"><use href="#i-caret-down"></use></svg><span class="visually-hidden">Enlaces de Videos</span></button></div><div class="sheet-section__panel" id="hoja-videos" hidden><div class="sheet-sub__group"><p class="sheet-sub__label" id="sheet-sub-g-que-ver">Qué ver</p><ul class="sheet-sub__links" role="list" aria-labelledby="sheet-sub-g-que-ver"><li><a class="sheet-sub__link" href="../videos.html#programas"><span class="nav-label" data-text="Programas completos">Programas completos</span></a></li><li><a class="sheet-sub__link" href="../shorts.html"><span class="nav-label" data-text="Shorts">Shorts</span></a></li></ul></div><div class="sheet-sub__group"><p class="sheet-sub__label" id="sheet-sub-g-por-tema">Por tema</p><ul class="sheet-sub__links" role="list" aria-labelledby="sheet-sub-g-por-tema"><li><a class="sheet-sub__link" href="../videos.html?tema=junior"><span class="nav-label" data-text="Videos de Junior">Videos de Junior</span></a></li><li><a class="sheet-sub__link" href="../videos.html?tema=seleccion"><span class="nav-label" data-text="Videos de la Selección">Videos de la Selección</span></a></li><li><a class="sheet-sub__link" href="../juan-salvador.html#videos"><span class="nav-label" data-text="Videos de Juan Salvador">Videos de Juan Salvador</span></a></li></ul></div></div></li><li class="sheet-section" data-nav="junior"><div class="sheet-section__row"><a class="sheet-section__link" href="../junior.html"><span class="sheet-section__thumb media"></span><span class="sheet-section__text"><span class="sheet-section__name"><span class="nav-label" data-text="Junior">Junior</span></span><span class="sheet-section__desc">Partidos, plantilla y noticias</span></span></a><button class="sheet-section__toggle" type="button" aria-expanded="false" aria-controls="hoja-junior" data-accordion><svg class="icon chevron" aria-hidden="true" focusable="false"><use href="#i-caret-down"></use></svg><span class="visually-hidden">Enlaces de Junior</span></button></div><div class="sheet-section__panel" id="hoja-junior" hidden><div class="sheet-sub__group"><p class="sheet-sub__label" id="sheet-sub-g-el-equipo">El equipo</p><ul class="sheet-sub__links" role="list" aria-labelledby="sheet-sub-g-el-equipo"><li><a class="sheet-sub__link" href="../junior.html#partidos"><span class="nav-label" data-text="Partidos de Junior">Partidos de Junior</span></a></li><li><a class="sheet-sub__link" href="../junior.html#plantilla"><span class="nav-label" data-text="Plantilla de Junior">Plantilla de Junior</span></a></li><li><a class="sheet-sub__link" href="../datos.html#posiciones"><span class="nav-label" data-text="Tabla de posiciones">Tabla de posiciones</span></a></li></ul></div><div class="sheet-sub__group"><p class="sheet-sub__label" id="sheet-sub-g-lo-ultimo">Lo último</p><ul class="sheet-sub__links" role="list" aria-labelledby="sheet-sub-g-lo-ultimo"><li><a class="sheet-sub__link" href="../noticias.html?tema=junior"><span class="nav-label" data-text="Noticias de Junior">Noticias de Junior</span></a></li><li><a class="sheet-sub__link" href="../videos.html?tema=junior"><span class="nav-label" data-text="Videos de Junior">Videos de Junior</span></a></li><li><a class="sheet-sub__link" href="../mercado.html?equipo=junior"><span class="nav-label" data-text="Mercado de Junior">Mercado de Junior</span></a></li></ul></div></div></li><li class="sheet-section" data-nav="fpc"><div class="sheet-section__row"><a class="sheet-section__link" href="../noticias.html?tema=futbol-colombiano"><span class="sheet-section__thumb media"></span><span class="sheet-section__text"><span class="sheet-section__name"><span class="visually-hidden">Fútbol colombiano (FPC)</span><span aria-hidden="true"><span class="nav-label" data-text="FPC">FPC</span></span></span><span class="sheet-section__desc">Liga, tabla y resultados</span></span></a><button class="sheet-section__toggle" type="button" aria-expanded="false" aria-controls="hoja-fpc" data-accordion><svg class="icon chevron" aria-hidden="true" focusable="false"><use href="#i-caret-down"></use></svg><span class="visually-hidden">Enlaces de FPC</span></button></div><div class="sheet-section__panel" id="hoja-fpc" hidden><div class="sheet-sub__group"><p class="sheet-sub__label" id="sheet-sub-g-futbol-colombiano">Fútbol colombiano</p><ul class="sheet-sub__links" role="list" aria-labelledby="sheet-sub-g-futbol-colombiano"><li><a class="sheet-sub__link" href="../noticias.html?tema=futbol-colombiano"><span class="nav-label" data-text="Noticias del FPC">Noticias del FPC</span></a></li><li><a class="sheet-sub__link" href="../videos.html?tema=fpc"><span class="nav-label" data-text="Videos del FPC">Videos del FPC</span></a></li><li><a class="sheet-sub__link" href="../datos.html#posiciones"><span class="nav-label" data-text="Posiciones">Posiciones</span></a></li><li><a class="sheet-sub__link" href="../datos.html#resultados"><span class="nav-label" data-text="Resultados de la fecha">Resultados de la fecha</span></a></li></ul></div><div class="sheet-sub__group"><p class="sheet-sub__label" id="sheet-sub-g-torneos">Torneos</p><ul class="sheet-sub__links" role="list" aria-labelledby="sheet-sub-g-torneos"><li><a class="sheet-sub__link" href="../datos.html?t=liga"><span class="nav-label" data-text="Liga BetPlay">Liga BetPlay</span></a></li><li><a class="sheet-sub__link" href="../datos.html?t=copa"><span class="nav-label" data-text="Copa Colombia">Copa Colombia</span></a></li><li><a class="sheet-sub__link" href="../datos.html?t=eliminatorias"><span class="nav-label" data-text="Eliminatorias">Eliminatorias</span></a></li><li><a class="sheet-sub__link" href="../datos.html?t=libertadores"><span class="nav-label" data-text="Copa Libertadores">Copa Libertadores</span></a></li><li><a class="sheet-sub__link" href="../datos.html?t=sudamericana"><span class="nav-label" data-text="Copa Sudamericana">Copa Sudamericana</span></a></li></ul></div></div></li><li class="sheet-section" data-nav="internacional"><div class="sheet-section__row"><a class="sheet-section__link" href="../noticias.html?tema=europa"><span class="sheet-section__thumb media"></span><span class="sheet-section__text"><span class="sheet-section__name"><span class="nav-label" data-text="Fútbol internacional">Fútbol internacional</span></span><span class="sheet-section__desc">Europa y colombianos afuera</span></span></a><button class="sheet-section__toggle" type="button" aria-expanded="false" aria-controls="hoja-internacional" data-accordion><svg class="icon chevron" aria-hidden="true" focusable="false"><use href="#i-caret-down"></use></svg><span class="visually-hidden">Enlaces de Fútbol internacional</span></button></div><div class="sheet-section__panel" id="hoja-internacional" hidden><div class="sheet-sub__group"><p class="sheet-sub__label" id="sheet-sub-g-europa">Europa</p><ul class="sheet-sub__links" role="list" aria-labelledby="sheet-sub-g-europa"><li><a class="sheet-sub__link" href="../noticias.html?tema=europa"><span class="nav-label" data-text="Noticias de Europa">Noticias de Europa</span></a></li></ul></div><div class="sheet-sub__group"><p class="sheet-sub__label" id="sheet-sub-g-colombianos-en-el-exterior">Colombianos en el exterior</p><ul class="sheet-sub__links" role="list" aria-labelledby="sheet-sub-g-colombianos-en-el-exterior"><li><a class="sheet-sub__link" href="../noticias.html?tema=colombianos-exterior"><span class="nav-label" data-text="Noticias de colombianos en el exterior">Noticias de colombianos en el exterior</span></a></li></ul></div><div class="sheet-sub__group"><p class="sheet-sub__label" id="sheet-sub-g-mercado">Mercado</p><ul class="sheet-sub__links" role="list" aria-labelledby="sheet-sub-g-mercado"><li><a class="sheet-sub__link" href="../mercado.html"><span class="nav-label" data-text="Mercado de fichajes">Mercado de fichajes</span></a></li></ul></div></div></li><li class="sheet-section" data-nav="mas"><div class="sheet-section__row"><a class="sheet-section__link" href="#pie-enlaces"><span class="sheet-section__thumb media"></span><span class="sheet-section__text"><span class="sheet-section__name"><span class="live-dot" aria-hidden="true"></span><span class="visually-hidden">, partido en vivo</span><span class="visually-hidden only-aire" hidden>, al aire ahora</span><span class="nav-label" data-text="Más">Más</span></span><span class="sheet-section__desc">Selección, Datos y En vivo</span></span></a><button class="sheet-section__toggle" type="button" aria-expanded="false" aria-controls="hoja-mas" data-accordion><svg class="icon chevron" aria-hidden="true" focusable="false"><use href="#i-caret-down"></use></svg><span class="visually-hidden">Enlaces de Más</span></button></div><div class="sheet-section__panel" id="hoja-mas" hidden><div class="sheet-sub__group"><p class="sheet-sub__label" id="sheet-sub-g-seleccion-colombia">Selección Colombia</p><ul class="sheet-sub__links" role="list" aria-labelledby="sheet-sub-g-seleccion-colombia"><li><a class="sheet-sub__link" href="../seleccion.html"><span class="nav-label" data-text="Selección Colombia">Selección Colombia</span></a></li><li><a class="sheet-sub__link" href="../seleccion.html#convocatoria"><span class="nav-label" data-text="Convocatoria">Convocatoria</span></a></li><li><a class="sheet-sub__link" href="../seleccion.html#partidos"><span class="nav-label" data-text="Partidos de la Selección">Partidos de la Selección</span></a></li><li><a class="sheet-sub__link" href="../noticias.html?tema=seleccion"><span class="nav-label" data-text="Noticias de la Selección">Noticias de la Selección</span></a></li><li><a class="sheet-sub__link" href="../videos.html?tema=seleccion"><span class="nav-label" data-text="Videos de la Selección">Videos de la Selección</span></a></li></ul></div><div class="sheet-sub__group"><p class="sheet-sub__label" id="sheet-sub-g-datos">Datos</p><ul class="sheet-sub__links" role="list" aria-labelledby="sheet-sub-g-datos"><li><a class="sheet-sub__link" href="../datos.html#hoy"><span class="nav-label" data-text="Partidos de hoy">Partidos de hoy</span></a></li><li><a class="sheet-sub__link" href="../partido.html"><span class="live-dot" aria-hidden="true"></span><span class="visually-hidden">, partido en vivo</span><span class="nav-label" data-text="Partido en vivo">Partido en vivo</span></a></li><li><a class="sheet-sub__link" href="../datos.html#posiciones"><span class="nav-label" data-text="Posiciones">Posiciones</span></a></li><li><a class="sheet-sub__link" href="../datos.html#resultados"><span class="nav-label" data-text="Resultados de la fecha">Resultados de la fecha</span></a></li><li><a class="sheet-sub__link" href="../datos.html#goleadores"><span class="nav-label" data-text="Goleadores">Goleadores</span></a></li><li><a class="sheet-sub__link" href="../datos.html#estadisticas"><span class="nav-label" data-text="Estadísticas">Estadísticas</span></a></li></ul></div><div class="sheet-sub__group"><p class="sheet-sub__label" id="sheet-sub-g-en-vivo">En vivo</p><ul class="sheet-sub__links" role="list" aria-labelledby="sheet-sub-g-en-vivo"><li><a class="sheet-sub__link" href="../en-vivo.html"><span class="live-dot only-aire" hidden aria-hidden="true"></span><span class="visually-hidden only-aire" hidden>, al aire ahora</span><span class="nav-label" data-text="El programa en vivo">El programa en vivo</span></a></li><li><a class="sheet-sub__link" href="../en-vivo.html#parrilla"><span class="nav-label" data-text="Parrilla">Parrilla</span></a></li><li><a class="sheet-sub__link" href="../en-vivo.html#episodios"><span class="nav-label" data-text="Programas anteriores">Programas anteriores</span></a></li><li><a class="sheet-sub__link" href="../en-vivo.html#participa"><span class="nav-label" data-text="Participa">Participa</span></a></li></ul></div><div class="sheet-sub__group"><p class="sheet-sub__label" id="sheet-sub-g-noticias">Noticias</p><ul class="sheet-sub__links" role="list" aria-labelledby="sheet-sub-g-noticias"><li><a class="sheet-sub__link" href="../noticias.html"><span class="nav-label" data-text="Todas las noticias">Todas las noticias</span></a></li><li><a class="sheet-sub__link" href="../noticias.html?tema=opinion"><span class="nav-label" data-text="Opinión">Opinión</span></a></li></ul></div><div class="sheet-sub__group"><p class="sheet-sub__label" id="sheet-sub-g-habla-deportes">Habla Deportes</p><ul class="sheet-sub__links" role="list" aria-labelledby="sheet-sub-g-habla-deportes"><li><a class="sheet-sub__link" href="../contacto.html#nosotros"><span class="nav-label" data-text="Quiénes somos">Quiénes somos</span></a></li><li><a class="sheet-sub__link" href="../contacto.html#contacto"><span class="nav-label" data-text="Contacto">Contacto</span></a></li><li><a class="sheet-sub__link" href="../contacto.html#publicidad"><span class="nav-label" data-text="Publicidad y patrocinios">Publicidad y patrocinios</span></a></li><li><a class="sheet-sub__link" href="#pie-aliados"><span class="nav-label" data-text="Nuestros aliados">Nuestros aliados</span></a></li><li><a class="sheet-sub__link" href="../redes.html"><span class="nav-label" data-text="Redes">Redes</span></a></li><li><a class="sheet-sub__link" href="../legales.html"><span class="nav-label" data-text="Legales">Legales</span></a></li></ul></div><div class="sheet-sub__group"><p class="sheet-sub__label" id="sheet-sub-g-el-programa">El programa</p><ul class="sheet-sub__links" role="list" aria-labelledby="sheet-sub-g-el-programa"><li><a class="sheet-sub__link" href="../juan-salvador.html"><span class="nav-label" data-text="Juan Salvador Bárcena">Juan Salvador Bárcena</span></a></li><li><a class="sheet-sub__link" href="../juan-salvador.html#videos"><span class="nav-label" data-text="Videos de Juan Salvador">Videos de Juan Salvador</span></a></li><li><a class="sheet-sub__link" href="../juan-salvador.html#x"><span class="nav-label" data-text="Su timeline en X">Su timeline en X</span></a></li><li><a class="sheet-sub__link" href="../juan-salvador.html#pregunta"><span class="nav-label" data-text="Pregúntale a Juan">Pregúntale a Juan</span></a></li></ul></div></div></li></ul></nav><ul class="sheet-social" role="list" aria-label="Habla Deportes en redes"><li><a class="icon-btn" href="https://youtube.com/@habladeportesradio" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-youtube-logo"></use></svg><span class="visually-hidden">YouTube (se abre en una pestaña nueva)</span></a></li><li><a class="icon-btn" href="https://www.instagram.com/" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-instagram-logo"></use></svg><span class="visually-hidden">Instagram (se abre en una pestaña nueva)</span></a></li><li><a class="icon-btn" href="https://x.com/" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-x-logo"></use></svg><span class="visually-hidden">X (se abre en una pestaña nueva)</span></a></li><li><a class="icon-btn" href="https://www.facebook.com/" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-facebook-logo"></use></svg><span class="visually-hidden">Facebook (se abre en una pestaña nueva)</span></a></li></ul></div></div>
+</header>
+<main id="contenido" class="site-main" tabindex="-1">
+<h1 class="visually-hidden">Habla Deportes: el programa, Junior y la Selección desde Barranquilla</h1>
+
+<!-- HERO · Cartel D «Cartel de partido · entrada de estadio».
+     Estado de ejemplo: lunes 9 de noviembre de 2026, 12:40 p. m. El programa de hoy ya terminó (data-aire="no"):
+     el escenario muestra el programa de hoy, en autoplay silenciado (main.js §8, data-hero-player).
+     Con data-aire="si", main.js carga la transmisión en vivo del canal y la pegatina pasa a «En vivo» (rojo).
+     Partido y tabla: nueva/data-datafactory.json (fecha 19; Junior 17.º, 16 pts; 8.º Águilas, 25 pts).
+     Sin estadio ni canal de TV en la fuente: no se muestran. Pasto no tiene escudo en el banco: monograma de marca. -->
+<section class="cartel hero-stage" aria-label="Destacado de la portada">
+  <div class="container cartel__grid">
+
+    <!-- 1 · El programa de hoy (primero en el DOM: video-first; en escritorio va a la derecha) -->
+    <div class="programa">
+      <div class="programa__head">
+        <p class="programa__rotulo">El programa de hoy</p>
+        <p class="programa__horario">Lunes a viernes, 10:00 a. m. a 12:00 m.</p>
+      </div>
+      <div class="hero-stage__player" data-hero-player data-video="sbECwF3dEaI" data-channel="UCm_25dALt4-r7C0wSsbaxzA">
+        <span class="pegatina" data-hero-chip>Al aire 10:00 a. m.</span>
+        <span class="cinta cinta--a" aria-hidden="true"></span>
+        <span class="cinta cinta--b" aria-hidden="true"></span>
+        <div class="hero-stage__frame" data-hero-frame>
+          <a class="hero-stage__poster" href="../video.html" data-hero-poster>
+            <img class="media__img" src="../assets/img/js-2.webp" alt="Juan Salvador Bárcena, de camiseta negra y gafas, pensativo ante el micrófono de Habla Deportes" width="1719" height="915" fetchpriority="high" decoding="async">
+            <span class="play play--lg"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-play-fill"></use></svg></span>
+            <span class="visually-hidden">Ver el programa de hoy</span>
+          </a>
+          <div class="hero-stage__controls" data-hero-controls hidden>
+            <button class="hero-stage__sound" type="button" data-hero-sound aria-pressed="false">
+              <span class="hero-stage__ico hero-stage__ico--off"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-speaker-x-fill"></use></svg></span>
+              <span class="hero-stage__ico hero-stage__ico--on"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-speaker-high-fill"></use></svg></span>
+              <span data-hero-sound-label>Activar sonido</span>
+            </button>
+            <button class="icon-btn icon-btn--on-dark hero-stage__pause" type="button" data-hero-pause aria-pressed="false">
+              <svg class="icon icon-pause" aria-hidden="true" focusable="false"><use href="#i-pause-fill"></use></svg><svg class="icon icon-play" aria-hidden="true" focusable="false"><use href="#i-play-fill"></use></svg>
+              <span class="visually-hidden" data-hero-pause-label>Pausar el video</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <p class="programa__meta"><b>El show de las mañanas</b> · Lun 9 nov<span class="solo-ancho"> · Programa completo</span></p>
+      <h2 class="programa__titulo afiche"><a href="../video.html">Pasto vs. Junior: la mesa saca las cuentas</a></h2>
+      <p class="programa__bajada">A las 10 de la mañana lo hablamos; a las 10 de la noche se juega.</p>
+      <div class="programa__acciones">
+        <a class="btn btn--primary" href="../video.html">Ver el programa completo</a>
+        <a class="link-action" href="https://youtube.com/@habladeportesradio" target="_blank" rel="noopener">Ver en YouTube<svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="#i-arrow-up-right"></use></svg><span class="visually-hidden"> (se abre en una pestaña nueva)</span></a>
+      </div>
+    </div>
+
+    <!-- 2 · La boleta de la fecha -->
+    <div class="boleta-wrap">
+      <article class="boleta" aria-labelledby="boleta-t">
+        <div class="boleta__cuerpo">
+          <div class="boleta__top">
+            <span class="sello-liga">Liga BetPlay 2026-II</span>
+            <span class="boleta__serie" aria-hidden="true">N.º 019 · 111126 · JUN</span>
+          </div>
+
+          <h2 class="duelo" id="boleta-t">
+            <span class="visually-hidden">Próximo partido de Junior: </span>
+            <span class="equipo equipo--local">
+              <span class="equipo__bloque equipo__bloque--mono" aria-hidden="true"><span class="equipo__mono">P</span></span>
+              <span class="equipo__txt"><span class="equipo__rol" aria-hidden="true">Local</span><span class="equipo__nombre afiche">Pasto</span></span>
+            </span>
+            <span class="duelo__vs">vs.</span>
+            <span class="equipo equipo--visita">
+              <span class="equipo__bloque equipo__bloque--escudo"><img src="../assets/img/escudo-junior.webp" alt="" width="208" height="237" decoding="async"></span>
+              <span class="equipo__txt"><span class="equipo__rol" aria-hidden="true">Visitante</span><span class="equipo__nombre afiche">Junior</span></span>
+            </span>
+          </h2>
+
+          <p class="cuando">
+            <time datetime="2026-11-11T22:00-05:00">
+              <span class="cuando__dia afiche">Miércoles<br>11 nov<small>Hora de Colombia</small></span>
+              <span class="cuando__hora">10:00</span>
+              <span class="cuando__ampm afiche">p. m.</span>
+            </time>
+          </p>
+
+          <div class="raya">
+            <p class="raya__dato"><strong>Junior llega 17.º</strong> con 16 puntos.<span class="solo-ancho"> Clasifican los 8 primeros.</span></p>
+            <p class="raya__pega" aria-hidden="true">A 9 puntos<br>del 8.º</p>
+            <p class="visually-hidden">Está a 9 puntos del octavo, Águilas Doradas, que tiene 25.</p>
+            <ol class="raya__fila" aria-hidden="true">
+              <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+              <li></li><li></li><li></li><li></li><li></li><li></li><li class="is-junior"></li><li></li><li></li><li></li>
+            </ol>
+            <div class="raya__eje" aria-hidden="true"><span>1.º a 8.º: clasifican</span><span>17.º Junior</span></div>
+            <p class="boleta__fuente">Datos: Datafactory, fecha 19.</p>
+          </div>
+        </div>
+
+        <div class="talon">
+          <span class="talon__liga" aria-hidden="true">Liga BetPlay</span>
+          <span class="sello-fecha">Fecha <b>19</b></span>
+          <span class="talon__admite" aria-hidden="true">Admite un hincha</span>
+          <span class="talon__barras" aria-hidden="true"></span>
+          <a class="talon__cta" href="../partido.html">Previa y datos<svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="#i-arrow-right"></use></svg></a>
+        </div>
+      </article>
+    </div>
+
+  </div>
+</section>
+
+<!-- Asomo del siguiente módulo (fuera del alcance de esta variación) -->
+<div class="asomo" aria-hidden="true">
+  <div class="container">
+    <div class="section-head"><p class="section-head__title" style="margin:0">Los programas de la semana</p><span class="link-action">Todos los programas</span></div>
+    <div class="asomo__fila"><div class="asomo__thumb"></div><div class="asomo__thumb"></div><div class="asomo__thumb"></div><div class="asomo__thumb"></div></div>
+  </div>
+</div>
+</main>
+<p class="wf-flag">Cartel D · wireframe · textos de ejemplo; partido y tabla de Datafactory</p>
+<!-- Dúo-tono de marca para el póster: sombras brand-800 (#183148) → luces hueso (#F5F1E8) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><filter id="duo-habla" color-interpolation-filters="sRGB"><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncR type="linear" slope="1.25" intercept="-0.1"/><feFuncG type="linear" slope="1.25" intercept="-0.1"/><feFuncB type="linear" slope="1.25" intercept="-0.1"/></feComponentTransfer><feComponentTransfer><feFuncR type="table" tableValues="0.094 0.961"/><feFuncG type="table" tableValues="0.192 0.945"/><feFuncB type="table" tableValues="0.282 0.910"/></feComponentTransfer></filter></svg>
+<nav class="bottom-nav" aria-label="Accesos rápidos"><ul class="bottom-nav__list" role="list"><li data-nav="inicio"><a class="bottom-nav__link" href="../index.html" aria-current="page"><span class="bottom-nav__icon"><svg class="icon icon-line" aria-hidden="true" focusable="false"><use href="#i-house"></use></svg><svg class="icon icon-fill" aria-hidden="true" focusable="false"><use href="#i-house-fill"></use></svg></span><span class="bottom-nav__label"><span class="nav-label" data-text="Inicio">Inicio</span></span></a></li><li data-nav="videos"><a class="bottom-nav__link" href="../videos.html"><span class="bottom-nav__icon"><svg class="icon icon-line" aria-hidden="true" focusable="false"><use href="#i-monitor-play"></use></svg><svg class="icon icon-fill" aria-hidden="true" focusable="false"><use href="#i-monitor-play-fill"></use></svg></span><span class="bottom-nav__label"><span class="nav-label" data-text="Videos">Videos</span></span></a></li><li data-nav="junior"><a class="bottom-nav__link" href="../junior.html"><span class="bottom-nav__icon"><svg class="icon icon-line" aria-hidden="true" focusable="false"><use href="#i-shield"></use></svg><svg class="icon icon-fill" aria-hidden="true" focusable="false"><use href="#i-shield-fill"></use></svg></span><span class="bottom-nav__label"><span class="nav-label" data-text="Junior">Junior</span></span></a></li><li data-nav="fpc"><a class="bottom-nav__link" href="../noticias.html?tema=futbol-colombiano"><span class="bottom-nav__icon"><svg class="icon icon-line" aria-hidden="true" focusable="false"><use href="#i-trophy"></use></svg><svg class="icon icon-fill" aria-hidden="true" focusable="false"><use href="#i-trophy-fill"></use></svg></span><span class="bottom-nav__label"><span class="visually-hidden">Fútbol colombiano (FPC)</span><span aria-hidden="true"><span class="nav-label" data-text="FPC">FPC</span></span></span></a></li><li data-nav="internacional"><a class="bottom-nav__link" href="../noticias.html?tema=europa"><span class="bottom-nav__icon"><svg class="icon icon-line" aria-hidden="true" focusable="false"><use href="#i-globe"></use></svg><svg class="icon icon-fill" aria-hidden="true" focusable="false"><use href="#i-globe-fill"></use></svg></span><span class="bottom-nav__label"><span class="visually-hidden">Mundo: fútbol internacional</span><span aria-hidden="true"><span class="nav-label" data-text="Mundo">Mundo</span></span></span></a></li><li data-nav="mas"><button class="bottom-nav__link" type="button" aria-expanded="false" aria-controls="menu-movil" data-menu-toggle><span class="bottom-nav__icon"><svg class="icon icon-line" aria-hidden="true" focusable="false"><use href="#i-dots-three"></use></svg><svg class="icon icon-fill" aria-hidden="true" focusable="false"><use href="#i-dots-three-fill"></use></svg></span><span class="bottom-nav__label"><span class="nav-label" data-text="Más">Más</span></span><span class="bottom-nav__dot" aria-hidden="true"></span><span class="visually-hidden">, partido en vivo</span><span class="visually-hidden only-aire" hidden>, al aire ahora</span></button></li></ul></nav>
+<svg class="icon-sprite" width="0" height="0" aria-hidden="true" focusable="false"><symbol id="i-arrow-left" viewBox="0 0 256 256" fill="currentColor"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"/></symbol><symbol id="i-arrow-right" viewBox="0 0 256 256" fill="currentColor"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></symbol><symbol id="i-arrow-up-right" viewBox="0 0 256 256" fill="currentColor"><path d="M200,64V168a8,8,0,0,1-16,0V83.31L69.66,197.66a8,8,0,0,1-11.32-11.32L172.69,72H88a8,8,0,0,1,0-16H192A8,8,0,0,1,200,64Z"/></symbol><symbol id="i-calendar-blank" viewBox="0 0 256 256" fill="currentColor"><path d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Z"/></symbol><symbol id="i-caret-down" viewBox="0 0 256 256" fill="currentColor"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"/></symbol><symbol id="i-caret-left" viewBox="0 0 256 256" fill="currentColor"><path d="M165.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128Z"/></symbol><symbol id="i-caret-right" viewBox="0 0 256 256" fill="currentColor"><path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"/></symbol><symbol id="i-check" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></symbol><symbol id="i-dots-three" viewBox="0 0 256 256" fill="currentColor"><path d="M48,128a16,16 0 1,0 32,0a16,16 0 1,0 -32,0ZM112,128a16,16 0 1,0 32,0a16,16 0 1,0 -32,0ZM176,128a16,16 0 1,0 32,0a16,16 0 1,0 -32,0Z"/></symbol><symbol id="i-dots-three-fill" viewBox="0 0 256 256" fill="currentColor"><path fill-rule="evenodd" d="M16,128a112,112 0 1,0 224,0a112,112 0 1,0 -224,0ZM60,128a16,16 0 1,0 32,0a16,16 0 1,0 -32,0ZM112,128a16,16 0 1,0 32,0a16,16 0 1,0 -32,0ZM164,128a16,16 0 1,0 32,0a16,16 0 1,0 -32,0Z"/></symbol><symbol id="i-facebook-logo" viewBox="0 0 256 256" fill="currentColor"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm8,191.63V152h24a8,8,0,0,0,0-16H136V112a16,16,0,0,1,16-16h16a8,8,0,0,0,0-16H152a32,32,0,0,0-32,32v24H96a8,8,0,0,0,0,16h24v63.63a88,88,0,1,1,16,0Z"/></symbol><symbol id="i-globe" viewBox="0 0 256 256" fill="currentColor"><circle cx="128" cy="128" r="96" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><ellipse cx="128" cy="128" rx="40" ry="96" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><path d="M32,128H224" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></symbol><symbol id="i-globe-fill" viewBox="0 0 256 256" fill="currentColor"><circle cx="128" cy="128" r="96" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/><ellipse cx="128" cy="128" rx="40" ry="96" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/><path d="M32,128H224" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/></symbol><symbol id="i-house" viewBox="0 0 256 256" fill="currentColor"><path d="M219.31,108.68l-80-80a16,16,0,0,0-22.62,0l-80,80A15.87,15.87,0,0,0,32,120v96a8,8,0,0,0,8,8h64a8,8,0,0,0,8-8V160h32v56a8,8,0,0,0,8,8h64a8,8,0,0,0,8-8V120A15.87,15.87,0,0,0,219.31,108.68ZM208,208H160V152a8,8,0,0,0-8-8H104a8,8,0,0,0-8,8v56H48V120l80-80,80,80Z"/></symbol><symbol id="i-house-fill" viewBox="0 0 256 256" fill="currentColor"><path d="M224,120v96a8,8,0,0,1-8,8H160a8,8,0,0,1-8-8V164a4,4,0,0,0-4-4H108a4,4,0,0,0-4,4v52a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V120a16,16,0,0,1,4.69-11.31l80-80a16,16,0,0,1,22.62,0l80,80A16,16,0,0,1,224,120Z"/></symbol><symbol id="i-instagram-logo" viewBox="0 0 256 256" fill="currentColor"><path d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160ZM176,24H80A56.06,56.06,0,0,0,24,80v96a56.06,56.06,0,0,0,56,56h96a56.06,56.06,0,0,0,56-56V80A56.06,56.06,0,0,0,176,24Zm40,152a40,40,0,0,1-40,40H80a40,40,0,0,1-40-40V80A40,40,0,0,1,80,40h96a40,40,0,0,1,40,40ZM192,76a12,12,0,1,1-12-12A12,12,0,0,1,192,76Z"/></symbol><symbol id="i-list" viewBox="0 0 256 256" fill="currentColor"><path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"/></symbol><symbol id="i-magnifying-glass" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"/></symbol><symbol id="i-monitor-play" viewBox="0 0 256 256" fill="currentColor"><path d="M208,40H48A24,24,0,0,0,24,64V176a24,24,0,0,0,24,24H208a24,24,0,0,0,24-24V64A24,24,0,0,0,208,40Zm8,136a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V64a8,8,0,0,1,8-8H208a8,8,0,0,1,8,8Zm-48,48a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,224Zm-3.56-110.66-48-32A8,8,0,0,0,104,88v64a8,8,0,0,0,12.44,6.66l48-32a8,8,0,0,0,0-13.32ZM120,137.05V103l25.58,17Z"/></symbol><symbol id="i-monitor-play-fill" viewBox="0 0 256 256" fill="currentColor"><path d="M168,224a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,224ZM232,64V176a24,24,0,0,1-24,24H48a24,24,0,0,1-24-24V64A24,24,0,0,1,48,40H208A24,24,0,0,1,232,64Zm-68,56a8,8,0,0,0-3.41-6.55l-40-28A8,8,0,0,0,108,92v56a8,8,0,0,0,12.59,6.55l40-28A8,8,0,0,0,164,120Z"/></symbol><symbol id="i-pause-fill" viewBox="0 0 256 256" fill="currentColor"><path d="M216,48V208a16,16,0,0,1-16,16H160a16,16,0,0,1-16-16V48a16,16,0,0,1,16-16h40A16,16,0,0,1,216,48ZM96,32H56A16,16,0,0,0,40,48V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V48A16,16,0,0,0,96,32Z"/></symbol><symbol id="i-play-fill" viewBox="0 0 256 256" fill="currentColor"><path d="M240,128a15.74,15.74,0,0,1-7.6,13.51L88.32,229.65a16,16,0,0,1-16.2.3A15.86,15.86,0,0,1,64,216.13V39.87a15.86,15.86,0,0,1,8.12-13.82,16,16,0,0,1,16.2.3L232.4,114.49A15.74,15.74,0,0,1,240,128Z"/></symbol><symbol id="i-shield" viewBox="0 0 256 256" fill="currentColor"><path d="M48,56H208v64c0,68-52,96-80,108C100,216,48,188,48,120Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></symbol><symbol id="i-shield-fill" viewBox="0 0 256 256" fill="currentColor"><path d="M48,56H208v64c0,68-52,96-80,108C100,216,48,188,48,120Z" stroke="currentColor" stroke-width="16" stroke-linejoin="round"/></symbol><symbol id="i-speaker-high-fill" viewBox="0 0 256 256" fill="currentColor"><path d="M160,32.25V223.69a8.29,8.29,0,0,1-3.91,7.18,8,8,0,0,1-9-.56l-65.57-51A4,4,0,0,1,80,176.16V79.84a4,4,0,0,1,1.55-3.15l65.57-51a8,8,0,0,1,10,.16A8.27,8.27,0,0,1,160,32.25ZM60,80H32A16,16,0,0,0,16,96v64a16,16,0,0,0,16,16H60a4,4,0,0,0,4-4V84A4,4,0,0,0,60,80Zm126.77,20.84a8,8,0,0,0-.72,11.3,24,24,0,0,1,0,31.72,8,8,0,1,0,12,10.58,40,40,0,0,0,0-52.88A8,8,0,0,0,186.74,100.84Zm40.89-26.17a8,8,0,1,0-11.92,10.66,64,64,0,0,1,0,85.34,8,8,0,1,0,11.92,10.66,80,80,0,0,0,0-106.66Z"/></symbol><symbol id="i-speaker-x-fill" viewBox="0 0 256 256" fill="currentColor"><path d="M245.66,146.34a8,8,0,0,1-11.32,11.32L216,139.31l-18.34,18.35a8,8,0,0,1-11.32-11.32L204.69,128l-18.35-18.34a8,8,0,0,1,11.32-11.32L216,116.69l18.34-18.35a8,8,0,0,1,11.32,11.32L227.31,128ZM60,80H32A16,16,0,0,0,16,96v64a16,16,0,0,0,16,16H60a4,4,0,0,0,4-4V84A4,4,0,0,0,60,80Zm97.15-54.15a8,8,0,0,0-10-.16l-65.57,51A4,4,0,0,0,80,79.84v96.32a4,4,0,0,0,1.55,3.15l65.57,51a8,8,0,0,0,9,.56,8.29,8.29,0,0,0,3.91-7.18V32.25A8.27,8.27,0,0,0,157.12,25.85Z"/></symbol><symbol id="i-trophy" viewBox="0 0 256 256" fill="currentColor"><path d="M72,40H184V96a56,56,0,0,1-112,0Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><path d="M72,64H48a16,16,0,0,0-16,16v8a32,32,0,0,0,40,30M184,64h24a16,16,0,0,1,16,16v8a32,32,0,0,1-40,30M128,152v56M88,216h80" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></symbol><symbol id="i-trophy-fill" viewBox="0 0 256 256" fill="currentColor"><path d="M72,40H184V96a56,56,0,0,1-112,0Z" stroke="currentColor" stroke-width="16" stroke-linejoin="round"/><path d="M72,64H48a16,16,0,0,0-16,16v8a32,32,0,0,0,40,30M184,64h24a16,16,0,0,1,16,16v8a32,32,0,0,1-40,30M128,152v56M88,216h80" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></symbol><symbol id="i-warning-circle" viewBox="0 0 256 256" fill="currentColor"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm-8-80V80a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,172Z"/></symbol><symbol id="i-x" viewBox="0 0 256 256" fill="currentColor"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></symbol><symbol id="i-x-logo" viewBox="0 0 256 256" fill="currentColor"><path d="M214.75,211.71l-62.6-98.38,61.77-67.95a8,8,0,0,0-11.84-10.76L143.24,99.34,102.75,35.71A8,8,0,0,0,96,32H48a8,8,0,0,0-6.75,12.3l62.6,98.37-61.77,68a8,8,0,1,0,11.84,10.76l58.84-64.72,40.49,63.63A8,8,0,0,0,160,224h48a8,8,0,0,0,6.75-12.29ZM164.39,208,62.57,48h29L193.43,208Z"/></symbol><symbol id="i-youtube-logo" viewBox="0 0 256 256" fill="currentColor"><path d="M164.44,121.34l-48-32A8,8,0,0,0,104,96v64a8,8,0,0,0,12.44,6.66l48-32a8,8,0,0,0,0-13.32ZM120,145.05V111l25.58,17ZM234.33,69.52a24,24,0,0,0-14.49-16.4C185.56,39.88,131,40,128,40s-57.56-.12-91.84,13.12a24,24,0,0,0-14.49,16.4C19.08,79.5,16,97.74,16,128s3.08,48.5,5.67,58.48a24,24,0,0,0,14.49,16.41C69,215.56,120.4,216,127.34,216h1.32c6.94,0,58.37-.44,91.18-13.11a24,24,0,0,0,14.49-16.41c2.59-10,5.67-28.22,5.67-58.48S236.92,79.5,234.33,69.52Zm-15.49,113a8,8,0,0,1-4.77,5.49c-31.65,12.22-85.48,12-86,12H128c-.54,0-54.33.2-86-12a8,8,0,0,1-4.77-5.49C34.8,173.39,32,156.57,32,128s2.8-45.39,5.16-54.47A8,8,0,0,1,41.93,68c30.52-11.79,81.66-12,85.85-12h.27c.54,0,54.38-.18,86,12a8,8,0,0,1,4.77,5.49C221.2,82.61,224,99.43,224,128S221.2,173.39,218.84,182.47Z"/></symbol></svg>
+</body>
+</html>

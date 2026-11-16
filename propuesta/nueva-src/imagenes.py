@@ -81,6 +81,16 @@ CATALOGO = {
     "Logotipo_FPF_2016": ("Logotipo_FPF_2016.png", "escudo-peru.webp", "escudo", "Escudo de la Selección Perú", None),
 }
 
+# Escudos provisionales de Datafactory (descargar_escudos.py) para el resto de la Liga BetPlay
+_LIGA = {"cali": "Deportivo Cali", "bucaramanga": "Atlético Bucaramanga", "santa-fe": "Independiente Santa Fe",
+         "once-caldas": "Once Caldas", "cucuta": "Cúcuta Deportivo", "aguilas": "Águilas Doradas",
+         "llaneros": "Llaneros FC", "int-bogota": "Internacional de Bogotá", "boyaca-chico": "Boyacá Chicó",
+         "alianza": "Alianza Valledupar", "pereira": "Deportivo Pereira", "pasto": "Deportivo Pasto",
+         "jaguares": "Jaguares de Córdoba", "fortaleza": "Fortaleza FC"}
+for _c, _n in _LIGA.items():
+    CATALOGO[f"escudo-{_c}"] = (f"escudo-{_c}.png", f"escudo-{_c}.webp", "escudo", f"Escudo de {_n}", None)
+ESCUDOS_LIGA = {c: f"escudo-{c}.png" for c in _LIGA}
+
 _dims = {}
 FONDO_OSCURO = {"invitado-estudio"}
 

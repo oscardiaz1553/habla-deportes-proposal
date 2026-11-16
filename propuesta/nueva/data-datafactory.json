@@ -1,7 +1,7 @@
 {
-  "_aviso": "Foto tomada del HTML de Diario Deportes (fuente: Datafactory). Solo para la maqueta; en producción la sustituye la API de Datafactory con el mismo formato.",
+  "_aviso": "Foto tomada de las páginas públicas del HTML Center de Datafactory (publisher). Solo para la maqueta; en producción la sustituye la API de Datafactory con el mismo formato.",
   "fuente": "Datafactory",
-  "capturado": "2026-11-07T16:54-05:00",
+  "capturado": "2026-11-16T12:55-05:00",
   "torneo": {
     "nombre": "Liga BetPlay",
     "detalle": "Liga BetPlay 2026-II · Todos contra todos. Los 8 primeros clasifican.",
@@ -24,165 +24,165 @@
       "pos": 1,
       "equipo": "nacional",
       "nombre": "At. Nacional",
-      "pj": 17,
-      "dg": 19,
-      "pts": 36
+      "pj": 19,
+      "dg": 20,
+      "pts": 40
     },
     {
       "pos": 2,
       "equipo": "america",
       "nombre": "América de Cali",
-      "pj": 17,
-      "dg": 19,
-      "pts": 35
+      "pj": 19,
+      "dg": 16,
+      "pts": 36
     },
     {
       "pos": 3,
       "equipo": "cali",
       "nombre": "Deportivo Cali",
-      "pj": 17,
+      "pj": 19,
       "dg": 16,
-      "pts": 33
+      "pts": 35
     },
     {
       "pos": 4,
       "equipo": "bucaramanga",
       "nombre": "Bucaramanga",
-      "pj": 17,
-      "dg": 9,
-      "pts": 29
+      "pj": 19,
+      "dg": 14,
+      "pts": 35
     },
     {
       "pos": 5,
-      "equipo": "medellin",
-      "nombre": "Independiente Medellín",
-      "pj": 18,
-      "dg": 3,
-      "pts": 29
+      "equipo": "santa-fe",
+      "nombre": "Santa Fe",
+      "pj": 19,
+      "dg": 12,
+      "pts": 34
     },
     {
       "pos": 6,
-      "equipo": "santa-fe",
-      "nombre": "Santa Fe",
-      "pj": 17,
-      "dg": 5,
-      "pts": 28
+      "equipo": "medellin",
+      "nombre": "Independiente Medellín",
+      "pj": 19,
+      "dg": 4,
+      "pts": 32
     },
     {
       "pos": 7,
       "equipo": "millonarios",
       "nombre": "Millonarios",
-      "pj": 17,
-      "dg": 10,
-      "pts": 27
+      "pj": 19,
+      "dg": 11,
+      "pts": 30
     },
     {
       "pos": 8,
-      "equipo": "aguilas",
-      "nombre": "Águilas Doradas Rionegro",
-      "pj": 17,
-      "dg": 2,
-      "pts": 25
+      "equipo": "once-caldas",
+      "nombre": "Once Caldas",
+      "pj": 19,
+      "dg": 4,
+      "pts": 28
     },
     {
-      "pos": 17,
+      "pos": 14,
       "equipo": "junior",
       "nombre": "Junior",
-      "pj": 17,
-      "dg": -4,
-      "pts": 16
+      "pj": 19,
+      "dg": -1,
+      "pts": 22
     }
   ],
   "partidos": [
     {
       "local": "pasto",
       "visitante": "junior",
-      "dia": "2026-11-11",
-      "hora": "10:00 p.m.",
-      "estado": "proximo",
-      "gl": null,
-      "gv": null
-    },
-    {
-      "local": "nacional",
-      "visitante": "once-caldas",
-      "dia": "2026-11-11",
-      "hora": "10:00 p.m.",
-      "estado": "proximo",
-      "gl": null,
-      "gv": null
-    },
-    {
-      "local": "aguilas",
-      "visitante": "medellin",
-      "dia": "2026-11-11",
-      "hora": "10:00 p.m.",
-      "estado": "proximo",
-      "gl": null,
-      "gv": null
-    },
-    {
-      "local": "cucuta",
-      "visitante": "jaguares",
-      "dia": "2026-11-11",
-      "hora": "10:00 p.m.",
-      "estado": "proximo",
-      "gl": null,
-      "gv": null
-    },
-    {
-      "local": "bucaramanga",
-      "visitante": "fortaleza",
-      "dia": "2026-11-11",
-      "hora": "10:00 p.m.",
-      "estado": "proximo",
-      "gl": null,
-      "gv": null
-    },
-    {
-      "local": "int-bogota",
-      "visitante": "santa-fe",
-      "dia": "2026-11-11",
-      "hora": "10:00 p.m.",
-      "estado": "proximo",
-      "gl": null,
-      "gv": null
-    },
-    {
-      "local": "millonarios",
-      "visitante": "alianza",
-      "dia": "2026-11-11",
-      "hora": "10:00 p.m.",
-      "estado": "proximo",
-      "gl": null,
-      "gv": null
+      "dia": "2026-11-12",
+      "hora": "8:00 p.m.",
+      "estado": "final",
+      "gl": 0,
+      "gv": 1
     },
     {
       "local": "llaneros",
       "visitante": "boyaca-chico",
-      "dia": "2026-11-11",
-      "hora": "10:00 p.m.",
-      "estado": "proximo",
-      "gl": null,
-      "gv": null
+      "dia": "2026-11-12",
+      "hora": "9:00 p.m.",
+      "estado": "final",
+      "gl": 0,
+      "gv": 0
+    },
+    {
+      "local": "int-bogota",
+      "visitante": "santa-fe",
+      "dia": "2026-11-13",
+      "hora": "10:30 p.m.",
+      "estado": "final",
+      "gl": 0,
+      "gv": 2
+    },
+    {
+      "local": "nacional",
+      "visitante": "once-caldas",
+      "dia": "2026-11-14",
+      "hora": "5:30 p.m.",
+      "estado": "final",
+      "gl": 1,
+      "gv": 1
+    },
+    {
+      "local": "aguilas",
+      "visitante": "medellin",
+      "dia": "2026-11-14",
+      "hora": "5:30 p.m.",
+      "estado": "final",
+      "gl": 0,
+      "gv": 1
+    },
+    {
+      "local": "cucuta",
+      "visitante": "jaguares",
+      "dia": "2026-11-14",
+      "hora": "5:30 p.m.",
+      "estado": "final",
+      "gl": 2,
+      "gv": 0
+    },
+    {
+      "local": "bucaramanga",
+      "visitante": "fortaleza",
+      "dia": "2026-11-14",
+      "hora": "5:30 p.m.",
+      "estado": "final",
+      "gl": 1,
+      "gv": 0
+    },
+    {
+      "local": "millonarios",
+      "visitante": "alianza",
+      "dia": "2026-11-14",
+      "hora": "5:30 p.m.",
+      "estado": "final",
+      "gl": 2,
+      "gv": 0
     },
     {
       "local": "cali",
       "visitante": "tolima",
-      "dia": "2026-11-11",
-      "hora": "10:00 p.m.",
-      "estado": "proximo",
-      "gl": null,
-      "gv": null
+      "dia": "2026-11-14",
+      "hora": "5:30 p.m.",
+      "estado": "final",
+      "gl": 2,
+      "gv": 2
     },
     {
       "local": "pereira",
       "visitante": "america",
-      "dia": "2026-11-11",
-      "hora": "10:00 p.m.",
-      "estado": "proximo",
-      "gl": null,
-      "gv": null
+      "dia": "2026-11-14",
+      "hora": "5:30 p.m.",
+      "estado": "final",
+      "gl": 0,
+      "gv": 2
     }
   ]
 }

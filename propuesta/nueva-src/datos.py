@@ -23,6 +23,12 @@ if DF:
     DF_HOY = dt.date.fromisoformat(DF["capturado"][:10])
     DF_AHORA = dt.datetime.fromisoformat(DF["capturado"])
 
+# Escudos provisionales de Datafactory para el resto de la liga (ver imagenes.ESCUDOS_LIGA)
+import imagenes as _imagenes
+for _k, _f in _imagenes.ESCUDOS_LIGA.items():
+    if _k in EQUIPOS and not EQUIPOS[_k].get("escudo"):
+        EQUIPOS[_k]["escudo"] = _f
+
 DIAS = ["lun", "mar", "mié", "jue", "vie", "sáb", "dom"]
 DIAS_LARGO = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"]
 MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"]

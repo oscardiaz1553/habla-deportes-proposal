@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Opción C · Centro de partidos (wireframe)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<link rel="stylesheet" href="../assets/css/components.css">
+<style>
+/* Opción C · estilos propios del wireframe (sin JavaScript) */
+.wf-note{background:var(--brand-50);border-bottom:1px solid var(--color-border);padding:8px 0;font-size:var(--fs-meta);color:var(--color-text-secondary)}
+.wf-head{background:var(--brand-600);color:#fff}
+.wf-head__in{display:flex;align-items:center;gap:24px;min-height:64px}
+.wf-head img{height:32px;width:auto}
+.wf-head nav{display:flex;gap:20px;overflow-x:auto;font-size:var(--fs-meta);font-weight:500;white-space:nowrap}
+.wf-head a{color:#fff;text-decoration:none}
+.wf-tag{display:inline-block;font-size:11px;font-weight:600;color:var(--color-text-muted);border:1px dashed var(--color-border-field);padding:0 6px;margin-left:8px;vertical-align:middle}
+.daybar{display:flex;gap:8px 16px;align-items:center;flex-wrap:wrap;padding:16px 0 0}
+.daybar b{font-family:var(--font-display);font-size:var(--fs-title-sm)}
+.fold{display:grid;gap:16px;margin-top:16px}
+.fold__video h2{font-size:var(--fs-title-lg);margin-top:12px;line-height:1.2}
+.fold__video h2 a{color:inherit;text-decoration:none}
+.fold__video p{margin-top:4px}
+.jr{background:var(--color-surface-dark);color:#fff;padding:24px 16px 16px;display:flex;flex-direction:column;justify-content:center;gap:16px;text-align:center}
+.jr__top{display:flex;justify-content:space-between;font-size:13px;font-weight:500}
+.jr__teams{display:flex;align-items:center;justify-content:center;gap:16px}
+.jr__team{display:grid;justify-items:center;gap:8px;font-family:var(--font-display);font-weight:700}
+.jr__team .crest{height:64px}
+.jr__team .crest--mono{width:64px;font-size:18px!important}
+.jr__time{white-space:nowrap;font-family:var(--font-display);font-size:32px;font-weight:700;line-height:1}
+.jr__time small{font-size:14px;font-weight:500;margin-left:4px}
+.jr__count{font-size:13px;margin-top:4px;opacity:.85}
+.jr__facts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;border-top:1px solid var(--color-border-on-dark);padding-top:16px}
+.jr__facts b{display:block;font-family:var(--font-display);font-size:24px}
+.jr__facts span{font-size:12px;opacity:.85}
+.jr__cta{color:#fff;font-weight:600;font-size:var(--fs-meta)}
+.board{display:grid;gap:32px;margin-top:40px}
+.cal{list-style:none;margin:0;padding:0}
+.cal__row{display:grid;grid-template-columns:1fr 72px 1fr;align-items:center;gap:8px;min-height:48px;border-bottom:1px solid var(--color-border);font-size:var(--fs-meta);font-weight:500}
+.cal__row.is-junior{background:var(--color-surface-selected);font-weight:700}
+.cal__team{display:flex;align-items:center;gap:8px;min-width:0}
+.cal__team--l{justify-content:flex-end;text-align:right}
+.cal__time{text-align:center;font-family:var(--font-display);font-weight:700;font-variant-numeric:tabular-nums}
+.cal__time small{font-weight:500;color:var(--color-text-muted)}
+.cal__day{font-family:var(--font-display);font-weight:700;padding:12px 0 8px;border-bottom:2px solid var(--color-text)}
+.kv{grid-template-columns:1fr auto}
+.standings{width:100%}
+.standings .gap td{height:32px;text-align:center;color:var(--color-text-muted);font-size:12px;background:var(--color-surface-subtle)}
+.nodata{border:1px dashed var(--color-border-field);padding:12px;margin-top:24px;font-size:var(--fs-meta);color:var(--color-text-secondary)}
+.nodata b{color:var(--color-text)}
+.around,.pcs,.cols,.states{display:grid;gap:24px;margin-top:16px}
+.nt{display:grid;gap:8px;align-content:start}
+.nt h3{font-size:var(--fs-title-md);line-height:1.25;font-weight:600}
+.nt a,.pc a{color:var(--color-text);text-decoration:none}
+.pc{display:grid;gap:8px;align-content:start}
+.pc h3{font-size:var(--fs-title-sm);font-weight:600;line-height:1.3}
+.media--crest{display:grid;place-items:center}
+.shorts{display:grid;grid-auto-flow:column;grid-auto-columns:42%;gap:16px;overflow-x:auto;margin-top:16px}
+.shorts .media{aspect-ratio:9/16}
+.shorts p{font-size:var(--fs-meta);font-weight:600;margin-top:8px}
+.cols h3{font-family:var(--font-display);font-size:var(--fs-title-sm);border-bottom:2px solid var(--color-text);padding-bottom:8px;margin-bottom:8px}
+.cols ul{margin:0;padding:0}
+.cols li{list-style:none;padding:12px 0;border-bottom:1px solid var(--color-border);font-weight:500;line-height:1.35}
+.state{border:1px solid var(--color-border);padding:16px;display:grid;gap:8px;font-size:var(--fs-meta)}
+.state__row{display:flex;align-items:center;justify-content:space-between;gap:8px;font-family:var(--font-display);font-weight:700;font-size:var(--fs-title-sm)}
+.state__live{color:var(--color-live);font-size:12px;font-weight:700}
+.sponsor{display:grid;place-items:center;min-height:100px;background:var(--color-surface-subtle);border:1px solid var(--color-border);color:var(--color-text-muted);font-size:var(--fs-meta);margin-top:16px;text-align:center}
+.wf-main{display:grid;gap:0}
+.wf-foot{background:var(--color-surface-dark);color:#fff;margin-top:64px;padding:32px 0;font-size:var(--fs-meta)}
+@media (min-width:768px){
+ .around{grid-template-columns:repeat(3,1fr)}
+ .pcs,.cols{grid-template-columns:repeat(4,1fr)}
+ .states{grid-template-columns:repeat(3,1fr)}
+ .shorts{grid-auto-columns:22%}
+}
+@media (min-width:1024px){
+ .fold{grid-template-columns:7fr 5fr;gap:24px;align-items:stretch}
+ .jr{min-height:424px;padding:24px 32px 16px}
+ .jr__team .crest{height:112px}
+ .jr__team .crest--mono{width:112px;font-size:24px!important}
+ .jr__time{font-size:40px}
+ .board{grid-template-columns:1fr 1fr;gap:48px}
+ .shorts{grid-auto-columns:calc((100% - 64px)/5)}
+ .wf-main{grid-template-columns:minmax(0,1fr) 300px;gap:48px;align-items:start}
+}
+@media (max-width:1023px){.fold__video{order:1}.jr{order:2}}
+</style>
+</head>
+<body>
+<div class="wf-note"><div class="container"><strong>Opción C · Centro de partidos.</strong> Wireframe de media fidelidad. Datos: foto de Datafactory del 7 nov 2026 (maqueta). Datafactory no entrega marcador en vivo, estadio ni canal.</div></div>
+<header class="wf-head"><div class="container wf-head__in"><img src="../assets/img/logo-habla-blanco.webp" alt="Habla Deportes" height="32"><nav aria-label="Principal (resumen)"><a href="#">Inicio</a><a href="#">Videos</a><a href="#">Junior</a><a href="#">FPC</a><a href="#">Fútbol internacional</a><a href="#">Más</a></nav></div></header>
+
+<main>
+<div class="container">
+<h1 class="visually-hidden">Habla Deportes: partidos, tabla y noticias del fútbol colombiano</h1>
+
+<!-- C1 · Barra del día -->
+<div class="daybar" data-module="C1"><b>Hoy, domingo 8 de noviembre</b><span class="chip">Liga BetPlay · Fecha 19</span><span class="meta">Próximo partido de Junior: miércoles 11 nov, 10:00 p. m.</span></div>
+
+<!-- C2 · Primer plano: video (autoplay silenciado) + tarjeta del partido de Junior -->
+<section class="fold" aria-label="Lo principal de hoy" data-module="C2">
+ <div class="fold__video">
+  <div class="media"><img class="media__img" src="../assets/img/js-2.webp" alt="Juan Salvador Bárcena, de camiseta negra y gafas, pensativo ante el micrófono de Habla Deportes" width="1719" height="915" style="--focus:60% 35%"><span class="chip-media chip-media--tl">Último programa</span></div>
+  <h2><a href="#">¡Sorpresiva llegada! El refuerzo de Junior que pocos esperaban</a></h2>
+  <p class="meta">Habla Deportes · Video del programa · Sonido a un clic</p>
+ </div>
+ <article class="jr" aria-label="Próximo partido de Junior">
+  <p class="jr__top"><span>Liga BetPlay · Fecha 19</span><span>Próximo</span></p>
+  <div class="jr__teams">
+   <div class="jr__team"><span class="crest crest--mono" style="color:#fff;border-color:var(--color-border-on-dark)">PAS</span>Pasto</div>
+   <div><div class="jr__time">10:00<small>p. m.</small></div><p class="jr__count">Mié 11 nov · faltan 3 días</p></div>
+   <div class="jr__team"><img class="crest" src="../assets/img/escudo-junior.webp" alt="" height="88" style="height:var(--cr,64px)">Junior</div>
+  </div>
+  <div class="jr__facts">
+   <div><b>17.º</b><span>en la tabla</span></div><div><b>16</b><span>puntos</span></div><div><b>9</b><span>puntos del 8.º</span></div>
+  </div>
+  <a class="jr__cta" href="#">Ver la previa del partido ›</a>
+ </article>
+</section>
+
+<!-- C3 · Tablero de datos: calendario + tabla -->
+<section class="board" aria-label="Calendario y tabla" data-module="C3">
+ <div>
+  <div class="section-head"><h2 class="section-head__title">Calendario de la Fecha 19</h2><a class="link-action" href="#">Todos los partidos ›</a></div>
+  <p class="cal__day">Miércoles 11 de noviembre</p>
+  <ul class="cal"><li class="cal__row is-junior"><span class="cal__team cal__team--l">Pasto <span class="crest crest--sm crest--mono" aria-hidden="true">PAS</span></span><span class="cal__time">10:00 <small>p. m.</small></span><span class="cal__team"><img class="crest crest--sm" src="../assets/img/escudo-junior.webp" alt="" height="24" loading="lazy"> Junior</span></li><li class="cal__row"><span class="cal__team cal__team--l">Nacional <img class="crest crest--sm" src="../assets/img/escudo-nacional.webp" alt="" height="24" loading="lazy"></span><span class="cal__time">10:00 <small>p. m.</small></span><span class="cal__team"><span class="crest crest--sm crest--mono" aria-hidden="true">OCA</span> Once Caldas</span></li><li class="cal__row"><span class="cal__team cal__team--l">Águilas D. <span class="crest crest--sm crest--mono" aria-hidden="true">AGU</span></span><span class="cal__time">10:00 <small>p. m.</small></span><span class="cal__team"><img class="crest crest--sm" src="../assets/img/escudo-medellin.webp" alt="" height="24" loading="lazy"> Medellín</span></li><li class="cal__row"><span class="cal__team cal__team--l">Cúcuta <span class="crest crest--sm crest--mono" aria-hidden="true">CUC</span></span><span class="cal__time">10:00 <small>p. m.</small></span><span class="cal__team"><span class="crest crest--sm crest--mono" aria-hidden="true">JAG</span> Jaguares</span></li><li class="cal__row"><span class="cal__team cal__team--l">Bucaramanga <span class="crest crest--sm crest--mono" aria-hidden="true">BUC</span></span><span class="cal__time">10:00 <small>p. m.</small></span><span class="cal__team"><span class="crest crest--sm crest--mono" aria-hidden="true">FOR</span> Fortaleza</span></li><li class="cal__row"><span class="cal__team cal__team--l">Int. de Bogotá <span class="crest crest--sm crest--mono" aria-hidden="true">INT</span></span><span class="cal__time">10:00 <small>p. m.</small></span><span class="cal__team"><span class="crest crest--sm crest--mono" aria-hidden="true">SFE</span> Santa Fe</span></li><li class="cal__row"><span class="cal__team cal__team--l">Millonarios <img class="crest crest--sm" src="../assets/img/escudo-millonarios.webp" alt="" height="24" loading="lazy"></span><span class="cal__time">10:00 <small>p. m.</small></span><span class="cal__team"><span class="crest crest--sm crest--mono" aria-hidden="true">ALI</span> Alianza</span></li><li class="cal__row"><span class="cal__team cal__team--l">Llaneros <span class="crest crest--sm crest--mono" aria-hidden="true">LLA</span></span><span class="cal__time">10:00 <small>p. m.</small></span><span class="cal__team"><span class="crest crest--sm crest--mono" aria-hidden="true">BOY</span> Boyacá Chicó</span></li><li class="cal__row"><span class="cal__team cal__team--l">Cali <span class="crest crest--sm crest--mono" aria-hidden="true">CAL</span></span><span class="cal__time">10:00 <small>p. m.</small></span><span class="cal__team"><img class="crest crest--sm" src="../assets/img/escudo-tolima.webp" alt="" height="24" loading="lazy"> Tolima</span></li><li class="cal__row"><span class="cal__team cal__team--l">Pereira <span class="crest crest--sm crest--mono" aria-hidden="true">PER</span></span><span class="cal__time">10:00 <small>p. m.</small></span><span class="cal__team"><img class="crest crest--sm" src="../assets/img/escudo-america.webp" alt="" height="24" loading="lazy"> América</span></li></ul>
+  <p class="source-note">Fuente: Datafactory · foto del 7 nov 2026. Sin estadio ni canal por partido.</p>
+ </div>
+ <div>
+  <div class="section-head"><h2 class="section-head__title">Tabla de posiciones</h2><a class="link-action" href="#">Tabla completa ›</a></div>
+  <table class="standings"><caption class="visually-hidden">Liga BetPlay, tabla de posiciones: primeros 8 y Junior</caption><thead><tr><th scope="col" class="num">#</th><th scope="col" class="team-col">Equipo</th><th scope="col" class="num">PJ</th><th scope="col" class="num">DG</th><th scope="col" class="num">Pts</th></tr></thead><tbody><tr><td class="num pos">1</td><th scope="row" class="team-col"><span class="team-cell"><img class="crest crest--xs" src="../assets/img/escudo-nacional.webp" alt="" height="24" loading="lazy"><span>At. Nacional</span></span></th><td class="num">17</td><td class="num">+19</td><td class="num pts">36</td></tr><tr><td class="num pos">2</td><th scope="row" class="team-col"><span class="team-cell"><img class="crest crest--xs" src="../assets/img/escudo-america.webp" alt="" height="24" loading="lazy"><span>América de Cali</span></span></th><td class="num">17</td><td class="num">+19</td><td class="num pts">35</td></tr><tr><td class="num pos">3</td><th scope="row" class="team-col"><span class="team-cell"><span class="crest crest--xs crest--mono" aria-hidden="true">CAL</span><span>Deportivo Cali</span></span></th><td class="num">17</td><td class="num">+16</td><td class="num pts">33</td></tr><tr><td class="num pos">4</td><th scope="row" class="team-col"><span class="team-cell"><span class="crest crest--xs crest--mono" aria-hidden="true">BUC</span><span>Bucaramanga</span></span></th><td class="num">17</td><td class="num">+9</td><td class="num pts">29</td></tr><tr><td class="num pos">5</td><th scope="row" class="team-col"><span class="team-cell"><img class="crest crest--xs" src="../assets/img/escudo-medellin.webp" alt="" height="24" loading="lazy"><span>Medellín</span></span></th><td class="num">18</td><td class="num">+3</td><td class="num pts">29</td></tr><tr><td class="num pos">6</td><th scope="row" class="team-col"><span class="team-cell"><span class="crest crest--xs crest--mono" aria-hidden="true">SFE</span><span>Santa Fe</span></span></th><td class="num">17</td><td class="num">+5</td><td class="num pts">28</td></tr><tr><td class="num pos">7</td><th scope="row" class="team-col"><span class="team-cell"><img class="crest crest--xs" src="../assets/img/escudo-millonarios.webp" alt="" height="24" loading="lazy"><span>Millonarios</span></span></th><td class="num">17</td><td class="num">+10</td><td class="num pts">27</td></tr><tr><td class="num pos">8</td><th scope="row" class="team-col"><span class="team-cell"><span class="crest crest--xs crest--mono" aria-hidden="true">AGU</span><span>Águilas Doradas</span></span></th><td class="num">17</td><td class="num">+2</td><td class="num pts">25</td></tr><tr class="gap"><td colspan="5">Puestos 9.º al 16.º: sin datos en la maqueta</td></tr><tr class="is-selected"><td class="num pos">17</td><th scope="row" class="team-col"><span class="team-cell"><img class="crest crest--xs" src="../assets/img/escudo-junior.webp" alt="" height="24" loading="lazy"><span>Junior</span></span></th><td class="num">17</td><td class="num">−4</td><td class="num pts">16</td></tr></tbody></table>
+  <p class="source-note">Fuente: Datafactory · foto del 7 nov 2026. Los 8 primeros clasifican.</p>
+ </div>
+</section>
+<div class="nodata"><b>Qué entrega y qué no Datafactory (hoy).</b> Fixtures de una fecha y 9 filas de tabla. Faltan: tabla completa de 20 equipos, resultados de fechas pasadas, goleadores, estadio, canal y marcador en vivo. Esos módulos se activan solo cuando el dato exista.</div>
+
+<div class="wf-main">
+<div>
+<!-- C4 · Alrededor del partido -->
+<section class="section" aria-labelledby="c4" data-module="C4">
+ <div class="section-head"><h2 class="section-head__title" id="c4">Antes del pitazo</h2><a class="link-action" href="#">Noticias de Junior ›</a></div>
+ <div class="around">
+  <article class="nt"><div class="media"><img class="media__img" src="../assets/img/junior-trofeo-bandera.webp" alt="Jugadores de Junior alzan el trofeo entre serpentinas" loading="lazy"></div><p class="topic">Previa · Pasto vs. Junior</p><h3><a href="#">Pasto, un rival incómodo: lo que Junior debe resolver</a></h3><p class="meta">Hace 2 h</p></article>
+  <article class="nt"><div class="media"><img class="media__img" src="../assets/img/seleccion-gol.webp" alt="Jugadores de la Selección celebran un gol" loading="lazy"></div><p class="topic">Selección Colombia</p><h3><a href="#">Perú, en cinco claves: cómo juega y dónde duele</a></h3><p class="meta">Hace 4 h</p></article>
+  <article class="nt"><div class="media media--crest"><img class="crest" src="../assets/img/escudo-nacional.webp" alt="" height="96" loading="lazy"></div><p class="topic">Liga BetPlay</p><h3><a href="#">Nacional manda en la tabla: así llega a la Fecha 19</a></h3><p class="meta">Hace 5 h</p></article>
+ </div>
+ <div class="sponsor" role="complementary" aria-label="Publicidad">Publicidad · 970×90 (genérica, sin marca)</div>
+</section>
+
+<!-- C5 · Programa -->
+<section class="section" aria-labelledby="c5" data-module="C5">
+ <div class="section-head"><h2 class="section-head__title" id="c5">El show de las mañanas</h2><a class="link-action" href="#">Todos los videos ›</a></div>
+ <div class="pcs">
+  <article class="pc"><div class="media"><img class="media__img" src="../assets/img/banderas-junior-nacional.webp" alt="Banderas fundidas de Junior y Nacional" loading="lazy"></div><h3><a href="#">El clásico que viene: Junior y Nacional</a></h3><p class="meta">Programa completo</p></article>
+  <article class="pc"><div class="media"><img class="media__img" src="../assets/img/seleccion-tecnico-retrato.webp" alt="Retrato del técnico de la Selección" loading="lazy"></div><h3><a href="#">El once ideal de la Selección</a></h3><p class="meta">Programa completo</p></article>
+  <article class="pc"><div class="media"><img class="media__img" src="../assets/img/junior-bicampeon.webp" alt="Dos jugadores de Junior se abrazan sobre el césped" loading="lazy"></div><h3><a href="#">Junior: ¿le alcanza para entrar a los ocho?</a></h3><p class="meta">Programa completo</p></article>
+  <article class="pc"><div class="media"><img class="media__img" src="../assets/img/banderas-colombia-peru.webp" alt="Banderas de Colombia y Perú" loading="lazy"></div><h3><a href="#">Colombia–Perú, la previa en el estudio</a></h3><p class="meta">Programa completo</p></article>
+ </div>
+</section>
+</div>
+<aside class="section" aria-labelledby="c6" data-module="C6">
+ <div class="section-head"><h2 class="section-head__title" id="c6">Junior en la Liga</h2></div>
+ <ul class="cal">
+  <li class="cal__row kv"><span>Posición</span><b>17.º</b></li>
+  <li class="cal__row kv"><span>PJ · Pts · DG</span><b>17 · 16 · −4</b></li>
+  <li class="cal__row kv"><span>Del octavo (Águilas D.)</span><b>9 pts</b></li>
+  <li class="cal__row kv"><span>Próximo rival</span><b>Pasto (visitante)</b></li>
+ </ul>
+ <p class="source-note">Calculado con la tabla de Datafactory. Forma y racha requieren resultados de fechas pasadas.</p>
+ <div class="sponsor" style="min-height:250px" role="complementary" aria-label="Publicidad">Publicidad · 300×250</div>
+</aside>
+</div>
+
+<!-- C7 · Shorts -->
+<section class="section" aria-labelledby="c7" data-module="C7">
+ <div class="section-head"><h2 class="section-head__title" id="c7">Shorts</h2><a class="link-action" href="#">Ver todos ›</a></div>
+ <div class="shorts"><article><div class="media"><img class="media__img" src="../assets/img/js-1.webp" alt="" loading="lazy"></div><p>La frase del día</p></article><article><div class="media"><img class="media__img" src="../assets/img/nacional-celebracion.webp" alt="" loading="lazy"></div><p>Así se vivió el gol</p></article><article><div class="media"><img class="media__img" src="../assets/img/seleccion-once.webp" alt="" loading="lazy"></div><p>El once en 30 segundos</p></article><article><div class="media"><img class="media__img" src="../assets/img/junior-plantel-trofeo.webp" alt="" loading="lazy"></div><p>El plantel, de cerca</p></article><article><div class="media"><img class="media__img" src="../assets/img/seleccion-derrota.webp" alt="" loading="lazy"></div><p>Qué falló en Lima</p></article></div>
+</section>
+
+<!-- C8 · Alcance editorial -->
+<section class="section" aria-labelledby="c8" data-module="C8">
+ <div class="section-head"><h2 class="section-head__title" id="c8">Más fútbol</h2><a class="link-action" href="#">Ver todas ›</a></div>
+ <div class="cols">
+  <div><h3>Selección Colombia</h3><ul><li>Perú: el plan y las dudas</li><li>Los convocados que sorprenden</li></ul></div>
+  <div><h3>Fútbol colombiano</h3><ul><li>Millonarios y Santa Fe pelean los ocho</li><li>América sigue en la cima</li></ul></div>
+  <div><h3>Europa</h3><ul><li>La jornada de los clubes grandes</li><li>El fichaje que mueve el mercado</li></ul></div>
+  <div><h3>Colombianos afuera</h3><ul><li>Quién anda de racha en Europa</li><li>El cafetero que ya es titular</li></ul></div>
+ </div>
+</section>
+
+<!-- C9 · Estados de la tarjeta (contenido condicional) -->
+<section class="section" aria-labelledby="c9" data-module="C9">
+ <div class="section-head"><h2 class="section-head__title" id="c9">Cómo cambia la tarjeta de Junior<span class="wf-tag">solo wireframe</span></h2></div>
+ <div class="states">
+  <div class="state"><b>Antes (disponible hoy)</b><div class="state__row"><span>Pasto</span><span>10:00 p. m.</span><span>Junior</span></div><span>Cuenta regresiva, posición y previa.</span></div>
+  <div class="state"><b>En juego<span class="wf-tag">requiere dato en vivo</span></b><div class="state__row"><span>Pasto 1</span><span class="state__live">EN VIVO 67'</span><span>1 Junior</span></div><span>Solo si el proveedor entrega marcador y minuto. Ejemplo ilustrativo.</span></div>
+  <div class="state"><b>Después<span class="wf-tag">requiere resultado</span></b><div class="state__row"><span>Pasto 0</span><span>Final</span><span>2 Junior</span></div><span>Con resultado: crónica y video. Ejemplo ilustrativo.</span></div>
+ </div>
+</section>
+</div>
+</main>
+<footer class="wf-foot"><div class="container">Pie del sitio: aliados (los 10), redes y legales. Los aliados solo aparecen aquí.</div></footer>
+</body>
+</html>

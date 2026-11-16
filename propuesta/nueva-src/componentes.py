@@ -23,8 +23,8 @@ AHORA = dt.datetime(2026, 11, 6, 20, 40, tzinfo=dt.timezone(dt.timedelta(hours=-
 # ==========================================================================
 # Utilidades de página
 # ==========================================================================
-def foto(clave, clase="", alt=None, prioridad=False):
-    return img(clave, clase=clase, alt=alt, prioridad=prioridad)
+def foto(clave, clase="", alt=None, prioridad=False, repite=False):
+    return img(clave, clase=clase, alt=alt, prioridad=prioridad, repite=repite)
 
 
 def ico(nombre, clase="icon"):
@@ -1424,10 +1424,47 @@ def siguenos():
     return f'<p class="community__text">Síguenos donde prefieras.</p><ul class="share__list" role="list">{li}</ul>'
 
 
+def tira_partidos(datos="datafactory"):
+    """Tira de partidos de la fecha (Datafactory): una boleta por partido en una fila que se desliza de lado.
+    Cada equipo en su línea (escudo, nombre y goles); el ganador en negrita. El de Junior va primero y marcado."""
+    ref = _df_ref()
+    tor = DF["torneo"]
+    items = []
+    for p in DF["partidos"]:
+        loc, vis = equipo(p["local"]), equipo(p["visitante"])
+        jr = "junior" in (p["local"], p["visitante"])
+        final = p["estado"] == "final"
+        dia = dia_corto(p["dia"], mayus=False, ref=ref)
+        cuando = (f'<span class="tira__state">Final</span><time datetime="{hora_iso(p["dia"], p["hora"])}">{e(dia)}</time>' if final else
+                  f'<time datetime="{hora_iso(p["dia"], p["hora"])}">{e(dia)} · {e(hora(p["hora"]))}</time>')
+        lector = (f'{loc["corto"]} {p["gl"]}, {vis["corto"]} {p["gv"]}, final, {dia}.' if final else
+                  f'{loc["corto"]} contra {vis["corto"]}, {dia}, {hora(p["hora"])}.')
+
+        def fila(clave, eq, goles, rival):
+            gana = final and goles > rival
+            return (f'<span class="tira__row{" is-win" if gana else ""}{" is-nuestro" if clave == "junior" else ""}">'
+                    f'{escudo(clave, "tira__crest")}<span class="tira__name">{e(eq["corto"])}</span>'
+                    f'{f"<span class=tira__goals>{goles}</span>" if final else ""}</span>')
+        items.append(
+            f'<li class="tira__item{" is-junior" if jr else ""}"><a class="tira__card" href="{"partido.html" if jr else "datos.html#hoy"}">'
+            f'<span class="visually-hidden">{e(lector)}{" Partido de Junior." if jr else ""}</span>'
+            f'<span class="tira__when" aria-hidden="true">{cuando}</span>'
+            f'<span class="tira__rows" aria-hidden="true">'
+            f'{fila(p["local"], loc, p["gl"], p["gv"])}{fila(p["visitante"], vis, p["gv"], p["gl"])}</span></a></li>')
+    flecha = lambda d, n, ic: (f'<button class="icon-btn tira__arrow" type="button" data-tira-dir="{d}">'
+                               f'{icono(ic, "icon")}<span class="visually-hidden">{n}</span></button>')
+    return (f'<section class="tira" data-tira aria-labelledby="tira-t">'
+            f'<div class="tira__head"><h2 class="tira__title" id="tira-t">Fecha {e(str(tor["fecha"]))}'
+            f'<span class="tira__liga">{e(tor["nombre"])}</span></h2>'
+            f'<a class="link-action" href="datos.html#hoy">Todos los partidos{icono("caret-right", "icon icon--sm")}</a>'
+            f'<div class="tira__ctl">{flecha(-1, "Partidos anteriores", "caret-left")}{flecha(1, "Partidos siguientes", "caret-right")}</div></div>'
+            f'<ol class="tira__list" role="list" data-tira-list>{"".join(items)}</ol></section>')
+
+
 REGISTRO = {f.__name__: f for f in [
     foto, ico, rotulo, fuente, fuente_datafactory, ejemplo, live_pill, tarjeta, tarjeta_escudo, carrusel_noticias, short, carril_shorts, programa, titulares,
     centro_partidos, franja_dias, resultados, proximos_partidos, tabla_posiciones, goleadores, estadisticas,
-    tarjeta_en_vivo, racha, mercado, escaleta, estado_aire, en_vivo_ahora, reproductor_youtube, parrilla_semanal,
+    tarjeta_en_vivo, tira_partidos, racha, mercado, escaleta, estado_aire, en_vivo_ahora, reproductor_youtube, parrilla_semanal,
     programas_anteriores, participa, noticias_hub, noticias_por_tema, aliados, siguenos, encuesta, boletin,
     efemeride, pauta, sello, migas, compartir, caja_datos_junior, etiquetas, chips_torneos, en_construccion,
     buscador_404]}

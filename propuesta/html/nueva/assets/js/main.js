@@ -21,15 +21,13 @@
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
   var desktop = window.matchMedia('(min-width: 1024px)');
 
-  /* 1. Cabecera: se compacta al bajar. Escritorio: el nivel 1 (64) se va con la
-        página y queda pegado el nivel 2 (48) con el logo de 24 px. No se esconde
-        al bajar ni reaparece al subir (08 §2.5). */
+  /* 1. Cabecera: barra única fija que se encoge al bajar 16 px (72 a 52 en escritorio,
+        56 a 48 en móvil). No se esconde al bajar ni reaparece al subir (08 §2.5). */
   var header = $('[data-header]');
   if (header) {
     var ticking = false;
     var update = function () {
-      var limit = desktop.matches ? $('.masthead', header).offsetHeight : 0;
-      header.classList.toggle('is-stuck', window.scrollY > limit);
+      header.classList.toggle('is-compact', window.scrollY > 16);
       ticking = false;
     };
     window.addEventListener('scroll', function () {
@@ -635,4 +633,25 @@
       }
     }
   }
+
+  /* Tira de partidos de la portada: las flechas desplazan la fila y se apagan en los extremos */
+  $$('[data-tira]').forEach(function (tira) {
+    var lista = $('[data-tira-list]', tira);
+    var flechas = $$('[data-tira-dir]', tira);
+    var estado = function () {
+      flechas.forEach(function (b) {
+        var d = Number(b.getAttribute('data-tira-dir'));
+        b.disabled = d < 0 ? lista.scrollLeft <= 2 : lista.scrollLeft + lista.clientWidth >= lista.scrollWidth - 2;
+      });
+    };
+    flechas.forEach(function (b) {
+      b.addEventListener('click', function () {
+        var paso = (lista.firstElementChild ? lista.firstElementChild.getBoundingClientRect().width : 180) + 16;
+        lista.scrollBy({ left: Number(b.getAttribute('data-tira-dir')) * paso * 2, behavior: reduce.matches ? 'auto' : 'smooth' });
+      });
+    });
+    lista.addEventListener('scroll', estado, { passive: true });
+    window.addEventListener('resize', estado);
+    estado();
+  });
 })();

@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Opción B · Portada de diario deportivo (wireframe)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<link rel="stylesheet" href="../assets/css/components.css">
+<style>
+/* Wireframe de media fidelidad · Opción B. Solo estructura: sin JS. */
+.wf-note{background:var(--gray-50);border-bottom:1px solid var(--gray-200);font-size:var(--fs-meta);color:var(--gray-700);padding:8px 0}
+.wf-note b{color:var(--gray-900)}
+.wf-top{background:var(--brand-700);color:#fff}
+.wf-top .container{display:flex;align-items:center;gap:24px;min-height:56px}
+.wf-top img{height:34px;width:auto}
+.wf-nav{background:var(--brand-600);color:#fff;overflow-x:auto}
+.wf-nav ul{display:flex;gap:4px;list-style:none;margin:0;padding:0;white-space:nowrap}
+.wf-nav a{display:block;padding:12px 14px;color:#fff;text-decoration:none;font:500 15px var(--font-text)}
+.wf-nav a[aria-current]{font-weight:700;box-shadow:inset 0 -3px #fff}
+.wf-ctx{border-bottom:1px solid var(--gray-200);font-size:14px}
+.wf-ctx .container{padding-block:10px;color:var(--gray-700)}
+.b{padding-block:20px 40px}
+.b h2,.b h3{font-family:var(--font-display)}
+.t-hero{font:800 clamp(26px,3.2vw,40px)/1.1 var(--font-display);margin:12px 0 8px}
+.t-hero a,.t-m a,.t-s a,.hl a{color:var(--gray-900);text-decoration:none}
+.t-hero a:hover,.t-m a:hover,.t-s a:hover,.hl a:hover{text-decoration:underline}
+.t-m{font:700 clamp(18px,1.6vw,21px)/1.2 var(--font-display);margin:8px 0 4px}
+.t-s{font:700 16px/1.25 var(--font-display);margin:0 0 4px}
+.dek{color:var(--gray-700);font-size:17px;line-height:1.45;margin:0 0 8px}
+.kicker{font:700 12px/1 var(--font-display);letter-spacing:.06em;text-transform:uppercase;color:var(--brand-600)}
+.m{font-size:13px;color:var(--gray-600)}
+.ph{position:relative;display:block;background:var(--gray-100);overflow:hidden}
+.ph img{width:100%;height:100%;object-fit:cover;display:block}
+.r169{aspect-ratio:16/9}.r43{aspect-ratio:4/3}.r11{aspect-ratio:1/1}.r916{aspect-ratio:9/16}
+.pill{position:absolute;left:10px;top:10px;background:#fff;color:var(--gray-900);font:700 12px var(--font-display);padding:5px 9px}
+.pill.live{background:var(--live-600);color:#fff}
+.dur{position:absolute;right:8px;bottom:8px;background:rgba(15,33,51,.85);color:#fff;font:600 12px var(--font-text);padding:3px 6px}
+.pl{position:absolute;left:50%;top:50%;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;background:rgba(255,255,255,.95);display:grid;place-items:center}
+.pl:after{content:"";border-left:16px solid var(--brand-600);border-block:10px solid transparent;margin-left:4px}
+.hdr{display:flex;align-items:baseline;justify-content:space-between;border-top:3px solid var(--brand-600);padding-top:10px;margin:0 0 14px}
+.hdr h2{font:800 22px/1.1 var(--font-display);margin:0}
+.hdr a{font-size:14px;color:var(--brand-600);font-weight:600}
+.sec{margin-top:40px}
+/* Fila 1: nota principal + video + lista */
+.top{display:grid;gap:24px;grid-template-columns:1fr}
+@media(min-width:1024px){.top{grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:32px}}
+.vid{border:1px solid var(--gray-200)}
+.vid .body{padding:12px 14px 14px}
+.hl{list-style:none;margin:0;padding:0}
+.hl li{padding:10px 0;border-top:1px solid var(--gray-200)}
+.hl li:first-child{border-top:0;padding-top:0}
+.cols4{display:grid;gap:20px;grid-template-columns:1fr;margin-top:28px;padding-top:20px;border-top:1px solid var(--gray-200)}
+@media(min-width:640px){.cols4{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1024px){.cols4{grid-template-columns:repeat(4,1fr)}}
+.row{display:grid;grid-template-columns:88px 1fr;gap:12px;align-items:start}
+.row .ph{width:88px}
+.crest{display:grid;place-items:center;background:var(--gray-50);border:1px solid var(--gray-200)}
+.crest img{width:62%;height:62%;object-fit:contain}
+/* Banner de partidos (reutiliza lo existente: aquí maqueta) */
+.band{background:var(--brand-900);color:#fff;display:grid;gap:16px;padding:18px;margin-top:32px;grid-template-columns:1fr}
+@media(min-width:900px){.band{grid-template-columns:1fr auto;align-items:center;padding:20px 28px}}
+.band .vs{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.band img{width:56px;height:56px;object-fit:contain}
+.band .sc{font:800 18px var(--font-display)}
+.band .info{color:var(--brand-300);font-size:14px}
+.ad{background:var(--gray-50);border:1px dashed var(--gray-400);display:grid;place-items:center;color:var(--gray-600);font-size:12px;text-align:center;padding:8px}
+.ad.h90{min-height:90px;margin-top:24px}.ad.h250{min-height:250px}
+/* Cuerpo con lateral */
+.split{display:grid;gap:32px;grid-template-columns:1fr}
+@media(min-width:1024px){.split{grid-template-columns:minmax(0,8fr) minmax(0,4fr);gap:40px}}
+.team{display:grid;gap:20px;grid-template-columns:1fr}
+@media(min-width:720px){.team{grid-template-columns:minmax(0,5fr) minmax(0,4fr)}}
+.sidebox{border:1px solid var(--gray-200);padding:14px;margin-bottom:24px}
+.sidebox h3{font:800 17px var(--font-display);margin:0 0 10px}
+.tbl{width:100%;border-collapse:collapse;font-size:14px}
+.tbl td,.tbl th{padding:6px 4px;border-top:1px solid var(--gray-200);text-align:left}
+.tbl tr.jr{background:var(--brand-50);font-weight:700}
+.fx{list-style:none;margin:0;padding:0;font-size:14px}.fx li{padding:8px 0;border-top:1px solid var(--gray-200)}
+.shorts{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(150px,1fr);gap:12px;overflow-x:auto}
+@media(min-width:1024px){.shorts{grid-auto-columns:1fr}}
+.grid2{display:grid;gap:32px;grid-template-columns:1fr}
+@media(min-width:900px){.grid2{grid-template-columns:1fr 1fr}}
+.tag{display:inline-block;background:var(--brand-50);color:var(--brand-700);font:700 12px var(--font-display);padding:3px 8px;margin-right:6px}
+.pie{background:var(--brand-900);color:#fff;margin-top:48px;padding:28px 0}
+.pie .al{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px}
+@media(min-width:720px){.pie .al{grid-template-columns:repeat(5,1fr)}}
+.pie .al span{border:1px solid rgba(255,255,255,.3);padding:12px;text-align:center;font-size:13px}
+.bn{display:none}
+@media(max-width:1023px){.bn{display:flex;position:sticky;bottom:0;background:#fff;border-top:1px solid var(--gray-200);justify-content:space-around;padding:10px 0;font-size:12px;font-weight:600;color:var(--brand-600)}}
+</style>
+</head>
+<body>
+<div class="wf-note"><div class="container"><b>Opción B · Portada de diario deportivo</b> · wireframe de media fidelidad. Cabecera y menú son los vigentes (simplificados aquí). Datos de ejemplo.</div></div>
+
+<header>
+  <div class="wf-top"><div class="container"><img src="../assets/img/logo-habla-blanco.webp" alt="Habla Deportes"></div></div>
+  <nav class="wf-nav" aria-label="Secciones"><div class="container"><ul>
+    <li><a href="#" aria-current="page">Inicio</a></li><li><a href="#">Videos</a></li><li><a href="#">Junior</a></li><li><a href="#">FPC</a></li><li><a href="#">Selección</a></li><li><a href="#">Fútbol internacional</a></li><li><a href="#">Más</a></li>
+  </ul></div></nav>
+</header>
+
+<main class="container b">
+<h1 class="visually-hidden">Portada de Habla Deportes</h1>
+
+<!-- B1 · Apertura: nota principal + video del programa + titulares -->
+<div class="top">
+  <article>
+    <a class="ph r169" href="#"><img src="../assets/img/junior-bicampeon.webp" alt="Dos jugadores de Junior se abrazan sobre el césped bajo humo rojo"><span class="pill">Junior</span></a>
+    <h2 class="t-hero"><a href="#">Junior llega a Pasto con la obligación de cortar la racha y subir en la tabla</a></h2>
+    <p class="dek">Las claves del partido del miércoles, las bajas confirmadas y el once que prepara el técnico, según lo que se dijo en el programa.</p>
+    <p class="m">Habla Deportes · Hace 40 min · <a href="#">Ver el video del análisis</a></p>
+  </article>
+  <div>
+    <div class="vid">
+      <div class="ph r169"><img src="../assets/img/js-2.webp" alt="Juan Salvador Bárcena ante el micrófono"><span class="pill live">En vivo</span><span class="pl"></span></div>
+      <div class="body">
+        <p class="kicker">El show de las mañanas</p>
+        <h3 class="t-s"><a href="#">Programa de hoy: ¿cómo debe jugar Junior en Pasto?</a></h3>
+        <p class="m">Autoplay silenciado · sonido a un clic · de lunes a viernes, 10:00 a. m.</p>
+      </div>
+    </div>
+    <ul class="hl" style="margin-top:16px">
+      <li><span class="kicker">Selección</span><h3 class="t-s"><a href="#">Perú, en cinco claves: cómo juega y dónde duele</a></h3><span class="m">Hace 1 h</span></li>
+      <li><span class="kicker">FPC</span><h3 class="t-s"><a href="#">Nacional y Millonarios definen su cupo en la última fecha</a></h3><span class="m">Hace 2 h</span></li>
+      <li><span class="kicker">Europa</span><h3 class="t-s"><a href="#">Los colombianos de la Premier: quién suma y quién no</a></h3><span class="m">Hace 3 h</span></li>
+    </ul>
+  </div>
+</div>
+
+<!-- B2 · Cuatro notas secundarias, una por línea editorial -->
+<div class="cols4">
+  <article class="row"><a class="ph r11 crest" href="#"><img src="../assets/img/escudo-junior.webp" alt="Escudo de Junior"></a><div><span class="kicker">Junior</span><h3 class="t-s"><a href="#">El refuerzo que pocos esperaban llegó al Metropolitano</a></h3><span class="m">Hace 4 h</span></div></article>
+  <article class="row"><a class="ph r11 crest" href="#"><img src="../assets/img/escudo-colombia.webp" alt="Escudo de la Selección Colombia"></a><div><span class="kicker">Selección</span><h3 class="t-s"><a href="#">La lista de convocados: tres sorpresas y una ausencia</a></h3><span class="m">Hace 5 h</span></div></article>
+  <article class="row"><a class="ph r11 crest" href="#"><img src="../assets/img/escudo-tolima.webp" alt="Escudo del Tolima"></a><div><span class="kicker">FPC</span><h3 class="t-s"><a href="#">Tolima y la fecha que puede cambiar la clasificación</a></h3><span class="m">Hace 6 h</span></div></article>
+  <article class="row"><a class="ph r11 crest" href="#"><img src="../assets/img/escudo-medellin.webp" alt="Escudo del Medellín"></a><div><span class="kicker">Mercado</span><h3 class="t-s"><a href="#">Cuatro nombres que suenan para el próximo semestre</a></h3><span class="m">Hace 7 h</span></div></article>
+</div>
+
+<!-- B3 · Banner de partidos (Centro de Partidos, Datafactory) -->
+<section class="band" aria-label="Partidos destacados">
+  <div class="vs"><img src="../assets/img/escudo-junior.webp" alt=""><span class="sc">Pasto vs. Junior</span><img src="../assets/img/escudo-nacional.webp" alt=""><span class="info">Liga BetPlay · Mié 11 nov, 8:00 p. m. · Estadio Departamental · Win Sports</span></div>
+  <div class="ad" style="min-width:220px;color:#fff;border-color:rgba(255,255,255,.4);background:transparent">Publicidad<br>(lateral del banner)</div>
+</section>
+<div class="ad h90">Publicidad A · 970×90</div>
+
+<!-- B4 · Junior (el centro) + lateral de datos -->
+<div class="split sec">
+  <div>
+    <section aria-labelledby="bj">
+      <div class="hdr"><h2 id="bj">Junior</h2><a href="#">Ir a Junior →</a></div>
+      <div class="team">
+        <article><a class="ph r169" href="#"><img src="../assets/img/junior-plantel-trofeo.webp" alt="Plantel de Junior con el trofeo"></a><h3 class="t-m"><a href="#">Barranquilla rojiblanca: el barrio que llega al estadio desde las 3:00 p. m.</a></h3><p class="m">Crónica · Hace 8 h</p></article>
+        <ul class="hl"><li><h3 class="t-s"><a href="#">Las cuentas de Junior para meterse entre los ocho</a></h3><span class="m">Análisis</span></li><li><h3 class="t-s"><a href="#">Lo que dejó el último partido en el Metropolitano</a></h3><span class="m">Crónica</span></li><li><h3 class="t-s"><a href="#">El parte médico antes de viajar a Pasto</a></h3><span class="m">Hace 10 h</span></li><li><h3 class="t-s"><a href="#">La cantera rojiblanca: tres nombres para seguir</a></h3><span class="m">Reportaje</span></li></ul>
+      </div>
+    </section>
+    <section class="sec" aria-labelledby="bs">
+      <div class="hdr"><h2 id="bs">Selección Colombia</h2><a href="#">Ir a la Selección →</a></div>
+      <div class="team">
+        <article><a class="ph r169" href="#"><img src="../assets/img/seleccion-gol.webp" alt="Jugadores de la Selección celebran un gol"></a><h3 class="t-m"><a href="#">El once ideal para enfrentar a Perú</a></h3><p class="m">Análisis · Hace 9 h</p></article>
+        <ul class="hl"><li><h3 class="t-s"><a href="#">Convocados: cómo quedó la lista</a></h3></li><li><h3 class="t-s"><a href="#">Eliminatoria: la tabla y los rivales que vienen</a></h3></li><li><h3 class="t-s"><a href="#">El técnico habló de la presión y del estilo</a></h3></li></ul>
+      </div>
+    </section>
+  </div>
+  <aside aria-label="Datos">
+    <div class="sidebox"><h3>Liga BetPlay · Posiciones</h3>
+      <table class="tbl"><thead><tr><th>#</th><th>Equipo</th><th>PJ</th><th>Pts</th></tr></thead><tbody>
+        <tr><td>1</td><td>Equipo 1</td><td>19</td><td>38</td></tr><tr><td>2</td><td>Equipo 2</td><td>19</td><td>35</td></tr><tr><td>3</td><td>Equipo 3</td><td>19</td><td>33</td></tr>
+        <tr class="jr"><td>17</td><td>Junior</td><td>19</td><td>19</td></tr></tbody></table>
+      <p class="m">Fuente: Datafactory · <a href="#">Tabla completa</a></p></div>
+    <div class="sidebox"><h3>Próximos partidos</h3><ul class="fx"><li><b>Mié 11</b> Pasto vs. Junior</li><li><b>Sáb 14</b> Colombia vs. Perú</li><li><b>Dom 15</b> Nacional vs. Tolima</li></ul></div>
+    <div class="ad h250">Publicidad B · 300×250</div>
+  </aside>
+</div>
+
+<!-- B5 · FPC e Internacional: módulos de texto con escudos -->
+<div class="grid2 sec">
+  <section aria-labelledby="bf">
+    <div class="hdr"><h2 id="bf">Fútbol colombiano</h2><a href="#">Ver FPC →</a></div>
+    <article class="row" style="grid-template-columns:140px 1fr"><a class="ph r43" href="#"><img src="../assets/img/nacional-celebracion.webp" alt="Jugadores de Nacional celebran"></a><div><h3 class="t-m" style="margin-top:0"><a href="#">Nacional celebra y se mete en la pelea</a></h3><span class="m">Hace 2 h</span></div></article>
+    <ul class="hl" style="margin-top:12px"><li><h3 class="t-s"><a href="#">Millonarios y el dilema de la nómina</a></h3></li><li><h3 class="t-s"><a href="#">Tolima: el candidato que nadie nombra</a></h3></li><li><h3 class="t-s"><a href="#">América: la fecha que define el semestre</a></h3></li></ul>
+  </section>
+  <section aria-labelledby="bi">
+    <div class="hdr"><h2 id="bi">Internacional y colombianos afuera</h2><a href="#">Ver más →</a></div>
+    <ul class="hl">
+      <li><span class="tag">Premier</span><h3 class="t-s" style="display:inline"><a href="#">Luis Díaz y el partido que cambió su semana</a></h3></li>
+      <li><span class="tag">LaLiga</span><h3 class="t-s" style="display:inline"><a href="#">El colombiano que más minutos suma en España</a></h3></li>
+      <li><span class="tag">Serie A</span><h3 class="t-s" style="display:inline"><a href="#">Quién juega y quién espera en Italia</a></h3></li>
+      <li><span class="tag">Champions</span><h3 class="t-s" style="display:inline"><a href="#">La jornada europea en cinco minutos</a></h3></li>
+      <li><span class="tag">MLS</span><h3 class="t-s" style="display:inline"><a href="#">Colombianos en Estados Unidos: los que mandan</a></h3></li>
+    </ul>
+  </section>
+</div>
+
+<!-- B6 · Shorts -->
+<section class="sec" aria-labelledby="bsh">
+  <div class="hdr"><h2 id="bsh">Shorts</h2><a href="#">Ver todos →</a></div>
+  <div class="shorts">
+    <a class="ph r916" href="#"><img src="../assets/img/js-1.webp" alt="Juan Salvador"><span class="pl"></span><span class="dur">0:42</span></a>
+    <a class="ph r916" href="#"><img src="../assets/img/invitado-estudio.webp" alt="Invitado en el estudio"><span class="pl"></span><span class="dur">0:55</span></a>
+    <a class="ph r916" href="#"><img src="../assets/img/seleccion-tecnico-zona.webp" alt="Técnico de la Selección"><span class="pl"></span><span class="dur">0:38</span></a>
+    <a class="ph r916" href="#"><img src="../assets/img/seleccion-derrota.webp" alt="Jugadores de la Selección"><span class="pl"></span><span class="dur">0:47</span></a>
+    <a class="ph r916" href="#"><img src="../assets/img/junior-escudo-bandera.webp" alt="Escudo de Junior y bandera"><span class="pl"></span><span class="dur">0:30</span></a>
+  </div>
+</section>
+
+<!-- B7 · Programa (video) + Opinión -->
+<div class="grid2 sec">
+  <section aria-labelledby="bp">
+    <div class="hdr"><h2 id="bp">El programa</h2><a href="#">Todos los videos →</a></div>
+    <div class="team" style="grid-template-columns:1fr">
+      <article class="row" style="grid-template-columns:150px 1fr"><a class="ph r169" href="#"><img src="../assets/img/seleccion-tecnico-retrato.webp" alt="Retrato del técnico"><span class="dur">38:12</span></a><div><h3 class="t-s"><a href="#">Programa completo: la Selección y el once ideal</a></h3><span class="m">Ayer</span></div></article>
+      <article class="row" style="grid-template-columns:150px 1fr"><a class="ph r169" href="#"><img src="../assets/img/banderas-junior-nacional.webp" alt="Banderas de Junior y Nacional"><span class="dur">41:05</span></a><div><h3 class="t-s"><a href="#">Programa completo: el clásico y sus claves</a></h3><span class="m">Hace 2 días</span></div></article>
+    </div>
+  </section>
+  <section aria-labelledby="bo">
+    <div class="hdr"><h2 id="bo">Opinión</h2><a href="#">Juan Salvador →</a></div>
+    <ul class="hl">
+      <li><span class="kicker">Juan Salvador Bárcena</span><h3 class="t-s"><a href="#">Lo que se espera de una final de barrio</a></h3></li>
+      <li><span class="kicker">Juan Salvador Bárcena</span><h3 class="t-s"><a href="#">La Selección y el once ideal</a></h3></li>
+      <li><span class="kicker">Análisis táctico</span><h3 class="t-s"><a href="#">Equilibrio o creatividad en el medio campo</a></h3></li>
+    </ul>
+  </section>
+</div>
+
+<div class="ad h90" style="margin-top:40px">Publicidad C · 970×90 (cierre)</div>
+</main>
+
+<footer class="pie"><div class="container">
+  <p><b>Nuestros aliados</b> (solo en el pie · no es publicidad)</p>
+  <div class="al"><span>Alcaldía de Barranquilla</span><span>Gobernación del Atlántico</span><span>Tecnoglass</span><span>VP Global</span><span>Stake</span><span>Vitali</span><span>BQ City</span><span>Unisimón</span><span>Droguería Inglesa</span><span>Expreso Brasilia</span></div>
+</div></footer>
+<nav class="bn" aria-label="Accesos rápidos"><span>Noticias</span><span>Videos</span><span>Datos</span><span>En vivo</span></nav>
+</body>
+</html>

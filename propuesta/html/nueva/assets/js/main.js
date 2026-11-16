@@ -655,3 +655,13 @@
     estado();
   });
 })();
+
+/* Contenedores con scroll interno: deja a la vista la fila marcada (Junior en la clasificación) */
+(function () {
+  document.querySelectorAll('[data-scroll-a]').forEach(function (caja) {
+    var fila = caja.querySelector(caja.getAttribute('data-scroll-a'));
+    if (!fila) return;
+    var cab = caja.querySelector('thead');
+    caja.scrollTop = Math.max(0, fila.offsetTop - caja.clientHeight / 2 + fila.offsetHeight / 2 - (cab ? cab.offsetHeight : 0) / 2);
+  });
+})();

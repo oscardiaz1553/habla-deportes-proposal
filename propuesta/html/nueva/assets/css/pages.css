@@ -688,3 +688,9 @@
 @media (max-width: 1023px) {
   .pj__photo { aspect-ratio: 16 / 10; min-height: 0; }
 }
+
+/* L1 · Clasificación completa con scroll interno: cabecera fija y Junior a la vista */
+.standings-scroll { max-height: 560px; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--gray-300) transparent; }
+.standings-scroll .standings thead th { position: sticky; top: 0; z-index: 1; background: var(--white); }
+.standings-scroll:focus-visible { outline: var(--focus-width) solid var(--color-focus); outline-offset: 2px; }
+@media (max-width: 1023px) { .standings-scroll { max-height: 440px; } }

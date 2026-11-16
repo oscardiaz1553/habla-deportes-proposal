@@ -105,8 +105,6 @@ def main():
     por = fixture(hf)
     n, rotulo = fecha_actual(por, ahora)
     filas = tabla(hp)
-    # la clasificación compacta muestra los 8 primeros y a Junior
-    filas = [f for f in filas if f["pos"] <= 8 or f["equipo"] == "junior"]
     datos = {
         "_aviso": "Foto tomada de las páginas públicas del HTML Center de Datafactory (publisher). Solo para la maqueta; "
                   "en producción la sustituye la API de Datafactory con el mismo formato.",

@@ -124,13 +124,8 @@ og_imagen: assets/img/js-2.webp
       <!-- L1 · Clasificación -->
       <section class="rail-module" aria-labelledby="l1" data-module="L1">
         <div class="rail-module__head"><h2 class="rail-module__title" id="l1">Liga BetPlay</h2><a class="link-action" href="datos.html#posiciones">Tabla{{ ico("caret-right", "icon icon--sm") }}</a></div>
-        {{ tabla_posiciones("compacta", filas=5, datos="datafactory") }}
+        {{ tabla_posiciones("compacta", filas=20, datos="datafactory", scroll=True) }}
         {{ fuente_datafactory() }}
-      </section>
-      <!-- L2 · Próximos partidos -->
-      <section class="rail-module" aria-labelledby="l2" data-module="L2">
-        <div class="rail-module__head"><h2 class="rail-module__title" id="l2">Próximos partidos</h2><a class="link-action" href="datos.html#resultados">Calendario{{ ico("caret-right", "icon icon--sm") }}</a></div>
-        {{ proximos_partidos("datafactory") }}
       </section>
       <!-- L3 · Publicidad B · lateral (300×250) -->
       {{ pauta("lateral") }}

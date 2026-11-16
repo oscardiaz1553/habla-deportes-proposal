@@ -85,12 +85,100 @@
       "pts": 28
     },
     {
+      "pos": 9,
+      "equipo": "tolima",
+      "nombre": "Tolima",
+      "pj": 19,
+      "dg": 2,
+      "pts": 27
+    },
+    {
+      "pos": 10,
+      "equipo": "cucuta",
+      "nombre": "Cúcuta",
+      "pj": 19,
+      "dg": -5,
+      "pts": 27
+    },
+    {
+      "pos": 11,
+      "equipo": "aguilas",
+      "nombre": "Águilas Doradas Rionegro",
+      "pj": 19,
+      "dg": 0,
+      "pts": 25
+    },
+    {
+      "pos": 12,
+      "equipo": "llaneros",
+      "nombre": "Llaneros FC",
+      "pj": 19,
+      "dg": -3,
+      "pts": 24
+    },
+    {
+      "pos": 13,
+      "equipo": "int-bogota",
+      "nombre": "Internacional de Bogotá",
+      "pj": 19,
+      "dg": 0,
+      "pts": 23
+    },
+    {
       "pos": 14,
       "equipo": "junior",
       "nombre": "Junior",
       "pj": 19,
       "dg": -1,
       "pts": 22
+    },
+    {
+      "pos": 15,
+      "equipo": "boyaca-chico",
+      "nombre": "Boyacá Chicó",
+      "pj": 19,
+      "dg": -14,
+      "pts": 20
+    },
+    {
+      "pos": 16,
+      "equipo": "alianza",
+      "nombre": "Alianza Valledupar",
+      "pj": 19,
+      "dg": -15,
+      "pts": 18
+    },
+    {
+      "pos": 17,
+      "equipo": "pereira",
+      "nombre": "Pereira",
+      "pj": 19,
+      "dg": -12,
+      "pts": 17
+    },
+    {
+      "pos": 18,
+      "equipo": "pasto",
+      "nombre": "Pasto",
+      "pj": 19,
+      "dg": -17,
+      "pts": 15
+    },
+    {
+      "pos": 19,
+      "equipo": "jaguares",
+      "nombre": "Jaguares",
+      "pj": 19,
+      "dg": -20,
+      "pts": 13
+    },
+    {
+      "pos": 20,
+      "equipo": "fortaleza",
+      "nombre": "Fortaleza FC",
+      "pj": 19,
+      "dg": -12,
+      "pts": 12
     }
   ],
   "partidos": [

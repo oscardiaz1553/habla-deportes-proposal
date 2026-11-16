@@ -570,7 +570,7 @@ def _forma(forma):
     return f'<span class="form-list" role="img" aria-label="{e(forma_texto(forma))}">{cuadros}</span>'
 
 
-def tabla_posiciones(variante="compacta", filas=5, sello=False, datos="ejemplo"):
+def tabla_posiciones(variante="compacta", filas=5, sello=False, datos="ejemplo", scroll=False):
     real = datos == "datafactory"
     tp = D["tabla_posiciones"]
     hasta = tp["leyenda"]["cuadrangulares"][1]
@@ -617,6 +617,9 @@ def tabla_posiciones(variante="compacta", filas=5, sello=False, datos="ejemplo")
     if completa:
         tabla = (f'<div class="table-scroll" role="region" aria-label="Tabla de posiciones, se desplaza de lado" tabindex="0">'
                  f'{tabla}</div>')
+    if scroll and not completa:
+        tabla = (f'<div class="standings-scroll" role="region" aria-label="Tabla de posiciones, se desplaza hacia abajo" '
+                 f'tabindex="0" data-scroll-a="tr.is-selected">{tabla}</div>')
     leyenda = (f'<p class="standings-legend"><span class="zone-mark" aria-hidden="true"></span>'
                f'Cuadrangulares (1.º a {hasta}.º)</p>')
     return tabla + leyenda

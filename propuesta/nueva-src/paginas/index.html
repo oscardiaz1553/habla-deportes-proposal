@@ -128,12 +128,28 @@ og_imagen: assets/img/js-2.webp
       </section>
 
       <!-- M5 · Junior (1 destacada + 4 titulares de solo texto) -->
-      <section class="section section--tema" aria-labelledby="m5" data-module="M5">
-        {{ rotulo("Junior FC", "junior.html", "Ir a Junior FC", id="m5") }}
-        <div class="topic-block">
-          {{ tarjeta("articulo.html", "junior-trofeo-bandera", "Crónica", "El día que Junior se coronó bicampeón: la noche en tres escenas", "<time datetime='2026-11-05'>5 nov 2026</time> · Dato de ejemplo", variante="wide") }}
-          {{ titulares([("articulo.html", "Barranquilla rojiblanca: el barrio que llega al estadio desde las 3:00 p. m.", "Hinchada · Hace 6 horas", False), ("articulo.html", "Los once que más minutos suman en la Liga y por qué importa", "Plantel · Hace 9 horas", False), ("video.html", "El Metropolitano antes del clásico, en primera persona", "Hinchada · 15 min", True), ("articulo.html", "Junior visita a Pasto el miércoles 11 de noviembre, a las 10:00 p. m.", "Calendario · Ayer", False)]) }}
+      <section class="section jf" aria-labelledby="m5" data-module="M5">
+        <div class="jf-head"><h2 class="jf-h2" id="m5">Junior FC</h2><a class="jf-more" href="junior.html">Ir a Junior FC{{ ico("caret-right", "icon icon--sm") }}</a></div>
+        <div class="jf-block">
+          <span class="jf-tape jf-tape--a" aria-hidden="true"></span>
+          <article class="jf-feat">
+            <div class="jf-copy">
+              <p class="jf-tag">Crónica</p>
+              <h3 class="jf-ft"><a class="jf-card-link" href="articulo.html">El día que Junior se coronó <span class="jf-strip jf-strip--paper">bicampeón</span>: la noche en tres escenas</a></h3>
+              <p class="jf-dek">El pitazo final, la vuelta olímpica y la madrugada en la calle 72: tres momentos para recordar la noche del título.</p>
+              <p class="jf-lm"><time datetime="2026-11-05">5 nov 2026</time> · 7 min de lectura</p>
+            </div>
+            <div class="jf-photo">{{ foto("junior-trofeo-bandera", alt="Jugadores de Junior alzan el trofeo y una bandera con un mensaje religioso entre serpentinas azules") }}<span class="jf-st jf-st--a" aria-hidden="true">{{ foto("escudo-junior", clase="jf-st__img", alt="") }}</span></div>
+          </article>
+          <ul class="jf-list" role="list"><li class="jf-li"><p class="jf-topic">Hinchada</p><a class="jf-lt jf-card-link" href="articulo.html">Barranquilla rojiblanca: el barrio que llega al estadio desde las 3:00 p. m.</a><p class="jf-lm">Hace 6 horas</p></li><li class="jf-li"><p class="jf-topic">Plantel</p><a class="jf-lt jf-card-link" href="articulo.html">Los once que más minutos suman en la Liga y por qué importa</a><p class="jf-lm">Hace 9 horas</p></li><li class="jf-li"><p class="jf-topic">Hinchada</p><a class="jf-lt jf-card-link" href="video.html"><span class="jf-vid">{{ ico("play-fill", "icon") }}</span><span class="visually-hidden">Video: </span>El Metropolitano antes del clásico, en primera persona</a><p class="jf-lm">15 min</p></li><li class="jf-li"><p class="jf-topic">Tabla</p><a class="jf-lt jf-card-link" href="datos.html#posiciones">Seis puntos del octavo: las cuentas de Junior para meterse entre los ocho</a><p class="jf-lm">Ayer</p></li></ul>
+          <div class="jf-next">
+            <p class="jf-nl">Próximo partido</p>
+            <p class="jf-vs"><span class="visually-hidden">Junior contra Millonarios</span><span class="jf-st jf-st--sm" aria-hidden="true">{{ foto("escudo-junior", clase="jf-st__img", alt="") }}</span><span class="jf-vsx" aria-hidden="true">vs.</span><span class="jf-st jf-st--sm jf-st--tilt" aria-hidden="true">{{ foto("escudo-millonarios", clase="jf-st__img", alt="") }}</span></p>
+            <p class="jf-nd"><span class="jf-nt">Junior vs. Millonarios</span><span class="jf-nm"><time datetime="2026-11-22T18:10">Domingo 22 de noviembre, 6:10 p. m.</time> · Estadio Metropolitano</span></p>
+            <a class="jf-btn" href="partido.html">Ver la previa<span class="visually-hidden">: Junior contra Millonarios</span>{{ ico("caret-right", "icon icon--sm") }}</a>
+          </div>
         </div>
+        <p class="jf-note">Rival, fecha y hora del próximo partido, titulares y horas: dato de ejemplo.</p>
       </section>
     </div>
 

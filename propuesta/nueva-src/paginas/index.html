@@ -205,22 +205,35 @@ og_imagen: assets/img/js-2.webp
         <p class="sh-note">Títulos y duraciones de los Shorts: dato de ejemplo.</p>
       </section>
 
-  <div class="layout-split">
+  <div class="layout-split home-split">
     <div class="layout-split__main">
       <!-- M7 · Selección Colombia (1 + 3, menos peso que Junior) -->
-      <section class="section" aria-labelledby="m7" data-module="M7">
+      <section class="section sel" aria-labelledby="m7" data-module="M7">
         {{ rotulo("Selección Colombia", "seleccion.html", "Ir a la Selección", id="m7") }}
-        <div class="topic-block">
-          {{ tarjeta("articulo.html", "seleccion-gol", "Convocatoria", "Qué pide el técnico al medio campo para el amistoso con Perú", "<time datetime='2026-11-06T11:00-05:00'>Hace 9 horas</time> · 5 min de lectura", variante="wide") }}
-          {{ titulares([("articulo.html", "Perú, en cinco claves: cómo juega y dónde duele", "Rival · Hace 10 horas", False), ("video.html", "Debate: ¿es Perú el rival ideal para esta fecha FIFA?", "Debate · 19 min", True)]) }}
+        <div class="sel-panel">
+          <article class="sel-feat">
+            <div class="sel-photo">{{ foto("seleccion-gol", alt="Jugadores de la Selección con camiseta amarilla celebran un gol con los brazos en alto, con la tribuna amarilla de fondo") }}</div>
+            <span class="sel-shade" aria-hidden="true"></span>
+            <div class="sel-fb">
+              <p class="sel-tag sel-tag--sel">Convocatoria</p>
+              <h3 class="sel-ft"><a class="sel-card-link" href="articulo.html">Qué pide el técnico al medio campo para el amistoso con Perú</a></h3>
+              <p class="sel-fm"><time datetime='2026-11-06T11:00-05:00'>Hace 9 horas</time> · 5 min de lectura</p>
+            </div>
+            <p class="sel-next"><span class="sel-st-c" aria-hidden="true">{{ foto("Logotipo_FPF_2016", alt="") }}</span>
+              <span class="sel-nx"><span class="sel-nt">Vs. Perú</span><time datetime="2026-11-13T19:30-05:00">Vie 13 nov · 7:30 p. m.</time></span></p>
+          </article>
+          <ul class="sel-list" role="list"><li class="sel-li"><a class="sel-card-link " href="articulo.html">Perú, en cinco claves: cómo juega y dónde duele</a><span class="sel-meta">Rival · Hace 10 horas</span></li><li class="sel-li"><a class="sel-card-link " href="video.html"><span class="sel-vid" aria-hidden="true">{{ ico("play-fill", "icon") }}</span><span class="visually-hidden">Video: </span>Debate: ¿es Perú el rival ideal para esta fecha FIFA?</a><span class="sel-meta">Debate · 19 min</span></li></ul>
         </div>
       </section>
     </div>
     <div class="layout-split__rail">
       <!-- L4 · Mercado de fichajes -->
-      <section class="rail-module" aria-labelledby="l4" data-module="L4">
-        <div class="rail-module__head"><h2 class="rail-module__title" id="l4">Mercado de fichajes</h2><a class="link-action" href="mercado.html">Ver el mercado{{ ico("caret-right", "icon icon--sm") }}</a></div>
-        {{ mercado() }}
+      <section class="section mkt" aria-labelledby="l4" data-module="L4">
+        {{ rotulo("Mercado de fichajes", id="l4") }}
+        <div class="mkt-panel">
+          <ol class="mkt-list" role="list"><li class="mkt-slip mkt-slip--jr"><span class="mkt-stk" aria-hidden="true"><span class="mkt-sto">{{ foto("escudo-medellin", "mkt-sci", alt="") }}</span><span class="mkt-std">{{ foto("escudo-junior", "mkt-sci", alt="") }}</span></span><span class="mkt-tx"><span class="mkt-top"><span class="mkt-date">{{ ico("calendar-blank", "icon icon--sm") }}<time datetime="2026-11-05">Ayer</time></span><span class="mkt-st mkt-st--talks"><span class="mkt-dot" aria-hidden="true"></span>Negociando</span></span><a class="mkt-t" href="mercado.html">Jhon Mosquera</a><span class="mkt-r"><span class="mkt-kind mkt-kind--in">{{ ico("sign-in", "icon icon--sm") }}<span class="visually-hidden">Llega a Junior. </span></span><span class="mkt-route"><span>Medellín</span><span class="mkt-arr">{{ ico("arrow-right", "icon icon--sm") }}</span><span class="visually-hidden"> a </span><span class="mkt-to mkt-jr">Junior</span></span></span></span></li><li class="mkt-slip mkt-slip--jr"><span class="mkt-stk" aria-hidden="true"><span class="mkt-sto">{{ foto("escudo-tolima", "mkt-sci", alt="") }}</span><span class="mkt-std">{{ foto("escudo-junior", "mkt-sci", alt="") }}</span></span><span class="mkt-tx"><span class="mkt-top"><span class="mkt-date">{{ ico("calendar-blank", "icon icon--sm") }}<time datetime="2026-11-04">Mié 4 nov</time></span><span class="mkt-st mkt-st--closed"><span class="mkt-dot" aria-hidden="true"></span>Cerrado</span></span><a class="mkt-t" href="mercado.html">Kevin Arboleda</a><span class="mkt-r"><span class="mkt-kind mkt-kind--in">{{ ico("sign-in", "icon icon--sm") }}<span class="visually-hidden">Llega a Junior. </span></span><span class="mkt-route"><span>Tolima</span><span class="mkt-arr">{{ ico("arrow-right", "icon icon--sm") }}</span><span class="visually-hidden"> a </span><span class="mkt-to mkt-jr">Junior</span></span></span></span></li><li class="mkt-slip mkt-slip--jr"><span class="mkt-stk" aria-hidden="true"><span class="mkt-sto">{{ foto("escudo-millonarios", "mkt-sci", alt="") }}</span><span class="mkt-std">{{ foto("escudo-junior", "mkt-sci", alt="") }}</span></span><span class="mkt-tx"><span class="mkt-top"><span class="mkt-date">{{ ico("calendar-blank", "icon icon--sm") }}<time datetime="2026-11-02">Lun 2 nov</time></span><span class="mkt-st mkt-st--rumor"><span class="mkt-dot" aria-hidden="true"></span>Rumor</span></span><a class="mkt-t" href="mercado.html">Mateo Sosa</a><span class="mkt-r"><span class="mkt-kind mkt-kind--in">{{ ico("sign-in", "icon icon--sm") }}<span class="visually-hidden">Llega a Junior. </span></span><span class="mkt-route"><span>Millonarios</span><span class="mkt-arr">{{ ico("arrow-right", "icon icon--sm") }}</span><span class="visually-hidden"> a </span><span class="mkt-to mkt-jr">Junior</span></span></span></span></li><li class="mkt-slip"><span class="mkt-stk" aria-hidden="true"><span class="mkt-sto">{{ foto("escudo-america", "mkt-sci", alt="") }}</span><span class="mkt-std">{{ foto("escudo-medellin", "mkt-sci", alt="") }}</span></span><span class="mkt-tx"><span class="mkt-top"><span class="mkt-date">{{ ico("calendar-blank", "icon icon--sm") }}<time datetime="2026-10-30">Vie 30 oct</time></span><span class="mkt-st mkt-st--talks"><span class="mkt-dot" aria-hidden="true"></span>Negociando</span></span><a class="mkt-t" href="mercado.html">Yair Palacios</a><span class="mkt-r"><span class="mkt-kind mkt-kind--other">{{ ico("arrows-left-right", "icon icon--sm") }}<span class="visually-hidden">Entre otros clubes. </span></span><span class="mkt-route"><span>América</span><span class="mkt-arr">{{ ico("arrow-right", "icon icon--sm") }}</span><span class="visually-hidden"> a </span><span class="mkt-to">Medellín</span></span></span></span></li><li class="mkt-slip"><span class="mkt-stk" aria-hidden="true"><span class="mkt-sto">{{ foto("escudo-medellin", "mkt-sci", alt="") }}</span><span class="mkt-std">{{ foto("escudo-millonarios", "mkt-sci", alt="") }}</span></span><span class="mkt-tx"><span class="mkt-top"><span class="mkt-date">{{ ico("calendar-blank", "icon icon--sm") }}<time datetime="2026-10-28">Mié 28 oct</time></span><span class="mkt-st mkt-st--closed"><span class="mkt-dot" aria-hidden="true"></span>Cerrado</span></span><a class="mkt-t" href="mercado.html">Dylan Ortega</a><span class="mkt-r"><span class="mkt-kind mkt-kind--other">{{ ico("arrows-left-right", "icon icon--sm") }}<span class="visually-hidden">Entre otros clubes. </span></span><span class="mkt-route"><span>Medellín</span><span class="mkt-arr">{{ ico("arrow-right", "icon icon--sm") }}</span><span class="visually-hidden"> a </span><span class="mkt-to">Millonarios</span></span></span></span></li></ol>
+          <div class="mkt-foot"><p class="mkt-note">Nombres y datos de ejemplo.</p><a class="link-action" href="mercado.html">Ver todo<span class="visually-hidden"> el mercado de fichajes</span>{{ ico("caret-right", "icon icon--sm") }}</a></div>
+        </div>
       </section>
     </div>
   </div>

@@ -221,7 +221,7 @@
   --header-total-lg:    112px; /* nivel 1 (64) + nivel 2 (48) */
   --header-sticky-lg:   48px;  /* lo que queda pegado al bajar: solo el nivel 2 */
   --header-total-mobile:56px;  /* solo el nivel 1, pegado */
-  --bottom-nav-h:       64px;  /* + env(safe-area-inset-bottom) */
+  --bottom-nav-h:       0px;  /* sin barra inferior móvil */
   --radio-dock-h:       64px;  /* reproductor acoplado (escritorio) */
   --radio-dock-h-mobile:56px;  /* se apoya sobre la barra inferior */
   --match-banner-h:     424px; /* requisito del cliente (escritorio) */

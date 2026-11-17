@@ -165,7 +165,6 @@ def documento(slug, meta, cuerpo, jsonld):
         cabecera(slug),
         f'<main id="contenido" class="site-main" tabindex="-1">\n{cuerpo}\n</main>{c}',
         pie(),
-        barra_inferior(slug),
         nucleo.sprite(nucleo.P.iconos),
         "</body>",
         "</html>",

@@ -143,9 +143,9 @@
   /* Pesos: 3 en Archivo, 3 en Inter. Nada de "todo en bold". */
   --fw-regular:  400;  /* Inter: cuerpo */
   --fw-medium:   500;  /* Inter: meta, menú contextual */
-  --fw-semibold: 600;  /* Inter: botones, menú azul, títulos pequeños | Archivo: titular tarjeta pequeña */
-  --fw-bold:     700;  /* Archivo: titulares */
-  --fw-black:    800;  /* Archivo: H1, rótulo de sección en cursiva, marcadores */
+  --fw-semibold: 500;  /* Inter: botones, menú azul, títulos pequeños | Archivo: titular tarjeta pequeña */
+  --fw-bold:     500;  /* Archivo: titulares */
+  --fw-black:    500;  /* Archivo: H1, rótulo de sección en cursiva, marcadores */
 
   /* Escala. Las fluidas van de 390 px a 1440 px de viewport. */
   --fs-h1:       clamp(2rem, 1.629rem + 1.524vw, 3rem);        /* 32 -> 48  H1 de página / nota */

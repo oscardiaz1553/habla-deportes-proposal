@@ -9,8 +9,8 @@ og_imagen: assets/img/js-2.webp
      PORTADA (T1) · 02-arquitectura §4.2
      M1 principal · M2 tres noticias · M3 banner de partidos · A ·
      [M4 programa · M5 Junior | L1 clasificación · L2 próximos · B] ·
-     M6 Shorts · [M7 Selección | L4 mercado] · M8 En vivo ahora · M8b Noticias por tema ·
-     M9 opinión | M10 comunidad · C (aliados: solo en el pie)   (segunda pasada: 06-decisiones)
+     M6 Shorts · [M7 Selección | L4 mercado] · T-fc Fútbol colombiano · [T-eu Europa | T-ex Exterior] ·
+     C (aliados: solo en el pie)   (sin Opinión ni Comunidad: se quitaron de la portada)
      Inventario de fotos: el build falla si una foto se repite en la página.
      ====================================================================== -->
 <h1 class="visually-hidden">Portada de Habla Deportes</h1>
@@ -261,32 +261,5 @@ og_imagen: assets/img/js-2.webp
   </section>
   </div>
   <p class="tm-note">Fotos de Wikimedia Commons: Remux (CC BY-SA 4.0), Ángel Páez (CC BY 4.0), Steffen Prößdorf (CC BY-SA 4.0), Vincenzo.togni (CC BY-SA 4.0), Fra Casa (CC0), Hayden Schiff (CC BY 2.0) y jmmuguerza (CC BY-SA 3.0). Las imágenes son ilustrativas. Notas, horas y datos de estas secciones: de ejemplo, sin nombres reales.</p>
-
-  <!-- M9 · Opinión | M10 · Comunidad -->
-  <div class="duo">
-    <section class="section opinion" aria-labelledby="m9" data-module="M9">
-      {{ rotulo("Opinión", "juan-salvador.html#columnas", "Todas las columnas", id="m9") }}
-      <ul class="opinion-list" role="list">
-        <li class="opinion-item"><p class="opinion-item__author">Juan Salvador Bárcena <span>La voz del programa</span></p><h3 class="opinion-item__title"><a href="juan-salvador.html#columnas">Lo que se espera de una final de barrio</a></h3><p class="opinion-item__dek">Cómo se vive un partido grande en Barranquilla, antes y después del pitazo.</p><p class="meta">Columna de ejemplo · 4 min</p></li>
-        <li class="opinion-item"><p class="opinion-item__author">Juan Salvador Bárcena <span>La voz del programa</span></p><h3 class="opinion-item__title"><a href="juan-salvador.html#columnas">La Selección y el once ideal</a></h3><p class="opinion-item__dek">Por qué todos tenemos una alineación en la cabeza.</p><p class="meta">Columna de ejemplo · 5 min</p></li>
-        <li class="opinion-item"><p class="opinion-item__author">Mauricio Reyes <span>Análisis táctico</span></p><h3 class="opinion-item__title"><a href="articulo.html">Equilibrio o creatividad: el dilema del medio campo</a></h3><p class="opinion-item__dek">Dos formas de armar el centro de la cancha y lo que cada una le cuesta al equipo.</p><p class="meta">Columna de ejemplo · 5 min</p></li>
-      </ul>
-    </section>
-
-    <section class="section community" aria-labelledby="m10" data-module="M10">
-      {{ rotulo("Comunidad", id="m10") }}
-      <div class="community__block">
-        <h3 class="community__title">Encuesta del hincha</h3>
-        {{ encuesta("¿Qué debe mejorar Junior tras ganarle 1 a 0 a Pasto?", [("Más gol de los extremos", 44), ("Mejor salida con balón", 37), ("Más presión tras pérdida", 19)]) }}
-      </div>
-      <div class="community__block">
-        {{ boletin() }}
-      </div>
-      <div class="community__block">
-        <h3 class="community__title">Síguenos</h3>
-        {{ siguenos() }}
-      </div>
-    </section>
-  </div>
 
 </div>

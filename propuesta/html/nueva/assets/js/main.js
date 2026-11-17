@@ -665,3 +665,29 @@
     caja.scrollTop = Math.max(0, fila.offsetTop - caja.clientHeight / 2 + fila.offsetHeight / 2 - (cab ? cab.offsetHeight : 0) / 2);
   });
 })();
+
+/* M6 · Shorts: carril con flechas y barra de duración */
+(function () {
+          var s = document.querySelector('[data-sh]'); if (!s) return;
+          var t = s.querySelector('.sh-viewport'), prev = s.querySelector('[data-sh-prev]'), next = s.querySelector('[data-sh-next]');
+          var items = s.querySelectorAll('.sh-item'), segs = s.querySelectorAll('.sh-seg');
+          var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+          function sync() {
+            var max = t.scrollWidth - t.clientWidth;
+            s.classList.toggle('is-static', max <= 1);
+            prev.disabled = t.scrollLeft <= 5; next.disabled = t.scrollLeft >= max - 5;
+            var box = t.getBoundingClientRect();
+            items.forEach(function (it, i) {
+              var r = it.getBoundingClientRect(), seen = Math.min(r.right, box.right) - Math.max(r.left, box.left);
+              if (segs[i]) segs[i].classList.toggle('is-on', seen > r.width * 0.5);
+            });
+          }
+          function step(d) {
+            var it = t.querySelector('.sh-item'), gap = parseFloat(getComputedStyle(t.firstElementChild).columnGap) || 0;
+            t.scrollBy({ left: d * (it ? it.getBoundingClientRect().width + gap : t.clientWidth * .8), behavior: reduce.matches ? 'auto' : 'smooth' });
+          }
+          prev.addEventListener('click', function () { step(-1); });
+          next.addEventListener('click', function () { step(1); });
+          t.addEventListener('scroll', sync, { passive: true });
+          window.addEventListener('resize', sync); sync();
+        })();

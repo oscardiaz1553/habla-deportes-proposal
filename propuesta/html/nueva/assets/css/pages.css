@@ -583,7 +583,6 @@
 /* Partido de Junior: franja azul arriba, la misma que tapa «nadie» en el titular */
 .tira__item.is-junior .tira__card { border-top: 4px solid var(--brand-600); }
 .tira__item.is-junior .tira__when { color: var(--brand-600); }
-.tira__item.is-junior .tira__state { color: var(--brand-600); }
 .tira__card:hover { translate: 0 -2px; }
 .tira__card:focus-visible { outline: var(--focus-width) solid var(--color-focus); outline-offset: 4px; }
 @media (min-width: 1024px) {
@@ -861,4 +860,91 @@
   .jf-li + .jf-li { padding-left: var(--space-2); border-left: 1px solid rgba(255,255,255,.25); }
   .jf-next { grid-template-columns: auto minmax(0, 1fr) auto; gap: var(--space-3); padding: var(--space-3); }
   .jf .jf-btn { justify-self: end; }
+}
+
+/* Junior FC en el rojo del equipo: el bloque, la etiqueta, la tira y el botón (el resto de la Home sigue en azul) */
+.jf-block { background: var(--junior-600); }
+.jf-tag, .jf-strip--paper, .jf-vid { color: var(--junior-600); }
+.jf-nl { color: var(--junior-600); border-color: var(--junior-600); }
+.jf .jf-btn { background: var(--junior-600); }
+.jf .jf-btn:hover { background: var(--junior-700); }
+.jf .jf-next a:focus-visible { outline-color: var(--junior-600); }
+
+/* El partido de Junior y la boleta de Junior en la tira, también en el rojo del equipo */
+.pj__poster { background: var(--junior-600); }
+.pj__photo { background: var(--junior-700); }
+.pj__tag, .pj .rx-strip--paper { color: var(--junior-600); }
+.pj__btn { color: var(--junior-600); }
+.pj__btn:hover { background: var(--gray-100); }
+.tira__item.is-junior .tira__card { border-top-color: var(--junior-600); }
+.tira__item.is-junior .tira__when { color: var(--junior-600); }
+.tira__item.is-junior .tira__state { color: var(--junior-600); }
+
+/* M6 · Shorts: tira de ancho completo con título sobre la foto y barra de duración */
+/* ---- sh: base del módulo (Inter 400/500, sin mayúsculas sostenidas ni cursivas) ---- */
+.sh { color: var(--gray-900); font-family: var(--font-text); }
+.sh :where(h2, h3, h4, p, ol, ul, figure) { margin: 0; }
+.sh :where(h2, h3, h4) { font-family: var(--font-text); font-weight: var(--fw-medium); font-style: normal; text-wrap: balance; }
+.sh :where(ol, ul) { padding: 0; list-style: none; }
+.sh a { color: inherit; text-decoration: none; }
+.sh :where(a, button, [tabindex]):focus-visible { outline: var(--focus-width) solid var(--color-focus); outline-offset: 3px; }
+.sh-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0 var(--space-2);
+  margin-bottom: var(--space-3); padding-top: var(--space-2); border-top: var(--border-rule) solid var(--gray-900); }
+.sh-h2 { font-size: clamp(1.5rem, 1.2rem + 1vw, 1.75rem); line-height: var(--lh-title); letter-spacing: var(--ls-display); }
+.sh-tools { display: flex; align-items: center; gap: var(--space-2); }
+.sh .sh-more { display: inline-flex; align-items: center; gap: var(--space-half); min-height: var(--touch-min); color: var(--brand-600);
+  font-size: var(--fs-ui); font-weight: var(--fw-medium); }
+.sh .sh-more:hover { text-decoration: underline; text-underline-offset: 3px; }
+/* Tira que «tapa» una palabra */
+.sh-strip { display: inline-block; padding: .02em .16em .06em; margin-inline: -.04em; background: var(--brand-600); color: var(--white); rotate: -2deg;
+  clip-path: polygon(0 4%, 18% 0, 46% 5%, 72% 1%, 100% 4%, 99% 96%, 76% 100%, 49% 95%, 22% 100%, 1% 97%); }
+/* Cinta kraft: material, nunca lleva texto */
+.sh-tape { position: absolute; z-index: 3; display: block; width: 80px; height: 22px; background: var(--cb-tape); pointer-events: none; }
+.sh-photo { position: relative; background: var(--gray-100); }
+.sh-photo > img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; }
+/* Duración: papel sobre la foto */
+.sh-dur { position: absolute; z-index: 2; padding: 3px 7px; background: var(--white); color: var(--gray-900); font-size: var(--fs-label);
+  font-weight: var(--fw-medium); line-height: 1.3; font-variant-numeric: var(--numeric); rotate: 3deg; pointer-events: none; }
+.sh-play { position: absolute; z-index: 2; display: grid; place-items: center; width: 48px; height: 48px; border-radius: var(--radius-round);
+  background: var(--brand-600); color: var(--white); pointer-events: none; }
+.sh-play .icon { width: 40%; height: 40%; margin-left: 6%; }
+/* Enlace que cubre la tarjeta + foco visible en la tarjeta */
+.sh-card { position: relative; }
+.sh-card-link::after { content: ""; position: absolute; inset: 0; z-index: 1; }
+.sh-card:has(.sh-card-link:focus-visible) { outline: var(--focus-width) solid var(--color-focus); outline-offset: 4px; }
+.sh .sh-card .sh-card-link:focus-visible { outline: none; }
+.sh-note { margin-top: var(--space-3); font-size: var(--fs-label); line-height: 1.4; color: var(--gray-600); }
+@media (prefers-reduced-motion: reduce) { .sh *, .sh *::after { transition: none !important; } }
+/* ===== 4 · Tira numerada: los cinco a todo el ancho, título sobre la foto ===== */
+.sh-arrows { display: flex; gap: 6px; }
+.sh-arrow { display: grid; place-items: center; width: var(--touch-min); height: var(--touch-min); padding: 0; border: 1px solid var(--gray-200); border-radius: var(--radius-round);
+  background: var(--white); color: var(--brand-600); cursor: pointer; transition: background var(--dur-base) var(--ease-out); }
+.sh-arrow:hover:not(:disabled) { background: var(--brand-50); border-color: var(--brand-100); }
+.sh-arrow:disabled { color: var(--gray-400); cursor: default; }
+.sh.is-static .sh-arrows { display: none; }
+.sh-viewport { overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; scroll-padding-inline: 4px; margin: 0 -4px; padding: 4px; }
+.sh-viewport::-webkit-scrollbar { display: none; }
+.sh-track { display: flex; gap: var(--space-3); }
+.sh-item { flex: 0 0 min(64%, 260px); min-width: 0; display: flex; flex-direction: column; gap: 10px; scroll-snap-align: start; }
+.sh-card { display: grid; overflow: hidden; }
+.sh-card > * { grid-area: 1 / 1; }
+.sh-card .sh-photo { aspect-ratio: 9 / 16; }
+.sh-photo img { transition: scale var(--dur-slow, 300ms) var(--ease-out); }
+.sh-card:hover .sh-photo img { scale: 1.04; }
+.sh-photo .sh-dur { top: 16px; right: 10px; }
+.sh-shade { background: linear-gradient(to top, color-mix(in srgb, var(--brand-900) 92%, transparent) 0%, color-mix(in srgb, var(--brand-900) 72%, transparent) 30%, transparent 62%);
+  position: relative; z-index: 1; pointer-events: none; }
+.sh-t { align-self: end; z-index: 2; padding: 0 14px 16px; color: var(--white); font-size: var(--fs-title-md); line-height: var(--lh-snug); letter-spacing: var(--ls-title); }
+.sh-card:hover .sh-t a { text-decoration: underline; text-underline-offset: 3px; }
+.sh-foot { display: flex; align-items: center; gap: var(--space-2); margin-top: var(--space-2); }
+.sh-segs { flex: 1; display: flex; gap: 4px; }
+.sh-seg { flex-basis: 0; height: 4px; background: var(--gray-200); transition: background var(--dur-base) var(--ease-out); }
+.sh-seg.is-on { background: var(--brand-600); }
+.sh-seg.is-jr.is-on { background: var(--junior-600); }
+.sh-total { font-size: var(--fs-meta); color: var(--gray-600); white-space: nowrap; font-variant-numeric: var(--numeric); }
+@media (min-width: 600px) { .sh-item { flex-basis: calc((100% - 2 * var(--space-3)) / 2.5); } }
+@media (min-width: 900px) { .sh-item { flex-basis: calc((100% - 3 * var(--space-3)) / 3.6); } }
+@media (min-width: 1200px) {
+  .sh-item { flex-basis: calc((100% - 4 * var(--space-3)) / 5); }
+  .sh-t { padding: 0 16px 18px; }
 }

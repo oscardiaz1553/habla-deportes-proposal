@@ -166,9 +166,44 @@ og_imagen: assets/img/js-2.webp
   </div>
 
   <!-- M6 · Shorts (un solo carril, separado de los programas) -->
-  <section class="section" aria-labelledby="s-shorts" data-module="M6">
-    {{ carril_shorts("carril-shorts", "Shorts", "shorts.html", "Ver todos", [("seleccion-tecnico-zona", "Qué significa «oxigenar» una lista", "0:44"), ("banderas-junior-millonarios", "Tres datos de la Fecha 19 en menos de un minuto", "0:48"), ("banderas-colombia-peru", "Así se prepara la hinchada para Colombia vs. Perú", "0:33"), ("seleccion-derrota", "Pregunta del día: ¿qué lateral izquierdo quieres ver?", "0:19"), ("invitado-estudio", "¿Titular o suplente? El debate del extremo", "0:36")]) }}
-  </section>
+  <section class="section sh" aria-labelledby="s-shorts" data-module="M6" data-sh>
+        <div class="sh-head"><h2 class="sh-h2" id="s-shorts">Shorts</h2><div class="sh-tools"><div class="sh-arrows"><button class="sh-arrow" type="button" data-sh-prev aria-controls="sh-track">{{ ico("caret-left", "icon") }}<span class="visually-hidden">Shorts anteriores</span></button><button class="sh-arrow" type="button" data-sh-next aria-controls="sh-track">{{ ico("caret-right", "icon") }}<span class="visually-hidden">Shorts siguientes</span></button></div><a class="sh-more" href="shorts.html">Ver todos<span class="visually-hidden"> los Shorts</span>{{ ico("caret-right", "icon icon--sm") }}</a></div></div>
+        <div class="sh-viewport" id="sh-track" role="region" aria-label="Carril de Shorts, se desplaza de lado" tabindex="0">
+          <ol class="sh-track" role="list"><li class="sh-item">
+              <article class="sh-card">
+                <div class="sh-photo">{{ foto("seleccion-tecnico-zona", alt="") }}<span class="sh-dur " aria-hidden="true">0:44</span></div>
+                <span class="sh-shade" aria-hidden="true"></span>
+                <h3 class="sh-t"><a class="sh-card-link " href="shorts.html"><span class="visually-hidden">Video: </span>Qué significa «oxigenar» una lista<span class="visually-hidden">, 44 segundos</span></a></h3>
+              </article>
+            </li><li class="sh-item">
+              <article class="sh-card">
+                <div class="sh-photo">{{ foto("banderas-junior-millonarios", alt="") }}<span class="sh-dur " aria-hidden="true">0:48</span></div>
+                <span class="sh-shade" aria-hidden="true"></span>
+                <h3 class="sh-t"><a class="sh-card-link " href="shorts.html"><span class="visually-hidden">Video: </span>Tres datos de la Fecha 19 en menos de un minuto<span class="visually-hidden">, 48 segundos</span></a></h3>
+              </article>
+            </li><li class="sh-item">
+              <article class="sh-card">
+                <div class="sh-photo">{{ foto("banderas-colombia-peru", alt="") }}<span class="sh-dur " aria-hidden="true">0:33</span></div>
+                <span class="sh-shade" aria-hidden="true"></span>
+                <h3 class="sh-t"><a class="sh-card-link " href="shorts.html"><span class="visually-hidden">Video: </span>Así se prepara la hinchada para Colombia vs. Perú<span class="visually-hidden">, 33 segundos</span></a></h3>
+              </article>
+            </li><li class="sh-item">
+              <article class="sh-card">
+                <div class="sh-photo">{{ foto("seleccion-derrota", alt="") }}<span class="sh-dur " aria-hidden="true">0:19</span></div>
+                <span class="sh-shade" aria-hidden="true"></span>
+                <h3 class="sh-t"><a class="sh-card-link " href="shorts.html"><span class="visually-hidden">Video: Pregunta del día: </span>¿Qué lateral izquierdo quieres ver?<span class="visually-hidden">, 19 segundos</span></a></h3>
+              </article>
+            </li><li class="sh-item">
+              <article class="sh-card">
+                <div class="sh-photo">{{ foto("invitado-estudio", alt="") }}<span class="sh-dur " aria-hidden="true">0:36</span></div>
+                <span class="sh-shade" aria-hidden="true"></span>
+                <h3 class="sh-t"><a class="sh-card-link " href="shorts.html"><span class="visually-hidden">Video: </span>¿Titular o suplente? El debate del extremo<span class="visually-hidden">, 36 segundos</span></a></h3>
+              </article>
+            </li></ol>
+        </div>
+        <div class="sh-foot"><span class="sh-segs" aria-hidden="true"><span class="sh-seg" style="flex-grow: 44"></span><span class="sh-seg is-jr" style="flex-grow: 48"></span><span class="sh-seg" style="flex-grow: 33"></span><span class="sh-seg" style="flex-grow: 19"></span><span class="sh-seg" style="flex-grow: 36"></span></span><p class="sh-total">5 Shorts · 3:00 en total</p></div>
+        <p class="sh-note">Títulos y duraciones de los Shorts: dato de ejemplo.</p>
+      </section>
 
   <div class="layout-split">
     <div class="layout-split__main">

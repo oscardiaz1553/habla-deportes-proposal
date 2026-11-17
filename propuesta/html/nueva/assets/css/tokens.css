@@ -56,6 +56,9 @@
   --gray-900:  #111C27;  /* tinta: titulares y cuerpo (17.2:1) */
 
   /* Rojo en vivo: un solo tono. Texto blanco encima 5.2:1; como texto sobre blanco 5.2:1. */
+  /* Rojo de Junior (escudo y camiseta): acento solo en los módulos del equipo. Blanco sobre junior-600 = 5.9:1 */
+  --junior-600: #C8202F;
+  --junior-700: #A5192A;
   --live-600:  #D42318;
   --live-700:  #B81D14;  /* hover del enlace "en vivo" */
 

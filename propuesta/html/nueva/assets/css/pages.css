@@ -1173,3 +1173,49 @@
   .tm-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--space-4); }
   .tm-pair { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--space-6); }
 }
+
+/* Menú móvil: buscador con filete y lupa + índice tipográfico de secciones */
+/* ---- mn1: base de la hoja (Inter 400/500, sin mayúsculas sostenidas ni cursivas, papel blanco) ---- */
+.mn1 { color: var(--gray-900); font-family: var(--font-text); background: var(--white); }
+.mn1 :where(h2, h3, p, ul, ol) { margin: 0; }
+.mn1 :where(h2, h3) { font-family: var(--font-text); font-weight: var(--fw-medium); font-style: normal; }
+.mn1 :where(ul, ol) { padding: 0; list-style: none; }
+.mn1 :where(a) { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+.mn1 :where(button) { margin: 0; padding: 0; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.mn1 :where(a, button):focus-visible { outline: var(--focus-width) solid var(--color-focus); outline-offset: 2px; }
+.mn1-inner { max-width: 600px; margin-inline: auto; padding: 16px 16px 48px; }
+/* Búsqueda: filete inferior y lupa, sin caja ni botón relleno */
+.mn1-search { display: flex; align-items: center; gap: 4px; border-bottom: 1px solid var(--gray-400); padding-bottom: 1px; }
+.mn1-search:focus-within { border-bottom: 2px solid var(--brand-600); padding-bottom: 0; }
+.mn1-search__input { flex: 1; min-width: 0; min-height: 48px; padding: 0; border: 0; border-radius: 0; background: transparent; color: var(--gray-900);
+  font: var(--fw-regular) 1.0625rem/1.3 var(--font-text); -webkit-appearance: none; appearance: none; }
+.mn1-search__input:focus { outline: none; }
+.mn1-search__input::placeholder { color: var(--gray-600); opacity: 1; }
+.mn1-search__input::-webkit-search-cancel-button { display: none; }
+.mn1-search__btn { flex: none; display: grid; place-items: center; width: 44px; height: 44px; margin-right: -10px; color: var(--gray-900); }
+.mn1-search__btn .icon { width: 22px; height: 22px; }
+.mn1-search__btn:hover { color: var(--brand-600); }
+
+/* Índice tipográfico: la tira azul marca solo dónde está el lector */
+.mn1-block { margin-top: 12px; }
+.mn1-list { margin-top: 4px; }
+.mn1-sec { border-bottom: 1px solid var(--gray-200); }
+.mn1-sec:last-child { border-bottom: 0; }
+.mn1-row { display: flex; align-items: center; gap: 8px; min-height: 64px; }
+.mn1-name { flex: 1; min-width: 0; display: flex; align-items: center; align-self: stretch; padding: 10px 0;
+  font-size: 1.75rem; line-height: 1.1; letter-spacing: -.025em; font-weight: var(--fw-medium); }
+.mn1-name:hover .mn1-word { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; }
+.mn1-name[aria-current] .mn1-word { display: inline-block; padding: .04em .2em .08em; margin-left: -.1em; background: var(--brand-600); color: var(--white); rotate: -2deg;
+  clip-path: polygon(0 4%, 18% 0, 46% 5%, 72% 1%, 100% 4%, 99% 96%, 76% 100%, 49% 95%, 22% 100%, 1% 97%); }
+.mn1-name[aria-current]:hover .mn1-word { text-decoration: none; background: var(--brand-700); }
+.mn1-tog { flex: none; display: grid; place-items: center; width: 44px; height: 44px; margin-right: -10px; color: var(--gray-900); }
+.mn1-caret { width: 22px; height: 22px; transition: rotate var(--dur-fast) var(--ease-out); }
+.mn1-tog[aria-expanded="true"] .mn1-caret { rotate: 180deg; color: var(--brand-600); }
+/* Abierta: la palabra se subraya en azul (rojo si es Junior) */
+.mn1-sec:has(.mn1-tog[aria-expanded="true"]) .mn1-word { color: var(--brand-600); text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 7px; }
+.mn1-sec[data-anchor="junior"]:has(.mn1-tog[aria-expanded="true"]) .mn1-word { color: var(--junior-700); }
+.mn1-panel { padding: 2px 0 20px; }
+.mn1-group + .mn1-group { margin-top: 14px; }
+.mn1-glabel { font-size: var(--fs-label); line-height: 1.3; color: var(--gray-600); }
+.mn1-sub { display: flex; flex-wrap: wrap; align-items: center; min-height: 44px; padding: 8px 0; font-size: 1.0625rem; line-height: 1.3; }
+.mn1-sub:hover { color: var(--brand-600); text-decoration: underline; text-underline-offset: 4px; }

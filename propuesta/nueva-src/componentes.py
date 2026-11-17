@@ -1255,71 +1255,60 @@ def etiqueta_nav(it):
 
 
 def hoja_menu(slug):
-    """Hoja del menú móvil (< 1024 y pantallas táctiles): buscador, «Ahora» y las seis
-    opciones de la barra azul como filas con miniatura; todas menos Inicio con acordeón
-    (Selección, Datos y En vivo viven dentro de «Más»). 08 §6, 09 §4."""
-    from sitio import INICIO_MOVIL, PAGINAS, PANELES, PRIMARIO, SUGERENCIAS
+    """Hoja del menú móvil (< 1024 y pantallas táctiles): solo buscador y menú. El buscador es un campo
+    con filete inferior y lupa; el menú es un índice tipográfico con las seis opciones de la barra azul
+    (todas menos Inicio con acordeón; Selección, Datos y En vivo viven dentro de «Más»). La sección
+    actual va sobre la tira azul irregular. 08 §6, 09 §4."""
+    from sitio import PAGINAS, PANELES, PRIMARIO
     actual = PAGINAS[slug]["primario"]
-    chips = "".join(f'<li><a class="chip" href="buscar.html?q={q}">{e(t)}</a></li>' for t, q in SUGERENCIAS)
-    # Ahora: programa (al aire / próximo) y partido de Junior o la Selección en juego. Sin foto (08 §6.3).
-    ahora = (f'<li><a class="sheet-now" href="en-vivo.html">'
-             f'<span class="sheet-now__state"><span class="only-aire" hidden>{live_pill("Al aire")}</span>'
-             f'<span class="sheet-now__chip only-fuera">Próximo programa</span></span>'
-             f'<span class="sheet-now__body"><span class="sheet-now__title">El show de las mañanas</span>'
-             f'<span class="sheet-now__cta"><span class="only-aire" hidden>Ver en vivo</span>'
-             f'<span class="only-fuera">Lunes a viernes, 10:00 a. m.</span>{icono("caret-right", "icon icon--sm")}</span></span></a></li>')
-    if PARTIDO_EN_JUEGO:
-        loc, vis = equipo(_PV["local"]), equipo(_PV["visitante"])
-        ahora += (f'<li><a class="sheet-now" href="partido.html">'
-                  f'<span class="sheet-now__state">{live_pill("En vivo", _PV["minuto"])}</span>'
-                  f'<span class="sheet-now__body"><span class="sheet-now__score">{escudo(_PV["local"], "crest crest--sm")}'
-                  f'<span aria-hidden="true">{e(loc["corto"])} {_PV["marcador"]["local"]}-{_PV["marcador"]["visitante"]} {e(vis["corto"])}</span>'
-                  f'<span class="visually-hidden">{e(loc["corto"])} {_PV["marcador"]["local"]}, {e(vis["corto"])} {_PV["marcador"]["visitante"]}</span>'
-                  f'{escudo(_PV["visitante"], "crest crest--sm")}</span>'
-                  f'<span class="sheet-now__cta">Seguir el partido{icono("caret-right", "icon icon--sm")}</span></span></a></li>')
+
+    def sub_texto(texto, href):
+        if href == "partido.html" and texto == "Partido en vivo" and not PARTIDO_EN_JUEGO:
+            texto = "Último partido"  # 09 §3.5: sin partido en juego
+        return nav_label(texto)
+
+    def cur_sub(href):
+        return ' aria-current="page"' if href == f"{slug}.html" else ""
+
     filas = []
     for it in PRIMARIO:
         clave = it["clave"]
         panel = PANELES.get(clave)
-        desc, foto = panel["movil"] if panel else INICIO_MOVIL
         cur = ""
         if actual == clave:
             cur = ' aria-current="page"' if it["href"] == f"{slug}.html" else ' aria-current="true"'
         destino = it["href"] if clave != "mas" else "#pie-enlaces"
-        enlace = (f'<a class="sheet-section__link" href="{e(destino)}"{cur}>'
-                  f'<span class="sheet-section__thumb media">{img(foto, clase="media__img", alt="", menu=True)}</span>'
-                  f'<span class="sheet-section__text"><span class="sheet-section__name">{punto_vivo(it.get("punto"), "live-dot")}'
-                  f'{etiqueta_nav(it)}</span>'
-                  f'<span class="sheet-section__desc">{e(desc)}</span></span></a>')
-        if not panel:  # Inicio: enlace simple, sin acordeón ni chevron
-            filas.append(f'<li class="sheet-section" data-nav="{clave}"><div class="sheet-section__row">{enlace}</div></li>')
+        enlace = f'<a class="mn1-name" href="{e(destino)}"{cur}><span class="mn1-word">{etiqueta_nav(it)}</span></a>'
+        if not panel:  # Inicio: enlace simple, sin acordeón
+            filas.append(f'<li class="mn1-sec" data-nav="{clave}"><div class="mn1-row">{enlace}</div></li>')
             continue
-        abierto = clave == actual
-        pid = f"hoja-{clave}"
         grupos = [(r, l) for r, l in panel["z1"]]
         if panel.get("perfil"):
             pf = panel["perfil"]
             grupos.append((pf["etiqueta"], [(pf["nombre"], pf["href"])] + pf["enlaces"]))
-        sub = "".join(_grupo(r, l, slug, "sheet-sub") for r, l in grupos)
+        gs = []
+        for r, enlaces in grupos:
+            gid = nucleo.P.nuevo_id("mn1-g-" + _slug(r))
+            lis = "".join(f'<li><a class="mn1-sub" href="{e(h)}"{cur_sub(h)}>{sub_texto(t, h)}</a></li>'
+                          for t, h in enlaces)
+            gs.append(f'<div class="mn1-group"><p class="mn1-glabel" id="{gid}">{e(r)}</p>'
+                      f'<ul role="list" aria-labelledby="{gid}">{lis}</ul></div>')
+        pid = f"hoja-{clave}"
         filas.append(
-            f'<li class="sheet-section" data-nav="{clave}"><div class="sheet-section__row">{enlace}'
-            f'<button class="sheet-section__toggle" type="button" aria-expanded="{"true" if abierto else "false"}" '
-            f'aria-controls="{pid}" data-accordion>{icono("caret-down", "icon chevron")}'
-            f'<span class="visually-hidden">Enlaces de {e(it["texto"])}</span></button></div>'
-            f'<div class="sheet-section__panel" id="{pid}"{"" if abierto else " hidden"}>{sub}</div></li>')
+            f'<li class="mn1-sec" data-nav="{clave}" data-anchor="{clave}"><div class="mn1-row">{enlace}'
+            f'<button class="mn1-tog" type="button" aria-expanded="false" aria-controls="{pid}" data-accordion>'
+            f'{icono("caret-down", "icon mn1-caret")}<span class="visually-hidden">Enlaces de {e(it["texto"])}</span></button></div>'
+            f'<div class="mn1-panel" id="{pid}" hidden>{"".join(gs)}</div></li>')
     return (
-        f'<div class="menu-sheet" id="menu-movil" hidden data-menu>'
-        f'<div class="menu-sheet__inner">'
-        f'<form class="menu-sheet__search" action="buscar.html" method="get" role="search" aria-label="Buscar desde el menú">'
-        f'<label class="field__label" for="q-menu">Buscar en Habla Deportes</label>'
-        f'<div class="search-bar__row"><input class="field__input" id="q-menu" name="q" type="search" '
-        f'placeholder="Equipo, jugador o tema" autocomplete="off" enterkeyhint="search">'
-        f'<button class="btn btn--primary" type="submit">Buscar</button></div></form>'
-        f'<ul class="chip-list menu-sheet__suggest" role="list" aria-label="Búsquedas sugeridas">{chips}</ul>'
-        f'<p class="menu-sheet__heading" id="hoja-ahora">Ahora</p>'
-        f'<ul class="sheet-now-list" role="list" aria-labelledby="hoja-ahora">{ahora}</ul>'
-        f'<nav class="sheet-sections" aria-label="Menú: secciones"><ul role="list">{"".join(filas)}</ul></nav>'
-        f'{_redes_iconos("sheet-social")}'
+        f'<div class="menu-sheet mn1" id="menu-movil" hidden data-menu role="dialog" aria-label="Menú">'
+        f'<div class="mn1-inner">'
+        f'<form class="mn1-search" action="buscar.html" method="get" role="search" aria-label="Buscar desde el menú">'
+        f'<label class="visually-hidden" for="q-menu">Buscar en Habla Deportes</label>'
+        f'<input class="mn1-search__input" id="q-menu" name="q" type="search" placeholder="Buscar equipo, jugador o tema" '
+        f'autocomplete="off" enterkeyhint="search">'
+        f'<button class="mn1-search__btn" type="submit">{icono("magnifying-glass", "icon")}'
+        f'<span class="visually-hidden">Buscar</span></button></form>'
+        f'<nav class="mn1-block" aria-label="Menú: secciones"><ul class="mn1-list" role="list">{"".join(filas)}</ul></nav>'
         f'</div></div>')
 
 

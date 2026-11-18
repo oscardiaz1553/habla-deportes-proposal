@@ -691,3 +691,50 @@
           t.addEventListener('scroll', sync, { passive: true });
           window.addEventListener('resize', sync); sync();
         })();
+
+/* Estante del hero v3: indicador segmentado (un tramo por pieza, proporcional a su ancho, con la parte
+   visible en azul) y flechas que avanzan una pieza y se apagan en los extremos */
+(function () {
+  var track = document.querySelector('[data-shelf]');
+  var rail = document.querySelector('[data-shelf-rail]');
+  if (!track || !rail) return;
+  var items = Array.prototype.slice.call(track.children);
+  var btns = document.querySelectorAll('[data-shelf-dir]');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var segs = items.map(function () { var s = document.createElement('span'); rail.appendChild(s); return s; });
+  var queued = false;
+  function state() {
+    queued = false;
+    var tr = track.getBoundingClientRect(), max = track.scrollWidth - track.clientWidth;
+    items.forEach(function (it, i) {
+      var r = it.getBoundingClientRect(), w = r.width || 1;
+      var a = Math.min(1, Math.max(0, (tr.left - r.left) / w)), b = Math.min(1, Math.max(0, (tr.right - r.left) / w));
+      segs[i].style.setProperty('--g', Math.round(w));
+      segs[i].style.setProperty('--a', (a * 100).toFixed(1) + '%');
+      segs[i].style.setProperty('--b', (b * 100).toFixed(1) + '%');
+    });
+    btns.forEach(function (b) {
+      b.disabled = Number(b.getAttribute('data-shelf-dir')) < 0 ? track.scrollLeft <= 2 : track.scrollLeft >= max - 2;
+    });
+  }
+  function queue() { if (!queued) { queued = true; window.requestAnimationFrame(state); } }
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var dir = Number(b.getAttribute('data-shelf-dir'));
+      var tr = track.getBoundingClientRect(), pad = parseFloat(getComputedStyle(track).scrollPaddingLeft) || 0;
+      var target = null;
+      for (var i = 0; i < items.length; i++) {
+        var o = items[i].getBoundingClientRect().left - tr.left - pad;
+        if (dir > 0 && o > 4) { target = o; break; }
+        if (dir < 0 && o < -4) target = o;
+      }
+      if (target === null) target = dir > 0 ? track.scrollWidth : -track.scrollLeft;
+      track.scrollBy({ left: target, behavior: reduce.matches ? 'auto' : 'smooth' });
+    });
+  });
+  track.addEventListener('scroll', queue, { passive: true });
+  window.addEventListener('resize', queue);
+  /* las piezas entran con translate: se recalcula al terminar la entrada */
+  track.addEventListener('animationend', queue);
+  state();
+})();

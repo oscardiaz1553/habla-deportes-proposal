@@ -18,13 +18,13 @@
   <link rel="icon" href="data:,">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="assets/css/tokens.css?v=1794950766">
-  <link rel="stylesheet" href="assets/css/base.css?v=1794950766">
-  <link rel="stylesheet" href="assets/css/components.css?v=1794950766">
-  <link rel="stylesheet" href="assets/css/pages.css?v=1794950766">
-  <link rel="stylesheet" href="assets/css/pages-a.css?v=1794950766">
-  <link rel="stylesheet" href="assets/css/pages-b.css?v=1794950766">
-  <script src="assets/js/main.js?v=1794950766" defer></script>
+  <link rel="stylesheet" href="assets/css/tokens.css?v=1795026349">
+  <link rel="stylesheet" href="assets/css/base.css?v=1795026349">
+  <link rel="stylesheet" href="assets/css/components.css?v=1795026349">
+  <link rel="stylesheet" href="assets/css/pages.css?v=1795026349">
+  <link rel="stylesheet" href="assets/css/pages-a.css?v=1795026349">
+  <link rel="stylesheet" href="assets/css/pages-b.css?v=1795026349">
+  <script src="assets/js/main.js?v=1795026349" defer></script>
   <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -88,32 +88,28 @@
      ====================================================================== -->
 <h1 class="visually-hidden">Portada de Habla Deportes</h1>
 
-<!-- M1 · Hero «Cartel B-a5»: texto (5/12) + foto pegada con el video (7/12); debajo, boleta del partido y escudos.
+<!-- M1 · Hero «Estante»: titular con una palabra sobre tira azul, video del último programa (16:9) y
+     videos anteriores como carteles verticales del mismo alto, en un estante que corre hasta el borde.
      El video reproduce solo y sin sonido (autoplay silenciado); el visitante activa el audio con un botón.
-     Transmisión en vivo cuando está al aire; si no, el último programa.
+     Transmisión en vivo cuando está al aire; si no, el último programa (rótulo bajo el video).
      Sin JavaScript, con «reducir movimiento» o en ahorro de datos: portada con play que lleva al video.
-     Boleta: datos de Datafactory. Pasto no tiene escudo original todavía (pendiente del cliente). -->
-<section class="cb hero-stage" data-module="M1" aria-labelledby="hero-title">
-  <div class="container cb__grid">
-    <div class="cb__text">
-      <p class="cb__label">El show de las mañanas</p>
-      <h2 class="cb__title" id="hero-title"><a href="video.html"><span class="visually-hidden">Video: </span>El refuerzo de Junior que <span class="cb__strip">nadie</span> esperaba</a></h2>
-      <p class="cb__dek">La mesa analiza la llegada que casi nadie veía venir y lo que le puede aportar al equipo en lo que resta del año.</p>
-      <div class="cb__actions">
-        <a class="btn btn--primary" href="video.html"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-play-fill"></use></svg>Ver el programa</a>
-      </div>
+     Estante: main.js (flechas e indicador). Tira de partidos: datos de Datafactory. -->
+<section class="hero-stage hs" data-module="M1" aria-labelledby="hero-title">
+  <div class="hs-wrap">
+    <div class="hs-text">
+      <p class="hs-kick hs-fade" style="--d:60ms">El show de las mañanas</p>
+      <h2 class="hs-title" id="hero-title"><a href="video.html"><span class="visually-hidden">Video: El refuerzo de Junior que nadie esperaba</span><span aria-hidden="true"><span class="hs-w" style="--i:0"><span>El</span></span> <span class="hs-w" style="--i:1"><span>refuerzo</span></span> <span class="hs-w" style="--i:2"><span>de</span></span> <span class="hs-w" style="--i:3"><span>Junior</span></span> <span class="hs-w" style="--i:4"><span>que</span></span> <span class="hs-w hs-key" style="--i:5"><span>nadie</span></span> <span class="hs-w" style="--i:6"><span>esperaba</span></span></span></a></h2>
+      <p class="hs-act hs-fade" style="--d:620ms"><a class="btn btn--primary hs-btn" href="video.html"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-play-fill"></use></svg>Ver el programa</a></p>
     </div>
-
-    <div class="cb__collage">
-      <div class="hero-video">
-        <div class="hero-stage__player" data-hero-player data-video="sbECwF3dEaI" data-channel="UCm_25dALt4-r7C0wSsbaxzA">
-          <div class="hero-stage__frame media" data-hero-frame>
+    <div class="hs-shelf hero-stage__player" data-hero-player data-video="sbECwF3dEaI" data-channel="UCm_25dALt4-r7C0wSsbaxzA">
+      <ol class="hs-track" id="hs-track" role="list" aria-label="Último programa y videos anteriores" data-shelf>
+        <li class="hs-item hs-item--main" style="--n:0">
+          <div class="hero-stage__frame media hs-frame" data-hero-frame>
             <a class="hero-stage__poster" href="video.html" data-hero-poster>
               <img class="media__img" src="assets/img/js-2.webp" alt="Juan Salvador Bárcena, de camiseta negra y gafas, pensativo con la mano en la barbilla, sentado ante el micrófono de Habla Deportes" width="1719" height="915" style="--focus: 60% 35%" fetchpriority="high" decoding="async">
               <span class="play play--lg"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-play-fill"></use></svg></span>
               <span class="visually-hidden">Ver el video</span>
             </a>
-            <span class="chip-media chip-media--tl hero-stage__chip" data-hero-chip>Último programa</span>
             <div class="hero-stage__controls" data-hero-controls hidden>
               <button class="hero-stage__sound" type="button" data-hero-sound aria-pressed="false">
                 <span class="hero-stage__ico hero-stage__ico--off"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-speaker-x-fill"></use></svg></span>
@@ -126,19 +122,26 @@
               </button>
             </div>
           </div>
-        </div>
-        <!-- Videos anteriores: los mismos videos que muestra el módulo «El show de las mañanas» más abajo -->
-        <div class="hero-video__rail">
-          <p class="hero-video__head">Videos anteriores</p>
-          <ol class="hero-video__list" role="list">
-            <li class="hero-video__item"><a class="hero-video__link" href="video.html"><span class="hero-video__thumb"><img src="assets/img/seleccion-gol.webp" alt="" width="520" height="358" style="--focus: 40% 40%" loading="lazy" decoding="async"><span class="hero-video__dur">18 min</span></span><span class="hero-video__t">Lista de la Selección: cinco novedades y una ausencia</span></a></li>
-            <li class="hero-video__item"><a class="hero-video__link" href="video.html"><span class="hero-video__thumb"><img src="assets/img/junior-bicampeon.webp" alt="" width="1080" height="1080" style="--focus: 50% 45%" loading="lazy" decoding="async"><span class="hero-video__dur">22 min</span></span><span class="hero-video__t">Mercado de Junior: quién llega, quién se va y qué es humo</span></a></li>
-            <li class="hero-video__item"><a class="hero-video__link" href="video.html"><span class="hero-video__thumb"><img src="assets/img/nacional-celebracion.webp" alt="" width="520" height="358" style="--focus: 40% 40%" loading="lazy" decoding="async"><span class="hero-video__dur">31 min</span></span><span class="hero-video__t">Análisis táctico de Nacional: cómo se le juega</span></a></li>
-          </ol>
+          <p class="hs-cap"><span class="hs-chip hero-stage__chip" data-hero-chip>Último programa</span><span class="hs-host">Con Juan Salvador Bárcena</span><span class="hs-sched">De lunes a viernes, 10:00 a. m.</span></p>
+        </li>
+        <li class="hs-item hs-item--ant" style="--n:1"><a class="hs-card" href="video.html"><span class="hs-thumb"><img src="assets/img/seleccion-gol.webp" alt="" width="520" height="358" style="--focus: 40% 40%" loading="lazy" decoding="async"><span class="hs-dur"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-play-fill"></use></svg><span class="visually-hidden">Duración: </span>18 min</span></span><span class="hs-ct">Lista de la Selección: cinco novedades y una ausencia</span></a></li>
+        <li class="hs-item hs-item--ant" style="--n:2"><a class="hs-card" href="video.html"><span class="hs-thumb"><img src="assets/img/junior-bicampeon.webp" alt="" width="1080" height="1080" style="--focus: 50% 45%" loading="lazy" decoding="async"><span class="hs-dur"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-play-fill"></use></svg><span class="visually-hidden">Duración: </span>22 min</span></span><span class="hs-ct">Mercado de Junior: quién llega, quién se va y qué es humo</span></a></li>
+        <li class="hs-item hs-item--ant" style="--n:3"><a class="hs-card" href="video.html"><span class="hs-thumb"><img src="assets/img/nacional-celebracion.webp" alt="" width="520" height="358" style="--focus: 40% 40%" loading="lazy" decoding="async"><span class="hs-dur"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-play-fill"></use></svg><span class="visually-hidden">Duración: </span>31 min</span></span><span class="hs-ct">Análisis táctico de Nacional: cómo se le juega</span></a></li>
+        <li class="hs-item hs-item--all" style="--n:4"><a class="hs-all" href="videos.html"><span class="hs-all-t">Todos los programas</span><span class="hs-all-a"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-right"></use></svg></span></a></li>
+      </ol>
+    </div>
+    <div class="hs-ctrl hs-fade" style="--d:760ms">
+      <div class="hs-ctrl-l">
+        <p class="hs-nl">Videos anteriores</p>
+        <div class="hs-arrows">
+          <button class="hs-arw" type="button" data-shelf-dir="-1" aria-controls="hs-track"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-left"></use></svg><span class="visually-hidden">Ver la pieza anterior del estante</span></button>
+          <button class="hs-arw" type="button" data-shelf-dir="1" aria-controls="hs-track"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-right"></use></svg><span class="visually-hidden">Ver la siguiente pieza del estante</span></button>
         </div>
       </div>
+      <div class="hs-rail" aria-hidden="true" data-shelf-rail></div>
     </div>
-
+  </div>
+  <div class="container hs-tira">
     <section class="tira" data-tira aria-labelledby="tira-t"><div class="tira__head"><h2 class="tira__title" id="tira-t">Fecha 19<span class="tira__liga">Liga BetPlay</span></h2><a class="link-action" href="datos.html#hoy">Todos los partidos<svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="#i-caret-right"></use></svg></a><div class="tira__ctl"><button class="icon-btn tira__arrow" type="button" data-tira-dir="-1"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-caret-left"></use></svg><span class="visually-hidden">Partidos anteriores</span></button><button class="icon-btn tira__arrow" type="button" data-tira-dir="1"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-caret-right"></use></svg><span class="visually-hidden">Partidos siguientes</span></button></div></div><ol class="tira__list" role="list" data-tira-list><li class="tira__item is-junior"><a class="tira__card" href="partido.html"><span class="visually-hidden">Pasto 0, Junior 1, final, jue 12 nov. Partido de Junior.</span><span class="tira__when" aria-hidden="true"><span class="tira__state">Final</span><time datetime="2026-11-12T20:00:00-05:00">jue 12 nov</time></span><span class="tira__rows" aria-hidden="true"><span class="tira__row"><img class="tira__crest" src="assets/img/escudo-pasto.webp" alt="" width="200" height="200" loading="lazy" decoding="async"><span class="tira__name">Pasto</span><span class=tira__goals>0</span></span><span class="tira__row is-win is-nuestro"><img class="tira__crest" src="assets/img/escudo-junior.webp" alt="" width="208" height="237" loading="lazy" decoding="async"><span class="tira__name">Junior</span><span class=tira__goals>1</span></span></span></a></li><li class="tira__item"><a class="tira__card" href="datos.html#hoy"><span class="visually-hidden">Llaneros 0, Boyacá Chicó 0, final, jue 12 nov.</span><span class="tira__when" aria-hidden="true"><span class="tira__state">Final</span><time datetime="2026-11-12T21:00:00-05:00">jue 12 nov</time></span><span class="tira__rows" aria-hidden="true"><span class="tira__row"><img class="tira__crest" src="assets/img/escudo-llaneros.webp" alt="" width="200" height="200" loading="lazy" decoding="async"><span class="tira__name">Llaneros</span><span class=tira__goals>0</span></span><span class="tira__row"><img class="tira__crest" src="assets/img/escudo-boyaca-chico.webp" alt="" width="200" height="200" loading="lazy" decoding="async"><span class="tira__name">Boyacá Chicó</span><span class=tira__goals>0</span></span></span></a></li><li class="tira__item"><a class="tira__card" href="datos.html#hoy"><span class="visually-hidden">Int. de Bogotá 0, Santa Fe 2, final, vie 13 nov.</span><span class="tira__when" aria-hidden="true"><span class="tira__state">Final</span><time datetime="2026-11-13T22:30:00-05:00">vie 13 nov</time></span><span class="tira__rows" aria-hidden="true"><span class="tira__row"><img class="tira__crest" src="assets/img/escudo-int-bogota.webp" alt="" width="200" height="200" loading="lazy" decoding="async"><span class="tira__name">Int. de Bogotá</span><span class=tira__goals>0</span></span><span class="tira__row is-win"><img class="tira__crest" src="assets/img/escudo-santa-fe.webp" alt="" width="200" height="200" loading="lazy" decoding="async"><span class="tira__name">Santa Fe</span><span class=tira__goals>2</span></span></span></a></li><li class="tira__item"><a class="tira__card" href="datos.html#hoy"><span class="visually-hidden">Nacional 1, Once Caldas 1, final, sáb 14 nov.</span><span class="tira__when" aria-hidden="true"><span class="tira__state">Final</span><time datetime="2026-11-14T17:30:00-05:00">sáb 14 nov</time></span><span class="tira__rows" aria-hidden="true"><span class="tira__row"><img class="tira__crest" src="assets/img/escudo-nacional.webp" alt="" width="418" height="600" loading="lazy" decoding="async"><span class="tira__name">Nacional</span><span class=tira__goals>1</span></span><span class="tira__row"><img class="tira__crest" src="assets/img/escudo-once-caldas.webp" alt="" width="200" height="200" loading="lazy" decoding="async"><span class="tira__name">Once Caldas</span><span class=tira__goals>1</span></span></span></a></li><li class="tira__item"><a class="tira__card" href="datos.html#hoy"><span class="visually-hidden">Águilas D. 0, Medellín 1, final, sáb 14 nov.</span><span class="tira__when" aria-hidden="true"><span class="tira__state">Final</span><time datetime="2026-11-14T17:30:00-05:00">sáb 14 nov</time></span><span class="tira__rows" aria-hidden="true"><span class="tira__row"><img class="tira__crest" src="assets/img/escudo-aguilas.webp" alt="" width="200" height="200" loading="lazy" decoding="async"><span class="tira__name">Águilas D.</span><span class=tira__goals>0</span></span><span class="tira__row is-win"><img class="tira__crest" src="assets/img/escudo-medellin.webp" alt="" width="695" height="694" loading="lazy" decoding="async"><span class="tira__name">Medellín</span><span class=tira__goals>1</span></span></span></a></li><li class="tira__item"><a class="tira__card" href="datos.html#hoy"><span class="visually-hidden">Cúcuta 2, Jaguares 0, final, sáb 14 nov.</span><span class="tira__when" aria-hidden="true"><span class="tira__state">Final</span><time datetime="2026-11-14T17:30:00-05:00">sáb 14 nov</time></span><span class="tira__rows" aria-hidden="true"><span class="tira__row is-win"><img class="tira__crest" src="assets/img/escudo-cucuta.webp" alt="" width="200" height="200" loading="lazy" decoding="async"><span class="tira__name">Cúcuta</span><span class=tira__goals>2</span></span><span class="tira__row"><img class="tira__crest" src="assets/img/escudo-jaguares.webp" alt="" width="200" height="200" loading="lazy" decoding="async"><span class="tira__name">Jaguares</span><span class=tira__goals>0</span></span></span></a></li><li class="tira__item"><a class="tira__card" href="datos.html#hoy"><span class="visually-hidden">Bucaramanga 1, Fortaleza 0, final, sáb 14 nov.</span><span class="tira__when" aria-hidden="true"><span class="tira__state">Final</span><time datetime="2026-11-14T17:30:00-05:00">sáb 14 nov</time></span><span class="tira__rows" aria-hidden="true"><span class="tira__row is-win"><img class="tira__crest" src="assets/img/escudo-bucaramanga.webp" alt="" width="200" height="200" loading="lazy" decoding="async"><span class="tira__name">Bucaramanga</span><span class=tira__goals>1</span></span><span class="tira__row"><img class="tira__crest" src="assets/img/escudo-fortaleza.webp" alt="" width="200" height="200" loading="lazy" decoding="async"><span class="tira__name">Fortaleza</span><span class=tira__goals>0</span></span></span></a></li><li class="tira__item"><a class="tira__card" href="datos.html#hoy"><span class="visually-hidden">Millonarios 2, Alianza 0, final, sáb 14 nov.</span><span class="tira__when" aria-hidden="true"><span class="tira__state">Final</span><time datetime="2026-11-14T17:30:00-05:00">sáb 14 nov</time></span><span class="tira__rows" aria-hidden="true"><span class="tira__row is-win"><img class="tira__crest" src="assets/img/escudo-millonarios.webp" alt="" width="593" height="600" loading="lazy" decoding="async"><span class="tira__name">Millonarios</span><span class=tira__goals>2</span></span><span class="tira__row"><img class="tira__crest" src="assets/img/escudo-alianza.webp" alt="" width="200" height="200" loading="lazy" decoding="async"><span class="tira__name">Alianza</span><span class=tira__goals>0</span></span></span></a></li><li class="tira__item"><a class="tira__card" href="datos.html#hoy"><span class="visually-hidden">Cali 2, Tolima 2, final, sáb 14 nov.</span><span class="tira__when" aria-hidden="true"><span class="tira__state">Final</span><time datetime="2026-11-14T17:30:00-05:00">sáb 14 nov</time></span><span class="tira__rows" aria-hidden="true"><span class="tira__row"><img class="tira__crest" src="assets/img/escudo-cali.webp" alt="" width="200" height="200" loading="lazy" decoding="async"><span class="tira__name">Cali</span><span class=tira__goals>2</span></span><span class="tira__row"><img class="tira__crest" src="assets/img/escudo-tolima.webp" alt="" width="472" height="472" loading="lazy" decoding="async"><span class="tira__name">Tolima</span><span class=tira__goals>2</span></span></span></a></li><li class="tira__item"><a class="tira__card" href="datos.html#hoy"><span class="visually-hidden">Pereira 0, América 2, final, sáb 14 nov.</span><span class="tira__when" aria-hidden="true"><span class="tira__state">Final</span><time datetime="2026-11-14T17:30:00-05:00">sáb 14 nov</time></span><span class="tira__rows" aria-hidden="true"><span class="tira__row"><img class="tira__crest" src="assets/img/escudo-pereira.webp" alt="" width="200" height="200" loading="lazy" decoding="async"><span class="tira__name">Pereira</span><span class=tira__goals>0</span></span><span class="tira__row is-win"><img class="tira__crest" src="assets/img/escudo-america.webp" alt="" width="565" height="678" loading="lazy" decoding="async"><span class="tira__name">América</span><span class=tira__goals>2</span></span></span></a></li></ol></section>
   </div>
 </section>

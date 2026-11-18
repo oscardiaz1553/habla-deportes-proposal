@@ -1219,3 +1219,146 @@
 .mn1-glabel { font-size: var(--fs-label); line-height: 1.3; color: var(--gray-600); }
 .mn1-sub { display: flex; flex-wrap: wrap; align-items: center; min-height: 44px; padding: 8px 0; font-size: 1.0625rem; line-height: 1.3; }
 .mn1-sub:hover { color: var(--brand-600); text-decoration: underline; text-underline-offset: 4px; }
+
+/* ===== Hero «Estante» v3 (Archivo/Inter 400/500, sin mayúsculas sostenidas ni cursivas) ===== */
+.hs { position: relative; isolation: isolate; padding-top: var(--space-2); background: var(--white); color: var(--gray-900); }
+.hs :where(h2, h3, p, ol, ul) { margin: 0; }
+.hs :where(ol, ul) { padding: 0; list-style: none; }
+.hs :where(li) { position: relative; }
+.hs a { color: inherit; text-decoration: none; }
+.hs :where(a, button):focus-visible { outline: var(--focus-width) solid var(--color-focus); outline-offset: 3px; }
+
+.hs-wrap { --edge: var(--page-margin); --gap: 12px; display: grid; grid-template-columns: minmax(0, 1fr); grid-template-areas: "text" "shelf" "ctrl"; row-gap: 18px; }
+.hs-text { grid-area: text; display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding-inline: var(--edge); }
+.hs-kick { display: flex; align-items: center; gap: 10px; font-size: var(--fs-meta); font-weight: var(--fw-medium); line-height: 1.3; color: var(--brand-600); }
+.hs-kick::before { content: ""; width: 24px; height: 2px; background: var(--brand-600); }
+
+/* Titular: Archivo 500 al 75 % de anchura; el impacto es tamaño, no peso */
+.hs-title { font-family: var(--font-display); font-weight: var(--fw-medium); font-style: normal; font-stretch: 75%; line-height: .94; letter-spacing: -.025em;
+  font-size: clamp(2.375rem, 1.1rem + 5.2vw, 3.5rem); color: var(--gray-900); text-wrap: balance; }
+.hs-title a { display: block; }
+.hs-title a:focus-visible { outline-offset: 6px; }
+.hs-w { display: inline-block; overflow: clip; overflow-clip-margin: .04em; padding-bottom: .1em; margin-bottom: -.1em; vertical-align: top; }
+.hs-w > span { display: inline-block; }
+/* Palabra sobre la tira azul irregular (valores de .cb__strip). La tira es la propia máscara de la
+   palabra: su relleno y sus márgenes negativos se cancelan, así la línea no cambia de alto ni de ancho */
+.hs-key { position: relative; isolation: isolate; padding: .03em .15em .11em; margin: -.03em -.03em -.11em; rotate: -2deg; color: var(--white); overflow-clip-margin: 0; }
+.hs-key::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--brand-600); transform-origin: 0 50%;
+  clip-path: polygon(0 4%, 18% 0, 46% 5%, 72% 1%, 100% 4%, 99% 96%, 76% 100%, 49% 95%, 22% 100%, 1% 97%); transition: background var(--dur-fast) var(--ease-out); }
+.hs-title a:hover .hs-key::before { background: var(--brand-700); }
+.hs-title a:hover .hs-w:not(.hs-key) > span { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .08em; text-decoration-color: var(--brand-600); }
+.hs-act { margin-top: 4px; }
+.hs .hs-btn { min-height: 48px; padding-inline: 20px; border-radius: var(--radius-ctrl); font-weight: var(--fw-medium); color: var(--white); }
+.hs .hs-btn:hover { background: var(--brand-700); }
+.hs .hs-btn:active { background: var(--brand-800); }
+
+/* Estante: el video manda (16:9) y los anteriores son carteles del mismo alto */
+.hs-shelf { grid-area: shelf; min-width: 0;
+  --vw: min(calc(100vw - 2 * var(--edge) - 40px), 600px); --h: calc(var(--vw) * 9 / 16); --cw: max(150px, calc(var(--h) * .72)); }
+.hs .hs-track { display: flex; align-items: flex-start; gap: var(--gap); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain;
+  padding: 6px var(--edge); margin-block: -6px; scroll-padding-inline: var(--edge); }
+.hs-track::-webkit-scrollbar { display: none; }
+.hs-item { flex: none; display: grid; align-content: start; gap: 10px; scroll-snap-align: start; }
+.hs-item--main { width: var(--vw); }
+.hs .hs-frame { width: 100%; border-radius: 4px; }
+.hs .hero-stage__sound { border-radius: var(--radius-ctrl); font-weight: var(--fw-medium); }
+.hs .hero-stage__pause { border-radius: var(--radius-ctrl); }
+/* Rótulo del video: cuadrado azul + texto; al aire el cuadrado late (sin rojo ni pastilla) */
+.hs-cap { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 14px; font-size: var(--fs-meta); line-height: 1.3; }
+.hs .hs-chip { position: static; display: inline-flex; align-items: center; gap: 8px; padding: 0; background: none; color: var(--brand-600); font-size: var(--fs-meta); font-weight: var(--fw-medium); line-height: 1.3; }
+.hs .hs-chip::before { content: ""; flex: none; width: 8px; height: 8px; background: var(--brand-600); }
+.hs .hero-stage__chip--live { background: none; color: var(--brand-600); }
+.hs-host { color: var(--gray-900); }
+.hs-sched { color: var(--gray-600); }
+
+.hs-item--ant { width: var(--cw); }
+.hs-card { display: grid; gap: 10px; }
+.hs-thumb { position: relative; display: block; height: var(--h); overflow: hidden; border-radius: 4px; background: var(--gray-100);
+  transition: scale var(--dur-fast) var(--ease-out); }
+.hs-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: var(--focus, 50% 50%); transition: scale var(--dur-base) var(--ease-out); }
+/* Duración: placa oscura de canto recto con el triángulo de play (convención de video, no es estado) */
+.hs-dur { position: absolute; left: 8px; bottom: 8px; display: inline-flex; align-items: center; gap: 5px; padding: 5px 7px 5px 6px; border-radius: 2px;
+  background: rgba(15, 33, 51, .9); color: var(--white); font-size: var(--fs-label); font-weight: var(--fw-medium); line-height: 1; font-variant-numeric: tabular-nums;
+  transition: background var(--dur-fast) var(--ease-out); }
+.hs-dur .icon { width: 10px; height: 10px; }
+.hs-ct { padding-right: 4px; font-size: var(--fs-meta); font-weight: var(--fw-medium); line-height: 1.3; text-wrap: pretty;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.hs-card:hover .hs-thumb img { scale: 1.05; }
+.hs-card:hover .hs-ct { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.hs-card:hover .hs-dur { background: var(--brand-600); }
+.hs-card:active .hs-thumb { scale: .98; }
+.hs .hs-card:focus-visible { outline: 0; }
+.hs-card:focus-visible .hs-thumb { outline: var(--focus-width) solid var(--color-focus); outline-offset: 3px; }
+.hs-card:focus-visible .hs-ct { text-decoration: underline; text-underline-offset: 3px; }
+
+.hs-item--all { width: max(132px, calc(var(--cw) * .8)); }
+.hs-all { display: flex; flex-direction: column; justify-content: space-between; height: var(--h); padding: 16px; border-radius: 4px; background: var(--brand-50); color: var(--brand-600);
+  transition: background var(--dur-fast) var(--ease-out); }
+.hs-all-t { font-family: var(--font-display); font-weight: var(--fw-medium); font-stretch: 75%; font-size: 1.5rem; line-height: 1; letter-spacing: -.01em; }
+.hs-all-a { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--brand-600); color: var(--white); transition: translate var(--dur-base) var(--ease-out); }
+.hs-all-a .icon { width: 20px; height: 20px; }
+.hs-all:hover { background: var(--brand-100); }
+.hs-all:hover .hs-all-a { translate: 4px 0; }
+.hs .hs-all:focus-visible { outline-offset: 3px; }
+
+/* Control del estante: rótulo, flechas e indicador segmentado (un tramo por pieza, la parte visible en azul) */
+.hs-ctrl { grid-area: ctrl; display: flex; align-items: center; gap: 16px; padding-inline: var(--edge); }
+.hs-ctrl-l { display: flex; align-items: center; gap: 16px; flex: none; }
+.hs-nl { font-size: var(--fs-meta); font-weight: var(--fw-medium); line-height: 1.3; white-space: nowrap; }
+.hs-arrows { display: none; gap: 8px; }
+.hs-arw { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid var(--gray-200); border-radius: 50%; background: var(--white); color: var(--brand-600); cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.hs-arw .icon { width: 18px; height: 18px; }
+.hs-arw:hover:not(:disabled) { background: var(--brand-600); border-color: var(--brand-600); color: var(--white); }
+.hs-arw:active:not(:disabled) { background: var(--brand-800); border-color: var(--brand-800); color: var(--white); }
+.hs-arw:disabled { opacity: .35; cursor: default; }
+.hs-rail { flex: 1; display: flex; gap: 4px; min-width: 0; }
+.hs-rail > span { flex: var(--g, 1) 1 0; height: 3px;
+  background: linear-gradient(90deg, var(--gray-200) var(--a, 0%), var(--brand-600) var(--a, 0%), var(--brand-600) var(--b, 0%), var(--gray-200) var(--b, 0%)); }
+.hs-tira { margin-top: var(--space-3); }
+
+@media (min-width: 600px) { .hs-wrap { --edge: var(--page-margin-sm); } }
+@media (min-width: 768px) {
+  .hs-arrows { display: flex; }
+  .hs-title { font-size: 3.5rem; }
+}
+@media (max-width: 1023px) {
+  .hs .hero-stage__sound { min-height: 40px; padding-inline: 12px; font-size: var(--fs-meta); }
+  .hs-sched { display: none; }
+}
+@media (min-width: 1024px) {
+  /* Escritorio: columna del titular alineada con el contenedor; el estante corre hasta el borde de la
+     pantalla. El ancho del video deja asomar media tarjeta: vw = (ancho visible - hueco) / 1,2025 */
+  .hs { padding-top: var(--space-4); }
+  .hs-wrap { --edge: max(var(--page-margin-lg), calc((100vw - var(--container)) / 2)); --tw: clamp(320px, 27vw, 420px); --gap: 16px;
+    grid-template-columns: calc(var(--edge) + var(--tw)) minmax(0, 1fr); grid-template-areas: "text shelf" "ctrl ctrl"; row-gap: 22px; }
+  .hs-text { gap: 18px; padding: 0 var(--space-5) 30px var(--edge); }
+  .hs-title { font-size: clamp(3.25rem, calc(var(--tw) * .2), 5.25rem); }
+  .hs-act { margin-top: auto; }
+  .hs-shelf { --vw: min(calc((100vw - var(--edge) - var(--tw) - var(--gap)) / 1.2025), calc((100svh - 360px) * 16 / 9), 1000px);
+    --h: calc(var(--vw) * 9 / 16); --cw: calc(var(--h) * .72); }
+  .hs .hs-track { padding-left: 0; padding-right: var(--edge); scroll-padding-left: 0; }
+  .hs-ctrl { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; padding: 0; }
+  .hs-ctrl-l { justify-content: space-between; padding: 0 var(--space-5) 0 var(--edge); }
+  .hs-rail { padding-right: var(--edge); }
+  .hs-all { padding: 20px; }
+  .hs-all-t { font-size: 2rem; }
+  .hs-tira { margin-top: var(--space-4); }
+}
+@media (min-width: 1024px) and (max-width: 1279px) { .hs-sched { display: none; } }
+
+/* Movimiento: la tira se pega de izquierda a derecha y la palabra sube dentro; cada palabra sube desde
+   su propia máscara (solo transform, sin reflujo); las piezas del estante entran escalonadas */
+@media (prefers-reduced-motion: no-preference) {
+  .hs-w > span { animation: hs-rise .9s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(120ms + var(--i) * 55ms); }
+  .hs-key::before { animation: hs-tape .5s cubic-bezier(.3, .7, .2, 1) both; animation-delay: calc(80ms + var(--i) * 55ms); }
+  .hs-key > span { animation-delay: calc(260ms + var(--i) * 55ms); }
+  @keyframes hs-rise { from { transform: translateY(110%); } }
+  @keyframes hs-tape { from { scale: 0 1; } }
+  .hs-fade { animation: hs-fade .7s var(--ease-out) both; animation-delay: var(--d, 500ms); }
+  @keyframes hs-fade { from { opacity: 0; transform: translateY(10px); } }
+  .hs-item > * { animation: hs-in .8s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(220ms + var(--n) * 80ms); }
+  @keyframes hs-in { from { opacity: 0; translate: 48px 0; } }
+  .hs .hero-stage__chip--live::before { animation: hs-beat 1.6s ease-in-out infinite; }
+  @keyframes hs-beat { 50% { opacity: .25; } }
+}

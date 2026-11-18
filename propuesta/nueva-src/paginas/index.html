@@ -15,32 +15,28 @@ og_imagen: assets/img/js-2.webp
      ====================================================================== -->
 <h1 class="visually-hidden">Portada de Habla Deportes</h1>
 
-<!-- M1 · Hero «Cartel B-a5»: texto (5/12) + foto pegada con el video (7/12); debajo, boleta del partido y escudos.
+<!-- M1 · Hero «Estante»: titular con una palabra sobre tira azul, video del último programa (16:9) y
+     videos anteriores como carteles verticales del mismo alto, en un estante que corre hasta el borde.
      El video reproduce solo y sin sonido (autoplay silenciado); el visitante activa el audio con un botón.
-     Transmisión en vivo cuando está al aire; si no, el último programa.
+     Transmisión en vivo cuando está al aire; si no, el último programa (rótulo bajo el video).
      Sin JavaScript, con «reducir movimiento» o en ahorro de datos: portada con play que lleva al video.
-     Boleta: datos de Datafactory. Pasto no tiene escudo original todavía (pendiente del cliente). -->
-<section class="cb hero-stage" data-module="M1" aria-labelledby="hero-title">
-  <div class="container cb__grid">
-    <div class="cb__text">
-      <p class="cb__label">El show de las mañanas</p>
-      <h2 class="cb__title" id="hero-title"><a href="video.html"><span class="visually-hidden">Video: </span>El refuerzo de Junior que <span class="cb__strip">nadie</span> esperaba</a></h2>
-      <p class="cb__dek">La mesa analiza la llegada que casi nadie veía venir y lo que le puede aportar al equipo en lo que resta del año.</p>
-      <div class="cb__actions">
-        <a class="btn btn--primary" href="video.html">{{ ico("play-fill") }}Ver el programa</a>
-      </div>
+     Estante: main.js (flechas e indicador). Tira de partidos: datos de Datafactory. -->
+<section class="hero-stage hs" data-module="M1" aria-labelledby="hero-title">
+  <div class="hs-wrap">
+    <div class="hs-text">
+      <p class="hs-kick hs-fade" style="--d:60ms">El show de las mañanas</p>
+      <h2 class="hs-title" id="hero-title"><a href="video.html"><span class="visually-hidden">Video: El refuerzo de Junior que nadie esperaba</span><span aria-hidden="true"><span class="hs-w" style="--i:0"><span>El</span></span> <span class="hs-w" style="--i:1"><span>refuerzo</span></span> <span class="hs-w" style="--i:2"><span>de</span></span> <span class="hs-w" style="--i:3"><span>Junior</span></span> <span class="hs-w" style="--i:4"><span>que</span></span> <span class="hs-w hs-key" style="--i:5"><span>nadie</span></span> <span class="hs-w" style="--i:6"><span>esperaba</span></span></span></a></h2>
+      <p class="hs-act hs-fade" style="--d:620ms"><a class="btn btn--primary hs-btn" href="video.html">{{ ico("play-fill") }}Ver el programa</a></p>
     </div>
-
-    <div class="cb__collage">
-      <div class="hero-video">
-        <div class="hero-stage__player" data-hero-player data-video="sbECwF3dEaI" data-channel="UCm_25dALt4-r7C0wSsbaxzA">
-          <div class="hero-stage__frame media" data-hero-frame>
+    <div class="hs-shelf hero-stage__player" data-hero-player data-video="sbECwF3dEaI" data-channel="UCm_25dALt4-r7C0wSsbaxzA">
+      <ol class="hs-track" id="hs-track" role="list" aria-label="Último programa y videos anteriores" data-shelf>
+        <li class="hs-item hs-item--main" style="--n:0">
+          <div class="hero-stage__frame media hs-frame" data-hero-frame>
             <a class="hero-stage__poster" href="video.html" data-hero-poster>
               {{ foto("js-2", clase="media__img", prioridad=True) }}
               <span class="play play--lg">{{ ico("play-fill") }}</span>
               <span class="visually-hidden">Ver el video</span>
             </a>
-            <span class="chip-media chip-media--tl hero-stage__chip" data-hero-chip>Último programa</span>
             <div class="hero-stage__controls" data-hero-controls hidden>
               <button class="hero-stage__sound" type="button" data-hero-sound aria-pressed="false">
                 <span class="hero-stage__ico hero-stage__ico--off">{{ ico("speaker-x-fill") }}</span>
@@ -53,19 +49,26 @@ og_imagen: assets/img/js-2.webp
               </button>
             </div>
           </div>
-        </div>
-        <!-- Videos anteriores: los mismos videos que muestra el módulo «El show de las mañanas» más abajo -->
-        <div class="hero-video__rail">
-          <p class="hero-video__head">Videos anteriores</p>
-          <ol class="hero-video__list" role="list">
-            <li class="hero-video__item"><a class="hero-video__link" href="video.html"><span class="hero-video__thumb">{{ foto("seleccion-gol", alt="", repite=True) }}<span class="hero-video__dur">18 min</span></span><span class="hero-video__t">Lista de la Selección: cinco novedades y una ausencia</span></a></li>
-            <li class="hero-video__item"><a class="hero-video__link" href="video.html"><span class="hero-video__thumb">{{ foto("junior-bicampeon", alt="", repite=True) }}<span class="hero-video__dur">22 min</span></span><span class="hero-video__t">Mercado de Junior: quién llega, quién se va y qué es humo</span></a></li>
-            <li class="hero-video__item"><a class="hero-video__link" href="video.html"><span class="hero-video__thumb">{{ foto("nacional-celebracion", alt="", repite=True) }}<span class="hero-video__dur">31 min</span></span><span class="hero-video__t">Análisis táctico de Nacional: cómo se le juega</span></a></li>
-          </ol>
+          <p class="hs-cap"><span class="hs-chip hero-stage__chip" data-hero-chip>Último programa</span><span class="hs-host">Con Juan Salvador Bárcena</span><span class="hs-sched">De lunes a viernes, 10:00 a. m.</span></p>
+        </li>
+        <li class="hs-item hs-item--ant" style="--n:1"><a class="hs-card" href="video.html"><span class="hs-thumb">{{ foto("seleccion-gol", alt="", repite=True) }}<span class="hs-dur">{{ ico("play-fill") }}<span class="visually-hidden">Duración: </span>18 min</span></span><span class="hs-ct">Lista de la Selección: cinco novedades y una ausencia</span></a></li>
+        <li class="hs-item hs-item--ant" style="--n:2"><a class="hs-card" href="video.html"><span class="hs-thumb">{{ foto("junior-bicampeon", alt="", repite=True) }}<span class="hs-dur">{{ ico("play-fill") }}<span class="visually-hidden">Duración: </span>22 min</span></span><span class="hs-ct">Mercado de Junior: quién llega, quién se va y qué es humo</span></a></li>
+        <li class="hs-item hs-item--ant" style="--n:3"><a class="hs-card" href="video.html"><span class="hs-thumb">{{ foto("nacional-celebracion", alt="", repite=True) }}<span class="hs-dur">{{ ico("play-fill") }}<span class="visually-hidden">Duración: </span>31 min</span></span><span class="hs-ct">Análisis táctico de Nacional: cómo se le juega</span></a></li>
+        <li class="hs-item hs-item--all" style="--n:4"><a class="hs-all" href="videos.html"><span class="hs-all-t">Todos los programas</span><span class="hs-all-a">{{ ico("arrow-right") }}</span></a></li>
+      </ol>
+    </div>
+    <div class="hs-ctrl hs-fade" style="--d:760ms">
+      <div class="hs-ctrl-l">
+        <p class="hs-nl">Videos anteriores</p>
+        <div class="hs-arrows">
+          <button class="hs-arw" type="button" data-shelf-dir="-1" aria-controls="hs-track">{{ ico("arrow-left") }}<span class="visually-hidden">Ver la pieza anterior del estante</span></button>
+          <button class="hs-arw" type="button" data-shelf-dir="1" aria-controls="hs-track">{{ ico("arrow-right") }}<span class="visually-hidden">Ver la siguiente pieza del estante</span></button>
         </div>
       </div>
+      <div class="hs-rail" aria-hidden="true" data-shelf-rail></div>
     </div>
-
+  </div>
+  <div class="container hs-tira">
     {{ tira_partidos("datafactory") }}
   </div>
 </section>

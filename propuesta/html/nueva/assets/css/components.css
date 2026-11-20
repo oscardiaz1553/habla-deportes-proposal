@@ -4498,3 +4498,10 @@ html[data-page="index"] .site-main { padding-top: 0; }
    ========================================================================== */
 :where(main) .media:not(.hero-stage__frame), .lead-story__media { border-radius: var(--radius-media); overflow: hidden; }
 .ad-slot__frame { border: 0; border-radius: var(--radius-card); background: var(--card-soft); }
+
+/* Home, escritorio con puntero: la cápsula de la cabecera nace sin fondo sobre la portada y recupera el brand-800
+   al pasar el puntero, con foco dentro, con un menú abierto o al bajar (.is-compact), para no perder contraste. */
+@media (hover: hover) and (pointer: fine) and (min-width: 1024px) {
+  html[data-page="index"] .site-header:not(.is-compact) .masthead__inner { background: transparent; transition: background-color var(--dur-base) var(--ease-out), height var(--dur-base) var(--ease-out); }
+  html[data-page="index"] .site-header:not(.is-compact) .masthead__inner:is(:hover, :focus-within, :has([aria-expanded="true"])) { background: var(--brand-800); }
+}

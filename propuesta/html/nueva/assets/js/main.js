@@ -598,6 +598,21 @@
         noCaptions();
         window.setInterval(noCaptions, 1500);
       });
+      /* Portada dinámica: con el video en marcha el texto del hero se aparta (data-hero-text="oculto"); vuelve
+         al pausar, al terminar, con hover o foco (CSS) y, en pantallas sin hover, con un toque sobre el video.
+         Si YouTube no arranca (autoplay bloqueado) nunca se oculta. */
+      var setTxt = function (show) { stage.setAttribute('data-hero-text', show ? 'visible' : 'oculto'); };
+      var tap = document.createElement('button');
+      tap.type = 'button';
+      tap.className = 'hero-stage__tap';
+      tap.setAttribute('data-hero-tap', '');
+      tap.setAttribute('aria-hidden', 'true');
+      tap.tabIndex = -1;
+      tap.addEventListener('click', function () {
+        if (!playing || userPaused) return;
+        setTxt(stage.getAttribute('data-hero-text') !== 'visible');
+      });
+      $('[data-hero-frame]', hero).insertBefore(tap, heroCtl);
       window.addEventListener('message', function (ev) {
         if (ev.source !== frameEl.contentWindow) return;
         var d; try { d = JSON.parse(ev.data); } catch (x) { return; }
@@ -610,6 +625,12 @@
           noCaptions();
           stage.classList.add('is-playing');
           heroCtl.hidden = false;
+          if (!userPaused) setTxt(false);
+        }
+        /* Solo las transiciones (onStateChange) mueven el texto: 1 reproduce, 2 pausa, 0 fin */
+        if (d && d.event === 'onStateChange' && playing) {
+          if (d.info === 1 && !userPaused) setTxt(false);
+          if (d.info === 2 || d.info === 0) setTxt(true);
         }
       });
       soundBtn.addEventListener('click', function () {
@@ -622,6 +643,7 @@
         userPaused = !userPaused;
         cmd(userPaused ? 'pauseVideo' : 'playVideo');
         pauseBtn.setAttribute('aria-pressed', String(userPaused));
+        setTxt(userPaused);
         $('[data-hero-pause-label]', hero).textContent = userPaused ? 'Reanudar el video' : 'Pausar el video';
       });
       /* Fuera de pantalla se pausa (ahorra datos y evita audio de un video que no se ve) */

@@ -5,6 +5,14 @@
   publish = "propuesta/html"
   command = ""
 
+# La raíz del sitio abre la Home nueva (nueva/index.html). Es un 302 y no un 301
+# para que los navegadores no lo guarden de forma permanente mientras sea prototipo.
+[[redirects]]
+  from = "/"
+  to = "/nueva/index.html"
+  status = 302
+  force = true
+
 # Cabeceras de seguridad y de caché
 [[headers]]
   for = "/*"

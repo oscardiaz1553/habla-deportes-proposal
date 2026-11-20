@@ -15,60 +15,32 @@ og_imagen: assets/img/js-2.webp
      ====================================================================== -->
 <h1 class="visually-hidden">Portada de Habla Deportes</h1>
 
-<!-- M1 · Hero «Estante»: titular con una palabra sobre tira azul, video del último programa (16:9) y
-     videos anteriores como carteles verticales del mismo alto, en un estante que corre hasta el borde.
-     El video reproduce solo y sin sonido (autoplay silenciado); el visitante activa el audio con un botón.
-     Transmisión en vivo cuando está al aire; si no, el último programa (rótulo bajo el video).
-     Sin JavaScript, con «reducir movimiento» o en ahorro de datos: portada con play que lleva al video.
-     Estante: main.js (flechas e indicador). Tira de partidos: datos de Datafactory. -->
-<section class="hero-stage hs" data-module="M1" aria-labelledby="hero-title">
-  <div class="hs-wrap">
-    <div class="hs-text">
-      <p class="hs-kick hs-fade" style="--d:60ms">El show de las mañanas</p>
-      <h2 class="hs-title" id="hero-title"><a href="video.html"><span class="visually-hidden">Video: El refuerzo de Junior que nadie esperaba</span><span aria-hidden="true"><span class="hs-w" style="--i:0"><span>El</span></span> <span class="hs-w" style="--i:1"><span>refuerzo</span></span> <span class="hs-w" style="--i:2"><span>de</span></span> <span class="hs-w" style="--i:3"><span>Junior</span></span> <span class="hs-w" style="--i:4"><span>que</span></span> <span class="hs-w hs-key" style="--i:5"><span>nadie</span></span> <span class="hs-w" style="--i:6"><span>esperaba</span></span></span></a></h2>
-      <p class="hs-act hs-fade" style="--d:620ms"><a class="btn btn--primary hs-btn" href="video.html">{{ ico("play-fill") }}Ver el programa</a></p>
-    </div>
-    <div class="hs-shelf hero-stage__player" data-hero-player data-video="sbECwF3dEaI" data-channel="UCm_25dALt4-r7C0wSsbaxzA">
-      <ol class="hs-track" id="hs-track" role="list" aria-label="Último programa y videos anteriores" data-shelf>
-        <li class="hs-item hs-item--main" style="--n:0">
-          <div class="hero-stage__frame media hs-frame" data-hero-frame>
-            <a class="hero-stage__poster" href="video.html" data-hero-poster>
-              {{ foto("js-2", clase="media__img", prioridad=True) }}
-              <span class="play play--lg">{{ ico("play-fill") }}</span>
-              <span class="visually-hidden">Ver el video</span>
-            </a>
-            <div class="hero-stage__controls" data-hero-controls hidden>
-              <button class="hero-stage__sound" type="button" data-hero-sound aria-pressed="false">
-                <span class="hero-stage__ico hero-stage__ico--off">{{ ico("speaker-x-fill") }}</span>
-                <span class="hero-stage__ico hero-stage__ico--on">{{ ico("speaker-high-fill") }}</span>
-                <span data-hero-sound-label>Activar sonido</span>
-              </button>
-              <button class="icon-btn icon-btn--on-dark hero-stage__pause" type="button" data-hero-pause aria-pressed="false">
-                {{ ico("pause-fill", "icon icon-pause") }}{{ ico("play-fill", "icon icon-play") }}
-                <span class="visually-hidden" data-hero-pause-label>Pausar el video</span>
-              </button>
-            </div>
-          </div>
-          <p class="hs-cap"><span class="hs-chip hero-stage__chip" data-hero-chip>Último programa</span><span class="hs-host">Con Juan Salvador Bárcena</span><span class="hs-sched">De lunes a viernes, 10:00 a. m.</span></p>
-        </li>
-        <li class="hs-item hs-item--ant" style="--n:1"><a class="hs-card" href="video.html"><span class="hs-thumb">{{ foto("seleccion-gol", alt="", repite=True) }}<span class="hs-dur">{{ ico("play-fill") }}<span class="visually-hidden">Duración: </span>18 min</span></span><span class="hs-ct">Lista de la Selección: cinco novedades y una ausencia</span></a></li>
-        <li class="hs-item hs-item--ant" style="--n:2"><a class="hs-card" href="video.html"><span class="hs-thumb">{{ foto("junior-bicampeon", alt="", repite=True) }}<span class="hs-dur">{{ ico("play-fill") }}<span class="visually-hidden">Duración: </span>22 min</span></span><span class="hs-ct">Mercado de Junior: quién llega, quién se va y qué es humo</span></a></li>
-        <li class="hs-item hs-item--ant" style="--n:3"><a class="hs-card" href="video.html"><span class="hs-thumb">{{ foto("nacional-celebracion", alt="", repite=True) }}<span class="hs-dur">{{ ico("play-fill") }}<span class="visually-hidden">Duración: </span>31 min</span></span><span class="hs-ct">Análisis táctico de Nacional: cómo se le juega</span></a></li>
-        <li class="hs-item hs-item--all" style="--n:4"><a class="hs-all" href="videos.html"><span class="hs-all-t">Todos los programas</span><span class="hs-all-a">{{ ico("arrow-right") }}</span></a></li>
-      </ol>
-    </div>
-    <div class="hs-ctrl hs-fade" style="--d:760ms">
-      <div class="hs-ctrl-l">
-        <p class="hs-nl">Videos anteriores</p>
-        <div class="hs-arrows">
-          <button class="hs-arw" type="button" data-shelf-dir="-1" aria-controls="hs-track">{{ ico("arrow-left") }}<span class="visually-hidden">Ver la pieza anterior del estante</span></button>
-          <button class="hs-arw" type="button" data-shelf-dir="1" aria-controls="hs-track">{{ ico("arrow-right") }}<span class="visually-hidden">Ver la siguiente pieza del estante</span></button>
-        </div>
+<!-- M1 · Hero «Apertura» (aprobado): sala oscura con el video del último programa a 2,39:1 en escritorio
+     (16:9 en móvil), titular con una palabra sobre la tira azul y «Ver el programa»; banda inferior con
+     créditos, videos anteriores y la señal para bajar a los partidos. Cierra con el canto rasgado de la casa.
+     Video: main.js §8 (autoplay silenciado, sonido a un clic; rótulo propio cuando está al aire). Sin JS,
+     con «reducir movimiento» o en ahorro de datos: portada con play que lleva al video.
+     Tira de partidos: datos de Datafactory. -->
+<section class="hero-stage tt t1" data-module="M1" aria-labelledby="hero-title">
+  <div class="tt-room t1-room hero-stage__player" data-hero-player data-video="sbECwF3dEaI" data-channel="UCm_25dALt4-r7C0wSsbaxzA">
+    <div class="t1-stage">
+      <div class="t1-screen">
+        <div class="hero-stage__frame media tt-frame t1-frame tt-cover" data-hero-frame><a class="hero-stage__poster" href="video.html" data-hero-poster>{{ foto("js-2", clase="media__img", prioridad=True) }}<span class="play play--lg">{{ ico("play-fill") }}</span><span class="visually-hidden">Ver el video</span></a><span class="t1-scrim" aria-hidden="true"></span><div class="hero-stage__controls tt-ctl" data-hero-controls hidden><button class="hero-stage__sound" type="button" data-hero-sound aria-pressed="false"><span class="hero-stage__ico hero-stage__ico--off">{{ ico("speaker-x-fill") }}</span><span class="hero-stage__ico hero-stage__ico--on">{{ ico("speaker-high-fill") }}</span><span class="btn__txt" data-hero-sound-label>Activar sonido</span></button><button class="icon-btn icon-btn--on-dark hero-stage__pause" type="button" data-hero-pause aria-pressed="false">{{ ico("pause-fill", "icon icon-pause") }}{{ ico("play-fill", "icon icon-play") }}<span class="visually-hidden" data-hero-pause-label>Pausar el video</span></button></div></div>
+        <div class="t1-barwrap"><div class="tt-bar" aria-hidden="true"><span></span></div></div>
+        <div class="container t1-lab"><p class="t1-label"><span class="tt-chip hero-stage__chip" data-hero-chip>Último programa</span></p></div>
+        <div class="container t1-over"><div class="t1-copy">
+          <h2 class="tt-title t1-title" id="hero-title"><a href="video.html"><span class="visually-hidden">Video: El refuerzo de Junior que nadie esperaba</span><span aria-hidden="true"><span class="hs-w" style="--i:0"><span>El</span></span> <span class="hs-w" style="--i:1"><span>refuerzo</span></span> <span class="hs-w" style="--i:2"><span>de</span></span> <span class="hs-w" style="--i:3"><span>Junior</span></span> <span class="hs-w" style="--i:4"><span>que</span></span> <span class="hs-w hs-key" style="--i:5"><span>nadie</span></span> <span class="hs-w" style="--i:6"><span>esperaba</span></span></span></a></h2>
+          <p class="t1-act"><a class="btn btn--primary btn--lg btn--on-dark t1-btn" href="video.html">{{ ico("play-fill") }}<span class="btn__txt">Ver el programa</span></a></p>
+        </div></div>
       </div>
-      <div class="hs-rail" aria-hidden="true" data-shelf-rail></div>
+      <div class="container t1-bot">
+        <div class="t1-cr"><dl class="tt-credits t1-credits"><div><dt>Conduce</dt><dd>Juan Salvador Bárcena</dd></div><div><dt>Emisión</dt><dd>De lunes a viernes, 10:00 a. m.</dd></div><div><dt>Duración</dt><dd>1:51:20</dd></div></dl></div>
+        <nav class="tt-bill t1-bill" aria-labelledby="t1-ant-t"><div class="tt-bh t1-bh"><h3 class="tt-bt" id="t1-ant-t">Videos anteriores</h3><a class="link-action link-action--on-dark t1-all" href="videos.html"><span class="btn__txt">Todos los programas</span>{{ ico("arrow-right") }}</a></div><ol class="tt-rail t1-rail" role="list"><li class="t1-li tt-li" style="--n:0"><a class="tt-card tt-card--side t1-card" href="video.html"><span class="tt-pst t1-pst">{{ foto("seleccion-gol", alt="", repite=True) }}</span><span class="tt-cap t1-cap"><span class="tt-pt t1-pt">Lista de la Selección: cinco novedades y una ausencia</span><span class="tt-dur t1-dur"><span class="visually-hidden">Duración: </span>18 min</span></span></a></li><li class="t1-li tt-li" style="--n:1"><a class="tt-card tt-card--side t1-card" href="video.html"><span class="tt-pst t1-pst">{{ foto("junior-bicampeon", alt="", repite=True) }}</span><span class="tt-cap t1-cap"><span class="tt-pt t1-pt">Mercado de Junior: quién llega, quién se va y qué es humo</span><span class="tt-dur t1-dur"><span class="visually-hidden">Duración: </span>22 min</span></span></a></li><li class="t1-li tt-li" style="--n:2"><a class="tt-card tt-card--side t1-card" href="video.html"><span class="tt-pst t1-pst">{{ foto("nacional-celebracion", alt="", repite=True) }}</span><span class="tt-cap t1-cap"><span class="tt-pt t1-pt">Análisis táctico de Nacional: cómo se le juega</span><span class="tt-dur t1-dur"><span class="visually-hidden">Duración: </span>31 min</span></span></a></li></ol></nav>
+        <a class="t1-cue" href="#t1-next"><span>Bajar a los partidos de la fecha</span>{{ ico("caret-down", "icon t1-cue-i") }}</a>
+      </div>
     </div>
   </div>
-  <div class="container hs-tira">
+  <div class="container tt-tira t1-tira" id="t1-next">
     {{ tira_partidos("datafactory") }}
   </div>
 </section>
@@ -101,7 +73,7 @@ og_imagen: assets/img/js-2.webp
 
       <!-- M4 · El show de las mañanas: horario, escaleta y dónde verlo (el último programa ya está en el hero) -->
       <section class="section pgm" aria-labelledby="m4" data-module="M4">
-        <div class="pgm-head"><h2 class="pgm-h2" id="m4">El show de las mañanas</h2><a class="pgm-more" href="videos.html#programas">Todos los programas{{ ico("caret-right", "icon icon--sm") }}</a></div>
+        <div class="pgm-head"><h2 class="pgm-h2" id="m4">El show de las mañanas</h2><a class="btn btn--primary btn--end" href="videos.html#programas"><span class="btn__txt">Todos los programas</span>{{ ico("arrow-right") }}</a></div>
         <div class="pgm-grid">
           <div class="pgm-when">
             <div class="pgm-photo">
@@ -132,7 +104,7 @@ og_imagen: assets/img/js-2.webp
 
       <!-- M5 · Junior (1 destacada + 4 titulares de solo texto) -->
       <section class="section jf" aria-labelledby="m5" data-module="M5">
-        <div class="jf-head"><h2 class="jf-h2" id="m5">Junior FC</h2><a class="jf-more" href="junior.html">Ir a Junior FC{{ ico("caret-right", "icon icon--sm") }}</a></div>
+        <div class="jf-head"><h2 class="jf-h2" id="m5">Junior FC</h2><a class="link-action" href="junior.html"><span class="btn__txt">Ir a Junior FC</span>{{ ico("caret-right", "icon icon--sm") }}</a></div>
         <div class="jf-block">
           <span class="jf-tape jf-tape--a" aria-hidden="true"></span>
           <article class="jf-feat">
@@ -149,7 +121,7 @@ og_imagen: assets/img/js-2.webp
             <p class="jf-nl">Próximo partido</p>
             <p class="jf-vs"><span class="visually-hidden">Junior contra Millonarios</span><span class="jf-st jf-st--sm" aria-hidden="true">{{ foto("escudo-junior", clase="jf-st__img", alt="") }}</span><span class="jf-vsx" aria-hidden="true">vs.</span><span class="jf-st jf-st--sm jf-st--tilt" aria-hidden="true">{{ foto("escudo-millonarios", clase="jf-st__img", alt="") }}</span></p>
             <p class="jf-nd"><span class="jf-nt">Junior vs. Millonarios</span><span class="jf-nm"><time datetime="2026-11-22T18:10">Domingo 22 de noviembre, 6:10 p. m.</time> · Estadio Metropolitano</span></p>
-            <a class="jf-btn" href="partido.html">Ver la previa<span class="visually-hidden">: Junior contra Millonarios</span>{{ ico("caret-right", "icon icon--sm") }}</a>
+            <a class="btn btn--primary btn--jr btn--end jf-cta" href="partido.html">Ver la previa<span class="visually-hidden">: Junior contra Millonarios</span>{{ ico("arrow-right") }}</a>
           </div>
         </div>
         <p class="jf-note">Rival, fecha y hora del próximo partido, titulares y horas: dato de ejemplo.</p>
@@ -159,7 +131,7 @@ og_imagen: assets/img/js-2.webp
     <div class="layout-split__rail">
       <!-- L1 · Clasificación -->
       <section class="rail-module" aria-labelledby="l1" data-module="L1">
-        <div class="rail-module__head"><h2 class="rail-module__title" id="l1">Liga BetPlay</h2><a class="link-action" href="datos.html#posiciones">Tabla{{ ico("caret-right", "icon icon--sm") }}</a></div>
+        <div class="rail-module__head"><h2 class="rail-module__title" id="l1">Liga BetPlay</h2><a class="link-action" href="datos.html#posiciones"><span class="btn__txt">Tabla</span>{{ ico("caret-right", "icon icon--sm") }}</a></div>
         {{ tabla_posiciones("compacta", filas=20, datos="datafactory", scroll=True) }}
         {{ fuente_datafactory() }}
       </section>
@@ -170,7 +142,7 @@ og_imagen: assets/img/js-2.webp
 
   <!-- M6 · Shorts (un solo carril, separado de los programas) -->
   <section class="section sh" aria-labelledby="s-shorts" data-module="M6" data-sh>
-        <div class="sh-head"><h2 class="sh-h2" id="s-shorts">Shorts</h2><div class="sh-tools"><div class="sh-arrows"><button class="sh-arrow" type="button" data-sh-prev aria-controls="sh-track">{{ ico("caret-left", "icon") }}<span class="visually-hidden">Shorts anteriores</span></button><button class="sh-arrow" type="button" data-sh-next aria-controls="sh-track">{{ ico("caret-right", "icon") }}<span class="visually-hidden">Shorts siguientes</span></button></div><a class="sh-more" href="shorts.html">Ver todos<span class="visually-hidden"> los Shorts</span>{{ ico("caret-right", "icon icon--sm") }}</a></div></div>
+        <div class="sh-head"><h2 class="sh-h2" id="s-shorts">Shorts</h2><div class="sh-tools"><div class="sh-arrows"><button class="sh-arrow" type="button" data-sh-prev aria-controls="sh-track">{{ ico("caret-left", "icon") }}<span class="visually-hidden">Shorts anteriores</span></button><button class="sh-arrow" type="button" data-sh-next aria-controls="sh-track">{{ ico("caret-right", "icon") }}<span class="visually-hidden">Shorts siguientes</span></button></div><a class="btn btn--primary btn--end" href="shorts.html"><span class="btn__txt">Ver todos</span><span class="visually-hidden"> los Shorts</span>{{ ico("arrow-right") }}</a></div></div>
         <div class="sh-viewport" id="sh-track" role="region" aria-label="Carril de Shorts, se desplaza de lado" tabindex="0">
           <ol class="sh-track" role="list"><li class="sh-item">
               <article class="sh-card">
@@ -212,7 +184,7 @@ og_imagen: assets/img/js-2.webp
     <div class="layout-split__main">
       <!-- M7 · Selección Colombia (1 + 3, menos peso que Junior) -->
       <section class="section sel" aria-labelledby="m7" data-module="M7">
-        {{ rotulo("Selección Colombia", "seleccion.html", "Ir a la Selección", id="m7") }}
+        {{ rotulo("Selección Colombia", "seleccion.html", "Ir a la Selección", id="m7", boton=True) }}
         <div class="sel-panel">
           <article class="sel-feat">
             <div class="sel-photo">{{ foto("seleccion-tecnico-retrato") }}</div>
@@ -235,7 +207,7 @@ og_imagen: assets/img/js-2.webp
         {{ rotulo("Mercado de fichajes", id="l4") }}
         <div class="mkt-panel">
           <ol class="mkt-list" role="list"><li class="mkt-slip mkt-slip--jr"><span class="mkt-stk" aria-hidden="true"><span class="mkt-sto">{{ foto("escudo-medellin", "mkt-sci", alt="") }}</span><span class="mkt-std">{{ foto("escudo-junior", "mkt-sci", alt="") }}</span></span><span class="mkt-tx"><span class="mkt-top"><span class="mkt-date">{{ ico("calendar-blank", "icon icon--sm") }}<time datetime="2026-11-05">Ayer</time></span><span class="mkt-st mkt-st--talks"><span class="mkt-dot" aria-hidden="true"></span>Negociando</span></span><a class="mkt-t" href="mercado.html">Jhon Mosquera</a><span class="mkt-r"><span class="mkt-kind mkt-kind--in">{{ ico("sign-in", "icon icon--sm") }}<span class="visually-hidden">Llega a Junior. </span></span><span class="mkt-route"><span>Medellín</span><span class="mkt-arr">{{ ico("arrow-right", "icon icon--sm") }}</span><span class="visually-hidden"> a </span><span class="mkt-to mkt-jr">Junior</span></span></span></span></li><li class="mkt-slip mkt-slip--jr"><span class="mkt-stk" aria-hidden="true"><span class="mkt-sto">{{ foto("escudo-tolima", "mkt-sci", alt="") }}</span><span class="mkt-std">{{ foto("escudo-junior", "mkt-sci", alt="") }}</span></span><span class="mkt-tx"><span class="mkt-top"><span class="mkt-date">{{ ico("calendar-blank", "icon icon--sm") }}<time datetime="2026-11-04">Mié 4 nov</time></span><span class="mkt-st mkt-st--closed"><span class="mkt-dot" aria-hidden="true"></span>Cerrado</span></span><a class="mkt-t" href="mercado.html">Kevin Arboleda</a><span class="mkt-r"><span class="mkt-kind mkt-kind--in">{{ ico("sign-in", "icon icon--sm") }}<span class="visually-hidden">Llega a Junior. </span></span><span class="mkt-route"><span>Tolima</span><span class="mkt-arr">{{ ico("arrow-right", "icon icon--sm") }}</span><span class="visually-hidden"> a </span><span class="mkt-to mkt-jr">Junior</span></span></span></span></li><li class="mkt-slip mkt-slip--jr"><span class="mkt-stk" aria-hidden="true"><span class="mkt-sto">{{ foto("escudo-millonarios", "mkt-sci", alt="") }}</span><span class="mkt-std">{{ foto("escudo-junior", "mkt-sci", alt="") }}</span></span><span class="mkt-tx"><span class="mkt-top"><span class="mkt-date">{{ ico("calendar-blank", "icon icon--sm") }}<time datetime="2026-11-02">Lun 2 nov</time></span><span class="mkt-st mkt-st--rumor"><span class="mkt-dot" aria-hidden="true"></span>Rumor</span></span><a class="mkt-t" href="mercado.html">Mateo Sosa</a><span class="mkt-r"><span class="mkt-kind mkt-kind--in">{{ ico("sign-in", "icon icon--sm") }}<span class="visually-hidden">Llega a Junior. </span></span><span class="mkt-route"><span>Millonarios</span><span class="mkt-arr">{{ ico("arrow-right", "icon icon--sm") }}</span><span class="visually-hidden"> a </span><span class="mkt-to mkt-jr">Junior</span></span></span></span></li><li class="mkt-slip"><span class="mkt-stk" aria-hidden="true"><span class="mkt-sto">{{ foto("escudo-america", "mkt-sci", alt="") }}</span><span class="mkt-std">{{ foto("escudo-medellin", "mkt-sci", alt="") }}</span></span><span class="mkt-tx"><span class="mkt-top"><span class="mkt-date">{{ ico("calendar-blank", "icon icon--sm") }}<time datetime="2026-10-30">Vie 30 oct</time></span><span class="mkt-st mkt-st--talks"><span class="mkt-dot" aria-hidden="true"></span>Negociando</span></span><a class="mkt-t" href="mercado.html">Yair Palacios</a><span class="mkt-r"><span class="mkt-kind mkt-kind--other">{{ ico("arrows-left-right", "icon icon--sm") }}<span class="visually-hidden">Entre otros clubes. </span></span><span class="mkt-route"><span>América</span><span class="mkt-arr">{{ ico("arrow-right", "icon icon--sm") }}</span><span class="visually-hidden"> a </span><span class="mkt-to">Medellín</span></span></span></span></li><li class="mkt-slip"><span class="mkt-stk" aria-hidden="true"><span class="mkt-sto">{{ foto("escudo-medellin", "mkt-sci", alt="") }}</span><span class="mkt-std">{{ foto("escudo-millonarios", "mkt-sci", alt="") }}</span></span><span class="mkt-tx"><span class="mkt-top"><span class="mkt-date">{{ ico("calendar-blank", "icon icon--sm") }}<time datetime="2026-10-28">Mié 28 oct</time></span><span class="mkt-st mkt-st--closed"><span class="mkt-dot" aria-hidden="true"></span>Cerrado</span></span><a class="mkt-t" href="mercado.html">Dylan Ortega</a><span class="mkt-r"><span class="mkt-kind mkt-kind--other">{{ ico("arrows-left-right", "icon icon--sm") }}<span class="visually-hidden">Entre otros clubes. </span></span><span class="mkt-route"><span>Medellín</span><span class="mkt-arr">{{ ico("arrow-right", "icon icon--sm") }}</span><span class="visually-hidden"> a </span><span class="mkt-to">Millonarios</span></span></span></span></li></ol>
-          <div class="mkt-foot"><p class="mkt-note">Nombres y datos de ejemplo.</p><a class="link-action" href="mercado.html">Ver todo<span class="visually-hidden"> el mercado de fichajes</span>{{ ico("caret-right", "icon icon--sm") }}</a></div>
+          <div class="mkt-foot"><p class="mkt-note">Nombres y datos de ejemplo.</p><a class="btn btn--primary btn--end" href="mercado.html"><span class="btn__txt">Ver todo</span><span class="visually-hidden"> el mercado de fichajes</span>{{ ico("arrow-right") }}</a></div>
         </div>
       </section>
     </div>
@@ -243,7 +215,7 @@ og_imagen: assets/img/js-2.webp
 
   <!-- T1 · Fútbol colombiano: titular en grande con foto y tres fichas -->
   <section class="section tm tm--fc" aria-labelledby="t-fc" data-module="T-fc">
-    <div class="section-head"><h2 class="section-head__title" id="t-fc">Fútbol colombiano</h2><a class="link-action" href="noticias.html?tema=futbol-colombiano">Ver todo<span class="visually-hidden"> de Fútbol colombiano</span>{{ ico("caret-right", "icon icon--sm") }}</a></div>
+    <div class="section-head"><h2 class="section-head__title" id="t-fc">Fútbol colombiano</h2><a class="btn btn--primary btn--end" href="noticias.html?tema=futbol-colombiano"><span class="btn__txt">Ver todo</span><span class="visually-hidden"> de Fútbol colombiano</span>{{ ico("arrow-right") }}</a></div>
     <article class="tm-it tm-lead">{{ foto("tema-fc-3", "tm-lead-img") }}<div class="tm-lb"><p class="tm-tag">Análisis</p><h3 class="tm-lt"><a class="tm-link" href="articulo.html">Abajo de la tabla: cuatro equipos y un <span class="tm-strip">descenso</span> que ya se calcula</a></h3><p class="tm-dek">Con 15 puntos el último y 18 el 19.º, la tabla del promedio empieza a pesar más que la de la Liga.</p><p class="tm-meta"><time datetime="2026-11-06T08:00-05:00">Hace 3 horas</time> · 4 min de lectura</p></div></article>
     <ul class="tm-cards" role="list"><li class="tm-it tm-card"><div class="tm-cv">{{ foto("tema-fc-1", "tm-img") }}<p class="tm-tag tm-tag--paper">Previa</p></div><h3 class="tm-ct"><a class="tm-link" href="articulo.html">Tolima y América se miran en la zona media: la Fecha 20 los empareja</a></h3><p class="tm-cd">Los dos llegan con rachas opuestas al sábado en Ibagué; lo que se juegan en la lucha por los cuadrangulares.</p><p class="tm-meta"><time datetime="2026-11-06T06:30-05:00">Hace 5 horas</time> · 4 min de lectura</p></li><li class="tm-it tm-card"><div class="tm-cv">{{ foto("tema-fc-2", "tm-img") }}<p class="tm-tag tm-tag--paper">Táctica</p></div><h3 class="tm-ct"><a class="tm-link" href="articulo.html">Millonarios y Medellín cierran la fecha con un duelo de contrastes</a></h3><p class="tm-cd">Uno defiende de más, el otro ataca de más. El domingo se mide cuál idea rinde mejor.</p><p class="tm-meta"><time datetime="2026-11-05">Ayer</time> · 5 min de lectura</p></li><li class="tm-it tm-card"><div class="tm-cv tm-cv--vid"><span class="tm-play" aria-hidden="true">{{ ico("play-fill", "icon") }}</span><p class="tm-tag tm-tag--paper">Video</p></div><h3 class="tm-ct"><a class="tm-link" href="video.html"><span class="visually-hidden">Video: </span>La mesa elige al técnico revelación del semestre en la Liga</a></h3><p class="tm-cd">Tres candidatos, una votación y una discusión que se fue de las manos.</p><p class="tm-meta"><time datetime="2026-11-04">Mié 4 nov</time> · 24 min</p></li></ul>
   </section>
@@ -251,14 +223,14 @@ og_imagen: assets/img/js-2.webp
   <div class="tm-pair">
   <!-- T2 · Europa -->
   <section class="section tm tm--eu" aria-labelledby="t-eu" data-module="T-eu">
-    <div class="section-head"><h2 class="section-head__title" id="t-eu">Europa</h2><a class="link-action" href="noticias.html?tema=europa">Ver todo<span class="visually-hidden"> de Europa</span>{{ ico("caret-right", "icon icon--sm") }}</a></div>
+    <div class="section-head"><h2 class="section-head__title" id="t-eu">Europa</h2><a class="btn btn--primary btn--end" href="noticias.html?tema=europa"><span class="btn__txt">Ver todo</span><span class="visually-hidden"> de Europa</span>{{ ico("arrow-right") }}</a></div>
     <article class="tm-it tm-sl">{{ foto("tema-eu-3", "tm-lead-img") }}<div class="tm-sb"><p class="tm-tag">Análisis</p><h3 class="tm-st"><a class="tm-link" href="articulo.html">Un grande de Inglaterra pierde el <span class='tm-strip'>liderato</span>: tres razones del tropiezo</a></h3><p class="tm-dek">Una racha de cuatro partidos sin ganar y un problema de salida que el rival supo explotar.</p><p class="tm-meta"><time datetime="2026-11-05">Ayer</time> · 5 min de lectura</p></div></article>
     <ul class="tm-rows" role="list"><li class="tm-it tm-row">{{ foto("tema-eu-1", "tm-thumb") }}<div class="tm-rb"><h3 class="tm-rt"><a class="tm-link" href="articulo.html">El clásico de España que se decide por las bandas</a></h3><p class="tm-meta"><time datetime="2026-11-03">Mar 3 nov</time> · 6 min de lectura</p></div></li><li class="tm-it tm-row">{{ foto("tema-eu-2", "tm-thumb") }}<div class="tm-rb"><h3 class="tm-rt"><a class="tm-link" href="articulo.html">Qué se espera de la Champions esta semana: cinco partidos para no perderse</a></h3><p class="tm-meta"><time datetime="2026-11-02">Lun 2 nov</time> · 4 min de lectura</p></div></li><li class="tm-it tm-row"><span class="tm-thumb tm-thumb--vid" aria-hidden="true"><span class="tm-play tm-play--sm">{{ ico("play-fill", "icon") }}</span></span><div class="tm-rb"><h3 class="tm-rt"><a class="tm-link" href="video.html"><span class="visually-hidden">Video: </span>Europa en diez minutos: lo que dejó el fin de semana</a></h3><p class="tm-meta"><time datetime="2026-11-02">Lun 2 nov</time> · <span class="visually-hidden">Duración: </span>11 min</p></div></li></ul>
   </section>
 
   <!-- T3 · Colombianos en el exterior -->
   <section class="section tm tm--ex" aria-labelledby="t-ex" data-module="T-ex">
-    <div class="section-head"><h2 class="section-head__title" id="t-ex">Colombianos en el exterior</h2><a class="link-action" href="noticias.html?tema=colombianos-exterior">Ver todo<span class="visually-hidden"> de Colombianos en el exterior</span>{{ ico("caret-right", "icon icon--sm") }}</a></div>
+    <div class="section-head"><h2 class="section-head__title" id="t-ex">Colombianos en el exterior</h2><a class="btn btn--primary btn--end" href="noticias.html?tema=colombianos-exterior"><span class="btn__txt">Ver todo</span><span class="visually-hidden"> de Colombianos en el exterior</span>{{ ico("arrow-right") }}</a></div>
     <article class="tm-it tm-sl">{{ foto("tema-ex-1", "tm-lead-img") }}<div class="tm-sb"><p class="tm-tag">Portugal</p><h3 class="tm-st"><a class="tm-link" href="articulo.html">El extremo colombiano que gana <span class='tm-strip'>minutos</span> en un club de Portugal</a></h3><p class="tm-dek">Pasó de suplente a titular en tres semanas. Lo que cambió en su rol y lo que le pide el entrenador.</p><p class="tm-meta"><span class="tm-place">{{ ico("map-pin", "icon icon--sm") }}Portugal</span> · <time datetime="2026-11-05">Ayer</time> · 4 min de lectura</p></div></article>
     <ul class="tm-rows" role="list"><li class="tm-it tm-row">{{ foto("tema-ex-3", "tm-thumb") }}<div class="tm-rb"><h3 class="tm-rt"><a class="tm-link" href="articulo.html">Un delantero colombiano en la liga de Brasil llega al décimo gol</a></h3><p class="tm-meta"><span class="tm-place">{{ ico("map-pin", "icon icon--sm") }}Brasil</span> · <time datetime="2026-11-04">Mié 4 nov</time> · 4 min de lectura</p></div></li><li class="tm-it tm-row">{{ foto("tema-ex-2", "tm-thumb") }}<div class="tm-rb"><h3 class="tm-rt"><a class="tm-link" href="articulo.html">Colombianos en Europa: quién juega, quién espera y quién vuelve</a></h3><p class="tm-meta"><span class="tm-place">{{ ico("map-pin", "icon icon--sm") }}Europa</span> · <time datetime="2026-11-02">Lun 2 nov</time> · 6 min de lectura</p></div></li><li class="tm-it tm-row"><span class="tm-thumb tm-thumb--vid" aria-hidden="true"><span class="tm-play tm-play--sm">{{ ico("play-fill", "icon") }}</span></span><div class="tm-rb"><h3 class="tm-rt"><a class="tm-link" href="video.html"><span class="visually-hidden">Video: </span>El arquero colombiano de la liga de México que se volvió especialista en penales</a></h3><p class="tm-meta"><span class="tm-place">{{ ico("map-pin", "icon icon--sm") }}México</span> · <time datetime="2026-11-01">Dom 1 nov</time> · <span class="visually-hidden">Duración: </span>12 min</p></div></li></ul>
   </section>

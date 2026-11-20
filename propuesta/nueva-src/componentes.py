@@ -31,13 +31,15 @@ def ico(nombre, clase="icon"):
     return icono(nombre, clase)
 
 
-def rotulo(titulo, enlace=None, texto_enlace=None, id=None, nivel=2, oculto=False):
-    """Rótulo de sección (01 §4: Archivo 800 cursiva sobre filete de 2 px)."""
+def rotulo(titulo, enlace=None, texto_enlace=None, id=None, nivel=2, oculto=False, boton=False):
+    """Rótulo de sección. boton=True: el enlace es la cápsula principal del módulo (portada, sistema 3c)."""
     hid = id or nucleo.P.nuevo_id("s-" + _slug(titulo))
     if oculto:
         return f'<h{nivel} class="visually-hidden" id="{hid}">{e(titulo)}</h{nivel}>'
     link = ""
-    if enlace:
+    if enlace and boton:
+        link = f'<a class="btn btn--primary btn--end" href="{e(enlace)}"><span class="btn__txt">{e(texto_enlace)}</span>{icono("arrow-right")}</a>'
+    elif enlace:
         link = (f'<a class="link-action" href="{e(enlace)}">{e(texto_enlace)}'
                 f'{icono("caret-right", "icon icon--sm")}</a>')
     return (f'<div class="section-head"><h{nivel} class="section-head__title" id="{hid}">{e(titulo)}</h{nivel}>'
@@ -335,7 +337,7 @@ def partido_junior(foto_clave="junior-bicampeon"):
         f'<li><span class="pj__facts__n">{octavo["pts"] - jr["pts"]}</span><span class="pj__facts__l">pts del 8.º</span></li>'
         '</ul>'
         '<div class="pj__actions">'
-        f'<a class="pj__btn" href="partido.html">Ver la crónica{icono("caret-right", "icon icon--sm")}'
+        f'<a class="btn btn--primary btn--jr btn--on-dark btn--end pj__btn" href="partido.html">Ver la crónica{icono("arrow-right")}'
         f'<span class="visually-hidden">: {e(lector)}</span></a>'
         f'<a class="pj__link" href="datos.html#hoy">Todos los partidos de la fecha{icono("caret-right", "icon icon--sm")}</a>'
         '</div></div></div>'
@@ -796,7 +798,7 @@ def reproductor_youtube():
         f'<div class="player__bar">'
         f'<div><p class="player__title">El show de las mañanas · En directo</p>'
         f'<p class="meta only-aire" hidden data-now-line="{TEMAS_HOY}">Ahora: {e(D["programa"]["parrilla"][0]["bloque"])}</p></div>'
-        f'{enlace_externo("Abrir en YouTube", CANAL, clase="btn btn--secondary btn--sm")}'
+        f'{enlace_externo("Abrir en YouTube", CANAL, clase="btn btn--secondary btn--sm btn--end")}'
         f'</div>'
         f'<p class="player__audio"><span class="player__audio-label">{e(audio["texto"])}</span> '
         f'Aún no confirmamos que exista una transmisión solo en audio.</p>'

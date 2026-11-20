@@ -79,6 +79,11 @@
   --color-surface-brand:   var(--brand-700); /* cabecera nivel 1 (logo): azul oscuro */
   --color-surface-brand-2: var(--brand-600); /* cabecera nivel 2 (menú): azul del logo, más claro */
   --color-surface-dark:    var(--brand-900); /* banner de partidos y pie (los únicos bloques oscuros) */
+
+  /* Azul suave de las cards y paneles claros de la portada (sistema «Solo acentos», bloques-3c).
+     Un único punto de cambio. gray-900 encima 15,3:1, gray-700 8,3:1, gray-600 5,8:1, brand-700 9,8:1. */
+  --card-soft: var(--brand-50);
+  --card-soft-inner: var(--brand-100);  /* tesela dentro de una card suave (próximo programa, dónde verlo) */
   --color-scrim:           rgba(15, 33, 51, 0.56); /* fondo tras hoja inferior móvil */
 
   /* Texto sobre blanco */

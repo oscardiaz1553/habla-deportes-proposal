@@ -1288,7 +1288,24 @@ html[data-aire="si"] .tt-bar > span { transform: none; }
 /* «Todos los programas»: cápsula de 44 px de área táctil sin crecer la fila de la banda inferior */
 .t1-bh .t1-all { margin-block: -12px; }
 /* Cabecera flotante sobre la sala: en móvil la sala deja sitio a la cápsula (12 + 56 + 16) */
-@media (max-width: 1023px) { .t1-stage { padding-top: 84px; } }
+@media (max-width: 1023px) { .t1-stage { padding-top: 88px; } }
+
+/* ==========================================================================
+   Portada · reproductor del hero en móvil y tableta: una card más de la retícula
+   Con los márgenes de página (16 en móvil, 24 en tableta), esquinas --radius-card (24, el de las cards de
+   la portada) recortando póster, iframe y controles; 20 px de aire bajo la cabecera flotante
+   (12 + 56 + 20 = 88) y la barra de avance a 8 px del video. Las miniaturas de videos anteriores
+   toman --radius-media. El escritorio (sala 2,39:1 a sangre) no cambia.
+   ========================================================================== */
+@media (max-width: 1023px) {
+  .t1 .t1-frame { margin-inline: 0; border-radius: var(--radius-card); overflow: hidden; clip-path: inset(0 round var(--radius-card)); isolation: isolate; }
+  .t1 .t1-frame iframe, .t1 .hero-stage__poster { border-radius: var(--radius-card); }
+  .t1 .hero-stage__controls { right: var(--space-2); bottom: var(--space-2); }
+  .t1-barwrap { margin: calc(-1 * var(--space-1)) 0 0; }
+  .t1-barwrap .tt-bar { border-radius: var(--radius-ctrl); }
+  .tt :is(.tt-pst, .tt-frm) { border-radius: var(--radius-media); }
+}
+
 
 /* ==========================================================================
    Portada · sistema «Solo acentos» (aprobado: opciones/bloques-3c, con el azul suave unificado)
@@ -1298,8 +1315,8 @@ html[data-aire="si"] .tt-bar > span { transform: none; }
    marca vive en los títulos, los iconos, la tira del hero y el pie. Planos: sin sombras, degradados,
    filtros ni bordes de otro color; filetes en brand-100. Todo acotado a .home y a la tira del hero.
    ========================================================================== */
-.home { --panel-r: 24px; --tile-r: 24px; --img-r: 16px; --panel-py: var(--space-4); --panel-px: var(--space-2); }
-@media (min-width: 600px) { .home { --panel-r: 32px; --panel-py: var(--space-6); --panel-px: var(--space-5); } }
+.home { --panel-r: var(--radius-panel); --tile-r: var(--radius-card); --img-r: var(--radius-media); --panel-py: var(--space-4); --panel-px: var(--space-2); }
+@media (min-width: 600px) { .home { --panel-py: var(--space-6); --panel-px: var(--space-5); } }
 @media (min-width: 1024px) { .home { --panel-px: var(--space-6); } }
 
 /* Fotos a color natural */
@@ -1334,7 +1351,7 @@ html[data-aire="si"] .tt-bar > span { transform: none; }
 
 /* Tira de partidos: boletas planas en el azul suave */
 .t1-tira .tira__head { border-top: 0; }
-.t1-tira .tira__card { background: var(--card-soft); border: 0; border-radius: 16px; box-shadow: none; -webkit-mask: none; mask: none; rotate: 0deg; }
+.t1-tira .tira__card { background: var(--card-soft); border: 0; border-radius: var(--radius-media); box-shadow: none; -webkit-mask: none; mask: none; rotate: 0deg; }
 .t1-tira .tira__item.is-junior .tira__card { border: 0; }
 .t1-tira .tira__item.is-junior :is(.tira__when, .tira__state) { color: var(--junior-700); }
 
@@ -1343,6 +1360,7 @@ html[data-aire="si"] .tt-bar > span { transform: none; }
 .home .news-rail .story-card { gap: 0; overflow: hidden; border-radius: var(--tile-r); background: var(--card-soft); }
 .home .news-rail .story-card__body { padding: var(--space-2) 20px 20px; }
 .home .news-rail .media--crest { background: var(--card-soft-inner); }
+.home .news-rail .story-card__media { border-radius: 0; }
 /* Móvil y tableta: el carril sangra hasta el borde, pero la primera tarjeta arranca en el margen */
 @media (max-width: 1023px) { .home .news-rail .rail__track { padding-inline: var(--page-margin); scroll-padding-inline: var(--page-margin); } }
 @media (min-width: 600px) and (max-width: 1023px) { .home .news-rail .rail__track { padding-inline: var(--page-margin-sm); scroll-padding-inline: var(--page-margin-sm); } }
@@ -1361,9 +1379,9 @@ html[data-aire="si"] .tt-bar > span { transform: none; }
 .home .pgm-photo img { border-radius: var(--img-r); }
 .home .pgm-dot { border: 0; border-radius: 50%; background: transparent; color: var(--gray-700); }
 .home .pgm-dot.is-on { background: var(--brand-900); color: var(--white); }
-.home .pgm-next { border: 0; border-radius: 16px; background: var(--card-soft-inner); }
+.home .pgm-next { border: 0; border-radius: var(--radius-media); background: var(--card-soft-inner); }
 .home .pgm-next__v { color: var(--gray-900); }
-.home .pgm-w { border: 0; border-radius: 16px; background: var(--card-soft-inner); }
+.home .pgm-w { border: 0; border-radius: var(--radius-media); background: var(--card-soft-inner); }
 .home .pgm-w:hover { background: var(--card-soft-inner); }
 .home .pgm-w:hover .pgm-wt { text-decoration: underline; text-underline-offset: 3px; }
 .home .pgm-wi { background: var(--brand-900); }
@@ -1396,7 +1414,7 @@ html[data-aire="si"] .tt-bar > span { transform: none; }
 .home .standings tr.is-selected { background: var(--card-soft-inner); }
 
 /* Publicidad: hueco plano en el azul suave */
-.home .ad-slot__frame, .ad-slot--cierre .ad-slot__frame { border: 0; border-radius: var(--tile-r); background: var(--card-soft); }
+.home .ad-slot__frame, .ad-slot--cierre .ad-slot__frame { border: 0; border-radius: var(--radius-card); background: var(--card-soft); }
 
 /* M6 · Shorts: el título sale de la foto (sin velo degradado) */
 .home .sh-card { gap: 12px; overflow: visible; }

@@ -337,7 +337,7 @@ def partido_junior(foto_clave="junior-bicampeon"):
         f'<li><span class="pj__facts__n">{octavo["pts"] - jr["pts"]}</span><span class="pj__facts__l">pts del 8.º</span></li>'
         '</ul>'
         '<div class="pj__actions">'
-        f'<a class="btn btn--primary btn--jr btn--on-dark btn--end pj__btn" href="partido.html">Ver la crónica{icono("arrow-right")}'
+        f'<a class="btn btn--primary btn--jr btn--on-dark btn--end btn--wide pj__btn" href="partido.html">Ver la crónica{icono("arrow-right")}'
         f'<span class="visually-hidden">: {e(lector)}</span></a>'
         f'<a class="pj__link" href="datos.html#hoy">Todos los partidos de la fecha{icono("caret-right", "icon icon--sm")}</a>'
         '</div></div></div>'

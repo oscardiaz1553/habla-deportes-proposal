@@ -245,6 +245,10 @@
   --radius-0:     0;        /* imágenes, tarjetas, bloques, banner, pauta, avatares, escudos */
   --radius-ctrl:  2px;      /* botones rectangulares, campos, etiquetas: canto apenas suavizado */
   --radius-round: 999px;    /* SOLO controles circulares: play, flechas, puntos, punto en vivo, píldora "En vivo" */
+  /* Sistema «Solo acentos» (portada): tres radios, de mayor a menor anidación */
+  --radius-panel: 24px;     /* paneles grandes de módulo (Junior FC, Selección, temas, Mercado, póster de Junior); 32 desde 600 */
+  --radius-card:  24px;     /* cards y teselas (noticias, fichas, tabla, patrocinio, pauta) y el reproductor en móvil/tableta */
+  --radius-media: 16px;     /* fotos dentro de una card con relleno, boletas de la tira, miniaturas, teselas interiores */
 
   --border-hair:   1px;
   --border-rule:   2px;     /* filete sobre rótulo de sección */
@@ -371,6 +375,10 @@
 }
 
 /* Movimiento reducido: los componentes leen estas variables; aquí se anulan. */
+@media (min-width: 600px) {
+  :root { --radius-panel: 32px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   :root {
     --dur-fast: 0ms;

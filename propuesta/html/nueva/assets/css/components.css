@@ -4481,7 +4481,20 @@ html[data-page="index"] .site-main { padding-top: 0; }
   .link-action:has(> .btn__txt) .icon { width: 20px; height: 20px; }
   .hero-stage__sound:has(> .btn__txt) { width: var(--touch-min); min-width: var(--touch-min); }
 
+  /* Acción principal de un bloque: conserva el texto y ocupa todo el ancho del bloque, disco a la derecha */
+  .btn--wide { width: 100%; justify-content: space-between; }
+  .btn--wide:not(.btn--end):has(> .icon) { padding: 0 6px 0 var(--space-3); }
+  .btn--wide:not(.btn--end) > .icon { order: 2; }
+
   /* Botón Menú de la cabecera: la hamburguesa basta; el nombre accesible es «Abrir el menú» */
   .site-header .menu-toggle { width: var(--touch-min); padding: 0; justify-content: center; }
   .site-header .menu-toggle__text { display: none; }
 }
+
+/* ==========================================================================
+   6.18 · Redondeo de fotos y pauta en todo el sitio (mismo sistema que la portada)
+   Fotos de cards y de notas: --radius-media (16) con recorte; huecos de pauta: --radius-card (24) en
+   el azul suave de las cards, sin filete. El reproductor del hero tiene su propia regla.
+   ========================================================================== */
+:where(main) .media:not(.hero-stage__frame), .lead-story__media { border-radius: var(--radius-media); overflow: hidden; }
+.ad-slot__frame { border: 0; border-radius: var(--radius-card); background: var(--card-soft); }
